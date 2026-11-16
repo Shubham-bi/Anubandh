@@ -1332,10 +1332,6 @@
       </div>
 
       <div class="header-actions">
-        <!-- Direct PWA Install Button (Matching working 2b03a85 code) -->
-        <button id="pwaInstallBtn" class="hbtn-install" style="display:none;" onclick="triggerPwaInstall()" title="मोबाईलवर ॲप इन्स्टॉल करा">
-          📲 ॲप इन्स्टॉल करा
-        </button>
         <!-- Quick Biodata Button -->
         <button class="hbtn-quick" onclick="openBioViewModal()" title="शुभमचा मूळ बायोडाटा फोटो पहा">
           🖼️ बायोडाटा
@@ -1845,9 +1841,7 @@
       window.deferredPrompt = e;
       deferredPrompt = e;
       console.log('PWA beforeinstallprompt event captured!');
-      const pwaBtn = document.getElementById('pwaInstallBtn');
-      if (pwaBtn) pwaBtn.style.display = 'inline-flex';
-      const banner = document.getElementById('pwaInstallBanner');
+            const banner = document.getElementById('pwaInstallBanner');
       if (banner) banner.style.display = 'flex';
       const mInstall = document.getElementById('menuInstallBtn');
       if (mInstall) mInstall.style.display = 'flex';
@@ -2872,9 +2866,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       window.deferredPrompt = e;
       console.log('PWA beforeinstallprompt fired!');
       
-      const pwaBtn = document.getElementById('pwaInstallBtn');
-      if (pwaBtn) pwaBtn.style.display = 'inline-flex';
-      const banner = document.getElementById('pwaInstallBanner');
+            const banner = document.getElementById('pwaInstallBanner');
       if (banner) banner.style.display = 'flex';
       const mInstall = document.getElementById('menuInstallBtn');
       if (mInstall) mInstall.style.display = 'flex';
@@ -2892,9 +2884,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           }
           window.deferredPrompt = null;
           deferredPrompt = null;
-          const pwaBtn = document.getElementById('pwaInstallBtn');
-          if (pwaBtn) pwaBtn.style.display = 'none';
-          const banner = document.getElementById('pwaInstallBanner');
+                    const banner = document.getElementById('pwaInstallBanner');
           if (banner) banner.style.display = 'none';
           const mInstall = document.getElementById('menuInstallBtn');
           if (mInstall) mInstall.style.display = 'none';
@@ -2911,9 +2901,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     window.addEventListener('appinstalled', () => {
       window.deferredPrompt = null;
       deferredPrompt = null;
-      const pwaBtn = document.getElementById('pwaInstallBtn');
-      if (pwaBtn) pwaBtn.style.display = 'none';
-      const banner = document.getElementById('pwaInstallBanner');
+            const banner = document.getElementById('pwaInstallBanner');
       if (banner) banner.style.display = 'none';
       const mInstall = document.getElementById('menuInstallBtn');
       if (mInstall) mInstall.style.display = 'none';
@@ -2971,21 +2959,18 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     function setupInstallPromptBanner() {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
       const banner = document.getElementById('pwaInstallBanner');
-      const pwaBtn = document.getElementById('pwaInstallBtn');
-      const mInstall = document.getElementById('menuInstallBtn');
+            const mInstall = document.getElementById('menuInstallBtn');
 
       if (isStandalone) {
         if (banner) banner.style.display = 'none';
-        if (pwaBtn) pwaBtn.style.display = 'none';
-        if (mInstall) mInstall.style.display = 'none';
+                if (mInstall) mInstall.style.display = 'none';
         return;
       }
 
       // If prompt event already captured, display immediately
       if (window.deferredPrompt || deferredPrompt) {
         if (banner) banner.style.display = 'flex';
-        if (pwaBtn) pwaBtn.style.display = 'inline-flex';
-        if (mInstall) mInstall.style.display = 'flex';
+                if (mInstall) mInstall.style.display = 'flex';
       }
     }
 

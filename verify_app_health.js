@@ -169,6 +169,7 @@ try {
   assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
   assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
+  assert(!indexCode.includes('id="pwaInstallBtn"'), "index.html has removed duplicate header install button");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
   assert(indexCode.includes('✍️ संभाषण नोंद'), "index.html uses updated button label संभाषण नोंद");
   assert(indexCode.includes('.btn-track'), "index.html has proper button styling for .btn-track");

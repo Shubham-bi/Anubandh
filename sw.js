@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anubandh-v24';
+const CACHE_NAME = 'anubandh-v25';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
