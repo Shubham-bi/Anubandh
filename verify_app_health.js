@@ -176,6 +176,7 @@ try {
   const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
   const candJson = JSON.parse(candJsonRaw);
   assert(Array.isArray(candJson) && candJson.length === 83, "candidates.json is valid array containing exactly 83 records");
+  assert(indexCode.includes('calculateAge(') && indexCode.includes('age-badge'), "index.html calculates and displays age based on DOB");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

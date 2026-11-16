@@ -1223,6 +1223,21 @@
       transform: translateY(-2px);
     }
   
+  
+    .age-badge {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 800;
+      margin-left: 4px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+  
   </style>
 </head>
 <body>
@@ -2269,6 +2284,31 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     // Spacious Balanced Dual-Column Card Renderer
     
+    
+    function toMarathiDigits(num) {
+      if (num === null || num === undefined) return '';
+      const dev = ['०','१','२','३','४','५','६','७','८','९'];
+      return String(num).replace(/[0-9]/g, d => dev[parseInt(d, 10)]);
+    }
+
+    function calculateAge(dateStr) {
+      if (!dateStr) return null;
+      const eng = toEnglishDigits(dateStr);
+      const parts = eng.split(/[-/.]/);
+      if (parts.length !== 3) return null;
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+      const today = new Date();
+      let age = today.getFullYear() - year;
+      const m = today.getMonth() - month;
+      if (m < 0 || (m === 0 && today.getDate() < day)) {
+        age--;
+      }
+      return (age > 0 && age < 120) ? age : null;
+    }
+  
     function parseContactSections(contactStr, phonesList) {
       const text = contactStr || '';
       const phones = (phonesList || []).map(p => ({
@@ -2444,7 +2484,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">जन्म तारीख / वेळ:</span>
-                <span class="detail-val">${c.date || '-'} (${c.time || '-'})</span>
+                <span class="detail-val">
+                  ${c.date || '-'} (${c.time || '-'})
+                  ${calculateAge(c.date) ? `<span class="age-badge">वय: ${toMarathiDigits(calculateAge(c.date))} वर्षे</span>` : ''}
+                </span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">गोत्र:</span>
