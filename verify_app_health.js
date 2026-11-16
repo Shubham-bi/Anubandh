@@ -178,7 +178,9 @@ try {
   const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
   const candJson = JSON.parse(candJsonRaw);
   assert(Array.isArray(candJson) && candJson.length === 83, "candidates.json is valid array containing exactly 83 records");
-  assert(indexCode.includes('calculateAge(') && indexCode.includes('age-badge'), "index.html calculates and displays age based on DOB");
+  assert(candJson.every(c => c.age !== undefined && c.age > 0), "all 83 candidates have calculated age field in candidates.json");
+  assert(indexCode.includes('cand-name') && indexCode.includes('age-badge'), "index.html displays age badge in front of candidate name");
+  assert(bioCode.includes('shubhamAge') && bioCode.includes('hero-name'), "biodata.html displays dynamically calculated age in front of groom name");
   // 8. Validate Shareable Profile CMS & Dynamic Profile Rendering
   const profileJsonRaw = fs.readFileSync(path.join(repoDir, 'profile_data.json'), 'utf8');
   const profileJson = JSON.parse(profileJsonRaw);

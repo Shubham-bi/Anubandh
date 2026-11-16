@@ -1329,17 +1329,19 @@
   
   
     .age-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       background: #fef3c7;
       color: #92400e;
-      border: 1px solid #fde68a;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 11.5px;
+      border: 1.5px solid #fcd34d;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
       font-weight: 800;
-      margin-left: 4px;
+      margin-left: 8px;
       white-space: nowrap;
       vertical-align: middle;
+      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.12);
     }
   
   </style>
@@ -2238,7 +2240,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         name: "चि. शुभम अनिल खर्चे",
         role: "B.E. Mechanical • Senior QA Engineer, Pune",
         tags: [
-          { text: "🎂 २५/०८/१९९६ (२९ वर्षे)", type: "highlight" },
+          { text: "🎂 २५/०८/१९९६ (वय: ३० वर्षे)", type: "highlight" },
           { text: "📏 उंची: ५' ७\"", type: "default" },
           { text: "🩸 रक्तगट: B+ve", type: "default" },
           { text: "💰 वार्षिक उत्पन्न: ७.८ लाख", type: "primary" }
@@ -3122,15 +3124,26 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       return String(num).replace(/[0-9]/g, d => dev[parseInt(d, 10)]);
     }
 
+    function convertDevanagariDigits(str) {
+      if (!str) return '';
+      const devanagari = ['०','१','२','३','४','५','६','७','८','९'];
+      let res = String(str);
+      for (let i = 0; i < 10; i++) {
+        res = res.split(devanagari[i]).join(String(i));
+      }
+      return res;
+    }
+
     function calculateAge(dateStr) {
       if (!dateStr) return null;
-      const eng = toEnglishDigits(dateStr);
+      const eng = convertDevanagariDigits(dateStr).trim();
       const parts = eng.split(/[-/.]/);
-      if (parts.length !== 3) return null;
+      if (parts.length < 3) return null;
       const day = parseInt(parts[0], 10);
       const month = parseInt(parts[1], 10) - 1;
       const year = parseInt(parts[2], 10);
       if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+      if (year < 1900 || year > 2050) return null;
       const today = new Date();
       let age = today.getFullYear() - year;
       const m = today.getMonth() - month;
@@ -3298,7 +3311,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           <div class="card-top">
             <div>
               <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
-              <h3 class="cand-name">${c.name}</h3>
+              <h3 class="cand-name">
+                ${c.name}
+                ${calculateAge(c.date) ? `<span class="age-badge">वय: ${toMarathiDigits(calculateAge(c.date))} वर्षे</span>` : ''}
+              </h3>
               <div class="cand-village">📍 जन्म ठिकाण: <strong>${c.mulgaon || '-'}</strong></div>
             </div>
             <span class="status-badge ${sInfo.cls}">
@@ -3315,10 +3331,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">जन्म तारीख / वेळ:</span>
-                <span class="detail-val">
-                  ${c.date || '-'} (${c.time || '-'})
-                  ${calculateAge(c.date) ? `<span class="age-badge">वय: ${toMarathiDigits(calculateAge(c.date))} वर्षे</span>` : ''}
-                </span>
+                <span class="detail-val">${c.date || '-'} (${c.time || '-'})</span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">गोत्र:</span>
@@ -3404,7 +3417,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="font-weight:700; color:var(--primary);">${c.sr}</td>
-          <td style="font-weight:700; min-width:130px;">${c.name}</td>
+          <td style="font-weight:700; min-width:140px;">
+            ${c.name}
+            ${calculateAge(c.date) ? `<span class="age-badge" style="font-size:11px; padding:1px 6px; margin-left:4px; display:inline-block;">वय: ${toMarathiDigits(calculateAge(c.date))} वर्षे</span>` : ''}
+          </td>
           <td>${c.mulgaon || '-'}</td>
           <td>${c.height || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.complexion || '-'}</span></td>
           <td><strong>${c.gotra || '-'}</strong><br/><span style="color:var(--text-muted); font-size:11.5px;">${c.mamkul || '-'}</span></td>

@@ -621,11 +621,11 @@
       <!-- Hero Summary Card -->
       <div id="heroCard" class="hero-card">
         <div class="hero-avatar">🤵</div>
-        <h2 class="hero-name">चि. शुभम अनिल खर्चे</h2>
+        <h2 class="hero-name">चि. शुभम अनिल खर्चे <span class="hero-pill highlight" style="font-size:13.5px; vertical-align:middle; margin-left:6px; display:inline-block;">वय: ३० वर्षे</span></h2>
         <div class="hero-role">B.E. Mechanical • Senior QA Engineer, Pune</div>
 
         <div class="hero-tags">
-          <span class="hero-pill highlight">🎂 २५/०८/१९९६ (२९ वर्षे)</span>
+          <span class="hero-pill highlight">🎂 २५/०८/१९९६ (वय: ३० वर्षे)</span>
           <span class="hero-pill">📏 उंची: ५' ७"</span>
           <span class="hero-pill">🩸 रक्तगट: B+ve</span>
           <span class="hero-pill primary">💰 वार्षिक उत्पन्न: ७.८ लाख</span>
@@ -831,7 +831,7 @@
         name: "चि. शुभम अनिल खर्चे",
         role: "B.E. Mechanical • Senior QA Engineer, Pune",
         tags: [
-          { text: "🎂 २५/०८/१९९६ (२९ वर्षे)", type: "highlight" },
+          { text: "🎂 २५/०८/१९९६ (वय: ३० वर्षे)", type: "highlight" },
           { text: "📏 उंची: ५' ७\"", type: "default" },
           { text: "🩸 रक्तगट: B+ve", type: "default" },
           { text: "💰 वार्षिक उत्पन्न: ७.८ लाख", type: "primary" }
@@ -927,6 +927,41 @@
 
     let currentProfile = null;
 
+    function convertDevanagariDigits(str) {
+      if (!str) return '';
+      const devanagari = ['०','१','२','३','४','५','६','७','८','९'];
+      let res = String(str);
+      for (let i = 0; i < 10; i++) {
+        res = res.split(devanagari[i]).join(String(i));
+      }
+      return res;
+    }
+
+    function toMarathiDigits(num) {
+      if (num === null || num === undefined) return '';
+      const dev = ['०','१','२','३','४','५','६','७','८','९'];
+      return String(num).replace(/[0-9]/g, d => dev[parseInt(d, 10)]);
+    }
+
+    function calculateAge(dateStr) {
+      if (!dateStr) return null;
+      const eng = convertDevanagariDigits(dateStr).trim();
+      const parts = eng.split(/[-/.]/);
+      if (parts.length < 3) return null;
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+      if (year < 1900 || year > 2050) return null;
+      const today = new Date();
+      let age = today.getFullYear() - year;
+      const m = today.getMonth() - month;
+      if (m < 0 || (m === 0 && today.getDate() < day)) {
+        age--;
+      }
+      return (age > 0 && age < 120) ? age : null;
+    }
+
     function escapeHtml(text) {
       if (text === null || text === undefined) return '';
       return String(text)
@@ -940,6 +975,10 @@
     function renderProfile(data) {
       if (!data || !data.hero) return;
       currentProfile = data;
+
+      // Dynamically calculate age from DOB (25/08/1996)
+      const shubhamDob = "25/08/1996";
+      const shubhamAge = calculateAge(shubhamDob);
 
       // 1. Update Title
       if (data.title) {
@@ -960,13 +999,24 @@
       const heroCard = document.getElementById('heroCard');
       if (heroCard) {
         const tagsHtml = (data.hero.tags || []).map(t => {
+          let text = t.text;
+          // Dynamically sync age if tag contains year 1996 / १९९६
+          if (shubhamAge && (text.includes('१९९६') || text.includes('1996'))) {
+            text = text.replace(/\(\d+\s*वर्षे\)/g, `(वय: ${toMarathiDigits(shubhamAge)} वर्षे)`);
+            if (!text.includes('वर्षे')) {
+              text += ` (वय: ${toMarathiDigits(shubhamAge)} वर्षे)`;
+            }
+          }
           const cls = t.type === 'highlight' ? 'hero-pill highlight' : (t.type === 'primary' ? 'hero-pill primary' : 'hero-pill');
-          return `<span class="${cls}">${escapeHtml(t.text)}</span>`;
+          return `<span class="${cls}">${escapeHtml(text)}</span>`;
         }).join(' ');
 
         heroCard.innerHTML = `
           <div class="hero-avatar">${escapeHtml(data.hero.avatar || '🤵')}</div>
-          <h2 class="hero-name">${escapeHtml(data.hero.name || '')}</h2>
+          <h2 class="hero-name">
+            ${escapeHtml(data.hero.name || '')}
+            ${shubhamAge ? `<span class="hero-pill highlight" style="font-size:13.5px; vertical-align:middle; margin-left:6px; display:inline-block;">वय: ${toMarathiDigits(shubhamAge)} वर्षे</span>` : ''}
+          </h2>
           <div class="hero-role">${escapeHtml(data.hero.role || '')}</div>
           <div class="hero-tags">${tagsHtml}</div>
         `;
