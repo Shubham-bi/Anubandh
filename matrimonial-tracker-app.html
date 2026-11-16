@@ -408,7 +408,7 @@
     /* Top Specs Grid */
     .detail-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(95px, 0.72fr) minmax(190px, 1.28fr);
       gap: 8px 12px;
       background: #f8fafc;
       padding: 10px 12px;
@@ -419,6 +419,7 @@
       display: flex;
       flex-direction: column;
       gap: 1px;
+      min-width: 0;
     }
     .detail-lbl {
       font-size: 12px;
@@ -429,6 +430,11 @@
       font-size: 14px;
       font-weight: 700;
       color: #1e293b;
+    }
+    .detail-dob-val {
+      font-size: 13px;
+      white-space: nowrap;
+      letter-spacing: -0.2px;
     }
 
     /* Purple Box: Dedicated Two-Row Layout (Row 1: Education & Career, Row 2: Family & Expectations) */
@@ -3331,7 +3337,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">जन्म तारीख / वेळ:</span>
-                <span class="detail-val">${c.date || '-'} (${c.time || '-'})</span>
+                <span class="detail-val detail-dob-val">${c.date || '-'} (${c.time || '-'})</span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">गोत्र:</span>
@@ -3424,7 +3430,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           <td>${c.mulgaon || '-'}</td>
           <td>${c.height || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.complexion || '-'}</span></td>
           <td><strong>${c.gotra || '-'}</strong><br/><span style="color:var(--text-muted); font-size:11.5px;">${c.mamkul || '-'}</span></td>
-          <td>${c.date || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.time || '-'}</span></td>
+          <td style="white-space:nowrap; font-size:12.5px;">${c.date || '-'} <span style="color:var(--text-muted); font-size:11.5px;">(${c.time || '-'})</span></td>
           <td><span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-weight:700; font-size:11px;">${c.blood || '-'}</span></td>
           <td style="max-width:190px; font-size:12px;">${(c.edu || '-').replace(/\n/g, ' ')}</td>
           <td style="font-size:12px;">${(c.fam || '-').replace(/\n/g, ' ')}</td>
