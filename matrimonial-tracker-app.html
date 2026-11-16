@@ -554,9 +554,20 @@
     .contact-name-info {
       font-size: 12.5px;
       color: #1e293b;
-      font-weight: 600;
       line-height: 1.35;
       word-break: break-word;
+    }
+    .contact-person-name {
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+    .contact-person-addr {
+      font-size: 12px;
+      color: #475569;
+      font-weight: 500;
+      line-height: 1.35;
     }
     .contact-row-right {
       flex-shrink: 0;
@@ -1376,10 +1387,11 @@
           placeholder="•••"
           autocomplete="off"
           autofocus
+          onkeydown="if(event.key==='Enter') verifyAppPassword();"
         />
       </div>
 
-      <button type="button" class="auth-btn" onclick="verifyAppPassword()">
+      <button type="button" id="appPassBtn" class="auth-btn" onclick="verifyAppPassword()">
         प्रवेश करा &rarr;
       </button>
 
@@ -1617,7 +1629,7 @@
 
           <div style="display:flex; gap:8px; margin-top:14px;">
             <button type="button" class="action-btn action-btn-outline" style="flex:1;" onclick="closePwdModal()">रद्द करा</button>
-            <button type="submit" class="action-btn action-btn-primary" style="flex:1;">🔓 उघडा</button>
+            <button type="submit" id="adminPwdSubmitBtn" class="action-btn action-btn-primary" style="flex:1;">🔓 उघडा</button>
           </div>
         </form>
       </div>
@@ -2744,6 +2756,55 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       }
     }
 
+    const ADMIN_ATTEMPTS_KEY = 'anubandh_admin_attempts';
+    const ADMIN_LOCKOUT_KEY = 'anubandh_admin_lockout_until';
+    let adminLockTimer = null;
+
+    function checkAdminLockout() {
+      const lockoutUntil = parseInt(localStorage.getItem(ADMIN_LOCKOUT_KEY) || '0', 10);
+      const now = Date.now();
+      const inp = document.getElementById('adminPwdInput');
+      const btn = document.getElementById('adminPwdSubmitBtn');
+      const err = document.getElementById('pwdErrorMsg');
+
+      if (now < lockoutUntil) {
+        if (inp) { inp.disabled = true; inp.value = ''; }
+        if (btn) btn.disabled = true;
+
+        const updateCountdown = () => {
+          const remaining = lockoutUntil - Date.now();
+          if (remaining <= 0) {
+            if (adminLockTimer) { clearInterval(adminLockTimer); adminLockTimer = null; }
+            localStorage.removeItem(ADMIN_LOCKOUT_KEY);
+            localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
+            if (inp) { inp.disabled = false; inp.focus(); }
+            if (btn) btn.disabled = false;
+            if (err) {
+              err.style.display = 'block';
+              err.style.color = '#15803d';
+              err.innerHTML = '✅ अ‍ॅडमिन लॉक समाप्त झाले. कृपया अचूक पासवर्ड टाका.';
+            }
+          } else {
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+            const timeStr = `${toMarathiDigits(mins)}:${secs < 10 ? '०' : ''}${toMarathiDigits(secs)}`;
+            if (err) {
+              err.style.display = 'block';
+              err.style.color = '#dc2626';
+              err.innerHTML = `🔒 <strong>सलग ३ वेळा चुकीचा पासवर्ड टाकल्यामुळे अ‍ॅडमिन १० मिनिटांसाठी लॉक झाले आहे.</strong><br/>कृपया <strong>${timeStr}</strong> मिनिटांनंतर पुन्हा प्रयत्न करा.`;
+            }
+          }
+        };
+
+        updateCountdown();
+        if (!adminLockTimer) {
+          adminLockTimer = setInterval(updateCountdown, 1000);
+        }
+        return true;
+      }
+      return false;
+    }
+
     let targetAdminSection = 'profile_cms';
 
     function requestAdminAccess(targetSec) {
@@ -2752,9 +2813,12 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('adminPwdInput').value = '';
       document.getElementById('pwdErrorMsg').style.display = 'none';
       document.getElementById('pwdModal').classList.add('open');
-      setTimeout(() => {
-        document.getElementById('adminPwdInput').focus();
-      }, 250);
+      
+      if (!checkAdminLockout()) {
+        setTimeout(() => {
+          document.getElementById('adminPwdInput').focus();
+        }, 250);
+      }
     }
 
     function closePwdModal() {
@@ -2763,16 +2827,32 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     function verifyAdminPassword(e) {
       e.preventDefault();
+      if (checkAdminLockout()) return;
+
       const entered = document.getElementById('adminPwdInput').value.trim().toLowerCase();
       if (entered === ADMIN_PASSWORD) {
+        localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
+        localStorage.removeItem(ADMIN_LOCKOUT_KEY);
         closePwdModal();
         openAdminSettingsModal(targetAdminSection);
         showToast('🔓 ॲक्सेस मंजूर!');
       } else {
-        const errMsg = document.getElementById('pwdErrorMsg');
-        errMsg.style.display = 'block';
-        document.getElementById('adminPwdInput').value = '';
-        document.getElementById('adminPwdInput').focus();
+        let attempts = parseInt(localStorage.getItem(ADMIN_ATTEMPTS_KEY) || '0', 10) + 1;
+        if (attempts >= 3) {
+          const lockoutTime = Date.now() + (10 * 60 * 1000);
+          localStorage.setItem(ADMIN_LOCKOUT_KEY, lockoutTime.toString());
+          localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
+          checkAdminLockout();
+        } else {
+          localStorage.setItem(ADMIN_ATTEMPTS_KEY, attempts.toString());
+          const left = 3 - attempts;
+          const errMsg = document.getElementById('pwdErrorMsg');
+          errMsg.style.display = 'block';
+          errMsg.style.color = '#dc2626';
+          errMsg.innerHTML = `❌ चुकीचा पासवर्ड! आपल्याकडे आणखी <strong>${toMarathiDigits(left)} संधी</strong> शिल्लक आहेत.<br/><small style="color:#64748b;">(३ वेळा चुकीचा पासवर्ड टाकल्यास अ‍ॅडमिन १० मिनिटांसाठी लॉक होईल)</small>`;
+          document.getElementById('adminPwdInput').value = '';
+          document.getElementById('adminPwdInput').focus();
+        }
       }
     }
 
@@ -3192,10 +3272,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           const matched = phones.find(p => lineDigits.includes(p.clean) && p.clean.length >= 8);
           if (matched && !matchedPhone) {
             matchedPhone = matched;
-          } else if (line.startsWith('मो.') || line.startsWith('मो:') || line.startsWith('मो ') || /^[०-९0-9\s-]+$/.test(line)) {
-            // Mobile number line
-          } else {
-            infoLines.push(line);
+          }
+          
+          const isPurePhone = line.startsWith('मो.') || line.startsWith('मो:') || line.startsWith('मो ') || /^[०-९0-9\s-]+$/.test(line);
+          if (!isPurePhone) {
+            const textWithoutPhone = line
+              .replace(/[,，]?\s*मो[.:\s].*$/i, '')
+              .replace(/[,，]?\s*[०-९0-9\s-]{8,}$/, '')
+              .trim();
+            if (textWithoutPhone) {
+              infoLines.push(textWithoutPhone);
+            }
           }
         });
 
@@ -3203,14 +3290,50 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           matchedPhone = phones[idx];
         }
 
-        let cleanedInfo = infoLines.join(', ')
-          .replace(/^संपर्क-[१1२2][\):]\s*/, '')
-          .replace(/^[१1२2][\):]\s*/, '')
-          .trim();
+        const cleanedLines = infoLines.map(l => {
+          return l.replace(/^संपर्क-[१1२2][\):]\s*/, '')
+                  .replace(/^[१1२2][\):]\s*/, '')
+                  .trim();
+        }).filter(Boolean);
+
+        let namePart = '';
+        let addrPart = '';
+
+        if (cleanedLines.length >= 2) {
+          const addrStartIdx = cleanedLines.findIndex((l, i) => i > 0 && /^(?:रा\.|ह\.मु\.|मु\.)/.test(l));
+          if (addrStartIdx !== -1) {
+            namePart = cleanedLines.slice(0, addrStartIdx).join(', ');
+            addrPart = cleanedLines.slice(addrStartIdx).join(', ');
+          } else {
+            namePart = cleanedLines[0];
+            addrPart = cleanedLines.slice(1).join(', ');
+          }
+        } else if (cleanedLines.length === 1) {
+          const l = cleanedLines[0];
+          const raMatch = l.match(/^(.+?)[,，]?\s*((?:रा\.|ह\.मु\.|मु\.).+)$/);
+          if (raMatch) {
+            namePart = raMatch[1].trim();
+            addrPart = raMatch[2].trim();
+          } else {
+            namePart = l;
+            addrPart = '';
+          }
+        }
+
+        let formattedInfo = '';
+        if (namePart && addrPart) {
+          formattedInfo = `<div class="contact-person-name">${namePart}</div><div class="contact-person-addr">${addrPart}</div>`;
+        } else if (namePart) {
+          formattedInfo = `<div class="contact-person-name">${namePart}</div>`;
+        } else {
+          formattedInfo = '-';
+        }
 
         return {
           role: sec.role,
-          info: cleanedInfo,
+          info: formattedInfo,
+          namePart: namePart,
+          addrPart: addrPart,
           phone: matchedPhone
         };
       });
@@ -3220,7 +3343,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       remaining.forEach((rem, rIdx) => {
         contacts.push({
           role: 'अतिरिक्त संपर्क ' + (rIdx + 1),
-          info: 'फोन क्रमांक',
+          info: '<div class="contact-person-name">फोन क्रमांक</div>',
+          namePart: 'फोन क्रमांक',
+          addrPart: '',
           phone: rem
         });
       });
@@ -3714,6 +3839,57 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     const APP_PASS = '258';
     const APP_AUTH_KEY = 'anubandh_app_auth';
+    const APP_ATTEMPTS_KEY = 'anubandh_app_auth_attempts';
+    const APP_LOCKOUT_KEY = 'anubandh_app_auth_lockout_until';
+    const LOCKOUT_MINUTES = 10;
+    const LOCKOUT_MS = LOCKOUT_MINUTES * 60 * 1000;
+
+    let appLockTimer = null;
+
+    function checkAppLockout() {
+      const lockoutUntil = parseInt(localStorage.getItem(APP_LOCKOUT_KEY) || '0', 10);
+      const now = Date.now();
+      const inp = document.getElementById('appPassInput');
+      const btn = document.getElementById('appPassBtn');
+      const err = document.getElementById('appPassError');
+
+      if (now < lockoutUntil) {
+        if (inp) { inp.disabled = true; inp.value = ''; }
+        if (btn) btn.disabled = true;
+
+        const updateCountdown = () => {
+          const remaining = lockoutUntil - Date.now();
+          if (remaining <= 0) {
+            if (appLockTimer) { clearInterval(appLockTimer); appLockTimer = null; }
+            localStorage.removeItem(APP_LOCKOUT_KEY);
+            localStorage.removeItem(APP_ATTEMPTS_KEY);
+            if (inp) { inp.disabled = false; inp.focus(); }
+            if (btn) btn.disabled = false;
+            if (err) {
+              err.style.display = 'block';
+              err.style.color = '#15803d';
+              err.innerHTML = '✅ ॲप अनलॉक झाले आहे. कृपया अचूक ३-अंकी पिन टाका.';
+            }
+          } else {
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+            const timeStr = `${toMarathiDigits(mins)}:${secs < 10 ? '०' : ''}${toMarathiDigits(secs)}`;
+            if (err) {
+              err.style.display = 'block';
+              err.style.color = '#dc2626';
+              err.innerHTML = `🔒 <strong>सलग ३ वेळा चुकीचा पिन टाकल्यामुळे ॲप १० मिनिटांसाठी लॉक झाले आहे.</strong><br/>कृपया <strong>${timeStr}</strong> मिनिटांनंतर पुन्हा प्रयत्न करा.`;
+            }
+          }
+        };
+
+        updateCountdown();
+        if (!appLockTimer) {
+          appLockTimer = setInterval(updateCountdown, 1000);
+        }
+        return true;
+      }
+      return false;
+    }
 
     function checkAppAuth() {
       try {
@@ -3735,12 +3911,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
       const gate = document.getElementById('appAuthGate');
       if (gate) gate.style.display = 'flex';
-      const inp = document.getElementById('appPassInput');
-      if (inp) inp.focus();
+      
+      if (!checkAppLockout()) {
+        const inp = document.getElementById('appPassInput');
+        if (inp) inp.focus();
+      }
       return false;
     }
 
     function verifyAppPassword() {
+      if (checkAppLockout()) return;
+
       const inp = document.getElementById('appPassInput');
       const val = (inp.value || '').trim();
       const err = document.getElementById('appPassError');
@@ -3748,15 +3929,31 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (val === APP_PASS) {
         try {
           localStorage.setItem(APP_AUTH_KEY, APP_PASS);
+          localStorage.removeItem(APP_ATTEMPTS_KEY);
+          localStorage.removeItem(APP_LOCKOUT_KEY);
         } catch (e) {}
         if (err) err.style.display = 'none';
         const gate = document.getElementById('appAuthGate');
         if (gate) gate.style.display = 'none';
         showToast('स्वागत आहे! पासवर्ड सुरक्षितरित्या सेव्ह झाला.');
       } else {
-        if (err) err.style.display = 'block';
-        inp.value = '';
-        inp.focus();
+        let attempts = parseInt(localStorage.getItem(APP_ATTEMPTS_KEY) || '0', 10) + 1;
+        if (attempts >= 3) {
+          const lockoutTime = Date.now() + LOCKOUT_MS;
+          localStorage.setItem(APP_LOCKOUT_KEY, lockoutTime.toString());
+          localStorage.removeItem(APP_ATTEMPTS_KEY);
+          checkAppLockout();
+        } else {
+          localStorage.setItem(APP_ATTEMPTS_KEY, attempts.toString());
+          const left = 3 - attempts;
+          if (err) {
+            err.style.display = 'block';
+            err.style.color = '#dc2626';
+            err.innerHTML = `❌ चुकीचा पिन! आपल्याकडे आणखी <strong>${toMarathiDigits(left)} संधी</strong> शिल्लक आहेत.<br/><small style="color:#64748b;">(३ वेळा चुकीचा पिन टाकल्यास ॲप १० मिनिटांसाठी लॉक होईल)</small>`;
+          }
+          inp.value = '';
+          inp.focus();
+        }
       }
     }
 

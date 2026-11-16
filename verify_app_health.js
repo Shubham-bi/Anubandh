@@ -168,6 +168,8 @@ try {
   const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
   assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
+  assert(indexCode.includes('anubandh_app_auth_lockout_until'), "index.html enforces 3-attempt 10-minute lockout on wrong PIN");
+  assert(indexCode.includes('checkAppLockout'), "index.html contains checkAppLockout function");
   assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
   assert(!indexCode.includes('id="pwaInstallBtn"'), "index.html has removed duplicate header install button");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
@@ -199,6 +201,10 @@ try {
 
   const swCode2 = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(swCode2.includes('profile_data.json'), "sw.js caches profile_data.json");
+
+  // Contact Name and Address separation assertion
+  assert(indexCode.includes('contact-person-name') && indexCode.includes('contact-person-addr'), "index.html defines contact-person-name and contact-person-addr classes");
+  assert(indexCode.includes('addrStartIdx') || indexCode.includes('raMatch'), "index.html implements name and address line separation for contacts");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
