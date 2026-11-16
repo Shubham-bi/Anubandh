@@ -213,6 +213,11 @@ try {
   assert(shubhamCode.includes('shareProfileOnWhatsApp') && shubhamCode.includes('copyHyperlink'), "shubham-kharche.html has WhatsApp share and hyperlink copy options");
   assert(indexCode.includes('shareProfileOnWhatsApp') && indexCode.includes('copyProfileHyperlink'), "index.html provides options to share profile as Shubham_Kharche");
   assert(indexCode.includes('[Shubham_Kharche]('), "index.html WhatsApp message formats profile link as [Shubham_Kharche]");
+
+  // Track Modal (संभाषण नोंद) Enhanced Screen assertions
+  assert(indexCode.includes('track-cand-summary') && indexCode.includes('phone-touch-row'), "index.html defines track-cand-summary and phone-touch-row CSS");
+  assert(indexCode.includes('mCandAgeBadge') && indexCode.includes('mCandDob'), "index.html trackModal displays candidate age and birth info");
+  assert(indexCode.includes('quickContactChips') && indexCode.includes('selectTrackContact'), "index.html trackModal provides quick contact chips");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

@@ -848,6 +848,138 @@
     .action-btn-primary { background: var(--primary); color: white; }
     .action-btn-outline { background: white; border: 1.5px solid var(--border); color: var(--text); }
 
+    /* Track Modal Enhanced UI */
+    .track-cand-summary {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .track-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 12px;
+    }
+    .track-summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12.5px;
+    }
+    .track-item-lbl {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 11.5px;
+    }
+    .track-item-val {
+      color: #0f172a;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .track-contact-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .phone-touch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: white;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      flex-wrap: wrap;
+    }
+    .phone-contact-info {
+      flex: 1;
+      min-width: 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .phone-role-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 800;
+      color: #15803d;
+      background: #dcfce7;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .phone-person-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .phone-person-addr {
+      font-size: 11.5px;
+      color: #64748b;
+    }
+    .phone-actions-pair {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-action-call {
+      background: #e0f2fe;
+      color: #0284c7;
+      text-decoration: none;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid #bae6fd;
+      transition: background 0.15s ease;
+    }
+    .btn-action-call:active {
+      background: #bae6fd;
+    }
+    .btn-action-wa {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-action-wa:active {
+      background: #bbf7d0;
+    }
+
+    .quick-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-chip:hover, .quick-chip:active {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
     .timeline {
       display: flex;
       flex-direction: column;
@@ -1993,62 +2125,94 @@
 
   <!-- Interactive Call Logging Modal -->
   <div id="trackModal" class="modal-overlay">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 650px;">
       <div class="modal-head">
         <div>
-          <div class="modal-head-title" id="mCandName">कु. नाव</div>
-          <div style="font-size:12px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • जन्म ठिकाण</div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span class="cand-sr-badge" id="mCandSrBadge">अ.क्र. -</span>
+            <div class="modal-head-title" id="mCandName" style="color:#0f172a;">कु. नाव</div>
+            <span class="age-badge" id="mCandAgeBadge" style="display:none;">वय: -</span>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;" id="mCandSubtitle">वधू संशोधन व संभाषण नोंदवही</div>
         </div>
-        <button class="close-btn" onclick="closeTrackModal()">&times;</button>
+        <button type="button" class="close-btn" onclick="closeTrackModal()">&times;</button>
       </div>
 
       <div class="modal-content-body">
         
-        <div style="background:#f1f5f9; padding:9px 12px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-          <div><strong>गोत्र:</strong> <span id="mCandGotra">-</span> | <strong>मामकुळ:</strong> <span id="mCandMamkul">-</span></div>
-          <div><strong>शिक्षण:</strong> <span id="mCandEdu">-</span></div>
+        <!-- Candidate Snapshot -->
+        <div class="track-cand-summary">
+          <div class="track-summary-grid">
+            <div class="track-summary-item">
+              <span class="track-item-lbl">🎂 जन्मतारीख व वेळ:</span>
+              <span class="track-item-val" id="mCandDob">-</span>
+            </div>
+            <div class="track-summary-item">
+              <span class="track-item-lbl">🎓 शिक्षण / नोकरी:</span>
+              <span class="track-item-val" id="mCandEdu">-</span>
+            </div>
+            <div class="track-summary-item">
+              <span class="track-item-lbl">🧬 गोत्र / मामकुळ:</span>
+              <span class="track-item-val" id="mCandGotraMamkul">-</span>
+            </div>
+            <div class="track-summary-item">
+              <span class="track-item-lbl">🏡 मूळगाव / पत्ता:</span>
+              <span class="track-item-val" id="mCandMulgaon">-</span>
+            </div>
+          </div>
         </div>
 
+        <!-- Contact Section -->
         <div class="form-group">
-          <label class="form-label">📞 संपर्क क्रमांक (कॉल किंवा WhatsApp):</label>
-          <div id="mCandPhones" style="display:flex; flex-direction:column; gap:5px;"></div>
+          <label class="form-label" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+            <span>📞 संपर्क व्यक्ती व दूरध्वनी (कॉल / WhatsApp):</span>
+            <small style="color:var(--text-muted); font-weight:normal;">नावावर क्लिक करून व्यक्ती निवडा</small>
+          </label>
+          <div id="mCandPhones" style="display:flex; flex-direction:column; gap:6px;"></div>
         </div>
 
-        <hr style="border:0; border-top:1px solid #f1f5f9;"/>
+        <hr style="border:0; border-top:1.5px solid #f1f5f9; margin:4px 0;"/>
 
-        <form id="logForm" onsubmit="saveLogEntry(event)">
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <div class="form-group" style="flex:1 1 170px;">
-              <label class="form-label">कोणाशी संपर्क झाला?</label>
-              <input type="text" id="fContactPerson" class="form-control" placeholder="उदा. वडील / मामा" required/>
+        <!-- New Log Form -->
+        <form id="logForm" onsubmit="saveLogEntry(event)" style="background:#fafaf9; border:1px solid #e7e5e4; border-radius:10px; padding:12px 14px;">
+          <div style="font-size:13.5px; font-weight:800; color:#1e293b; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>✍️</span>
+            <span>नवीन संभाषण नोंद जोडा</span>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div class="form-group" style="flex:1 1 200px;">
+              <label class="form-label">कोणाशी संभाषण झाले?</label>
+              <div id="quickContactChips" style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:4px;"></div>
+              <input type="text" id="fContactPerson" class="form-control" placeholder="उदा. वडील / आई / काका" required/>
             </div>
 
-            <div class="form-group" style="flex:1 1 150px;">
-              <label class="form-label">स्थिती (Status)</label>
+            <div class="form-group" style="flex:1 1 180px;">
+              <label class="form-label">सध्याची स्थिती (Status)</label>
               <select id="fStatus" class="form-control" required>
-                <option value="contacted">संपर्क झाला (Contacted)</option>
-                <option value="interested">सकारात्मक - अनुकूल (Interested)</option>
-                <option value="followup">पुन्हा संपर्क करावा (Follow-up)</option>
-                <option value="not_interested">नकार - जुळत नाही (Not Interested)</option>
-                <option value="matched">स्थळ जुळले (Matched)</option>
-                <option value="pending">संपर्क बाकी (Pending)</option>
+                <option value="contacted">📞 संपर्क झाला (Contacted)</option>
+                <option value="interested">⭐ सकारात्मक - अनुकूल (Interested)</option>
+                <option value="followup">⏰ पुन्हा संपर्क करावा (Follow-up)</option>
+                <option value="not_interested">❌ नकार - जुळत नाही (Not Interested)</option>
+                <option value="matched">💍 स्थळ जुळले (Matched)</option>
+                <option value="pending">⏳ संपर्क बाकी (Pending)</option>
               </select>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="margin-top:8px;">
             <label class="form-label">काय संभाषण झाले?</label>
-            <textarea id="fDiscussion" class="form-control" placeholder="उदा. पत्रिका पाहिली, फोटो पाहिले..."></textarea>
+            <textarea id="fDiscussion" class="form-control" placeholder="उदा. पत्रिका पाहिली, फोटो पाहिले, मुलाचे पॅकेज व स्थळ अनुकूल वाटले..."></textarea>
           </div>
 
-          <div class="form-group">
-            <label class="form-label">अतिरिक्त माहिती:</label>
-            <textarea id="fAdditionalInfo" class="form-control" style="min-height:55px;" placeholder="उदा. नोकरी, कुटुंब, अपेक्षा..."></textarea>
+          <div class="form-group" style="margin-top:8px;">
+            <label class="form-label">अतिरिक्त माहिती / अपेक्षा:</label>
+            <textarea id="fAdditionalInfo" class="form-control" style="min-height:55px;" placeholder="उदा. नोकरीचे ठिकाण, कुटुंब पार्श्वभूमी, अपेक्षा..."></textarea>
           </div>
 
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
             <div class="form-group" style="flex:1 1 150px;">
-              <label class="form-label">पुढील कॉल तारीख:</label>
+              <label class="form-label">पुढील फॉलो-अप तारीख:</label>
               <input type="date" id="fNextDate" class="form-control"/>
             </div>
 
@@ -2058,18 +2222,19 @@
             </div>
           </div>
 
-          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
             <button type="button" class="action-btn action-btn-outline" onclick="closeTrackModal()">रद्द करा</button>
-            <button type="submit" class="action-btn action-btn-primary">💾 नोंद सेव्ह करा</button>
+            <button type="submit" class="action-btn action-btn-primary" style="background:#15803d;">💾 नोंद सेव्ह करा</button>
           </div>
         </form>
 
-        <div>
-          <div style="font-size:13.5px; font-weight:800; color:#1e293b; margin-top:8px; display:flex; justify-content:space-between;">
-            <span>📜 संभाषण इतिहास</span>
+        <!-- Log History Timeline -->
+        <div style="margin-top:6px;">
+          <div style="font-size:13.5px; font-weight:800; color:#1e293b; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span>📜 मागील संभाषण इतिहास</span>
             <span id="mLogCount" style="font-size:12px; color:var(--text-muted); font-weight:normal;">(० नोंदी)</span>
           </div>
-          <div id="mTimeline" class="timeline" style="margin-top:8px;"></div>
+          <div id="mTimeline" class="timeline"></div>
         </div>
 
       </div>
@@ -3650,40 +3815,108 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     let currentEditCandidateId = null;
 
+    function selectTrackContact(name) {
+      if (!name) return;
+      const cleanName = name.replace(/^श्री\.|^सौ\.|^श्रीमती\.|\(.*?\)/g, '').trim();
+      document.getElementById('fContactPerson').value = cleanName || name;
+    }
+
     function openTrackModal(candId) {
       const cand = candidates.find(c => c.id === candId);
       if (!cand) return;
 
       currentEditCandidateId = candId;
+      document.getElementById('mCandSrBadge').textContent = `अ.क्र. ${cand.sr}`;
       document.getElementById('mCandName').textContent = cand.name;
-      document.getElementById('mCandSrMulgaon').textContent = `अ.क्र. ${cand.sr} • जन्म ठिकाण: ${cand.mulgaon || '-'}`;
-      document.getElementById('mCandGotra').textContent = cand.gotra || '-';
-      document.getElementById('mCandMamkul').textContent = cand.mamkul || '-';
-      document.getElementById('mCandEdu').textContent = (cand.edu || '-').replace(/\n/g, ' ');
+      
+      const ageBadge = document.getElementById('mCandAgeBadge');
+      if (cand.age) {
+        ageBadge.textContent = `वय: ${toMarathiDigits(cand.age)} वर्षे`;
+        ageBadge.style.display = 'inline-block';
+      } else {
+        ageBadge.style.display = 'none';
+      }
 
+      document.getElementById('mCandSubtitle').textContent = `अ.क्र. ${cand.sr} • ${cand.mulgaon ? 'मूळगाव: ' + cand.mulgaon : 'वधू संशोधन व संभाषण नोंदवही'}`;
+
+      // DOB & Time with Age badge
+      document.getElementById('mCandDob').innerHTML = `${cand.date || '-'} ${cand.time ? '(' + cand.time + ')' : ''} ${cand.age ? '<span class="age-badge" style="font-size:11px; padding:1px 6px;">वय: ' + toMarathiDigits(cand.age) + ' वर्षे</span>' : ''}`;
+
+      // Clean education formatting preserving line structure
+      const eduLines = (cand.edu || '-').split('\n').map(l => l.trim()).filter(Boolean);
+      const eduHtml = eduLines.length ? eduLines.map((l, i) => {
+        return i === 0 ? `<strong>${l}</strong>` : `<span style="color:#475569;">${l}</span>`;
+      }).join('<br/>') : '-';
+      document.getElementById('mCandEdu').innerHTML = eduHtml;
+
+      document.getElementById('mCandGotraMamkul').textContent = `गोत्र: ${cand.gotra || '-'} • मामकुळ: ${cand.mamkul || '-'}`;
+      document.getElementById('mCandMulgaon').textContent = cand.mulgaon || '-';
+
+      // Parse structured contacts
       const phonesBox = document.getElementById('mCandPhones');
       phonesBox.innerHTML = '';
       const escapedName = cand.name.replace(/'/g, "\'");
+      const contactSections = parseContactSections(cand.contact, cand.phones);
 
-      (cand.phones || []).forEach(p => {
-        const cleanP = toEnglishDigits(p);
+      // Contact quick chips
+      const chipsBox = document.getElementById('quickContactChips');
+      chipsBox.innerHTML = '';
+      const defaultRoles = ['पालक / वडील', 'आई', 'मामा', 'भाऊ', 'काका'];
+      const seenNames = new Set();
+
+      contactSections.forEach(cs => {
+        const cleanP = cs.phone ? cs.phone.clean : '';
+        const dispP = cs.phone ? cs.phone.display : '';
+        const rawName = cs.namePart || '';
+        if (rawName && !seenNames.has(rawName)) {
+          seenNames.add(rawName);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'quick-chip';
+          btn.textContent = rawName;
+          btn.onclick = () => selectTrackContact(rawName);
+          chipsBox.appendChild(btn);
+        }
+
         const pRow = document.createElement('div');
         pRow.className = 'phone-touch-row';
         pRow.innerHTML = `
-          <a href="tel:${cleanP}" class="phone-dial-link">📞 <strong>${p}</strong></a>
+          <div class="phone-contact-info" onclick="selectTrackContact('${rawName.replace(/'/g, "\\'")}')" style="cursor:pointer;" title="संभाषण फॉर्ममध्ये हे नाव निवडा">
+            <span class="phone-role-badge">${cs.role}</span>
+            <div class="phone-person-name">${cs.namePart || cs.info || '-'}</div>
+            ${cs.addrPart ? `<div class="phone-person-addr">${cs.addrPart}</div>` : ''}
+          </div>
           <div class="phone-actions-pair">
-            <a href="tel:${cleanP}" class="btn-action-call">📞 कॉल करा</a>
-            <button type="button" class="btn-action-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${cand.sr}')">💬 WhatsApp</button>
+            ${cleanP ? `
+              <a href="tel:${cleanP}" class="btn-action-call" title="थेट फोन कॉल करा">
+                📞 ${dispP}
+              </a>
+              <button type="button" class="btn-action-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${cand.sr}')" title="WhatsApp वर बोला">
+                💬 WhatsApp
+              </button>
+            ` : '<span style="font-size:11.5px; color:#94a3b8;">फोन नाही</span>'}
           </div>
         `;
         phonesBox.appendChild(pRow);
       });
 
-      document.getElementById('fStatus').value = cand.status || 'pending';
+      defaultRoles.forEach(r => {
+        if (!seenNames.has(r)) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'quick-chip';
+          btn.textContent = r;
+          btn.onclick = () => { document.getElementById('fContactPerson').value = r; };
+          chipsBox.appendChild(btn);
+        }
+      });
+
+      document.getElementById('fStatus').value = (cand.status && cand.status !== 'pending') ? cand.status : 'contacted';
       document.getElementById('fDiscussion').value = '';
       document.getElementById('fAdditionalInfo').value = '';
       document.getElementById('fContactPerson').value = '';
       document.getElementById('fNextDate').value = '';
+      document.getElementById('fCallerUser').value = localStorage.getItem(USER_NAME_KEY) || 'वडील';
 
       renderTimeline(cand.logs || []);
       document.getElementById('trackModal').classList.add('open');
@@ -3697,10 +3930,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     function renderTimeline(logs) {
       const container = document.getElementById('mTimeline');
       container.innerHTML = '';
-      document.getElementById('mLogCount').textContent = `(${logs.length} नोंदी)`;
+      document.getElementById('mLogCount').textContent = `(${logs ? logs.length : 0} नोंदी)`;
 
       if (!logs || logs.length === 0) {
-        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:5px 0;">कोणतीही नोंद नाही.</div>';
+        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:10px 0; text-align:center; background:#f8fafc; border-radius:8px; border:1px dashed #cbd5e1;">अद्याप कोणतीही संभाषण नोंद नाही. वरील फॉर्म भरून पहिली नोंद जोडा.</div>';
         return;
       }
 
@@ -3709,13 +3942,19 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const item = document.createElement('div');
         item.className = 'timeline-item';
         item.innerHTML = `
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); font-weight:700;">
-            <span>${log.contactPerson || 'पालक'} शी संभाषण • ${sInfo.label}</span>
-            <span>${new Date(log.timestamp).toLocaleDateString('mr-IN')}</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="status-badge" style="background:${sInfo.bg}; color:${sInfo.color}; font-size:11px; padding:2px 7px;">${sInfo.label}</span>
+              <strong style="color:#0f172a;">${log.contactPerson || 'पालक'} शी संभाषण</strong>
+            </div>
+            <span style="color:#64748b; font-size:11.5px;">📅 ${new Date(log.timestamp).toLocaleDateString('mr-IN', { day:'numeric', month:'short', year:'numeric' })}</span>
           </div>
-          ${log.discussion ? `<div style="margin-top:4px; line-height:1.45;"><strong>बोलणे:</strong> ${log.discussion}</div>` : ''}
-          ${log.additionalInfo ? `<div style="margin-top:3px; color:#0369a1; line-height:1.45;"><strong>माहिती:</strong> ${log.additionalInfo}</div>` : ''}
-          ${log.nextDate ? `<div style="margin-top:3px; font-size:11.5px; color:#b45309;"><strong>⏰ पुढील कॉल:</strong> ${log.nextDate}</div>` : ''}
+          ${log.discussion ? `<div style="margin-top:4px; line-height:1.45; color:#1e293b;"><strong>संभाषण तपशील:</strong> ${log.discussion}</div>` : ''}
+          ${log.additionalInfo ? `<div style="margin-top:4px; color:#0369a1; line-height:1.45; background:#f0f9ff; padding:4px 8px; border-radius:6px; font-size:12px;"><strong>अतिरिक्त माहिती:</strong> ${log.additionalInfo}</div>` : ''}
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:11.5px; color:#64748b; border-top:1px dashed #e2e8f0; padding-top:4px;">
+            ${log.nextDate ? `<span style="font-weight:700; color:#b45309;">⏰ पुढील फॉलो-अप: ${log.nextDate}</span>` : '<span></span>'}
+            <span>नोंद: ${log.loggedBy || 'शुभम'}</span>
+          </div>
         `;
         container.appendChild(item);
       });
