@@ -1823,6 +1823,72 @@ ${waSettings.photoNote}
     }
 
     // Spacious Balanced Dual-Column Card Renderer
+    function parseContactRows(c) {
+      const contactStr = c.contact || '';
+      const phones = (c.phones || []).map(p => ({
+        display: p,
+        clean: toEnglishDigits(p)
+      }));
+
+      const text = contactStr;
+      let sections = [];
+
+      const s1Idx = text.search(/संपर्क[\s-]*[१1][\):]/);
+      if (s1Idx !== -1) {
+        sections.push({ role: 'पालक', raw: text.slice(0, s1Idx).trim() });
+        const rest = text.slice(s1Idx);
+        const s2Idx = rest.search(/[\n\r]\s*[२2][\):]/);
+        if (s2Idx !== -1) {
+          sections.push({ role: 'संपर्क १', raw: rest.slice(0, s2Idx).trim() });
+          sections.push({ role: 'संपर्क २', raw: rest.slice(s2Idx).trim() });
+        } else {
+          sections.push({ role: 'संपर्क १', raw: rest.trim() });
+        }
+      } else {
+        sections.push({ role: 'पालक', raw: text.trim() });
+      }
+
+      const rows = sections.map((s, idx) => {
+        let lines = s.raw.split('\n').map(l => l.trim()).filter(Boolean);
+        let phoneObj = null;
+        let textLines = [];
+
+        lines.forEach(l => {
+          const digits = toEnglishDigits(l);
+          const matchedP = phones.find(p => digits.includes(p.clean) && p.clean.length >= 8);
+          if (matchedP && !phoneObj) {
+            phoneObj = matchedP;
+          } else if (l.startsWith('मो.') || l.startsWith('मो:')) {
+            // Mobile marker line
+          } else {
+            textLines.push(l);
+          }
+        });
+
+        if (!phoneObj && phones[idx]) {
+          phoneObj = phones[idx];
+        }
+
+        return {
+          role: s.role,
+          info: textLines.join(', ').replace(/^संपर्क-[१1२2][\):]\s*/, '').replace(/^[१1२2][\):]\s*/, '').trim(),
+          phone: phoneObj
+        };
+      });
+
+      const assignedCleans = rows.map(r => r.phone ? r.phone.clean : '').filter(Boolean);
+      const remainingPhones = phones.filter(p => !assignedCleans.includes(p.clean));
+      remainingPhones.forEach((rp, rIdx) => {
+        rows.push({
+          role: 'इतर फोन ' + (rIdx + 1),
+          info: 'अतिरिक्त संपर्क क्रमांक',
+          phone: rp
+        });
+      });
+
+      return rows;
+    }
+
     function renderCards(list) {
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
@@ -1830,22 +1896,36 @@ ${waSettings.photoNote}
       list.forEach(c => {
         const sInfo = STATUS_MAP[c.status || 'pending'] || STATUS_MAP.pending;
         const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
+        const logCount = (c.logs || []).length;
         const escapedName = c.name.replace(/'/g, "\'");
 
-        // Phone chips matching user screenshot: direct call on number + WhatsApp icon button
-        const phoneChipsHtml = (c.phones || []).map(p => {
-          const cleanP = toEnglishDigits(p);
+        const contactRows = parseContactRows(c);
+
+        const contactTableRowsHtml = contactRows.map(row => {
           return `
-            <div class="phone-chip-group">
-              <!-- Direct Phone Dial: NEVER redirects to WhatsApp -->
-              <a href="tel:${cleanP}" class="phone-chip" title="थेट फोन कॉल करा">
-                📞 ${p}
-              </a>
-              <!-- Dedicated WhatsApp button -->
-              <button type="button" class="phone-chip-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर बायोडाटा पाठवा">
-                💬
-              </button>
-            </div>
+            <tr>
+              <td class="col-contact-person">
+                <span class="role-pill ${row.role === 'पालक' ? 'role-guardian' : 'role-relative'}">${row.role}</span>
+                <div class="person-details-text">${row.info || '-'}</div>
+              </td>
+              <td class="col-contact-actions">
+                ${row.phone ? `
+                  <div class="table-phone-cell">
+                    <a href="tel:${row.phone.clean}" class="phone-link-number" title="थेट कॉल करा">
+                      📞 ${row.phone.display}
+                    </a>
+                    <div class="table-actions-pair">
+                      <a href="tel:${row.phone.clean}" class="tbl-btn-call" title="थेट फोन कॉल करा">
+                        📞 कॉल
+                      </a>
+                      <button type="button" class="tbl-btn-wa" onclick="openWhatsAppChat('${row.phone.clean}', '${escapedName}', '${c.sr}')" title="WhatsApp वर सविस्तर बायोडाटा पाठवा">
+                        💬 WA
+                      </button>
+                    </div>
+                  </div>
+                ` : '<span style="color:var(--text-muted); font-size:12px;">-</span>'}
+              </td>
+            </tr>
           `;
         }).join('');
 
@@ -1853,11 +1933,11 @@ ${waSettings.photoNote}
         card.className = 'profile-card';
 
         card.innerHTML = `
-          <!-- Old Beloved Card Top Design -->
+          <!-- Card Top: Name, Serial Number, Birth Place & Status -->
           <div class="card-top">
             <div>
               <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
-              <h3 class="cand-name">${c.name}</h3>
+              <h2 class="cand-name">${c.name}</h2>
               <div class="cand-village">📍 जन्म ठिकाण: <strong>${c.mulgaon || '-'}</strong></div>
             </div>
             <span class="status-badge ${sInfo.cls}">
@@ -1866,7 +1946,8 @@ ${waSettings.photoNote}
           </div>
 
           <div class="card-body">
-            <!-- 2x2 Clean Details Grid -->
+            
+            <!-- 2x2 Specs Grid with Blood Group -->
             <div class="detail-grid">
               <div class="detail-item">
                 <span class="detail-lbl">उंची / वर्ण:</span>
@@ -1877,28 +1958,43 @@ ${waSettings.photoNote}
                 <span class="detail-val">${c.date || '-'} (${c.time || '-'})</span>
               </div>
               <div class="detail-item">
-                <span class="detail-lbl">गोत्र:</span>
-                <span class="detail-val" style="color:var(--primary-dark); font-weight:700;">${c.gotra || '-'}</span>
+                <span class="detail-lbl">गोत्र / मामकुळ:</span>
+                <span class="detail-val"><strong style="color:var(--primary);">${c.gotra || '-'}</strong> • ${c.mamkul || '-'}</span>
               </div>
               <div class="detail-item">
-                <span class="detail-lbl">मामकुळ:</span>
-                <span class="detail-val">${c.mamkul || '-'}</span>
+                <span class="detail-lbl">रक्तगट:</span>
+                <span class="detail-val" style="color:#b91c1c; font-weight:800;">${c.blood || '-'}</span>
               </div>
             </div>
 
-            <!-- Purple Box: Education & Career -->
-            <div class="edu-box">
-              <strong>🎓 शिक्षण व नोकरी:</strong>
-              <div>${c.edu || '-'}</div>
+            <!-- Education, Career & Family Section -->
+            <div class="edu-card-section">
+              <div class="edu-section-title">🎓 शिक्षण व नोकरी:</div>
+              <div class="edu-section-content">${c.edu || '-'}</div>
+              ${(c.fam || c.exp) ? `
+                <div class="edu-sub-details">
+                  ${c.fam ? `<div>👨‍👩‍👧 <strong>कुटुंब:</strong> ${c.fam.replace(/\n/g, ', ')}</div>` : ''}
+                  ${c.exp ? `<div>🎯 <strong>अपेक्षा:</strong> ${c.exp}</div>` : ''}
+                </div>
+              ` : ''}
             </div>
 
-            <!-- Green Box: Parents & Contacts with Direct Call & WA chips -->
-            <div class="contact-box">
-              <strong>👨‍👩‍👧 संपर्क व पालक:</strong>
-              <div>${c.contact || '-'}</div>
-              <div class="phone-chips">
-                ${phoneChipsHtml || '<span style="font-size:12px; color:var(--text-muted);">फोन उपलब्ध नाही</span>'}
+            <!-- Professional Table Format for Parents & Contact Information -->
+            <div class="contact-table-wrapper">
+              <div class="contact-table-head-bar">
+                <span>👨‍👩‍👧 पालक व संपर्क माहिती</span>
               </div>
+              <table class="contact-table-layout">
+                <thead>
+                  <tr>
+                    <th style="width: 58%;">पालक / संपर्क व्यक्ती</th>
+                    <th style="width: 42%; text-align: right;">थेट संपर्क कृती</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${contactTableRowsHtml}
+                </tbody>
+              </table>
             </div>
 
             ${lastLog ? `
@@ -1907,8 +2003,8 @@ ${waSettings.photoNote}
                   <span>📝 शेवटचा संवाद (${lastLog.contactPerson || 'पालक'}):</span>
                   <span>${new Date(lastLog.timestamp).toLocaleDateString('mr-IN')}</span>
                 </div>
-                <div>${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}</div>
-                ${lastLog.nextDate ? `<div style="font-weight:700; color:#b45309; margin-top:2px;">⏰ पुढील कॉल: ${lastLog.nextDate}</div>` : ''}
+                <div style="font-size:13px; color:#334155; line-height:1.45;">${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}</div>
+                ${lastLog.nextDate ? `<div style="font-weight:700; color:#b45309; margin-top:3px; font-size:12px;">⏰ पुढील कॉल: ${lastLog.nextDate}</div>` : ''}
               </div>
             ` : ''}
 
@@ -1917,7 +2013,7 @@ ${waSettings.photoNote}
           <!-- Bottom Full-Width Action Button -->
           <div class="card-footer">
             <button class="btn-track" onclick="openTrackModal('${c.id}')">
-              ✍️ संभाषण नोंद व इतिहास (${(c.logs || []).length})
+              ✍️ काय बोलणे झाले? नोंद करा (${logCount})
             </button>
           </div>
         `;
