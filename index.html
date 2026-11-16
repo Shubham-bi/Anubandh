@@ -406,7 +406,7 @@
       color: #1e293b;
     }
 
-    /* Purple Box: 2-Column Grid utilizing Red Box 1 */
+    /* Purple Box: Dedicated Two-Row Layout (Row 1: Education & Career, Row 2: Family & Expectations) */
     .edu-box {
       background: #fdf4ff;
       border: 1px solid #f5d0fe;
@@ -416,49 +416,56 @@
       font-size: 13px;
       line-height: 1.45;
       color: #701a75;
-    }
-    .edu-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 10px;
-    }
-    .edu-col-left {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 8px;
     }
-    .edu-col-right {
+    .edu-row {
       display: flex;
       flex-direction: column;
       gap: 3px;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid #f0abfc;
-      border-radius: 8px;
-      padding: 7px 9px;
-      font-size: 12px;
+    }
+    .fam-exp-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px dashed #f0abfc;
+      padding-top: 8px;
+      margin-top: 2px;
     }
     .edu-header-title {
       font-size: 12.5px;
       font-weight: 800;
       color: #86198f;
-      margin-bottom: 2px;
       display: flex;
       align-items: center;
       gap: 4px;
+      margin-bottom: 2px;
     }
     .edu-text-body {
       white-space: pre-line;
       color: #4a044e;
-      font-size: 13px;
-      line-height: 1.42;
+      font-size: 13.5px;
+      line-height: 1.45;
       font-weight: 600;
     }
-    .fam-item {
-      color: #334155;
-      line-height: 1.35;
+    .fam-exp-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
     }
-    .fam-item strong {
-      color: #701a75;
+    .fam-chip {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid #f0abfc;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #334155;
+      font-weight: 600;
+    }
+    .fam-chip strong {
+      color: #86198f;
     }
 
     /* Green Box: Table Format utilizing Red Box 2 */
@@ -2207,18 +2214,21 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
             </div>
 
-            <!-- Purple Box: 2-Column Balanced Grid (Education & Career on Left, Family & Expectations on Right) -->
+            <!-- Purple Box: Dedicated Two-Row Layout (Row 1 = Education & Job, Row 2 = Family & Expectations) -->
             <div class="edu-box">
-              <div class="edu-grid">
-                <div class="edu-col-left">
-                  <div class="edu-header-title">🎓 शिक्षण व नोकरी:</div>
-                  <div class="edu-text-body">${c.edu || '-'}</div>
-                </div>
-                <div class="edu-col-right">
-                  <div class="edu-header-title">👨‍👩‍👧 कुटुंब व अपेक्षा:</div>
-                  <div class="fam-item"><strong>भावंडे:</strong> ${c.fam ? c.fam.replace(/\n/g, ', ') : '-'}</div>
-                  <div class="fam-item"><strong>अपेक्षा:</strong> ${c.exp || 'अनुरूप'}</div>
-                  ${c.blood ? `<div class="fam-item"><strong>रक्तगट:</strong> ${c.blood}</div>` : ''}
+              <!-- Row 1: Education & Job -->
+              <div class="edu-row">
+                <div class="edu-header-title">🎓 शिक्षण व नोकरी:</div>
+                <div class="edu-text-body">${c.edu || '-'}</div>
+              </div>
+
+              <!-- Row 2: Family & Expectations -->
+              <div class="fam-exp-row">
+                <div class="edu-header-title">👨‍👩‍👧 कुटुंब व अपेक्षा:</div>
+                <div class="fam-exp-content">
+                  <span class="fam-chip"><strong>भावंडे:</strong> ${c.fam ? c.fam.replace(/\n/g, ', ') : '-'}</span>
+                  <span class="fam-chip"><strong>अपेक्षा:</strong> ${c.exp || 'अनुरूप'}</span>
+                  ${c.blood ? `<span class="fam-chip"><strong>रक्तगट:</strong> ${c.blood}</span>` : ''}
                 </div>
               </div>
             </div>
