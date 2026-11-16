@@ -406,156 +406,164 @@
       color: #1e293b;
     }
 
-    /* Purple Box: 2-Column Grid filling Red Box 1 */
-    .edu-box-grid {
+    /* Purple Box: 2-Column Grid utilizing Red Box 1 */
+    .edu-box {
       background: #fdf4ff;
       border: 1px solid #f5d0fe;
-      border-left: 4px solid #c026d3;
+      border-left: 3.5px solid #d946ef;
       border-radius: 4px 10px 10px 4px;
       padding: 10px 12px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 10px;
-    }
-    .edu-box-col-left {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .edu-box-col-right {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      background: rgba(255, 255, 255, 0.65);
-      border-radius: 8px;
-      padding: 8px 10px;
-      border: 1px solid #f0abfc;
-    }
-    .box-head-label {
-      font-size: 12.5px;
-      font-weight: 800;
-      margin-bottom: 2px;
-      letter-spacing: 0.2px;
-    }
-    .edu-job-text {
-      font-size: 13.5px;
-      line-height: 1.45;
-      color: #701a75;
-      white-space: pre-line;
-      font-weight: 600;
-    }
-    .col-spec-row {
-      display: flex;
-      flex-direction: column;
-      font-size: 12px;
-      line-height: 1.35;
-    }
-    .spec-k {
-      color: #86198f;
-      font-weight: 700;
-      font-size: 11px;
-    }
-    .spec-v {
-      color: #0f172a;
-      font-weight: 700;
-      word-break: break-word;
-    }
-
-    /* Green Box: 2-Column Grid filling Red Box 2 */
-    .contact-box-grid {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-left: 4px solid #16a34a;
-      border-radius: 4px 10px 10px 4px;
-      padding: 10px 12px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 10px;
-    }
-    .contact-box-col-left {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .contact-box-col-right {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .contact-address-text {
       font-size: 13px;
       line-height: 1.45;
-      color: #14532d;
-      white-space: pre-line;
-      font-weight: 600;
+      color: #701a75;
     }
-    .phones-col-wrap {
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 10px;
+    }
+    .edu-col-left {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 2px;
     }
-    .phone-chip-card {
+    .edu-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #f0abfc;
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 12px;
+    }
+    .edu-header-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #86198f;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .edu-text-body {
+      white-space: pre-line;
+      color: #4a044e;
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 600;
+    }
+    .fam-item {
+      color: #334155;
+      line-height: 1.35;
+    }
+    .fam-item strong {
+      color: #701a75;
+    }
+
+    /* Green Box: Table Format utilizing Red Box 2 */
+    .contact-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 3.5px solid #22c55e;
+      border-radius: 4px 10px 10px 4px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-header-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .contact-table {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-table-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+    .contact-row-left {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .contact-role-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 800;
+      color: #15803d;
+      background: #dcfce7;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+    }
+    .contact-name-info {
+      font-size: 12.5px;
+      color: #1e293b;
+      font-weight: 600;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .contact-row-right {
+      flex-shrink: 0;
+    }
+
+    /* Old Beloved Phone Chip Group (Dial Call on Number + WhatsApp icon button) */
+    .phone-chip-group {
+      display: inline-flex;
+      align-items: center;
       background: white;
       border: 1.5px solid #86efac;
       border-radius: 8px;
-      padding: 6px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
-    .phone-chip-num {
+    .phone-chip {
+      padding: 6px 9px;
+      font-size: 13px;
       font-weight: 800;
-      font-size: 13.5px;
-      color: #0f172a;
-      text-decoration: none;
-      letter-spacing: 0.3px;
-    }
-    .phone-chip-actions {
-      display: flex;
-      gap: 4px;
-    }
-    .btn-chip-call {
-      flex: 1;
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-      border-radius: 6px;
-      padding: 4px 6px;
-      font-size: 11.5px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-    }
-    .btn-chip-call:active {
-      background: #0284c7;
-      color: white;
-    }
-    .btn-chip-wa {
-      flex: 1;
-      background: #dcfce7;
       color: #15803d;
-      border: 1px solid #86efac;
-      border-radius: 6px;
-      padding: 4px 6px;
-      font-size: 11.5px;
-      font-weight: 700;
+      text-decoration: none;
+      background: white;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .phone-chip:active {
+      background: #f0fdf4;
+    }
+    .phone-chip-wa {
+      background: #25d366;
+      color: white;
+      border: none;
+      border-left: 1px solid #86efac;
+      padding: 6px 8px;
+      font-size: 12.5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      transition: background 0.15s ease;
     }
-    .btn-chip-wa:active {
-      background: #16a34a;
-      color: white;
+    .phone-chip-wa:active {
+      background: #128c7e;
     }
-
-    /* Last Log Box */
+    
     .last-log-box {
       background: #fffbeb;
       border: 1px solid #fef3c7;
@@ -1814,6 +1822,76 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     // Spacious Balanced Dual-Column Card Renderer
+    
+    function parseContactSections(contactStr, phonesList) {
+      const text = contactStr || '';
+      const phones = (phonesList || []).map(p => ({
+        display: p,
+        clean: toEnglishDigits(p)
+      }));
+
+      let sections = [];
+      const s1Idx = text.search(/संपर्क[\s-]*[१1][\):]/);
+      if (s1Idx !== -1) {
+        sections.push({ role: 'पालक', raw: text.slice(0, s1Idx).trim() });
+        const rest = text.slice(s1Idx);
+        const s2Idx = rest.search(/[\n\r]\s*[२2][\):]/);
+        if (s2Idx !== -1) {
+          sections.push({ role: 'संपर्क १', raw: rest.slice(0, s2Idx).trim() });
+          sections.push({ role: 'संपर्क २', raw: rest.slice(s2Idx).trim() });
+        } else {
+          sections.push({ role: 'संपर्क १', raw: rest.trim() });
+        }
+      } else {
+        sections.push({ role: 'पालक', raw: text.trim() });
+      }
+
+      const contacts = sections.map((sec, idx) => {
+        const rawLines = sec.raw.split('\n').map(l => l.trim()).filter(Boolean);
+        let matchedPhone = null;
+        let infoLines = [];
+
+        rawLines.forEach(line => {
+          const lineDigits = toEnglishDigits(line);
+          const matched = phones.find(p => lineDigits.includes(p.clean) && p.clean.length >= 8);
+          if (matched && !matchedPhone) {
+            matchedPhone = matched;
+          } else if (line.startsWith('मो.') || line.startsWith('मो:') || line.startsWith('मो ') || /^[०-९0-9\s-]+$/.test(line)) {
+            // Mobile number line
+          } else {
+            infoLines.push(line);
+          }
+        });
+
+        if (!matchedPhone && phones[idx]) {
+          matchedPhone = phones[idx];
+        }
+
+        let cleanedInfo = infoLines.join(', ')
+          .replace(/^संपर्क-[१1२2][\):]\s*/, '')
+          .replace(/^[१1२2][\):]\s*/, '')
+          .trim();
+
+        return {
+          role: sec.role,
+          info: cleanedInfo,
+          phone: matchedPhone
+        };
+      });
+
+      const attachedCleans = contacts.map(c => c.phone ? c.phone.clean : '').filter(Boolean);
+      const remaining = phones.filter(p => !attachedCleans.includes(p.clean));
+      remaining.forEach((rem, rIdx) => {
+        contacts.push({
+          role: 'अतिरिक्त संपर्क ' + (rIdx + 1),
+          info: 'फोन क्रमांक',
+          phone: rem
+        });
+      });
+
+      return contacts;
+    }
+
     function renderCards(list) {
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
@@ -1823,12 +1901,22 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
         const escapedName = c.name.replace(/'/g, "\'");
 
-        const phoneChipsHtml = (c.phones || []).map(p => {
-          const cleanP = toEnglishDigits(p);
+        const contactSections = parseContactSections(c.contact, c.phones);
+        const contactRowsHtml = contactSections.map(cs => {
           return `
-            <div class="phone-chip-group">
-              <a href="tel:${cleanP}" class="phone-chip" title="कॉल करा">📞 ${p}</a>
-              <button type="button" class="phone-chip-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर बायोडाटा पाठवा">💬</button>
+            <div class="contact-table-row">
+              <div class="contact-row-left">
+                <span class="contact-role-badge">${cs.role}</span>
+                <div class="contact-name-info">${cs.info || '-'}</div>
+              </div>
+              <div class="contact-row-right">
+                ${cs.phone ? `
+                  <div class="phone-chip-group">
+                    <a href="tel:${cs.phone.clean}" class="phone-chip" title="थेट कॉल करा">📞 ${cs.phone.display}</a>
+                    <button type="button" class="phone-chip-wa" onclick="openWhatsAppChat('${cs.phone.clean}', '${escapedName}', '${c.sr}')" title="WhatsApp वर बायोडाटा पाठवा">💬</button>
+                  </div>
+                ` : '<span style="font-size:11px; color:#94a3b8;">फोन नाही</span>'}
+              </div>
             </div>
           `;
         }).join('');
@@ -1849,6 +1937,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           </div>
 
           <div class="card-body">
+            <!-- 2x2 Details Grid -->
             <div class="detail-grid">
               <div class="detail-item">
                 <span class="detail-lbl">उंची / वर्ण:</span>
@@ -1868,16 +1957,27 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
             </div>
 
+            <!-- Purple Box: 2-Column Balanced Grid (Education & Career on Left, Family & Expectations on Right) -->
             <div class="edu-box">
-              <strong>🎓 शिक्षण व नोकरी:</strong>
-              <div>${c.edu || '-'}</div>
+              <div class="edu-grid">
+                <div class="edu-col-left">
+                  <div class="edu-header-title">🎓 शिक्षण व नोकरी:</div>
+                  <div class="edu-text-body">${c.edu || '-'}</div>
+                </div>
+                <div class="edu-col-right">
+                  <div class="edu-header-title">👨‍👩‍👧 कुटुंब व अपेक्षा:</div>
+                  <div class="fam-item"><strong>भावंडे:</strong> ${c.fam ? c.fam.replace(/\n/g, ', ') : '-'}</div>
+                  <div class="fam-item"><strong>अपेक्षा:</strong> ${c.exp || 'अनुरूप'}</div>
+                  ${c.blood ? `<div class="fam-item"><strong>रक्तगट:</strong> ${c.blood}</div>` : ''}
+                </div>
+              </div>
             </div>
 
+            <!-- Green Box: Contact Table Rows (Person Details on Left, Direct Action Chip on Right) -->
             <div class="contact-box">
-              <strong>👨‍👩‍👧 संपर्क व पालक:</strong>
-              <div>${c.contact || '-'}</div>
-              <div class="phone-chips">
-                ${phoneChipsHtml || '<span style="font-size:12px; color:var(--text-muted);">फोन उपलब्ध नाही</span>'}
+              <div class="contact-header-title">👨‍👩‍👧 संपर्क व पालक माहिती:</div>
+              <div class="contact-table">
+                ${contactRowsHtml || '<span style="font-size:12px; color:var(--text-muted);">संपर्क उपलब्ध नाही</span>'}
               </div>
             </div>
 
