@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>चि. शुभम अनिल खर्चे | विवाह प्रस्ताव (बायोडाटा)</title>
+  <title>चि. शुभम अनिल खर्चे | विवाह प्रस्ताव</title>
   
-  <meta name="theme-color" content="#be123c"/>
-  <meta name="description" content="चि. शुभम अनिल खर्चे (B.E. Mechanical, Sr. QA Engineer, Pune) यांचा सविस्तर विवाह प्रस्ताव व कौटुंबिक माहिती."/>
+  <meta name="theme-color" content="#881337"/>
+  <meta name="description" content="चि. शुभम अनिल खर्चे (B.E. Mechanical, Senior QA Engineer, Pune) यांचा सविस्तर विवाह प्रस्ताव."/>
   
   <!-- Open Graph for Rich WhatsApp / Social Preview -->
   <meta property="og:title" content="चि. शुभम अनिल खर्चे | विवाह प्रस्ताव"/>
@@ -19,23 +19,21 @@
 
   <style>
     :root {
-      --primary: #9f1239;
-      --primary-dark: #881337;
+      --primary: #881337;
       --primary-light: #fff1f2;
-      --gold: #d97706;
-      --gold-light: #fef3c7;
-      --gold-dark: #b45309;
-      --wa-green: #16a34a;
+      --accent: #b45309;
+      --accent-light: #fef3c7;
+      --wa-green: #15803d;
       --wa-bg: #dcfce7;
-      --call-blue: #0284c7;
+      --call-blue: #0369a1;
       --call-bg: #e0f2fe;
-      --bg: #fffbf5;
+      --bg: #faf7f2;
       --card-bg: #ffffff;
-      --text: #1e293b;
+      --text: #0f172a;
       --text-muted: #64748b;
-      --border: #f1e5d8;
+      --border: #f1e4d8;
       --radius: 14px;
-      --shadow: 0 4px 14px rgba(159, 18, 57, 0.08);
+      --shadow: 0 4px 16px rgba(136, 19, 55, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -44,346 +42,459 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Mangal", sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      padding-bottom: 70px;
+      line-height: 1.55;
+      padding-bottom: 85px;
       font-size: 15px;
     }
 
-    /* Traditional Header Band */
-    .header-banner {
-      background: linear-gradient(135deg, #881337 0%, #be123c 50%, #e11d48 100%);
-      color: white;
-      text-align: center;
-      padding: 26px 16px 36px;
-      position: relative;
-      box-shadow: 0 4px 16px rgba(136, 19, 55, 0.25);
-    }
-    .header-banner::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 0;
-      right: 0;
-      height: 24px;
-      background: var(--bg);
-      border-radius: 20px 20px 0 0;
-    }
-    .dev-ganesh {
-      font-size: 14px;
-      letter-spacing: 2px;
-      color: #fef08a;
-      font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-    .main-title {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      line-height: 1.25;
-      margin-bottom: 4px;
-    }
-    .sub-title {
-      font-size: 14.5px;
-      opacity: 0.94;
-      font-weight: 500;
-    }
-
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 14px;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Profile Summary Card */
-    .hero-card {
-      background: white;
-      border-radius: 18px;
-      border: 1.5px solid var(--border);
-      box-shadow: var(--shadow);
-      padding: 20px 18px;
-      text-align: center;
-      margin-bottom: 18px;
-    }
-    .hero-avatar {
-      width: 72px;
-      height: 72px;
-      background: linear-gradient(135deg, #fce7f3 0%, #fee2e2 100%);
-      color: var(--primary);
-      border-radius: 50%;
+    /* Password Lock Gate Overlay */
+    .auth-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #4c0519 0%, #881337 60%, #be123c 100%);
+      z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      margin: 0 auto 12px;
-      border: 3px solid #ffe4e6;
-      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.15);
+      padding: 20px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 380px;
+      width: 100%;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 2px solid #fef08a;
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .auth-emblem {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+    .auth-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .auth-subtitle {
+      font-size: 13.5px;
+      color: #64748b;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+    .auth-input-wrap {
+      margin-bottom: 14px;
+    }
+    .auth-input {
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 6px;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      outline: none;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+    .auth-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(136, 19, 55, 0.12);
+    }
+    .auth-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #881337, #be123c);
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(136, 19, 55, 0.25);
+      transition: transform 0.1s ease;
+    }
+    .auth-btn:active {
+      transform: scale(0.98);
+    }
+    .auth-error {
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 10px;
+      display: none;
+    }
+    .auth-hint {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Festive Header Banner */
+    .header-banner {
+      background: linear-gradient(135deg, #700c2a 0%, #881337 50%, #b91c1c 100%);
+      color: white;
+      text-align: center;
+      padding: 18px 16px 20px;
+      border-bottom: 3px solid #d97706;
+      box-shadow: 0 4px 16px rgba(112, 12, 42, 0.25);
+    }
+    .dev-ganesh {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fef08a;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .main-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .sub-title {
+      font-size: 13px;
+      opacity: 0.92;
+      margin-top: 2px;
+      color: #fed7aa;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 680px;
+      margin: 14px auto 0;
+      padding: 0 12px;
+    }
+
+    /* Profile Hero Card */
+    .hero-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero-avatar {
+      width: 74px;
+      height: 74px;
+      background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+      border: 2.5px solid #fda4af;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
     }
     .hero-name {
       font-size: 23px;
       font-weight: 800;
-      color: #0f172a;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    .hero-prof {
-      font-size: 15px;
       color: var(--primary);
-      font-weight: 700;
-      margin-bottom: 12px;
+      line-height: 1.2;
     }
-    .hero-badges {
+    .hero-role {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 4px;
+    }
+    .hero-tags {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 6px;
-      margin-bottom: 14px;
+      margin-top: 12px;
     }
-    .hero-badge {
+    .hero-pill {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
+      color: #1e293b;
+      padding: 5px 10px;
       border-radius: 999px;
-      padding: 4px 10px;
       font-size: 12.5px;
-      font-weight: 600;
-      color: #334155;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .hero-badge-highlight {
-      background: #fef3c7;
-      border-color: #fde68a;
-      color: #92400e;
       font-weight: 700;
+    }
+    .hero-pill.highlight {
+      background: #fef3c7;
+      border-color: #fcd34d;
+      color: #92400e;
+    }
+    .hero-pill.primary {
+      background: var(--primary-light);
+      border-color: #fecdd3;
+      color: var(--primary);
     }
 
     /* Section Cards */
-    .info-card {
+    .section-card {
       background: white;
-      border-radius: 16px;
+      border-radius: var(--radius);
       border: 1.5px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      padding: 16px 18px;
-      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      overflow: hidden;
     }
-    .card-head {
+    .section-header {
+      background: #fff8f5;
+      border-bottom: 1.5px solid var(--border);
+      padding: 11px 14px;
       display: flex;
       align-items: center;
       gap: 8px;
-      border-bottom: 1.5px dashed #f1e5d8;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
     }
-    .card-head-icon {
-      font-size: 20px;
+    .section-icon {
+      font-size: 18px;
     }
-    .card-head-title {
-      font-size: 16.5px;
+    .section-title {
+      font-size: 15px;
       font-weight: 800;
       color: var(--primary);
       letter-spacing: -0.2px;
     }
 
-    /* Info Table Grid */
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 14px;
+    /* Info Table Layout */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
     }
-    .info-item {
-      display: flex;
-      flex-direction: column;
+    .info-table tr {
+      border-bottom: 1px solid #f8fafc;
     }
-    .info-lbl {
-      font-size: 12px;
-      color: var(--text-muted);
+    .info-table tr:last-child {
+      border-bottom: none;
+    }
+    .info-table td {
+      padding: 10px 14px;
+      vertical-align: top;
+    }
+    .col-lbl {
+      width: 38%;
+      color: #64748b;
       font-weight: 600;
+      background: #fafaf9;
+      border-right: 1px solid #f1f5f9;
     }
-    .info-val {
-      font-size: 14px;
-      font-weight: 700;
+    .col-val {
+      width: 62%;
       color: #0f172a;
-      line-height: 1.35;
-      word-break: break-word;
-    }
-    .info-full {
-      grid-column: span 2;
+      font-weight: 700;
     }
 
-    /* Contact Elders Table */
-    .elder-contact-box {
-      background: #f0fdf4;
-      border: 1.5px solid #bbf7d0;
-      border-radius: 12px;
+    /* Elder Contacts List */
+    .contacts-list {
       padding: 12px 14px;
-      margin-bottom: 10px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
       gap: 10px;
+    }
+    .elder-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 9px 12px;
     }
     .elder-info {
       flex: 1;
+      min-width: 0;
     }
     .elder-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #14532d;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #0f172a;
     }
-    .elder-relation {
+    .elder-sub {
       font-size: 12px;
-      color: #166534;
-      opacity: 0.9;
+      color: #64748b;
+      margin-top: 2px;
     }
-    .elder-btns {
-      display: flex;
+    .elder-actions {
+      display: inline-flex;
       gap: 6px;
+      flex-shrink: 0;
     }
-    .btn-call {
-      background: #0284c7;
-      color: white;
-      border: none;
-      padding: 6px 11px;
-      border-radius: 7px;
-      font-size: 12px;
+    .btn-action-call {
+      background: var(--call-bg);
+      color: var(--call-blue);
+      border: 1px solid #bae6fd;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      box-shadow: 0 1px 3px rgba(2, 132, 199, 0.3);
+      gap: 4px;
     }
-    .btn-wa {
-      background: #16a34a;
-      color: white;
-      border: none;
-      padding: 6px 11px;
-      border-radius: 7px;
-      font-size: 12px;
+    .btn-action-wa {
+      background: var(--wa-bg);
+      color: var(--wa-green);
+      border: 1px solid #bbf7d0;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
       font-weight: 700;
-      cursor: pointer;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      box-shadow: 0 1px 3px rgba(22, 163, 74, 0.3);
+      gap: 4px;
     }
 
-    /* Original Biodata Photo Viewer Box */
-    .photo-preview-card {
-      background: #fff;
+    /* Original Photo Card */
+    .photo-card {
+      background: white;
+      border-radius: var(--radius);
       border: 1.5px solid var(--border);
-      border-radius: 16px;
+      box-shadow: var(--shadow);
       padding: 14px;
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
-    .biodata-img {
+    .biodata-thumbnail {
       width: 100%;
-      max-height: 480px;
-      object-fit: contain;
+      max-width: 320px;
       border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      background: #f8fafc;
+      border: 2px solid #e2e8f0;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.15s ease;
     }
-    .img-note {
+    .biodata-thumbnail:active {
+      transform: scale(0.98);
+    }
+    .tap-hint {
       font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 8px;
+      color: #64748b;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+    .btn-download-img {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #334155;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 10px;
     }
 
-    /* Sticky Bottom Actions Bar for Mobile */
-    .sticky-bottom-bar {
+    /* Polite Closing Footer */
+    .closing-box {
+      text-align: center;
+      padding: 16px 14px 24px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .closing-box strong {
+      color: var(--primary);
+    }
+
+    /* Sticky Bottom Action Bar */
+    .sticky-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(8px);
-      border-top: 1px solid var(--border);
+      border-top: 1.5px solid #e2e8f0;
       padding: 10px 14px;
       display: flex;
-      gap: 10px;
-      z-index: 100;
-      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.08);
-      max-width: 680px;
-      margin: 0 auto;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
     }
-    .btn-sticky-primary {
-      flex: 1;
-      background: #16a34a;
+    .sticky-btn-wa {
+      flex: 1.2;
+      background: #25d366;
       color: white;
-      border: none;
-      padding: 12px;
+      text-decoration: none;
+      padding: 11px 12px;
       border-radius: 10px;
       font-size: 14px;
-      font-weight: 700;
-      display: flex;
+      font-weight: 800;
+      text-align: center;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      text-decoration: none;
-      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+      box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
     }
-    .btn-sticky-secondary {
+    .sticky-btn-call {
       flex: 1;
       background: #0284c7;
       color: white;
-      border: none;
-      padding: 12px;
+      text-decoration: none;
+      padding: 11px 12px;
       border-radius: 10px;
       font-size: 14px;
-      font-weight: 700;
-      display: flex;
+      font-weight: 800;
+      text-align: center;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      text-decoration: none;
-      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
     }
-    .btn-sticky-share {
+    .sticky-btn-share {
       background: #f1f5f9;
       color: #334155;
-      border: 1px solid #cbd5e1;
-      padding: 12px 14px;
+      border: 1.5px solid #cbd5e1;
+      padding: 11px 14px;
       border-radius: 10px;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* Modal for Full Image Zoom */
+    /* Fullscreen Modal for Original Photo */
     .img-modal {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 999;
-      justify-content: center;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 999999;
       align-items: center;
+      justify-content: center;
       padding: 10px;
     }
-    .img-modal.open { display: flex; }
+    .img-modal.open {
+      display: flex;
+    }
     .img-modal img {
-      max-width: 98%;
+      max-width: 96%;
       max-height: 92vh;
       border-radius: 8px;
+      object-fit: contain;
     }
     .modal-close {
       position: absolute;
-      top: 15px;
+      top: 14px;
       right: 18px;
       color: white;
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 32px;
       background: none;
       border: none;
       cursor: pointer;
@@ -392,233 +503,251 @@
 </head>
 <body>
 
-  <!-- Top Festive Header Banner -->
-  <header class="header-banner">
-    <div class="dev-ganesh">॥ श्री गणेशाय नमः ॥</div>
-    <h1 class="main-title">विवाह प्रस्ताव व बायोडाटा</h1>
-    <div class="sub-title">खर्चे परिवार (शेलगाव बाजार / पुणे)</div>
-  </header>
-
-  <div class="container">
-
-    <!-- Profile Hero Card -->
-    <div class="hero-card">
-      <div class="hero-avatar">🤵</div>
-      <h2 class="hero-name">चि. शुभम अनिल खर्चे</h2>
-      <div class="hero-prof">B.E. Mechanical • Senior QA Engineer (Pune)</div>
-
-      <div class="hero-badges">
-        <span class="hero-badge">🎂 २५/०८/१९९६ (२९ वर्षे)</span>
-        <span class="hero-badge">📏 उंची: ५' ७"</span>
-        <span class="hero-badge">🩸 रक्तगट: B+ve</span>
-        <span class="hero-badge hero-badge-highlight">💰 वार्षिक उत्पन्न: ७.८ लाख (7.8 LPA)</span>
-        <span class="hero-badge">📍 पुणे / शेलगाव बाजार</span>
+  <!-- Password Security Screen (Requires Pin: 258) -->
+  <div id="authGate" class="auth-gate-overlay">
+    <div class="auth-card">
+      <div class="auth-emblem">🔒</div>
+      <h2 class="auth-title">विवाह प्रस्ताव</h2>
+      <div class="auth-subtitle">
+        चि. शुभम अनिल खर्चे<br/>
+        गोपनीयतेसाठी हा प्रस्ताव पासवर्डने सुरक्षित आहे. कृपया खर्चे परिवाराने दिलेला ३-अंकी पासवर्ड टाका:
       </div>
 
-      <div style="font-size: 13px; color: #475569; line-height: 1.5; background: #fffbeb; padding: 8px 12px; border-radius: 8px; border: 1px dashed #fcd34d;">
-        सस्नेह नमस्कार! खर्चे परिवाराकडून वधू पक्षासाठी हा सविस्तर विवाह प्रस्ताव सादर करीत आहोत.
+      <div class="auth-input-wrap">
+        <input 
+          type="password" 
+          id="passInput" 
+          class="auth-input" 
+          maxlength="6" 
+          inputmode="numeric" 
+          pattern="[0-9]*"
+          placeholder="•••"
+          autocomplete="off"
+          autofocus
+        />
       </div>
-    </div>
 
-    <!-- 1. वैयक्तिक व जन्म पत्रिका तपशील -->
-    <div class="info-card">
-      <div class="card-head">
-        <span class="card-head-icon">📋</span>
-        <h3 class="card-head-title">वैयक्तिक व जन्मपत्रिका तपशील</h3>
+      <button type="button" class="auth-btn" onclick="verifyPassword()">
+        प्रवेश करा &rarr;
+      </button>
+
+      <div id="passError" class="auth-error">
+        ❌ चुकीचा पासवर्ड! कृपया योग्य पासवर्ड टाका.
       </div>
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="info-lbl">संपूर्ण नाव:</span>
-          <span class="info-val">शुभम अनिल खर्चे</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">राशी नाव / जन्मनाव:</span>
-          <span class="info-val">धनंजय</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">जन्मतारीख:</span>
-          <span class="info-val">२५ ऑगस्ट १९९६ (25/08/1996)</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">जन्मवेळ:</span>
-          <span class="info-val">सकाळी ११:५६ वा.</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">जन्म ठिकाण:</span>
-          <span class="info-val">शेलगाव बाजार, ता. मोताळा</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">उंची व वर्ण:</span>
-          <span class="info-val">५ फूट ७ इंच • गोरा</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">गोत्र:</span>
-          <span class="info-val" style="color:var(--primary);">वशिष्ठ</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">रक्तगट:</span>
-          <span class="info-val" style="color:#b91c1c;">B+ve (बी पॉझिटिव्ह)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">मामांचे कुळ (मामकुळ):</span>
-          <span class="info-val">चोपडे (दाताळा, ता. मलकापूर, जि. बुलडाणा)</span>
-        </div>
+
+      <div class="auth-hint">
+        💡 एकदा पासवर्ड टाकल्यावर आपल्या फोनवर कायम सेव्ह राहील.
       </div>
     </div>
-
-    <!-- 2. शिक्षण, नोकरी व करिअर -->
-    <div class="info-card">
-      <div class="card-head">
-        <span class="card-head-icon">🎓</span>
-        <h3 class="card-head-title">शिक्षण, नोकरी व करिअर</h3>
-      </div>
-      <div class="info-grid">
-        <div class="info-item info-full">
-          <span class="info-lbl">शिक्षण (Education):</span>
-          <span class="info-val" style="font-size:15px; color:#701a75;">B.E. Mechanical (अभियांत्रिकी पदवी)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">नोकरी व हुद्दा (Designation):</span>
-          <span class="info-val">Senior QA Engineer (वरिष्ठ गुणवत्ता विश्लेषक)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">कंपनीचे नाव (Company):</span>
-          <span class="info-val">Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">वार्षिक पॅकेज (Salary):</span>
-          <span class="info-val" style="color:#15803d; font-size:15px;">रु. ७.८ लाख वार्षिक (7.8 LPA)</span>
-        </div>
-        <div class="info-item">
-          <span class="info-lbl">सध्याचे वास्तव्य:</span>
-          <span class="info-val">पुणे (हल्ली मुक्काम)</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. कौटुंबिक माहिती व संपत्ती -->
-    <div class="info-card">
-      <div class="card-head">
-        <span class="card-head-icon">👨‍👩‍👧‍👦</span>
-        <h3 class="card-head-title">कौटुंबिक माहिती व संपत्ती</h3>
-      </div>
-      <div class="info-grid">
-        <div class="info-item info-full">
-          <span class="info-lbl">वडिलांचे नाव:</span>
-          <span class="info-val">कै. अनिल पुंजाजी खर्चे</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">आईचे नाव:</span>
-          <span class="info-val">श्रीमती अनिता अनिल खर्चे (गृहिणी)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">बहिणी:</span>
-          <span class="info-val">२ बहिणी (दोन्ही सुविद्य व विवाहित)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">शेती व संपत्ती:</span>
-          <span class="info-val">५.५ एकर बागायती शेती (शेलगाव बाजार)</span>
-        </div>
-        <div class="info-item info-full">
-          <span class="info-lbl">मूळगाव:</span>
-          <span class="info-val">शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. कुटुंबातील संपर्क व्यक्ती -->
-    <div class="info-card">
-      <div class="card-head">
-        <span class="card-head-icon">📞</span>
-        <h3 class="card-head-title">कुटुंबातील ज्येष्ठ संपर्क व्यक्ती</h3>
-      </div>
-      <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px;">
-        कृपया अधिक माहितीसाठी खालीलपैकी कोणत्याही संपर्क क्रमांकावर कॉल किंवा WhatsApp करू शकता:
-      </p>
-
-      <!-- Elder 1 -->
-      <div class="elder-contact-box">
-        <div class="elder-info">
-          <div class="elder-name">श्री. विजय पुंजाजी खर्चे</div>
-          <div class="elder-relation">काका • शेलगाव बाजार • मो. ९४२०५३९३९६</div>
-        </div>
-        <div class="elder-btns">
-          <a href="tel:9420539396" class="btn-call">📞 कॉल</a>
-          <a href="https://api.whatsapp.com/send/?phone=919420539396&text=सस्नेह%20नमस्कार%20विजयजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-wa" target="_blank">💬 WA</a>
-        </div>
-      </div>
-
-      <!-- Elder 2 -->
-      <div class="elder-contact-box">
-        <div class="elder-info">
-          <div class="elder-name">श्री. गजानन नरहरी खर्चे</div>
-          <div class="elder-relation">काका • शेलगाव बाजार • मो. ९४२२१५२२३१</div>
-        </div>
-        <div class="elder-btns">
-          <a href="tel:9422152231" class="btn-call">📞 कॉल</a>
-          <a href="https://api.whatsapp.com/send/?phone=919422152231&text=सस्नेह%20नमस्कार%20गजाननजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-wa" target="_blank">💬 WA</a>
-        </div>
-      </div>
-
-      <!-- Elder 3 -->
-      <div class="elder-contact-box">
-        <div class="elder-info">
-          <div class="elder-name">श्री. महेंद्र प्रल्हाद पाटील</div>
-          <div class="elder-relation">नातेवाईक • मलकापूर • मो. ९९२१६३९८७२</div>
-        </div>
-        <div class="elder-btns">
-          <a href="tel:9921639872" class="btn-call">📞 कॉल</a>
-          <a href="https://api.whatsapp.com/send/?phone=919921639872&text=सस्नेह%20नमस्कार%20महेंद्रजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-wa" target="_blank">💬 WA</a>
-        </div>
-      </div>
-
-      <!-- Elder 4 -->
-      <div class="elder-contact-box">
-        <div class="elder-info">
-          <div class="elder-name">श्री. उमेश एकनाथ फेंगडे</div>
-          <div class="elder-relation">मेव्हणे • वाडी-पोफळी • मो. ९६०४४५८०१५</div>
-        </div>
-        <div class="elder-btns">
-          <a href="tel:9604458015" class="btn-call">📞 कॉल</a>
-          <a href="https://api.whatsapp.com/send/?phone=919604458015&text=सस्नेह%20नमस्कार%20उमेशजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-wa" target="_blank">💬 WA</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. मूळ हस्तलिखित / मुद्रित बायोडाटा पत्रिका फोटो -->
-    <div class="photo-preview-card">
-      <div class="card-head" style="justify-content: center;">
-        <span class="card-head-icon">🖼️</span>
-        <h3 class="card-head-title">मूळ बायोडाटा पत्रिका (फोटो)</h3>
-      </div>
-      <img src="./shubham_kharche_biodata.jpg" alt="शुभम खर्चे बायोडाटा पत्रिका" class="biodata-img" onclick="openFullImg()"/>
-      <div class="img-note">👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा</div>
-      <div style="margin-top:10px;">
-        <a href="./shubham_kharche_biodata.jpg" download="Shubham_Kharche_Biodata.jpg" class="btn-call" style="background:#475569; padding:8px 16px; font-size:13px;">
-          📥 मूळ बायोडाटा फोटो डाऊनलोड करा
-        </a>
-      </div>
-    </div>
-
-    <!-- Footer Note -->
-    <div style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 10px 0 20px;">
-      आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील चर्चेसाठी वर दिलेल्या संपर्क क्रमांकावर कॉल अथवा WhatsApp करावा, ही नम्र विनंती.<br/>
-      <strong>— खर्चे परिवार, शेलगाव बाजार</strong>
-    </div>
-
   </div>
 
-  <!-- Mobile Sticky Action Footer -->
-  <div class="sticky-bottom-bar">
-    <a href="https://api.whatsapp.com/send/?phone=919420539396&text=सस्नेह%20नमस्कार,%20आम्ही%20चि.%20शुभम%20खर्चे%20यांचा%20बायोडाटा%20पाहिला.%20आम्हाला%20पुढील%20चर्चा%20करायची%20आहे." class="btn-sticky-primary" target="_blank">
-      💬 WhatsApp वर बोला
-    </a>
-    <a href="tel:9420539396" class="btn-sticky-secondary">
-      📞 थेट कॉल करा
-    </a>
-    <button type="button" class="btn-sticky-share" onclick="shareProfile()" title="ही लिंक शेअर करा">
-      🔗 शेअर
-    </button>
+  <!-- Main Profile Content (Visible once unlocked) -->
+  <div id="profileContent" style="display:none;">
+
+    <!-- Top Banner -->
+    <header class="header-banner">
+      <div class="dev-ganesh">॥ श्री गणेशाय नमः ॥</div>
+      <h1 class="main-title">विवाह प्रस्ताव</h1>
+      <div class="sub-title">खर्चे परिवार (पुणे / शेलगाव बाजार)</div>
+    </header>
+
+    <div class="container">
+
+      <!-- Hero Summary Card -->
+      <div class="hero-card">
+        <div class="hero-avatar">🤵</div>
+        <h2 class="hero-name">चि. शुभम अनिल खर्चे</h2>
+        <div class="hero-role">B.E. Mechanical • Senior QA Engineer, Pune</div>
+
+        <div class="hero-tags">
+          <span class="hero-pill highlight">🎂 २५/०८/१९९६ (२९ वर्षे)</span>
+          <span class="hero-pill">📏 उंची: ५' ७"</span>
+          <span class="hero-pill">🩸 रक्तगट: B+ve</span>
+          <span class="hero-pill primary">💰 वार्षिक उत्पन्न: ७.८ लाख</span>
+        </div>
+      </div>
+
+      <!-- 1. वैयक्तिक व पत्रिका माहिती -->
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-icon">📋</span>
+          <h3 class="section-title">वैयक्तिक व जन्मपत्रिका माहिती</h3>
+        </div>
+        <table class="info-table">
+          <tr>
+            <td class="col-lbl">संपूर्ण नाव</td>
+            <td class="col-val">चि. शुभम अनिल खर्चे</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">जन्मतारीख व वेळ</td>
+            <td class="col-val">२५ ऑगस्ट १९९६ (सकाळी ११:५६ वा.)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">जन्म ठिकाण</td>
+            <td class="col-val">शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">उंची व वर्ण</td>
+            <td class="col-val">५ फूट ७ इंच • गोरा</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">गोत्र</td>
+            <td class="col-val" style="color:var(--primary); font-size:14.5px;">वशिष्ठ</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">मामांचे कुळ (मामकुळ)</td>
+            <td class="col-val">चोपडे (रा. दाताळा, ता. मलकापूर)</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 2. शिक्षण, नोकरी व करिअर -->
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-icon">🎓</span>
+          <h3 class="section-title">शिक्षण, नोकरी व करिअर</h3>
+        </div>
+        <table class="info-table">
+          <tr>
+            <td class="col-lbl">शिक्षण</td>
+            <td class="col-val" style="color:#701a75;">B.E. Mechanical (अभियांत्रिकी पदवी)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">हुद्दा (Role)</td>
+            <td class="col-val">Senior QA Engineer</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">कंपनी (Company)</td>
+            <td class="col-val">Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">वार्षिक उत्पन्न</td>
+            <td class="col-val" style="color:#15803d; font-size:14.5px;">रु. ७.८ लाख वार्षिक (7.8 LPA)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">सध्याचे वास्तव्य</td>
+            <td class="col-val">पुणे (हल्ली मुक्काम)</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 3. कौटुंबिक माहिती व शेती -->
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-icon">👨‍👩‍👧‍👦</span>
+          <h3 class="section-title">कौटुंबिक माहिती व शेती</h3>
+        </div>
+        <table class="info-table">
+          <tr>
+            <td class="col-lbl">वडिलांचे नाव</td>
+            <td class="col-val">कै. अनिल पुंजाजी खर्चे</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">आईचे नाव</td>
+            <td class="col-val">श्रीमती अनिता अनिल खर्चे (गृहिणी)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">बहिणी</td>
+            <td class="col-val">२ बहिणी (दोन्ही सुविद्य व विवाहित)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">शेती व संपत्ती</td>
+            <td class="col-val">५.५ एकर बागायती शेती (शेलगाव बाजार)</td>
+          </tr>
+          <tr>
+            <td class="col-lbl">मूळगाव</td>
+            <td class="col-val">शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 4. कुटुंबातील संपर्क व्यक्ती -->
+      <div class="section-card">
+        <div class="section-header">
+          <span class="section-icon">📞</span>
+          <h3 class="section-title">कुटुंबातील ज्येष्ठ संपर्क व्यक्ती</h3>
+        </div>
+        <div class="contacts-list">
+          
+          <!-- Elder 1 -->
+          <div class="elder-row">
+            <div class="elder-info">
+              <div class="elder-name">श्री. विजय पुंजाजी खर्चे</div>
+              <div class="elder-sub">काका • शेलगाव बाजार • मो. ९४२०५३९३९६</div>
+            </div>
+            <div class="elder-actions">
+              <a href="tel:9420539396" class="btn-action-call">📞 कॉल</a>
+              <a href="https://api.whatsapp.com/send/?phone=919420539396&text=सस्नेह%20नमस्कार%20विजयजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-action-wa" target="_blank">💬 WA</a>
+            </div>
+          </div>
+
+          <!-- Elder 2 -->
+          <div class="elder-row">
+            <div class="elder-info">
+              <div class="elder-name">श्री. गजानन नरहरी खर्चे</div>
+              <div class="elder-sub">काका • शेलगाव बाजार • मो. ९४२२१५२२३१</div>
+            </div>
+            <div class="elder-actions">
+              <a href="tel:9422152231" class="btn-action-call">📞 कॉल</a>
+              <a href="https://api.whatsapp.com/send/?phone=919422152231&text=सस्नेह%20नमस्कार%20गजाननजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-action-wa" target="_blank">💬 WA</a>
+            </div>
+          </div>
+
+          <!-- Elder 3 -->
+          <div class="elder-row">
+            <div class="elder-info">
+              <div class="elder-name">श्री. महेंद्र प्रल्हाद पाटील</div>
+              <div class="elder-sub">नातेवाईक • मलकापूर • मो. ९९२१६३९८७२</div>
+            </div>
+            <div class="elder-actions">
+              <a href="tel:9921639872" class="btn-action-call">📞 कॉल</a>
+              <a href="https://api.whatsapp.com/send/?phone=919921639872&text=सस्नेह%20नमस्कार%20महेंद्रजी,%20चि.%20शुभम%20खर्चे%20यांच्या%20विवाह%20प्रस्तावासंदर्भात%20संपर्क%20करत%20आहोत." class="btn-action-wa" target="_blank">💬 WA</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 5. मूळ बायोडाटा पत्रिका फोटो -->
+      <div class="photo-card">
+        <div style="font-size:15px; font-weight:800; color:var(--primary); margin-bottom:8px;">
+          🖼️ मूळ बायोडाटा पत्रिका
+        </div>
+        <img 
+          src="./shubham_kharche_biodata.jpg" 
+          alt="शुभम खर्चे बायोडाटा पत्रिका" 
+          class="biodata-thumbnail" 
+          onclick="openFullImg()"
+        />
+        <div class="tap-hint">👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा</div>
+        <div>
+          <a href="./shubham_kharche_biodata.jpg" download="Shubham_Kharche_Biodata.jpg" class="btn-download-img">
+            📥 बायोडाटा फोटो सेव्ह करा
+          </a>
+        </div>
+      </div>
+
+      <!-- Closing Note -->
+      <div class="closing-box">
+        आपणास स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी वर दिलेल्या संपर्क क्रमांकावर कॉल अथवा WhatsApp करावा, ही नम्र विनंती.<br/>
+        <strong>— खर्चे परिवार, शेलगाव बाजार</strong>
+      </div>
+
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="sticky-bar">
+      <a href="https://api.whatsapp.com/send/?phone=919420539396&text=सस्नेह%20नमस्कार,%20आम्ही%20चि.%20शुभम%20खर्चे%20यांचा%20बायोडाटा%20पाहिला.%20आम्हाला%20पुढील%20चर्चा%20करायची%20आहे." class="sticky-btn-wa" target="_blank">
+        💬 WhatsApp वर बोला
+      </a>
+      <a href="tel:9420539396" class="sticky-btn-call">
+        📞 थेट कॉल करा
+      </a>
+      <button type="button" class="sticky-btn-share" onclick="shareProfile()" title="शेअर करा">
+        🔗 शेअर
+      </button>
+    </div>
+
   </div>
 
   <!-- Fullscreen Image Modal -->
@@ -628,6 +757,66 @@
   </div>
 
   <script>
+    const PROFILE_PASS = '258';
+    const AUTH_KEY = 'anubandh_profile_auth';
+
+    // Verify authentication from localStorage or URL query param
+    function checkAuth() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryPass = urlParams.get('pass') || urlParams.get('p');
+        
+        if (queryPass === PROFILE_PASS) {
+          localStorage.setItem(AUTH_KEY, PROFILE_PASS);
+        }
+
+        const saved = localStorage.getItem(AUTH_KEY);
+        if (saved === PROFILE_PASS) {
+          document.getElementById('authGate').style.display = 'none';
+          document.getElementById('profileContent').style.display = 'block';
+          return true;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      document.getElementById('authGate').style.display = 'flex';
+      document.getElementById('profileContent').style.display = 'none';
+      const input = document.getElementById('passInput');
+      if (input) input.focus();
+      return false;
+    }
+
+    function verifyPassword() {
+      const inputEl = document.getElementById('passInput');
+      const val = (inputEl.value || '').trim();
+      const errEl = document.getElementById('passError');
+
+      if (val === PROFILE_PASS) {
+        try {
+          localStorage.setItem(AUTH_KEY, PROFILE_PASS);
+        } catch (e) {}
+        errEl.style.display = 'none';
+        document.getElementById('authGate').style.display = 'none';
+        document.getElementById('profileContent').style.display = 'block';
+      } else {
+        errEl.style.display = 'block';
+        inputEl.value = '';
+        inputEl.focus();
+      }
+    }
+
+    // Allow Enter key to submit password
+    document.getElementById('passInput').addEventListener('keyup', function(e) {
+      if (e.key === 'Enter') {
+        verifyPassword();
+      }
+    });
+
+    // Run auth check on load
+    window.addEventListener('DOMContentLoaded', checkAuth);
+
+    // Image Zoom Modal
     function openFullImg() {
       document.getElementById('fullImgModal').classList.add('open');
     }
@@ -635,17 +824,18 @@
       document.getElementById('fullImgModal').classList.remove('open');
     }
 
+    // Share Profile
     function shareProfile() {
       const shareData = {
         title: 'चि. शुभम अनिल खर्चे | विवाह प्रस्ताव',
-        text: 'चि. शुभम अनिल खर्चे (B.E. Mechanical, Sr. QA Engineer, Pune) यांचा सविस्तर विवाह प्रस्ताव पहा:',
-        url: window.location.href
+        text: 'चि. शुभम अनिल खर्चे (B.E. Mechanical, Senior QA Engineer, Pune) यांचा विवाह प्रस्ताव पहा:',
+        url: window.location.href.split('?')[0] + '?pass=' + PROFILE_PASS
       };
       if (navigator.share) {
         navigator.share(shareData).catch(() => {});
       } else {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          alert('बायोडाटा लिंक कॉपी झाली आहे! आपण कोणालाही पाठवू शकता.');
+        navigator.clipboard.writeText(shareData.url).then(() => {
+          alert('बायोडाटा लिंक कॉपी केली आहे! आपण कोणालाही पाठवू शकता.');
         });
       }
     }

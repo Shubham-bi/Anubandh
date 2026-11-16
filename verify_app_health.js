@@ -154,6 +154,19 @@ try {
   assert(false, `sw.js error: ${e.message}`);
 }
 
+// 5. Validate Bride Family Profile Security & Content
+try {
+  const bioCode = fs.readFileSync(path.join(repoDir, 'biodata.html'), 'utf8');
+  assert(bioCode.includes("PROFILE_PASS = '258'"), "biodata.html enforces password '258'");
+  assert(bioCode.includes('anubandh_profile_auth'), "biodata.html uses localStorage for persistent login");
+  assert(bioCode.includes('shubham_kharche_biodata.jpg'), "biodata.html links to original biodata photo");
+  
+  const shubhamCode = fs.readFileSync(path.join(repoDir, 'shubham-kharche.html'), 'utf8');
+  assert(shubhamCode.includes("PROFILE_PASS = '258'"), "shubham-kharche.html enforces password '258'");
+} catch(e) {
+  assert(false, `biodata profile verification error: ${e.message}`);
+}
+
 console.log(`\n=== SUMMARY: ${passCount} PASSED, ${failCount} FAILED ===`);
 if (failCount === 0) {
   console.log('🎉 ALL SYSTEMS OPERATIONAL AND ERROR-FREE!');
