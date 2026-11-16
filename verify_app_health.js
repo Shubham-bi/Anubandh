@@ -219,6 +219,10 @@ try {
   assert(indexCode.includes('track-cand-summary') && indexCode.includes('phone-touch-row'), "index.html defines track-cand-summary and phone-touch-row CSS");
   assert(indexCode.includes('mCandAgeBadge') && indexCode.includes('mCandDob'), "index.html trackModal displays candidate age and birth info");
   assert(indexCode.includes('quickContactChips') && indexCode.includes('selectTrackContact'), "index.html trackModal provides quick contact chips");
+
+  // Phone Action Modal (संपर्क पर्याय निवडा) Contact Person Name assertions
+  assert(indexCode.includes('phoneModalContactName') && indexCode.includes('phone-modal-contact-name'), "index.html phone action modal defines phoneModalContactName element and CSS");
+  assert(indexCode.includes('contactPersonName') && indexCode.includes('contactName'), "index.html passes and binds contact person name in openPhoneActionPrompt");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

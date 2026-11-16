@@ -1114,6 +1114,19 @@
       color: #64748b;
       margin-top: 2px;
     }
+    .phone-modal-contact-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
     .phone-modal-number {
       font-size: 21px;
       font-weight: 800;
@@ -3574,10 +3587,21 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     // Active Phone Action state
     let activePhoneAction = null;
 
-    function openPhoneActionPrompt(cleanDigits, displayPhone, candName, srNo, roleName) {
-      activePhoneAction = { cleanDigits, displayPhone, candName, srNo, roleName };
+    function openPhoneActionPrompt(cleanDigits, displayPhone, candName, srNo, roleName, contactPersonName) {
+      activePhoneAction = { cleanDigits, displayPhone, candName, srNo, roleName, contactPersonName };
       
       document.getElementById('phoneModalSubtitle').textContent = `${candName} (अ.क्र. ${srNo}) • ${roleName || 'पालक'}`;
+      
+      const nameEl = document.getElementById('phoneModalContactName');
+      if (nameEl) {
+        if (contactPersonName && contactPersonName !== '-' && contactPersonName !== 'फोन क्रमांक') {
+          nameEl.innerHTML = `👤 <strong>${contactPersonName}</strong>`;
+          nameEl.style.display = 'inline-flex';
+        } else {
+          nameEl.style.display = 'none';
+        }
+      }
+
       document.getElementById('phoneModalDisplayNumber').textContent = `📞 ${displayPhone}`;
       document.getElementById('phoneModalCallBtn').href = `tel:${cleanDigits}`;
 
@@ -3635,6 +3659,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
         const contactSections = parseContactSections(c.contact, c.phones);
         const contactRowsHtml = contactSections.map(cs => {
+          const contactName = (cs.namePart || cs.info || '').replace(/<[^>]*>/g, '').trim().replace(/'/g, "\\'");
           return `
             <div class="contact-table-row">
               <div class="contact-row-left">
@@ -3643,7 +3668,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
               <div class="contact-row-right">
                 ${cs.phone ? `
-                  <button type="button" class="phone-chip-single" onclick="openPhoneActionPrompt('${cs.phone.clean}', '${cs.phone.display}', '${escapedName}', '${c.sr}', '${cs.role}')" title="कॉल किंवा WhatsApp पर्याय">
+                  <button type="button" class="phone-chip-single" onclick="openPhoneActionPrompt('${cs.phone.clean}', '${cs.phone.display}', '${escapedName}', '${c.sr}', '${cs.role}', '${contactName}')" title="कॉल किंवा WhatsApp पर्याय">
                     📞 ${cs.phone.display}
                   </button>
                 ` : '<span style="font-size:11px; color:#94a3b8;">फोन नाही</span>'}
@@ -3751,16 +3776,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const logCount = (c.logs || []).length;
         const escapedName = c.name.replace(/'/g, "\'");
 
-        const phoneButtons = (c.phones || []).map(p => {
-          const cleanP = toEnglishDigits(p);
+        const contactSections = parseContactSections(c.contact, c.phones);
+        const phoneButtons = contactSections.filter(cs => cs.phone).map(cs => {
+          const contactName = (cs.namePart || cs.info || '').replace(/<[^>]*>/g, '').trim().replace(/'/g, "\\'");
           return `
             <div style="margin-bottom:4px;">
-              <button type="button" class="phone-chip-single" style="font-size:12px; padding:4px 8px;" onclick="openPhoneActionPrompt('${cleanP}', '${p}', '${escapedName}', '${c.sr}', 'पालक')" title="कॉल किंवा WhatsApp">
-                📞 ${p}
+              <button type="button" class="phone-chip-single" style="font-size:12px; padding:4px 8px;" onclick="openPhoneActionPrompt('${cs.phone.clean}', '${cs.phone.display}', '${escapedName}', '${c.sr}', '${cs.role}', '${contactName}')" title="${cs.role}: ${contactName} - कॉल किंवा WhatsApp">
+                📞 ${cs.phone.display}
               </button>
             </div>
           `;
-        }).join('');
+        }).join('') || '<span style="font-size:11px; color:#94a3b8;">-</span>';
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -4296,6 +4322,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         <div class="phone-modal-icon">📱</div>
         <h3 class="phone-modal-title">संपर्क पर्याय निवडा</h3>
         <div id="phoneModalSubtitle" class="phone-modal-subtitle">पालक किंवा नातेवाईक</div>
+        <div id="phoneModalContactName" class="phone-modal-contact-name" style="display:none;"></div>
         <div id="phoneModalDisplayNumber" class="phone-modal-number">📞 ----------</div>
       </div>
       
