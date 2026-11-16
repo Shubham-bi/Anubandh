@@ -1391,38 +1391,22 @@
 
 आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.
 
-आमच्या मुलाचा (शुभम खर्चे) सविस्तर बायोडाटा खालीलप्रमाणे आहे:
-━━━━━━━━━━━━━━━━━━━━
-॥ श्री गणेशाय नमः ॥
-*वैयक्तिक माहिती:*
-• नाव: ${waSettings.groomName}
-• जन्मनाव: ${waSettings.groomBirthName}
-• जन्म तारीख: ${waSettings.groomDob}
-• जन्म वेळ: ${waSettings.groomTime}
-• जन्म ठिकाण: ${waSettings.groomPlace}
-• गोत्र: ${waSettings.groomGotra}
-• वर्ण व रक्तगट: ${waSettings.groomComplexionBlood}
-• शिक्षण: ${waSettings.groomEdu}
-• नोकरी: ${waSettings.groomJob}
-• कंपनी / शहर: ${waSettings.groomCompany}
-• वार्षिक उत्पन्न: ${waSettings.groomSalary}
+आमच्या मुलाचा (${waSettings.groomName || 'शुभम अनिल खर्चे'}) सविस्तर बायोडाटा फोटो सोबत जोडत आहोत:
+📷 बायोडाटा फोटो पहा:
+https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
-*कौटुंबिक माहिती:*
-• वडिलांचे नाव: ${waSettings.groomFather}
-• आईचे नाव: ${waSettings.groomMother}
-• शेती / व्यवसाय: ${waSettings.groomLand}
-• भावंडे: ${waSettings.groomSiblings}
-• मामकुळ: ${waSettings.groomMamkul}
+*थोडक्यात माहिती:*
+• नाव: ${waSettings.groomName || 'शुभम अनिल खर्चे'}
+• शिक्षण: ${waSettings.groomEdu || 'B.E. Mechanical'}
+• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune'}
+• वार्षिक पॅकेज: ${waSettings.groomSalary || '7.8 LPA'}
+• जन्म तारीख: ${waSettings.groomDob || '२५/०८/१९९६'}
+• गोत्र: ${waSettings.groomGotra || 'वशिष्ठ'} | रक्तगट: B+ve
 
-*संपर्क क्रमांक:*
-${waSettings.groomContacts}
-━━━━━━━━━━━━━━━━━━━━
-${waSettings.photoNote}
-
-आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील चर्चेसाठी संपर्क करावा किंवा आपला अनुकूल प्रतिसाद कळवावा, ही नम्र विनंती.
+आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील चर्चेसाठी संपर्क करावा, ही नम्र विनंती.
 
 धन्यवाद! 🙏
-खर्चे परिवार`;
+खर्चे परिवार (मो. 9420539396 / 9422152231)`;
     }
 
     // Robust digit converter (handles Devanagari ०-९ and English 0-9)
