@@ -212,7 +212,8 @@ try {
   assert(!bioCode.includes('class="sticky-btn-call"') && !bioCode.includes('class="sticky-btn-wa"'), "biodata.html has removed bottom call and whatsapp direct chat options");
   assert(shubhamCode.includes('shareProfileOnWhatsApp') && shubhamCode.includes('copyHyperlink'), "shubham-kharche.html has WhatsApp share and hyperlink copy options");
   assert(indexCode.includes('shareProfileOnWhatsApp') && indexCode.includes('copyProfileHyperlink'), "index.html provides options to share profile as Shubham_Kharche");
-  assert(indexCode.includes('[Shubham_Kharche]('), "index.html WhatsApp message formats profile link as [Shubham_Kharche]");
+  assert(indexCode.includes('Shubham_Kharche'), "index.html WhatsApp message formats profile link with Shubham_Kharche");
+  assert(fs.existsSync(path.join(repoDir, 'Shubham_Kharche.html')), "Shubham_Kharche.html vanity route exists");
 
   // Track Modal (संभाषण नोंद) Enhanced Screen assertions
   assert(indexCode.includes('track-cand-summary') && indexCode.includes('phone-touch-row'), "index.html defines track-cand-summary and phone-touch-row CSS");

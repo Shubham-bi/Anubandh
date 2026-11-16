@@ -2374,8 +2374,8 @@
 आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.
 
 आमच्या मुलाचा (${waSettings.groomName || 'शुभम अनिल खर्चे'}) सविस्तर विवाह प्रस्ताव खालील लिंकवर पाहू शकता:
-🌐 सविस्तर माहिती व प्रोफाईल:
-[Shubham_Kharche](https://shubham-bi.github.io/Anubandh/biodata.html)
+🌐 सविस्तर माहिती व प्रोफाईल वेबपेज:
+👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche
 
 📷 बायोडाटा पत्रिका फोटो:
 https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
@@ -2916,19 +2916,18 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     const PROFILE_SHARE_NAME = 'Shubham_Kharche';
-    const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
+    const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
 
     function shareProfileOnWhatsApp() {
-      // Hyperlink formatted message: [Shubham_Kharche](URL)
-      const text = `[${PROFILE_SHARE_NAME}](${PROFILE_SHARE_URL})`;
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      const msg = `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव*\n(B.E. Mechanical • Sr. QA Engineer, Pune)\n\n🌐 सविस्तर माहिती व प्रोफाईल वेबपेज:\n👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche`;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank');
     }
 
     function copyProfileHyperlink() {
       if (navigator.clipboard && window.ClipboardItem) {
         const htmlBlob = new Blob([`<a href="${PROFILE_SHARE_URL}">${PROFILE_SHARE_NAME}</a>`], { type: 'text/html' });
-        const textBlob = new Blob([`[${PROFILE_SHARE_NAME}](${PROFILE_SHARE_URL})`], { type: 'text/plain' });
+        const textBlob = new Blob([PROFILE_SHARE_URL], { type: 'text/plain' });
         navigator.clipboard.write([
           new ClipboardItem({
             'text/html': htmlBlob,
@@ -2946,11 +2945,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     function fallbackCopyProfileLink() {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(`[${PROFILE_SHARE_NAME}](${PROFILE_SHARE_URL})`).then(() => {
-          showToast('✅ हायपरलिंक कॉपी केली! (Shubham_Kharche)');
+        navigator.clipboard.writeText(PROFILE_SHARE_URL).then(() => {
+          showToast('✅ लिंक कॉपी केली: Shubham_Kharche');
         });
       } else {
-        alert(`हायपरलिंक: [${PROFILE_SHARE_NAME}](${PROFILE_SHARE_URL})`);
+        alert(`लिंक: ${PROFILE_SHARE_URL}`);
       }
     }
 

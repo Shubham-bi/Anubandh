@@ -1157,19 +1157,18 @@
     }
 
     const SHARE_LINK_NAME = 'Shubham_Kharche';
-    const SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
+    const SHARE_URL = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
 
     function shareProfileOnWhatsApp() {
-      // Hyperlink formatted message: [Shubham_Kharche](URL)
-      const text = `[${SHARE_LINK_NAME}](${SHARE_URL})`;
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      const msg = `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव*\n(B.E. Mechanical • Sr. QA Engineer, Pune)\n\n🌐 सविस्तर माहिती व प्रोफाईल वेबपेज:\n👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche`;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank');
     }
 
     function copyHyperlink() {
       if (navigator.clipboard && window.ClipboardItem) {
         const htmlBlob = new Blob([`<a href="${SHARE_URL}">${SHARE_LINK_NAME}</a>`], { type: 'text/html' });
-        const textBlob = new Blob([`[${SHARE_LINK_NAME}](${SHARE_URL})`], { type: 'text/plain' });
+        const textBlob = new Blob([SHARE_URL], { type: 'text/plain' });
         navigator.clipboard.write([
           new ClipboardItem({
             'text/html': htmlBlob,
@@ -1187,11 +1186,11 @@
 
     function fallbackCopy() {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(`[${SHARE_LINK_NAME}](${SHARE_URL})`).then(() => {
-          showToast('✅ हायपरलिंक कॉपी केली! (Shubham_Kharche)');
+        navigator.clipboard.writeText(SHARE_URL).then(() => {
+          showToast('✅ लिंक कॉपी केली: Shubham_Kharche');
         });
       } else {
-        alert(`हायपरलिंक: [${SHARE_LINK_NAME}](${SHARE_URL})`);
+        alert(`लिंक: ${SHARE_URL}`);
       }
     }
 
