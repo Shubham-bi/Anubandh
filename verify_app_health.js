@@ -29,6 +29,7 @@ const requiredFiles = [
   'biodata.html',
   'shubham-kharche.html',
   'shubham_kharche_biodata.jpg',
+  'candidates.json',
   'server.js',
   'start-pwa.bat'
 ];
@@ -170,6 +171,11 @@ try {
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
   assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
+
+  // 7. Validate Standalone candidates.json
+  const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
+  const candJson = JSON.parse(candJsonRaw);
+  assert(Array.isArray(candJson) && candJson.length === 83, "candidates.json is valid array containing exactly 83 records");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
