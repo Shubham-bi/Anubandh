@@ -1813,25 +1813,21 @@ ${waSettings.photoNote}
       list.forEach(c => {
         const sInfo = STATUS_MAP[c.status || 'pending'] || STATUS_MAP.pending;
         const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
-        const logCount = (c.logs || []).length;
         const escapedName = c.name.replace(/'/g, "\'");
 
-        // Filter contact text so duplicate 'मो.' lines are omitted (phone numbers are shown on the right)
-        const cleanContactLines = (c.contact || '').split('\n').filter(l => !l.trim().startsWith('मो.')).join('\n');
-
-        const phoneListHtml = (c.phones || []).map(p => {
+        // Phone chips matching user screenshot: direct call on number + WhatsApp icon button
+        const phoneChipsHtml = (c.phones || []).map(p => {
           const cleanP = p.replace(/[^0-9]/g, '');
           return `
-            <div class="phone-chip-card">
-              <a href="tel:${cleanP}" class="phone-chip-num" title="थेट कॉल करा">📞 ${p}</a>
-              <div class="phone-chip-actions">
-                <a href="tel:${cleanP}" class="btn-chip-call" title="कॉल करा">
-                  📞 कॉल
-                </a>
-                <button type="button" class="btn-chip-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर सविस्तर बायोडाटा पाठवा">
-                  💬 WA
-                </button>
-              </div>
+            <div class="phone-chip-group">
+              <!-- Direct Phone Dial: NEVER redirects to WhatsApp -->
+              <a href="tel:${cleanP}" class="phone-chip" title="थेट फोन कॉल करा">
+                📞 ${p}
+              </a>
+              <!-- Dedicated WhatsApp button -->
+              <button type="button" class="phone-chip-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर बायोडाटा पाठवा">
+                💬
+              </button>
             </div>
           `;
         }).join('');
@@ -1840,11 +1836,11 @@ ${waSettings.photoNote}
         card.className = 'profile-card';
 
         card.innerHTML = `
-          <!-- Card Header matching user screenshot -->
+          <!-- Old Beloved Card Top Design -->
           <div class="card-top">
             <div>
               <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
-              <h2 class="cand-name">${c.name}</h2>
+              <h3 class="cand-name">${c.name}</h3>
               <div class="cand-village">📍 जन्म ठिकाण: <strong>${c.mulgaon || '-'}</strong></div>
             </div>
             <span class="status-badge ${sInfo.cls}">
@@ -1853,8 +1849,7 @@ ${waSettings.photoNote}
           </div>
 
           <div class="card-body">
-            
-            <!-- Top Specs Grid (Height, Complexion, Birth, Gotra, Mamkul) -->
+            <!-- 2x2 Clean Details Grid -->
             <div class="detail-grid">
               <div class="detail-item">
                 <span class="detail-lbl">उंची / वर्ण:</span>
@@ -1866,7 +1861,7 @@ ${waSettings.photoNote}
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">गोत्र:</span>
-                <span class="detail-val" style="color:var(--primary); font-weight:800;">${c.gotra || '-'}</span>
+                <span class="detail-val" style="color:var(--primary-dark); font-weight:700;">${c.gotra || '-'}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">मामकुळ:</span>
@@ -1874,40 +1869,18 @@ ${waSettings.photoNote}
               </div>
             </div>
 
-            <!-- Purple Box: Left = Education & Job, Right = Family, Blood Group & Expectations (Red Box 1 Filled) -->
-            <div class="edu-box-grid">
-              <div class="edu-box-col-left">
-                <div class="box-head-label" style="color:#a21caf;">🎓 शिक्षण व नोकरी:</div>
-                <div class="edu-job-text">${c.edu || '-'}</div>
-              </div>
-              <div class="edu-box-col-right">
-                <div class="box-head-label" style="color:#a21caf;">👨‍👩‍👧 कुटुंब व इतर:</div>
-                <div class="col-spec-row">
-                  <span class="spec-k">कुटुंब:</span>
-                  <span class="spec-v">${(c.fam || '-').replace(/\n/g, ', ')}</span>
-                </div>
-                <div class="col-spec-row">
-                  <span class="spec-k">रक्तगट:</span>
-                  <span class="spec-v" style="color:#b91c1c; font-weight:800;">${c.blood || '-'}</span>
-                </div>
-                <div class="col-spec-row">
-                  <span class="spec-k">अपेक्षा:</span>
-                  <span class="spec-v">${c.exp || 'अनुरूप'}</span>
-                </div>
-              </div>
+            <!-- Purple Box: Education & Career -->
+            <div class="edu-box">
+              <strong>🎓 शिक्षण व नोकरी:</strong>
+              <div>${c.edu || '-'}</div>
             </div>
 
-            <!-- Green Box: Left = Parents & Relatives info, Right = Phones with Call & WA buttons (Red Box 2 Filled) -->
-            <div class="contact-box-grid">
-              <div class="contact-box-col-left">
-                <div class="box-head-label" style="color:#166534;">👨‍👩‍👧‍👦 संपर्क व पालक:</div>
-                <div class="contact-address-text">${cleanContactLines || c.contact || '-'}</div>
-              </div>
-              <div class="contact-box-col-right">
-                <div class="box-head-label" style="color:#166534;">📞 थेट संपर्क:</div>
-                <div class="phones-col-wrap">
-                  ${phoneListHtml || '<div style="font-size:12px; color:var(--text-muted);">फोन उपलब्ध नाही</div>'}
-                </div>
+            <!-- Green Box: Parents & Contacts with Direct Call & WA chips -->
+            <div class="contact-box">
+              <strong>👨‍👩‍👧 संपर्क व पालक:</strong>
+              <div>${c.contact || '-'}</div>
+              <div class="phone-chips">
+                ${phoneChipsHtml || '<span style="font-size:12px; color:var(--text-muted);">फोन उपलब्ध नाही</span>'}
               </div>
             </div>
 
@@ -1917,17 +1890,17 @@ ${waSettings.photoNote}
                   <span>📝 शेवटचा संवाद (${lastLog.contactPerson || 'पालक'}):</span>
                   <span>${new Date(lastLog.timestamp).toLocaleDateString('mr-IN')}</span>
                 </div>
-                <div style="font-size:13px; color:#334155;">${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}</div>
-                ${lastLog.nextDate ? `<div style="font-weight:700; color:#b45309; margin-top:3px; font-size:12px;">⏰ पुढील कॉल: ${lastLog.nextDate}</div>` : ''}
+                <div>${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}</div>
+                ${lastLog.nextDate ? `<div style="font-weight:700; color:#b45309; margin-top:2px;">⏰ पुढील कॉल: ${lastLog.nextDate}</div>` : ''}
               </div>
             ` : ''}
 
           </div>
 
-          <!-- Bottom Action Button: Log Conversation and History -->
+          <!-- Bottom Full-Width Action Button -->
           <div class="card-footer">
-            <button class="btn-log-action" onclick="openTrackModal('${c.id}')">
-              ✍️ संभाषण नोंद व इतिहास (${logCount})
+            <button class="btn-track" onclick="openTrackModal('${c.id}')">
+              ✍️ संभाषण नोंद व इतिहास (${(c.logs || []).length})
             </button>
           </div>
         `;
