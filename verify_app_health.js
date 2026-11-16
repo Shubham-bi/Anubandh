@@ -227,6 +227,12 @@ try {
   // Admin Portal Full Page assertions
   assert(indexCode.includes('full-page-view'), "index.html adminSettingsModal has full-page-view class");
   assert(indexCode.includes('.modal-overlay.full-page-view'), "index.html defines .modal-overlay.full-page-view CSS for full page view");
+
+  // Shareable Profile CMS Mobile Responsiveness assertions
+  assert(indexCode.includes('cms-mobile-save-bar'), "index.html defines sticky floating save bar for mobile");
+  assert(indexCode.includes('cms-grid-2') && indexCode.includes('cms-row-item'), "index.html uses responsive grid and row classes for CMS");
+  assert(indexCode.includes('cms-contact-card') && indexCode.includes('cms-sec-head-main'), "index.html provides touch-friendly contact cards and section headers for CMS");
+  assert(indexCode.includes('@media (max-width: 640px)'), "index.html includes mobile media queries for CMS editor");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
