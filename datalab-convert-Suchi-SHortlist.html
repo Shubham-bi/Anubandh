@@ -348,177 +348,241 @@
     .status-followup { background: #fef3c7; color: #b45309; }
     .status-matched { background: #f3e8ff; color: #7e22ce; }
 
+    /* Card Header & Badges */
+    .cand-sr-badge {
+      background: #fce7f3;
+      color: #9d174d;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    .cand-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin: 2px 0;
+    }
+    .cand-village {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
     .card-body {
-      padding: 12px 16px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       flex: 1;
     }
 
-    /* Balanced Dual-Column Details Box: Comfortably utilizes Left & Right */
-    .dual-column-details {
+    /* Top Specs Grid */
+    .detail-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      width: 100%;
-    }
-    .detail-col {
+      gap: 8px 12px;
       background: #f8fafc;
-      border: 1px solid #f1f5f9;
-      border-radius: 10px;
       padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #f1f5f9;
+    }
+    .detail-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
+      gap: 1px;
     }
-    .col-title {
+    .detail-lbl {
       font-size: 12px;
-      font-weight: 800;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      border-bottom: 1.5px dashed #e2e8f0;
-      padding-bottom: 4px;
-      margin-bottom: 3px;
-    }
-    .item-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      align-items: baseline;
-      line-height: 1.4;
-    }
-    .item-lbl {
       color: var(--text-muted);
-      font-size: 12px;
-      flex-shrink: 0;
+      font-weight: 600;
     }
-    .item-val {
+    .detail-val {
+      font-size: 14px;
       font-weight: 700;
       color: #1e293b;
-      text-align: right;
+    }
+
+    /* Purple Box: 2-Column Grid filling Red Box 1 */
+    .edu-box-grid {
+      background: #fdf4ff;
+      border: 1px solid #f5d0fe;
+      border-left: 4px solid #c026d3;
+      border-radius: 4px 10px 10px 4px;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 10px;
+    }
+    .edu-box-col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .edu-box-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid #f0abfc;
+    }
+    .box-head-label {
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 2px;
+      letter-spacing: 0.2px;
+    }
+    .edu-job-text {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #701a75;
+      white-space: pre-line;
+      font-weight: 600;
+    }
+    .col-spec-row {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .spec-k {
+      color: #86198f;
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .spec-v {
+      color: #0f172a;
+      font-weight: 700;
       word-break: break-word;
     }
 
-    /* Contact Section with Clear Full-Width Action Rows */
-    .contact-card-section {
+    /* Green Box: 2-Column Grid filling Red Box 2 */
+    .contact-box-grid {
       background: #f0fdf4;
-      border-left: 4px solid #22c55e;
-      border-radius: 0 10px 10px 0;
-      padding: 10px 13px;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      border-radius: 4px 10px 10px 4px;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 10px;
+    }
+    .contact-box-col-left {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 3px;
     }
-    .guardian-text {
+    .contact-box-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .contact-address-text {
       font-size: 13px;
-      color: #14532d;
       line-height: 1.45;
+      color: #14532d;
+      white-space: pre-line;
       font-weight: 600;
     }
-    .phones-list-wrap {
+    .phones-col-wrap {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-top: 2px;
     }
-    .phone-touch-row {
+    .phone-chip-card {
       background: white;
-      border: 1.5px solid #bbf7d0;
+      border: 1.5px solid #86efac;
       border-radius: 8px;
-      padding: 6px 10px;
+      padding: 6px 8px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    /* Phone number link: triggers PHONE CALL ONLY, never WhatsApp */
-    .phone-dial-link {
-      font-size: 14.5px;
+    .phone-chip-num {
       font-weight: 800;
+      font-size: 13.5px;
       color: #0f172a;
       text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+    .phone-chip-actions {
       display: flex;
-      align-items: center;
-      gap: 5px;
-      letter-spacing: 0.2px;
+      gap: 4px;
     }
-    .phone-dial-link:active {
-      color: var(--call-blue);
-    }
-    .phone-actions-pair {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    /* Separate Call Button */
-    .btn-action-call {
-      background: var(--call-blue);
-      color: white;
-      border: none;
-      padding: 7px 12px;
-      border-radius: 7px;
-      font-size: 13px;
+    .btn-chip-call {
+      flex: 1;
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      padding: 4px 6px;
+      font-size: 11.5px;
       font-weight: 700;
+      text-align: center;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      line-height: 1;
+      justify-content: center;
+      gap: 2px;
     }
-    .btn-action-call:active {
-      background: var(--call-dark);
-    }
-    /* Separate WhatsApp Button */
-    .btn-action-wa {
-      background: var(--wa-green);
+    .btn-chip-call:active {
+      background: #0284c7;
       color: white;
-      border: none;
-      padding: 7px 12px;
-      border-radius: 7px;
-      font-size: 13px;
+    }
+    .btn-chip-wa {
+      flex: 1;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 4px 6px;
+      font-size: 11.5px;
       font-weight: 700;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      line-height: 1;
+      justify-content: center;
+      gap: 2px;
     }
-    .btn-action-wa:active {
-      background: var(--wa-dark);
+    .btn-chip-wa:active {
+      background: #16a34a;
+      color: white;
     }
 
-    /* Last Log Note */
-    .compact-last-log {
+    /* Last Log Box */
+    .last-log-box {
       background: #fffbeb;
-      border: 1px dashed #fcd34d;
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 12.5px;
-      color: #92400e;
+      border: 1px solid #fef3c7;
+      border-left: 3.5px solid #d97706;
+      border-radius: 6px;
+      padding: 7px 10px;
+    }
+    .last-log-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #b45309;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 2px;
     }
 
-    /* Card Bottom Action: Comfortable Touch Target */
+    /* Card Footer Action Button */
     .card-footer {
-      padding: 10px 16px 12px;
-      background: #fafafa;
-      border-top: 1px solid #f1f5f9;
+      padding: 0 14px 14px;
     }
     .btn-log-action {
       width: 100%;
-      background: var(--primary);
+      background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
       color: white;
       border: none;
-      padding: 11px 16px;
-      border-radius: 9px;
+      padding: 10px 14px;
+      border-radius: 10px;
       font-size: 14.5px;
       font-weight: 700;
       cursor: pointer;
@@ -526,9 +590,11 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 2px 6px rgba(190, 18, 60, 0.18);
+      box-shadow: 0 2px 6px rgba(190, 18, 60, 0.25);
     }
-    .btn-log-action:active { background: var(--primary-dark); }
+    .btn-log-action:active {
+      transform: scale(0.98);
+    }
 
     /* Table View */
     .table-container {
@@ -1321,7 +1387,7 @@
     }
 
     function buildWhatsAppText(candidateName, srNo) {
-      return `सस्नेह जय जिजाऊ / नमस्कार 🙏
+      return `सस्नेह नमस्कार 🙏
 
 आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.
 
@@ -1749,137 +1815,119 @@ ${waSettings.photoNote}
         const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
         const logCount = (c.logs || []).length;
         const escapedName = c.name.replace(/'/g, "\'");
-        const eduJobInfo = formatEduJob(c.edu);
 
-        const card = document.createElement('div');
-        card.className = 'profile-card';
+        // Filter contact text so duplicate 'मो.' lines are omitted (phone numbers are shown on the right)
+        const cleanContactLines = (c.contact || '').split('\n').filter(l => !l.trim().startsWith('मो.')).join('\n');
 
-        // Full Width Phone Action Rows with Both Distinct Buttons
         const phoneListHtml = (c.phones || []).map(p => {
           const cleanP = p.replace(/[^0-9]/g, '');
           return `
-            <div class="phone-touch-row">
-              <!-- Clicking phone number triggers PHONE CALL ONLY, never WhatsApp -->
-              <a href="tel:${cleanP}" class="phone-dial-link" title="थेट फोन कॉल करा">
-                📞 <strong>${p}</strong>
-              </a>
-              <div class="phone-actions-pair">
-                <!-- Separate Direct Call Button -->
-                <a href="tel:${cleanP}" class="btn-action-call" title="कॉल करा">
+            <div class="phone-chip-card">
+              <a href="tel:${cleanP}" class="phone-chip-num" title="थेट कॉल करा">📞 ${p}</a>
+              <div class="phone-chip-actions">
+                <a href="tel:${cleanP}" class="btn-chip-call" title="कॉल करा">
                   📞 कॉल
                 </a>
-                <!-- Separate Direct WhatsApp Button -->
-                <button type="button" class="btn-action-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर सविस्तर बायोडाटा पाठवा">
-                  💬 WhatsApp
+                <button type="button" class="btn-chip-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर सविस्तर बायोडाटा पाठवा">
+                  💬 WA
                 </button>
               </div>
             </div>
           `;
         }).join('');
 
+        const card = document.createElement('div');
+        card.className = 'profile-card';
+
         card.innerHTML = `
-          <!-- Card Top: Name on Left, Birth Place & Status on Right -->
+          <!-- Card Header matching user screenshot -->
           <div class="card-top">
-            <div class="cand-head-left">
-              <span class="cand-sr-badge">#${c.sr.replace(/\./g,'')}</span>
+            <div>
+              <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
               <h2 class="cand-name">${c.name}</h2>
+              <div class="cand-village">📍 जन्म ठिकाण: <strong>${c.mulgaon || '-'}</strong></div>
             </div>
-            <div class="cand-head-right">
-              <span class="cand-village-pill" title="जन्म ठिकाण">📍 ${c.mulgaon || '-'}</span>
-              <span class="status-badge ${sInfo.cls}">
-                ${sInfo.icon} ${sInfo.label}
-              </span>
-            </div>
+            <span class="status-badge ${sInfo.cls}">
+              ${sInfo.icon} ${sInfo.label}
+            </span>
           </div>
 
           <div class="card-body">
             
-            <!-- Dual-Column Balanced Grid: Left & Right filled with comfortable readable text -->
-            <div class="dual-column-details">
-              
-              <!-- Left Column: Birth & Horoscope Details -->
-              <div class="detail-col">
-                <div class="col-title">📋 जन्म व पत्रिका</div>
-                <div class="item-row">
-                  <span class="item-lbl">📏 उंची/वर्ण:</span>
-                  <span class="item-val">${c.height || '-'} • ${c.complexion || '-'}</span>
-                </div>
-                <div class="item-row">
-                  <span class="item-lbl">🩸 रक्तगट:</span>
-                  <span class="item-val" style="color:#b91c1c;">${c.blood || '-'}</span>
-                </div>
-                <div class="item-row">
-                  <span class="item-lbl">🏛️ गोत्र:</span>
-                  <span class="item-val" style="color:var(--primary);">${c.gotra || '-'}</span>
-                </div>
-                <div class="item-row">
-                  <span class="item-lbl">🌾 मामकुळ:</span>
-                  <span class="item-val">${c.mamkul || '-'}</span>
-                </div>
-                <div class="item-row">
-                  <span class="item-lbl">🎂 जन्म:</span>
-                  <span class="item-val">${c.date || '-'} (${c.time || '-'})</span>
-                </div>
+            <!-- Top Specs Grid (Height, Complexion, Birth, Gotra, Mamkul) -->
+            <div class="detail-grid">
+              <div class="detail-item">
+                <span class="detail-lbl">उंची / वर्ण:</span>
+                <span class="detail-val">${c.height || '-'} / ${c.complexion || '-'}</span>
               </div>
-
-              <!-- Right Column: Education, Career & Family (Fills the right space comfortably) -->
-              <div class="detail-col" style="background: #fdf4ff; border-color: #f5d0fe;">
-                <div class="col-title" style="color: #a21caf; border-color: #f0abfc;">🎓 शिक्षण व नोकरी</div>
-                <div class="item-row">
-                  <span class="item-lbl">शिक्षण:</span>
-                  <span class="item-val" style="color:#701a75;">${eduJobInfo.edu}</span>
-                </div>
-                ${eduJobInfo.job ? `
-                  <div class="item-row">
-                    <span class="item-lbl">नोकरी:</span>
-                    <span class="item-val" style="color:#701a75;">${eduJobInfo.job}</span>
-                  </div>
-                ` : ''}
-                ${eduJobInfo.income ? `
-                  <div class="item-row">
-                    <span class="item-lbl">उत्पन्न:</span>
-                    <span class="item-val" style="color:#15803d;">${eduJobInfo.income}</span>
-                  </div>
-                ` : ''}
-                ${c.fam ? `
-                  <div class="item-row">
-                    <span class="item-lbl">कुटुंब:</span>
-                    <span class="item-val">${c.fam.replace(/\n/g, ', ')}</span>
-                  </div>
-                ` : ''}
-                ${c.exp ? `
-                  <div class="item-row">
-                    <span class="item-lbl">अपेक्षा:</span>
-                    <span class="item-val">${c.exp}</span>
-                  </div>
-                ` : ''}
+              <div class="detail-item">
+                <span class="detail-lbl">जन्म तारीख / वेळ:</span>
+                <span class="detail-val">${c.date || '-'} (${c.time || '-'})</span>
               </div>
-
+              <div class="detail-item">
+                <span class="detail-lbl">गोत्र:</span>
+                <span class="detail-val" style="color:var(--primary); font-weight:800;">${c.gotra || '-'}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-lbl">मामकुळ:</span>
+                <span class="detail-val">${c.mamkul || '-'}</span>
+              </div>
             </div>
 
-            <!-- Full-Width Guardian & Contact Bar with Separate Call & WhatsApp Buttons -->
-            <div class="contact-card-section">
-              <div class="guardian-text">👨‍👩‍👧 <strong>पालक:</strong> ${(c.contact || '').split('मो.')[0].trim()}</div>
-              <div class="phones-list-wrap">
-                ${phoneListHtml}
+            <!-- Purple Box: Left = Education & Job, Right = Family, Blood Group & Expectations (Red Box 1 Filled) -->
+            <div class="edu-box-grid">
+              <div class="edu-box-col-left">
+                <div class="box-head-label" style="color:#a21caf;">🎓 शिक्षण व नोकरी:</div>
+                <div class="edu-job-text">${c.edu || '-'}</div>
+              </div>
+              <div class="edu-box-col-right">
+                <div class="box-head-label" style="color:#a21caf;">👨‍👩‍👧 कुटुंब व इतर:</div>
+                <div class="col-spec-row">
+                  <span class="spec-k">कुटुंब:</span>
+                  <span class="spec-v">${(c.fam || '-').replace(/\n/g, ', ')}</span>
+                </div>
+                <div class="col-spec-row">
+                  <span class="spec-k">रक्तगट:</span>
+                  <span class="spec-v" style="color:#b91c1c; font-weight:800;">${c.blood || '-'}</span>
+                </div>
+                <div class="col-spec-row">
+                  <span class="spec-k">अपेक्षा:</span>
+                  <span class="spec-v">${c.exp || 'अनुरूप'}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Green Box: Left = Parents & Relatives info, Right = Phones with Call & WA buttons (Red Box 2 Filled) -->
+            <div class="contact-box-grid">
+              <div class="contact-box-col-left">
+                <div class="box-head-label" style="color:#166534;">👨‍👩‍👧‍👦 संपर्क व पालक:</div>
+                <div class="contact-address-text">${cleanContactLines || c.contact || '-'}</div>
+              </div>
+              <div class="contact-box-col-right">
+                <div class="box-head-label" style="color:#166534;">📞 थेट संपर्क:</div>
+                <div class="phones-col-wrap">
+                  ${phoneListHtml || '<div style="font-size:12px; color:var(--text-muted);">फोन उपलब्ध नाही</div>'}
+                </div>
               </div>
             </div>
 
             ${lastLog ? `
-              <div class="compact-last-log">
-                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                  <strong>📝 संवाद:</strong> ${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}
+              <div class="last-log-box">
+                <div class="last-log-title">
+                  <span>📝 शेवटचा संवाद (${lastLog.contactPerson || 'पालक'}):</span>
+                  <span>${new Date(lastLog.timestamp).toLocaleDateString('mr-IN')}</span>
                 </div>
-                <span style="font-weight:700; flex-shrink:0;">${new Date(lastLog.timestamp).toLocaleDateString('mr-IN', {month:'numeric', day:'numeric'})}</span>
+                <div style="font-size:13px; color:#334155;">${lastLog.discussion || lastLog.additionalInfo || 'नोंद सेव्ह केली'}</div>
+                ${lastLog.nextDate ? `<div style="font-weight:700; color:#b45309; margin-top:3px; font-size:12px;">⏰ पुढील कॉल: ${lastLog.nextDate}</div>` : ''}
               </div>
             ` : ''}
 
           </div>
 
-          <!-- Single Prominent Touch Log Button -->
+          <!-- Bottom Action Button: Log Conversation and History -->
           <div class="card-footer">
             <button class="btn-log-action" onclick="openTrackModal('${c.id}')">
-              ✍️ काय बोलणे झाले? नोंद करा (${logCount})
+              ✍️ संभाषण नोंद व इतिहास (${logCount})
             </button>
           </div>
         `;
