@@ -1,9 +1,7 @@
-const CACHE_NAME = 'anubandh-v40';
+const CACHE_NAME = 'anubandh-v41';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './matrimonial-tracker-app.html',
-  './datalab-convert-Suchi-SHortlist.html',
   './biodata.html',
   './shubham-kharche.html',
   './Shubham_Kharche.html',

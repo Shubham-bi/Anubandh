@@ -21,8 +21,6 @@ function assert(condition, message) {
 const repoDir = 'd:/UBUNTU DATA/01_Experiments/SY_OCR';
 const requiredFiles = [
   'index.html',
-  'datalab-convert-Suchi-SHortlist.html',
-  'matrimonial-tracker-app.html',
   'manifest.json',
   'sw.js',
   'icon.svg',
@@ -253,10 +251,9 @@ try {
   assert(bioCode.includes('sec.hidden'), "biodata.html checks sec.hidden to hide/show sections dynamically");
   
   // Master file parity assertions
-  const trackerA = fs.readFileSync('index.html');
-  const trackerB = fs.readFileSync('datalab-convert-Suchi-SHortlist.html');
-  const trackerC = fs.readFileSync('matrimonial-tracker-app.html');
-  assert(trackerA.equals(trackerB) && trackerA.equals(trackerC), "Primary master index.html is 100% synchronized with datalab-convert-Suchi-SHortlist.html and matrimonial-tracker-app.html");
+  assert(indexCode.includes('<!DOCTYPE html>') && indexCode.includes('INITIAL_DATA'), "index.html serves as the standalone primary single-source PWA entry");
+  const currentSwCode = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
+  assert(!currentSwCode.includes('datalab-convert-Suchi-SHortlist.html') && !currentSwCode.includes('matrimonial-tracker-app.html'), "sw.js focuses on index.html and no longer caches redundant secondary files");
 
   const bioA = fs.readFileSync('biodata.html');
   const bioB = fs.readFileSync('shubham-kharche.html');

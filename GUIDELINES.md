@@ -9,9 +9,9 @@
 
 | फाईल | वर्णन व उद्देश |
 | :--- | :--- |
-| **`index.html`** | 🌐 **मुख्य वेब ॲप व GitHub Pages फाईल** (लाईव्ह URL: `https://shubham-bi.github.io/Anubandh/`). |
-| **`datalab-convert-Suchi-SHortlist.html`** | 📄 स्थानिक सिंगल HTML फाईल (इंटरनेट नसताना थेट डबल-क्लिक करून उघडता येते). |
-| **`matrimonial-tracker-app.html`** | 💻 स्टँडअलोन बॅकअप ॲप कॉपी. |
+| **`index.html`** | 🌐 **एकमेव Single Source of Truth व मुख्य वेब ॲप** (लाईव्ह URL: `https://shubham-bi.github.io/Anubandh/`). |
+| **`datalab-convert-Suchi-SHortlist.html`** | 📄 ऐतिहासिक बॅकअप फाईल (Single Source धोरणानुसार आता सक्रिय कोड किंवा कॅशमध्ये वापरली जात नाही). |
+| **`matrimonial-tracker-app.html`** | 💻 ऐतिहासिक बॅकअप फाईल. |
 | **`manifest.json`** | 📱 PWA (Progressive Web App) कॉन्फिगरेशन (नाव: अनुबंध, थीम: `#be123c`, आयकॉन्स). |
 | **`sw.js`** | ⚡ Service Worker (ऑफलाइन कॅशिंगसाठी; नेट नसतानाही ॲप चालू ठेवते). |
 | **`icon.svg`** | 🎨 अनुबंधचा अधिकृत सुवर्ण-कुंकुम आयकॉन (देवनागरी 'अ' व रेशीमगाठ). |
@@ -41,8 +41,9 @@
 - जेव्हा जेव्हा `index.html` मध्ये नवीन बदल केले जातील, तेव्हा **`sw.js`** मधील कॅशचे नाव (उदा. `v2` चे `v3`) बदलावे.
 - यामुळे वापरकर्त्याच्या मोबाईल ब्राऊझरला कळते की नवीन अपडेट आले आहे आणि जुनी कॅश न वापरता नवीन कोड लगेच लोड होतो.
 
-### नियम ५: तीनही HTML फाइल्स सिंक ठेवणे
-- कोणत्याही बदलांनंतर `index.html`, `datalab-convert-Suchi-SHortlist.html` आणि `matrimonial-tracker-app.html` हे तिन्ही एकसारखे अद्ययावत ठेवावेत.
+### नियम ५: `index.html` हाच एकमेव Single Source of Truth
+- सर्व नवीन फीचर्स, बग फिक्स आणि कोड बदल फक्त **`index.html`** मध्येच केले जातात.
+- जुन्या बॅकअप फाईल्स सुरक्षित ठेवल्या आहेत, परंतु ॲपचा मुख्य कोड व PWA कॅश आता पूर्णपणे `index.html` वर केंद्रित आहे.
 
 ---
 
