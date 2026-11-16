@@ -29,9 +29,10 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
-      --radius: 12px;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -40,22 +41,22 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Mangal", sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.45;
-      padding-bottom: 35px;
-      font-size: 14px;
+      line-height: 1.55;
+      padding-bottom: 45px;
+      font-size: 15px;
       width: 100%;
       overflow-x: hidden;
     }
 
-    /* Ultra-Compact Sticky App Header */
+    /* Clean Sticky Mobile Header */
     .portal-header {
       background: linear-gradient(135deg, #881337 0%, #be123c 60%, #e11d48 100%);
       color: white;
-      padding: 10px 14px;
+      padding: 13px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(190, 18, 60, 0.25);
+      box-shadow: 0 3px 12px rgba(190, 18, 60, 0.22);
     }
     .header-content {
       max-width: 1200px;
@@ -63,15 +64,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .header-brand {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
     .portal-emblem {
-      font-size: 20px;
+      font-size: 24px;
       line-height: 1;
     }
     .header-title-box {
@@ -79,117 +80,119 @@
       flex-direction: column;
     }
     .header-title {
-      font-size: 18px;
+      font-size: 21px;
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.2;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
     .header-title-en {
-      font-size: 12.5px;
+      font-size: 13.5px;
       opacity: 0.88;
       font-weight: 500;
     }
     .header-tagline {
-      font-size: 10.5px;
+      font-size: 11.5px;
       opacity: 0.92;
-      line-height: 1;
+      margin-top: 1px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 220px;
+      max-width: 250px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .hbtn-quick {
       background: #fef08a;
       color: #854d0e;
       border: none;
-      padding: 6px 11px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
     .hbtn-menu {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.35);
       color: white;
-      padding: 6px 11px;
-      border-radius: 8px;
-      font-size: 13.5px;
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
-    /* Container: Full Width Edge-to-Edge */
+    /* Container */
     .app-container {
       width: 100%;
       max-width: 1200px;
-      margin: 8px auto 0;
-      padding: 0 10px;
+      margin: 10px auto 0;
+      padding: 0 12px;
     }
 
-    /* Mobile Status Filter Pills Bar */
+    /* Status Filter Pills Bar (Thumb Scrollable) */
     .quick-status-scroll {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       overflow-x: auto;
-      padding: 2px 0 8px;
+      padding: 4px 2px 10px;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
     .quick-status-scroll::-webkit-scrollbar { display: none; }
     .status-pill {
       background: white;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       color: #334155;
-      padding: 6px 11px;
+      padding: 7px 13px;
       border-radius: 999px;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       flex-shrink: 0;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      box-shadow: var(--shadow-sm);
     }
     .status-pill.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(190, 18, 60, 0.25);
     }
     .pill-count {
       background: rgba(0, 0, 0, 0.08);
-      padding: 0 6px;
+      padding: 1px 7px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 11.5px;
     }
     .status-pill.active .pill-count {
       background: rgba(255, 255, 255, 0.28);
       color: white;
     }
 
-    /* Full-Width Search Row */
+    /* Full Width Search Row */
     .search-row {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       width: 100%;
     }
     .search-wrap {
@@ -200,27 +203,28 @@
     }
     .search-icon {
       position: absolute;
-      left: 11px;
-      font-size: 15px;
+      left: 13px;
+      font-size: 16px;
       color: var(--text-muted);
       pointer-events: none;
     }
     .search-input {
       width: 100%;
-      height: 38px;
-      padding: 6px 32px 6px 34px;
-      border-radius: 9px;
+      height: 42px;
+      padding: 8px 36px 8px 38px;
+      border-radius: 10px;
       border: 1.5px solid var(--border);
-      font-size: 14px;
+      font-size: 14.5px;
       outline: none;
       background: white;
     }
     .search-input:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.1);
     }
     .search-clear-btn {
       position: absolute;
-      right: 9px;
+      right: 11px;
       background: #e2e8f0;
       border: none;
       width: 22px;
@@ -236,33 +240,33 @@
     .view-switch {
       display: inline-flex;
       background: #f1f5f9;
-      padding: 2px;
-      border-radius: 8px;
+      padding: 3px;
+      border-radius: 9px;
       border: 1px solid var(--border);
-      height: 38px;
+      height: 42px;
       align-items: center;
     }
     .view-btn {
-      padding: 5px 9px;
-      font-size: 12px;
+      padding: 6px 11px;
+      font-size: 13px;
       font-weight: 700;
       border: none;
       background: transparent;
-      border-radius: 6px;
+      border-radius: 7px;
       cursor: pointer;
       color: var(--text-muted);
     }
     .view-btn.active {
       background: white;
       color: var(--primary);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
 
-    /* Candidates Grid: Full Width Responsive */
+    /* Spacious Responsive Cards Grid */
     .candidates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 14px;
       width: 100%;
     }
     .profile-card {
@@ -275,61 +279,65 @@
       position: relative;
       width: 100%;
       overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .profile-card:hover {
+      box-shadow: var(--shadow);
     }
 
-    /* Card Top: Balanced Left & Right */
+    /* Card Top */
     .card-top {
-      padding: 10px 12px 8px;
+      padding: 12px 16px 10px;
       border-bottom: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: #fff;
     }
     .cand-head-left {
       display: flex;
       align-items: baseline;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
     .cand-sr-badge {
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 800;
       color: var(--primary);
       background: var(--primary-light);
-      padding: 1px 6px;
-      border-radius: 4px;
+      padding: 2px 7px;
+      border-radius: 5px;
     }
     .cand-name {
-      font-size: 16.5px;
+      font-size: 18px;
       font-weight: 800;
       color: #0f172a;
-      line-height: 1.2;
+      line-height: 1.25;
     }
     .cand-head-right {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       flex-shrink: 0;
     }
     .cand-village-pill {
-      font-size: 12px;
-      color: #1e293b;
+      font-size: 12.5px;
+      color: #334155;
       background: #f1f5f9;
-      padding: 2px 7px;
-      border-radius: 5px;
+      padding: 3px 8px;
+      border-radius: 6px;
       font-weight: 600;
       white-space: nowrap;
     }
     .status-badge {
-      padding: 3px 8px;
+      padding: 4px 9px;
       border-radius: 9999px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -341,50 +349,50 @@
     .status-matched { background: #f3e8ff; color: #7e22ce; }
 
     .card-body {
-      padding: 9px 12px;
+      padding: 12px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       flex: 1;
     }
 
-    /* Balanced Dual-Column Details Box: Utilizes Left & Right completely */
+    /* Balanced Dual-Column Details Box: Comfortably utilizes Left & Right */
     .dual-column-details {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
     }
     .detail-col {
       background: #f8fafc;
       border: 1px solid #f1f5f9;
-      border-radius: 8px;
-      padding: 8px 10px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 12px;
+      gap: 6px;
+      font-size: 13px;
     }
     .col-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
       color: var(--primary);
       text-transform: uppercase;
       letter-spacing: 0.3px;
-      border-bottom: 1px dashed #e2e8f0;
-      padding-bottom: 2px;
-      margin-bottom: 2px;
+      border-bottom: 1.5px dashed #e2e8f0;
+      padding-bottom: 4px;
+      margin-bottom: 3px;
     }
     .item-row {
       display: flex;
       justify-content: space-between;
-      gap: 4px;
+      gap: 6px;
       align-items: baseline;
-      line-height: 1.35;
+      line-height: 1.4;
     }
     .item-lbl {
       color: var(--text-muted);
-      font-size: 11px;
+      font-size: 12px;
       flex-shrink: 0;
     }
     .item-val {
@@ -394,47 +402,49 @@
       word-break: break-word;
     }
 
-    /* Contact Section with Balanced Full-Width Action Rows */
+    /* Contact Section with Clear Full-Width Action Rows */
     .contact-card-section {
       background: #f0fdf4;
-      border-left: 3.5px solid #22c55e;
-      border-radius: 0 8px 8px 0;
-      padding: 7px 10px;
+      border-left: 4px solid #22c55e;
+      border-radius: 0 10px 10px 0;
+      padding: 10px 13px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 7px;
     }
     .guardian-text {
-      font-size: 12px;
+      font-size: 13px;
       color: #14532d;
-      line-height: 1.35;
-      font-weight: 500;
+      line-height: 1.45;
+      font-weight: 600;
     }
     .phones-list-wrap {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
+      margin-top: 2px;
     }
     .phone-touch-row {
       background: white;
-      border: 1px solid #bbf7d0;
-      border-radius: 7px;
-      padding: 4px 8px;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 6px;
+      gap: 8px;
       width: 100%;
     }
     /* Phone number link: triggers PHONE CALL ONLY, never WhatsApp */
     .phone-dial-link {
-      font-size: 13.5px;
+      font-size: 14.5px;
       font-weight: 800;
       color: #0f172a;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      letter-spacing: 0.2px;
     }
     .phone-dial-link:active {
       color: var(--call-blue);
@@ -442,21 +452,21 @@
     .phone-actions-pair {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
     }
     /* Separate Call Button */
     .btn-action-call {
       background: var(--call-blue);
       color: white;
       border: none;
-      padding: 6px 11px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 13px;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       cursor: pointer;
       line-height: 1;
     }
@@ -468,13 +478,13 @@
       background: var(--wa-green);
       color: white;
       border: none;
-      padding: 6px 11px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 13px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       cursor: pointer;
       line-height: 1;
     }
@@ -486,19 +496,19 @@
     .compact-last-log {
       background: #fffbeb;
       border: 1px dashed #fcd34d;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 11.5px;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12.5px;
       color: #92400e;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
 
-    /* Card Bottom Action */
+    /* Card Bottom Action: Comfortable Touch Target */
     .card-footer {
-      padding: 6px 10px 8px;
+      padding: 10px 16px 12px;
       background: #fafafa;
       border-top: 1px solid #f1f5f9;
     }
@@ -507,15 +517,16 @@
       background: var(--primary);
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 13px;
+      padding: 11px 16px;
+      border-radius: 9px;
+      font-size: 14.5px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(190, 18, 60, 0.18);
     }
     .btn-log-action:active { background: var(--primary-dark); }
 
@@ -530,18 +541,18 @@
     .custom-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12.5px;
+      font-size: 13px;
     }
     .custom-table th {
       background: #f8fafc;
-      padding: 8px 10px;
+      padding: 10px 12px;
       border-bottom: 2px solid var(--border);
       font-weight: 700;
       color: #334155;
       white-space: nowrap;
     }
     .custom-table td {
-      padding: 6px 10px;
+      padding: 9px 12px;
       border-bottom: 1px solid #f1f5f9;
       vertical-align: top;
     }
@@ -574,37 +585,37 @@
     .drawer-head {
       background: linear-gradient(135deg, #881337 0%, #be123c 100%);
       color: white;
-      padding: 15px 14px 13px;
+      padding: 18px 16px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .drawer-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+    .drawer-title { font-size: 17px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
     .drawer-close-btn {
       background: rgba(255, 255, 255, 0.2);
       border: none;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       font-size: 18px;
       color: white;
       cursor: pointer;
     }
     .drawer-body {
-      padding: 10px;
+      padding: 12px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
     .menu-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 11px 12px;
-      border-radius: 8px;
-      font-size: 14px;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      font-size: 14.5px;
       font-weight: 700;
       color: #1e293b;
       cursor: pointer;
@@ -613,11 +624,11 @@
     .menu-item:active { background: #f1f5f9; }
     .menu-item-lock {
       margin-left: auto;
-      font-size: 11px;
+      font-size: 11.5px;
       background: #fee2e2;
       color: #b91c1c;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 2px 7px;
+      border-radius: 5px;
       font-weight: 800;
     }
 
@@ -626,7 +637,7 @@
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(4px);
       z-index: 1050;
       display: flex;
       align-items: center;
@@ -634,21 +645,21 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.22s ease;
-      padding: 10px;
+      padding: 12px;
     }
     .modal-overlay.open { opacity: 1; pointer-events: auto; }
     .modal-box {
       background: white;
-      border-radius: 14px;
+      border-radius: 16px;
       width: 100%;
-      max-width: 580px;
+      max-width: 600px;
       max-height: 88vh;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
     .modal-head {
-      padding: 12px 14px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -658,48 +669,48 @@
       top: 0;
       z-index: 5;
     }
-    .modal-head-title { font-size: 16px; font-weight: 800; }
+    .modal-head-title { font-size: 17px; font-weight: 800; }
     .close-btn {
       background: #f1f5f9;
       border: none;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
       color: var(--text-muted);
     }
     .modal-content-body {
-      padding: 12px 14px;
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
-    .form-label { font-size: 12px; font-weight: 700; color: #334155; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-label { font-size: 13px; font-weight: 700; color: #334155; }
     .form-control {
-      padding: 8px 10px;
-      border-radius: 7px;
+      padding: 10px 12px;
+      border-radius: 8px;
       border: 1.5px solid var(--border);
-      font-size: 13.5px;
+      font-size: 14px;
       font-family: inherit;
       outline: none;
     }
     .form-control:focus { border-color: var(--primary); }
-    textarea.form-control { min-height: 65px; }
+    textarea.form-control { min-height: 75px; }
 
     .action-btn {
-      padding: 9px 14px;
-      border-radius: 7px;
-      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       border: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
     }
     .action-btn-primary { background: var(--primary); color: white; }
     .action-btn-outline { background: white; border: 1.5px solid var(--border); color: var(--text); }
@@ -707,31 +718,31 @@
     .timeline {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 9px;
       border-left: 2px solid #e2e8f0;
-      padding-left: 10px;
+      padding-left: 12px;
       margin-left: 4px;
     }
     .timeline-item {
       background: #f8fafc;
-      padding: 8px 10px;
-      border-radius: 6px;
+      padding: 10px 12px;
+      border-radius: 8px;
       border: 1px solid var(--border);
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .toast-msg {
       position: fixed;
-      bottom: 16px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: #0f172a;
       color: white;
-      padding: 9px 16px;
-      border-radius: 20px;
-      font-size: 12.5px;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
       z-index: 2500;
       opacity: 0;
       transition: all 0.22s ease;
@@ -744,13 +755,13 @@
     }
 
     @media (max-width: 600px) {
-      .header-title { font-size: 17px; }
+      .header-title { font-size: 18.5px; }
       .header-tagline { display: none; }
       .candidates-grid { grid-template-columns: 1fr; }
       .view-switch { display: none; }
       .modal-overlay { align-items: flex-end; padding: 0; }
       .modal-box {
-        border-radius: 16px 16px 0 0;
+        border-radius: 18px 18px 0 0;
         max-height: 90vh;
       }
     }
@@ -758,7 +769,7 @@
 </head>
 <body>
 
-  <!-- Sticky Ultra-Compact Header -->
+  <!-- Sticky Mobile Header -->
   <header class="portal-header">
     <div class="header-content">
       <div class="header-brand">
@@ -787,7 +798,7 @@
 
   <main class="app-container">
 
-    <!-- Compact Status Filter Pills Bar -->
+    <!-- Status Filter Pills Bar -->
     <div class="quick-status-scroll">
       <button class="status-pill active" onclick="filterByStatus('all', this)">
         <span>सर्व</span>
@@ -819,7 +830,7 @@
       </button>
     </div>
 
-    <!-- Full Width Search Row (Gotra & Sort removed for space) -->
+    <!-- Full Width Search Row -->
     <div class="search-row">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
@@ -860,13 +871,13 @@
     </section>
 
     <!-- No Results State -->
-    <div id="noResults" style="display:none; text-align:center; padding: 30px 16px; background:white; border-radius:10px; margin-top:10px; border:1px solid #e2e8f0;">
-      <h3 style="color:#64748b; font-size:16px;">कोणतेही उमेदवार सापडले नाहीत</h3>
-      <p style="color:#94a3b8; font-size:12.5px; margin-top:4px;">शोध शब्द बदलून पहा.</p>
+    <div id="noResults" style="display:none; text-align:center; padding: 36px 16px; background:white; border-radius:12px; margin-top:12px; border:1px solid #e2e8f0;">
+      <h3 style="color:#64748b; font-size:17px;">कोणतेही उमेदवार सापडले नाहीत</h3>
+      <p style="color:#94a3b8; font-size:13px; margin-top:5px;">शोध शब्द बदलून पहा.</p>
     </div>
 
     <!-- Footer -->
-    <footer style="text-align: center; margin-top: 20px; font-size: 11.5px; color: var(--text-muted);">
+    <footer style="text-align: center; margin-top: 25px; font-size: 12px; color: var(--text-muted);">
       <p><strong>अनुबंध (Anubandh)</strong> • खर्चे परिवार • Crafted with ❤️ by Shubham Kharche</p>
     </footer>
 
@@ -903,7 +914,7 @@
         <div class="menu-item" onclick="requestAdminAccess('sync')">
           <span>🔄</span>
           <span>मल्टी-युझर क्लाउड सिंक</span>
-          <span id="menuSyncDot" style="width:8px; height:8px; border-radius:50%; background:#4ade80; margin-left:auto;"></span>
+          <span id="menuSyncDot" style="width:9px; height:9px; border-radius:50%; background:#4ade80; margin-left:auto;"></span>
         </div>
 
         <div class="menu-item" onclick="exportDataJson(); closeSideMenu();">
@@ -922,31 +933,31 @@
         </div>
       </div>
 
-      <div style="padding: 10px 14px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-muted); text-align: center;">
-        अनुबंध v2.3 • Created by: Shubham Kharche
+      <div style="padding: 12px 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); text-align: center;">
+        अनुबंध v2.4 • Created by: Shubham Kharche
       </div>
     </div>
   </div>
 
   <!-- Password Security Modal (Requires 'ekdant') -->
   <div id="pwdModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 340px;">
+    <div class="modal-box" style="max-width: 350px;">
       <div class="modal-head">
         <div class="modal-head-title">🔒 पासवर्ड आवश्यक</div>
         <button class="close-btn" onclick="closePwdModal()">&times;</button>
       </div>
       <div class="modal-content-body" style="text-align: center;">
-        <p style="font-size: 13.5px; color: #334155;">
+        <p style="font-size: 14px; color: #334155;">
           सेटिंग्ज उघडण्यासाठी कृपया पासवर्ड टाका:
         </p>
 
         <form id="pwdForm" onsubmit="verifyAdminPassword(event)">
-          <div class="form-group" style="margin-top: 6px;">
-            <input type="password" id="adminPwdInput" class="form-control" style="text-align:center; font-size:16px; letter-spacing:2px;" placeholder="पासवर्ड टाका..." autocomplete="off" required/>
-            <div id="pwdErrorMsg" style="color:#dc2626; font-size:12px; font-weight:700; display:none; margin-top:4px;">❌ चुकीचा पासवर्ड! पुन्हा प्रयत्न करा.</div>
+          <div class="form-group" style="margin-top: 8px;">
+            <input type="password" id="adminPwdInput" class="form-control" style="text-align:center; font-size:17px; letter-spacing:2px;" placeholder="पासवर्ड टाका..." autocomplete="off" required/>
+            <div id="pwdErrorMsg" style="color:#dc2626; font-size:12.5px; font-weight:700; display:none; margin-top:5px;">❌ चुकीचा पासवर्ड! पुन्हा प्रयत्न करा.</div>
           </div>
 
-          <div style="display:flex; gap:8px; margin-top:12px;">
+          <div style="display:flex; gap:8px; margin-top:14px;">
             <button type="button" class="action-btn action-btn-outline" style="flex:1;" onclick="closePwdModal()">रद्द करा</button>
             <button type="submit" class="action-btn action-btn-primary" style="flex:1;">🔓 उघडा</button>
           </div>
@@ -964,11 +975,11 @@
       </div>
       <div class="modal-content-body">
         
-        <div style="display:flex; gap:6px; border-bottom:1.5px solid #f1f5f9; padding-bottom:8px;">
-          <button id="tabWaBtn" type="button" class="action-btn action-btn-primary" style="padding:6px 12px; font-size:12px;" onclick="switchAdminTab('wa')">
+        <div style="display:flex; gap:8px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px;">
+          <button id="tabWaBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 14px; font-size:13px;" onclick="switchAdminTab('wa')">
             💬 WhatsApp मेसेज व बायोडाटा
           </button>
-          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12px;" onclick="switchAdminTab('sync')">
+          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 14px; font-size:13px;" onclick="switchAdminTab('sync')">
             🔄 Firebase क्लाउड सिंक
           </button>
         </div>
@@ -976,7 +987,7 @@
         <div id="secWaSettings">
           <form id="waSettingsForm" onsubmit="saveWaSettings(event)">
             
-            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 10px; font-size:12px; color:#14532d; margin-bottom:10px;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:9px 12px; font-size:12.5px; color:#14532d; margin-bottom:10px;">
               ✅ <strong>Method B सक्रिय:</strong> प्रत्येक वधूच्या WhatsApp बटनावर क्लिक केल्यावर खालील संपूर्ण बायोडाटा मेसेज आपोआप टाईप होईल.
             </div>
 
@@ -1050,7 +1061,7 @@
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
               <div class="form-group">
                 <label class="form-label">शेती / व्यवसाय:</label>
                 <input type="text" id="waGroomLand" class="form-control" oninput="updateWaPreview()"/>
@@ -1067,7 +1078,7 @@
 
             <div class="form-group">
               <label class="form-label">संपर्क क्रमांक (Contact Persons):</label>
-              <textarea id="waGroomContacts" class="form-control" style="min-height:60px;" oninput="updateWaPreview()"></textarea>
+              <textarea id="waGroomContacts" class="form-control" style="min-height:65px;" oninput="updateWaPreview()"></textarea>
             </div>
 
             <div class="form-group">
@@ -1077,10 +1088,10 @@
 
             <div class="form-group" style="margin-top:8px;">
               <label class="form-label">व्हॉट्सॲप मेसेज प्रिव्ह्यू:</label>
-              <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px; font-size:12px; color:#14532d; white-space:pre-wrap; max-height:160px; overflow-y:auto; line-height:1.4;"></div>
+              <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; font-size:12.5px; color:#14532d; white-space:pre-wrap; max-height:160px; overflow-y:auto; line-height:1.45;"></div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
               <button type="button" class="action-btn action-btn-outline" onclick="resetWaToDefault()">↺ मूळ बायोडाटा</button>
               <button type="submit" class="action-btn action-btn-primary">💾 सेव्ह करा</button>
             </div>
@@ -1088,7 +1099,7 @@
         </div>
 
         <div id="secSyncSettings" style="display:none;">
-          <p style="font-size:13px; color:var(--text-muted); line-height:1.45; margin-bottom:10px;">
+          <p style="font-size:13.5px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
             कुटुंबातील अनेक व्यक्ती वेगवेगळ्या मोबाईलवरून डेटा वापरत असल्यास, रिअल-टाईम सिंकसाठी Firebase Database URL:
           </p>
           <form id="firebaseConfigForm" onsubmit="saveFirebaseConfig(event)">
@@ -1100,7 +1111,7 @@
               <label class="form-label">Firebase API Key (Optional):</label>
               <input type="text" id="fbApiKey" class="form-control" placeholder="AIzaSy..."/>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-top:14px;">
+            <div style="display:flex; justify-content:space-between; margin-top:16px;">
               <button type="button" class="action-btn action-btn-outline" style="color:var(--danger);" onclick="disconnectFirebase()">डिस्कनेक्ट करा</button>
               <button type="submit" class="action-btn action-btn-primary">🔗 सिंक सेव्ह करा</button>
             </div>
@@ -1117,33 +1128,33 @@
       <div class="modal-head">
         <div>
           <div class="modal-head-title" id="mCandName">कु. नाव</div>
-          <div style="font-size:11.5px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • जन्म ठिकाण</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • जन्म ठिकाण</div>
         </div>
         <button class="close-btn" onclick="closeTrackModal()">&times;</button>
       </div>
 
       <div class="modal-content-body">
         
-        <div style="background:#f1f5f9; padding:7px 10px; border-radius:6px; font-size:12px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+        <div style="background:#f1f5f9; padding:9px 12px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
           <div><strong>गोत्र:</strong> <span id="mCandGotra">-</span> | <strong>मामकुळ:</strong> <span id="mCandMamkul">-</span></div>
           <div><strong>शिक्षण:</strong> <span id="mCandEdu">-</span></div>
         </div>
 
         <div class="form-group">
           <label class="form-label">📞 संपर्क क्रमांक (कॉल किंवा WhatsApp):</label>
-          <div id="mCandPhones" style="display:flex; flex-direction:column; gap:4px;"></div>
+          <div id="mCandPhones" style="display:flex; flex-direction:column; gap:5px;"></div>
         </div>
 
         <hr style="border:0; border-top:1px solid #f1f5f9;"/>
 
         <form id="logForm" onsubmit="saveLogEntry(event)">
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <div class="form-group" style="flex:1 1 160px;">
+            <div class="form-group" style="flex:1 1 170px;">
               <label class="form-label">कोणाशी संपर्क झाला?</label>
               <input type="text" id="fContactPerson" class="form-control" placeholder="उदा. वडील / मामा" required/>
             </div>
 
-            <div class="form-group" style="flex:1 1 140px;">
+            <div class="form-group" style="flex:1 1 150px;">
               <label class="form-label">स्थिती (Status)</label>
               <select id="fStatus" class="form-control" required>
                 <option value="contacted">संपर्क झाला (Contacted)</option>
@@ -1163,33 +1174,33 @@
 
           <div class="form-group">
             <label class="form-label">अतिरिक्त माहिती:</label>
-            <textarea id="fAdditionalInfo" class="form-control" style="min-height:50px;" placeholder="उदा. नोकरी, कुटुंब, अपेक्षा..."></textarea>
+            <textarea id="fAdditionalInfo" class="form-control" style="min-height:55px;" placeholder="उदा. नोकरी, कुटुंब, अपेक्षा..."></textarea>
           </div>
 
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <div class="form-group" style="flex:1 1 140px;">
+            <div class="form-group" style="flex:1 1 150px;">
               <label class="form-label">पुढील कॉल तारीख:</label>
               <input type="date" id="fNextDate" class="form-control"/>
             </div>
 
-            <div class="form-group" style="flex:1 1 140px;">
+            <div class="form-group" style="flex:1 1 150px;">
               <label class="form-label">नोंद करणारी व्यक्ती:</label>
               <input type="text" id="fCallerUser" class="form-control" placeholder="उदा. वडील / आई / शुभम"/>
             </div>
           </div>
 
-          <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
             <button type="button" class="action-btn action-btn-outline" onclick="closeTrackModal()">रद्द करा</button>
             <button type="submit" class="action-btn action-btn-primary">💾 नोंद सेव्ह करा</button>
           </div>
         </form>
 
         <div>
-          <div style="font-size:13px; font-weight:800; color:#1e293b; margin-top:6px; display:flex; justify-content:space-between;">
+          <div style="font-size:13.5px; font-weight:800; color:#1e293b; margin-top:8px; display:flex; justify-content:space-between;">
             <span>📜 संभाषण इतिहास</span>
-            <span id="mLogCount" style="font-size:11.5px; color:var(--text-muted); font-weight:normal;">(० नोंदी)</span>
+            <span id="mLogCount" style="font-size:12px; color:var(--text-muted); font-weight:normal;">(० नोंदी)</span>
           </div>
-          <div id="mTimeline" class="timeline" style="margin-top:6px;"></div>
+          <div id="mTimeline" class="timeline" style="margin-top:8px;"></div>
         </div>
 
       </div>
@@ -1198,16 +1209,16 @@
 
   <!-- View Original Biodata Image Modal -->
   <div id="bioViewModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 640px;">
+    <div class="modal-box" style="max-width: 650px;">
       <div class="modal-head">
         <div>
           <div class="modal-head-title">📋 शुभम अनिल खर्चे - मूळ बायोडाटा</div>
-          <div style="font-size:11.5px; color:var(--text-muted);">वधू-वर संशोधन परिचय पत्रक</div>
+          <div style="font-size:12px; color:var(--text-muted);">वधू-वर संशोधन परिचय पत्रक</div>
         </div>
         <button class="close-btn" onclick="closeBioViewModal()">&times;</button>
       </div>
       <div class="modal-content-body" style="align-items: center; text-align: center;">
-        <div style="width:100%; max-height:72vh; overflow-y:auto; border-radius:8px; border:1px solid #e2e8f0; background:#f8fafc; padding:4px;">
+        <div style="width:100%; max-height:72vh; overflow-y:auto; border-radius:10px; border:1px solid #e2e8f0; background:#f8fafc; padding:6px;">
           <img src="shubham_kharche_biodata.jpg" alt="Shubham Kharche Biodata" style="max-width: 100%; height: auto; border-radius: 6px;"/>
         </div>
         <div style="display:flex; justify-content:space-between; width:100%; margin-top:8px;">
@@ -1222,24 +1233,24 @@
 
   <!-- About App Modal -->
   <div id="aboutModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 420px;">
+    <div class="modal-box" style="max-width: 440px;">
       <div class="modal-head">
         <div class="modal-head-title">ℹ️ अनुबंध ॲप विषयी</div>
         <button class="close-btn" onclick="closeAboutModal()">&times;</button>
       </div>
-      <div class="modal-content-body" style="font-size: 13.5px; line-height: 1.55;">
+      <div class="modal-content-body" style="font-size: 14px; line-height: 1.6;">
         <p><strong>अनुबंध (Anubandh)</strong> हे खर्चे परिवारासाठी खास तयार केलेले खाजगी वधू संशोधन व संभाषण नोंद पोर्टल आहे.</p>
-        <ul style="padding-left: 18px; margin: 6px 0; color: #334155; font-size:12.5px;">
+        <ul style="padding-left: 20px; margin: 8px 0; color: #334155; font-size:13px;">
           <li>८३ वधू उमेदवारांची संपूर्ण १४ रकान्यांची माहिती</li>
           <li>अ.क्र. चढत्या क्रमाने (१ ते ८३) स्वयंचलित सॉर्टिंग</li>
           <li>थेट फोन कॉल व WhatsApp मेसेजचे स्वतंत्र बटन्स</li>
           <li>कोणाशी काय बोलणे झाले याची वेळेनुसार नोंद</li>
           <li>सुरक्षित अ‍ॅडमिन पासवर्ड संरक्षण (ekdant)</li>
         </ul>
-        <div style="background:#f1f5f9; padding:8px; border-radius:6px; text-align:center; margin-top:6px; font-size:12px;">
+        <div style="background:#f1f5f9; padding:9px; border-radius:8px; text-align:center; margin-top:6px; font-size:12.5px;">
           <strong>संकल्पना व निर्मिती:</strong> शुभम खर्चे
         </div>
-        <button type="button" class="action-btn action-btn-primary" style="margin-top:8px; width:100%;" onclick="closeAboutModal()">समजले</button>
+        <button type="button" class="action-btn action-btn-primary" style="margin-top:10px; width:100%;" onclick="closeAboutModal()">समजले</button>
       </div>
     </div>
   </div>
@@ -1707,7 +1718,7 @@ ${waSettings.photoNote}
       renderView();
     }
 
-    // Format Candidate's Education & Job into clean parts
+    // Format Candidate's Education & Job into clean readable strings
     function formatEduJob(eduText) {
       if (!eduText) return { edu: '-', job: '', income: '' };
       const lines = eduText.split('\n').map(l => l.trim()).filter(Boolean);
@@ -1728,7 +1739,7 @@ ${waSettings.photoNote}
       return { edu, job, income };
     }
 
-    // Space-Effective Balanced Dual-Column Card Renderer
+    // Spacious Balanced Dual-Column Card Renderer
     function renderCards(list) {
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
@@ -1743,12 +1754,12 @@ ${waSettings.photoNote}
         const card = document.createElement('div');
         card.className = 'profile-card';
 
-        // Compact Phone Action Rows with Both Distinct Buttons
+        // Full Width Phone Action Rows with Both Distinct Buttons
         const phoneListHtml = (c.phones || []).map(p => {
           const cleanP = p.replace(/[^0-9]/g, '');
           return `
             <div class="phone-touch-row">
-              <!-- Clicking phone number triggers PHONE CALL ONLY -->
+              <!-- Clicking phone number triggers PHONE CALL ONLY, never WhatsApp -->
               <a href="tel:${cleanP}" class="phone-dial-link" title="थेट फोन कॉल करा">
                 📞 <strong>${p}</strong>
               </a>
@@ -1783,10 +1794,10 @@ ${waSettings.photoNote}
 
           <div class="card-body">
             
-            <!-- Dual-Column Balanced Grid: Utilizes Left & Right Completely (No empty space!) -->
+            <!-- Dual-Column Balanced Grid: Left & Right filled with comfortable readable text -->
             <div class="dual-column-details">
               
-              <!-- Left Column: Specs, Horoscope & Birth Details -->
+              <!-- Left Column: Birth & Horoscope Details -->
               <div class="detail-col">
                 <div class="col-title">📋 जन्म व पत्रिका</div>
                 <div class="item-row">
@@ -1811,7 +1822,7 @@ ${waSettings.photoNote}
                 </div>
               </div>
 
-              <!-- Right Column: Education, Career & Family (Fills the right side!) -->
+              <!-- Right Column: Education, Career & Family (Fills the right space comfortably) -->
               <div class="detail-col" style="background: #fdf4ff; border-color: #f5d0fe;">
                 <div class="col-title" style="color: #a21caf; border-color: #f0abfc;">🎓 शिक्षण व नोकरी</div>
                 <div class="item-row">
@@ -1889,10 +1900,10 @@ ${waSettings.photoNote}
         const phoneButtons = (c.phones || []).map(p => {
           const cleanP = p.replace(/[^0-9]/g, '');
           return `
-            <div style="display:flex; align-items:center; gap:3px; margin-bottom:3px;">
-              <a href="tel:${cleanP}" style="font-weight:700; font-size:11.5px; text-decoration:none; color:#0f172a;">${p}</a>
-              <a href="tel:${cleanP}" class="btn-action-call" style="padding:2px 5px; font-size:10px;">📞</a>
-              <button type="button" class="btn-action-wa" style="padding:2px 5px; font-size:10px;" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')">💬</button>
+            <div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;">
+              <a href="tel:${cleanP}" style="font-weight:700; font-size:12px; text-decoration:none; color:#0f172a;">${p}</a>
+              <a href="tel:${cleanP}" class="btn-action-call" style="padding:3px 7px; font-size:11px;">📞</a>
+              <button type="button" class="btn-action-wa" style="padding:3px 7px; font-size:11px;" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')">💬</button>
             </div>
           `;
         }).join('');
@@ -1900,25 +1911,25 @@ ${waSettings.photoNote}
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="font-weight:700; color:var(--primary);">${c.sr}</td>
-          <td style="font-weight:700; min-width:120px;">${c.name}</td>
+          <td style="font-weight:700; min-width:130px;">${c.name}</td>
           <td>${c.mulgaon || '-'}</td>
-          <td>${c.height || '-'}<br/><span style="color:var(--text-muted); font-size:11px;">${c.complexion || '-'}</span></td>
-          <td><strong>${c.gotra || '-'}</strong><br/><span style="color:var(--text-muted); font-size:11px;">${c.mamkul || '-'}</span></td>
-          <td>${c.date || '-'}<br/><span style="color:var(--text-muted); font-size:11px;">${c.time || '-'}</span></td>
-          <td><span style="background:#fee2e2; color:#b91c1c; padding:1px 5px; border-radius:3px; font-weight:700; font-size:10.5px;">${c.blood || '-'}</span></td>
-          <td style="max-width:180px; font-size:11.5px;">${(c.edu || '-').replace(/\n/g, ' ')}</td>
-          <td style="font-size:11.5px;">${(c.fam || '-').replace(/\n/g, ' ')}</td>
-          <td style="font-size:11.5px; min-width:170px;">
+          <td>${c.height || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.complexion || '-'}</span></td>
+          <td><strong>${c.gotra || '-'}</strong><br/><span style="color:var(--text-muted); font-size:11.5px;">${c.mamkul || '-'}</span></td>
+          <td>${c.date || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.time || '-'}</span></td>
+          <td><span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-weight:700; font-size:11px;">${c.blood || '-'}</span></td>
+          <td style="max-width:190px; font-size:12px;">${(c.edu || '-').replace(/\n/g, ' ')}</td>
+          <td style="font-size:12px;">${(c.fam || '-').replace(/\n/g, ' ')}</td>
+          <td style="font-size:12px; min-width:180px;">
             ${(c.contact || '').split('मो.')[0].trim()}
             <div style="margin-top:4px;">${phoneButtons}</div>
           </td>
           <td>
-            <span class="status-badge ${sInfo.cls}" style="font-size:10.5px; padding:1px 6px;">
+            <span class="status-badge ${sInfo.cls}" style="font-size:11px; padding:2px 7px;">
               ${sInfo.icon} ${sInfo.label}
             </span>
           </td>
           <td>
-            <button class="action-btn action-btn-primary" style="padding:4px 8px; font-size:11px;" onclick="openTrackModal('${c.id}')">
+            <button class="action-btn action-btn-primary" style="padding:5px 9px; font-size:12px;" onclick="openTrackModal('${c.id}')">
               ✍️ (${logCount})
             </button>
           </td>
@@ -1996,7 +2007,7 @@ ${waSettings.photoNote}
       document.getElementById('mLogCount').textContent = `(${logs.length} नोंदी)`;
 
       if (!logs || logs.length === 0) {
-        container.innerHTML = '<div style="font-size:12px; color:var(--text-muted); padding:4px 0;">कोणतीही नोंद नाही.</div>';
+        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:5px 0;">कोणतीही नोंद नाही.</div>';
         return;
       }
 
@@ -2005,13 +2016,13 @@ ${waSettings.photoNote}
         const item = document.createElement('div');
         item.className = 'timeline-item';
         item.innerHTML = `
-          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); font-weight:700;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); font-weight:700;">
             <span>${log.contactPerson || 'पालक'} शी संभाषण • ${sInfo.label}</span>
             <span>${new Date(log.timestamp).toLocaleDateString('mr-IN')}</span>
           </div>
-          ${log.discussion ? `<div style="margin-top:3px; line-height:1.4;"><strong>बोलणे:</strong> ${log.discussion}</div>` : ''}
-          ${log.additionalInfo ? `<div style="margin-top:2px; color:#0369a1; line-height:1.4;"><strong>माहिती:</strong> ${log.additionalInfo}</div>` : ''}
-          ${log.nextDate ? `<div style="margin-top:2px; font-size:11px; color:#b45309;"><strong>⏰ पुढील कॉल:</strong> ${log.nextDate}</div>` : ''}
+          ${log.discussion ? `<div style="margin-top:4px; line-height:1.45;"><strong>बोलणे:</strong> ${log.discussion}</div>` : ''}
+          ${log.additionalInfo ? `<div style="margin-top:3px; color:#0369a1; line-height:1.45;"><strong>माहिती:</strong> ${log.additionalInfo}</div>` : ''}
+          ${log.nextDate ? `<div style="margin-top:3px; font-size:11.5px; color:#b45309;"><strong>⏰ पुढील कॉल:</strong> ${log.nextDate}</div>` : ''}
         `;
         container.appendChild(item);
       });
