@@ -1057,7 +1057,7 @@
           <form id="firebaseConfigForm" onsubmit="saveFirebaseConfig(event)">
             <div class="form-group">
               <label class="form-label">Firebase Database URL:</label>
-              <input type="url" id="fbDbUrl" class="form-control" placeholder="https://your-rtdb.firebaseio.com" required/>
+              <input type="url" id="fbDbUrl" class="form-control" value="https://anubandh-90d1f-default-rtdb.firebaseio.com" required/>
             </div>
             <div class="form-group">
               <label class="form-label">Firebase API Key (Optional):</label>
@@ -1217,6 +1217,7 @@
     const USER_NAME_KEY = 'matrimonial_username_v1';
     const WA_SETTINGS_KEY = 'matrimonial_wa_settings_v2';
     const ADMIN_PASSWORD = 'ekdant';
+    const DEFAULT_FIREBASE_URL = 'https://anubandh-90d1f-default-rtdb.firebaseio.com';
 
     let candidates = [];
     let activeView = 'cards';
@@ -1489,17 +1490,20 @@ ${waSettings.photoNote}
 
     function initFirebaseIfConfigured() {
       const configStr = localStorage.getItem(FIREBASE_CONFIG_KEY);
-      if (!configStr) return;
-      try {
-        const config = JSON.parse(configStr);
-        if (config.databaseURL) {
-          if (!window.firebase || !window.firebase.database) {
-            loadFirebaseSdk(() => connectFirebase(config));
-          } else {
-            connectFirebase(config);
-          }
+      let config = { databaseURL: DEFAULT_FIREBASE_URL };
+      if (configStr) {
+        try {
+          const parsed = JSON.parse(configStr);
+          if (parsed && parsed.databaseURL) config = parsed;
+        } catch(e) {}
+      }
+      if (config && config.databaseURL) {
+        if (!window.firebase || !window.firebase.database) {
+          loadFirebaseSdk(() => connectFirebase(config));
+        } else {
+          connectFirebase(config);
         }
-      } catch (e) {}
+      }
     }
 
     function loadFirebaseSdk(callback) {
