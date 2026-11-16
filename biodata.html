@@ -1264,6 +1264,25 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Close open modal (full image or contact sheet) on phone back button
+    try {
+      history.pushState({ page: 'biodata' }, '', window.location.href);
+      window.addEventListener('popstate', function() {
+        const fullImg = document.getElementById('fullImgModal');
+        const phoneModal = document.getElementById('phoneActionModal');
+        if (fullImg && fullImg.classList.contains('open')) {
+          try { history.pushState({ page: 'biodata' }, '', window.location.href); } catch (e) {}
+          closeFullImg();
+          return;
+        }
+        if (phoneModal && phoneModal.classList.contains('open')) {
+          try { history.pushState({ page: 'biodata' }, '', window.location.href); } catch (e) {}
+          closePhoneActionModal();
+          return;
+        }
+      });
+    } catch (e) {}
+
   </script>
 
   <!-- Floating Scroll-to-Top Button -->

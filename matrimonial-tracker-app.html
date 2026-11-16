@@ -4542,6 +4542,64 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (banner) banner.style.display = 'none';
       sessionStorage.setItem('anubandh_install_dismissed', 'true');
     }
+
+    // Double-press back button to exit app & close modals on back (PWA Native UX)
+    let lastBackPressTime = 0;
+    const BACK_EXIT_DELAY_MS = 2000;
+
+    function getOpenModal() {
+      const modalList = [
+        { id: 'phoneActionModal', close: () => closePhoneActionModal() },
+        { id: 'aboutModal', close: closeAboutModal },
+        { id: 'bioViewModal', close: closeBioViewModal },
+        { id: 'trackModal', close: closeTrackModal },
+        { id: 'pwdModal', close: closePwdModal },
+        { id: 'adminSettingsModal', close: closeAdminSettingsModal }
+      ];
+      for (const m of modalList) {
+        const el = document.getElementById(m.id);
+        if (el && el.classList.contains('open')) {
+          return m;
+        }
+      }
+      return null;
+    }
+
+    function initBackButtonHandler() {
+      try {
+        history.pushState({ page: 'anubandh_app' }, '', window.location.href);
+      } catch (e) {}
+
+      window.addEventListener('popstate', function(event) {
+        // 1. If any modal is currently open, back button smoothly closes the modal first
+        const openModal = getOpenModal();
+        if (openModal) {
+          try {
+            history.pushState({ page: 'anubandh_app' }, '', window.location.href);
+          } catch (e) {}
+          openModal.close();
+          return;
+        }
+
+        // 2. If no modal is open: require hitting back button twice to exit
+        const now = Date.now();
+        if (now - lastBackPressTime < BACK_EXIT_DELAY_MS) {
+          showToast('ॲपमधून बाहेर पडत आहे...');
+          try {
+            history.back();
+            setTimeout(() => {
+              try { window.close(); } catch(err) {}
+            }, 150);
+          } catch (e) {}
+        } else {
+          lastBackPressTime = now;
+          try {
+            history.pushState({ page: 'anubandh_app' }, '', window.location.href);
+          } catch (e) {}
+          showToast('ॲपमधून बाहेर पडण्यासाठी पुन्हा एकदा बॅक दाबा');
+        }
+      });
+    }
   
     document.addEventListener('DOMContentLoaded', () => {
       checkAppAuth();
@@ -4549,6 +4607,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       initData();
       updateStats();
       renderView();
+      initBackButtonHandler();
     });
   </script>
 

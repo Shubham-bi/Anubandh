@@ -233,6 +233,12 @@ try {
   assert(indexCode.includes('cms-grid-2') && indexCode.includes('cms-row-item'), "index.html uses responsive grid and row classes for CMS");
   assert(indexCode.includes('cms-contact-card') && indexCode.includes('cms-sec-head-main'), "index.html provides touch-friendly contact cards and section headers for CMS");
   assert(indexCode.includes('@media (max-width: 640px)'), "index.html includes mobile media queries for CMS editor");
+
+  // Double-press Back to Exit App assertions
+  assert(indexCode.includes('initBackButtonHandler'), "index.html contains initBackButtonHandler");
+  assert(indexCode.includes('BACK_EXIT_DELAY_MS') && indexCode.includes('lastBackPressTime'), "index.html tracks back button timing for double press exit");
+  assert(indexCode.includes('popstate') && indexCode.includes('getOpenModal'), "index.html listens to popstate and closes open modals on back");
+  assert(bioCode.includes('popstate') && bioCode.includes('closeFullImg'), "biodata.html handles back button to close open modals");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
