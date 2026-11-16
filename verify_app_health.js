@@ -155,15 +155,14 @@ try {
   assert(false, `sw.js error: ${e.message}`);
 }
 
-// 5. Validate Bride Family Profile Security & Content
+// 5. Validate Bride Family Profile Security & Content (Open to all, no password)
 try {
   const bioCode = fs.readFileSync(path.join(repoDir, 'biodata.html'), 'utf8');
-  assert(bioCode.includes("PROFILE_PASS = '258'"), "biodata.html enforces password '258'");
-  assert(bioCode.includes('anubandh_profile_auth'), "biodata.html uses localStorage for persistent login");
+  assert(!bioCode.includes("PROFILE_PASS"), "biodata.html is open to all without password");
   assert(bioCode.includes('shubham_kharche_biodata.jpg'), "biodata.html links to original biodata photo");
   
   const shubhamCode = fs.readFileSync(path.join(repoDir, 'shubham-kharche.html'), 'utf8');
-  assert(shubhamCode.includes("PROFILE_PASS = '258'"), "shubham-kharche.html enforces password '258'");
+  assert(!shubhamCode.includes("PROFILE_PASS"), "shubham-kharche.html is open to all without password");
 
   // 6. Validate Main Portal Authentication & App Install Banner & SVG Up Arrow
   const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
@@ -171,6 +170,8 @@ try {
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
   assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
+  assert(indexCode.includes('✍️ संभाषण नोंद'), "index.html uses updated button label संभाषण नोंद");
+  assert(indexCode.includes('.btn-track'), "index.html has proper button styling for .btn-track");
 
   // 7. Validate Standalone candidates.json
   const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');

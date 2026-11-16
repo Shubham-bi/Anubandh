@@ -47,99 +47,6 @@
       font-size: 15px;
     }
 
-    /* Password Lock Gate Overlay */
-    .auth-gate-overlay {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #4c0519 0%, #881337 60%, #be123c 100%);
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .auth-card {
-      background: #ffffff;
-      border-radius: 20px;
-      max-width: 380px;
-      width: 100%;
-      padding: 28px 22px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-      border: 2px solid #fef08a;
-      animation: popIn 0.3s ease;
-    }
-    @keyframes popIn {
-      from { transform: scale(0.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .auth-emblem {
-      font-size: 40px;
-      margin-bottom: 8px;
-    }
-    .auth-title {
-      font-size: 21px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 4px;
-    }
-    .auth-subtitle {
-      font-size: 13.5px;
-      color: #64748b;
-      margin-bottom: 18px;
-      line-height: 1.45;
-    }
-    .auth-input-wrap {
-      margin-bottom: 14px;
-    }
-    .auth-input {
-      width: 100%;
-      text-align: center;
-      font-size: 22px;
-      letter-spacing: 6px;
-      font-weight: 800;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 2px solid #cbd5e1;
-      outline: none;
-      background: #f8fafc;
-      color: #0f172a;
-      transition: all 0.2s ease;
-    }
-    .auth-input:focus {
-      border-color: var(--primary);
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(136, 19, 55, 0.12);
-    }
-    .auth-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #881337, #be123c);
-      color: white;
-      border: none;
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(136, 19, 55, 0.25);
-      transition: transform 0.1s ease;
-    }
-    .auth-btn:active {
-      transform: scale(0.98);
-    }
-    .auth-error {
-      color: #dc2626;
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 10px;
-      display: none;
-    }
-    .auth-hint {
-      margin-top: 14px;
-      font-size: 12px;
-      color: #94a3b8;
-    }
-
     /* Festive Header Banner */
     .header-banner {
       background: linear-gradient(135deg, #700c2a 0%, #881337 50%, #b91c1c 100%);
@@ -699,46 +606,8 @@
 </head>
 <body>
 
-  <!-- Password Security Screen (Requires Pin: 258) -->
-  <div id="authGate" class="auth-gate-overlay">
-    <div class="auth-card">
-      <div class="auth-emblem">🔒</div>
-      <h2 class="auth-title">विवाह प्रस्ताव</h2>
-      <div class="auth-subtitle">
-        चि. शुभम अनिल खर्चे<br/>
-        गोपनीयतेसाठी हा प्रस्ताव पासवर्डने सुरक्षित आहे. कृपया खर्चे परिवाराने दिलेला ३-अंकी पासवर्ड टाका:
-      </div>
-
-      <div class="auth-input-wrap">
-        <input 
-          type="password" 
-          id="passInput" 
-          class="auth-input" 
-          maxlength="6" 
-          inputmode="numeric" 
-          pattern="[0-9]*"
-          placeholder="•••"
-          autocomplete="off"
-          autofocus
-        />
-      </div>
-
-      <button type="button" class="auth-btn" onclick="verifyPassword()">
-        प्रवेश करा &rarr;
-      </button>
-
-      <div id="passError" class="auth-error">
-        ❌ चुकीचा पासवर्ड! कृपया योग्य पासवर्ड टाका.
-      </div>
-
-      <div class="auth-hint">
-        💡 एकदा पासवर्ड टाकल्यावर आपल्या फोनवर कायम सेव्ह राहील.
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Profile Content (Visible once unlocked) -->
-  <div id="profileContent" style="display:none;">
+  <!-- Main Profile Content (Open to All) -->
+  <div id="profileContent">
 
     <!-- Top Banner -->
     <header class="header-banner">
@@ -950,64 +819,7 @@
   </div>
 
   <script>
-    const PROFILE_PASS = '258';
-    const AUTH_KEY = 'anubandh_profile_auth';
-
-    // Verify authentication from localStorage or URL query param
-    function checkAuth() {
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const queryPass = urlParams.get('pass') || urlParams.get('p');
-        
-        if (queryPass === PROFILE_PASS) {
-          localStorage.setItem(AUTH_KEY, PROFILE_PASS);
-        }
-
-        const saved = localStorage.getItem(AUTH_KEY);
-        if (saved === PROFILE_PASS) {
-          document.getElementById('authGate').style.display = 'none';
-          document.getElementById('profileContent').style.display = 'block';
-          return true;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-
-      document.getElementById('authGate').style.display = 'flex';
-      document.getElementById('profileContent').style.display = 'none';
-      const input = document.getElementById('passInput');
-      if (input) input.focus();
-      return false;
-    }
-
-    function verifyPassword() {
-      const inputEl = document.getElementById('passInput');
-      const val = (inputEl.value || '').trim();
-      const errEl = document.getElementById('passError');
-
-      if (val === PROFILE_PASS) {
-        try {
-          localStorage.setItem(AUTH_KEY, PROFILE_PASS);
-        } catch (e) {}
-        errEl.style.display = 'none';
-        document.getElementById('authGate').style.display = 'none';
-        document.getElementById('profileContent').style.display = 'block';
-      } else {
-        errEl.style.display = 'block';
-        inputEl.value = '';
-        inputEl.focus();
-      }
-    }
-
-    // Allow Enter key to submit password
-    document.getElementById('passInput').addEventListener('keyup', function(e) {
-      if (e.key === 'Enter') {
-        verifyPassword();
-      }
-    });
-
-    // Run auth check on load
-    window.addEventListener('DOMContentLoaded', checkAuth);
+    // Open to all - no password required
 
     // Image Zoom Modal
     function openFullImg() {
@@ -1022,7 +834,7 @@
       const shareData = {
         title: 'चि. शुभम अनिल खर्चे | विवाह प्रस्ताव',
         text: 'चि. शुभम अनिल खर्चे (B.E. Mechanical, Senior QA Engineer, Pune) यांचा विवाह प्रस्ताव पहा:',
-        url: window.location.href.split('?')[0] + '?pass=' + PROFILE_PASS
+        url: window.location.href.split('?')[0]
       };
       if (navigator.share) {
         navigator.share(shareData).catch(() => {});
