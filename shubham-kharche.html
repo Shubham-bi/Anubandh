@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>चि. शुभम अनिल खर्चे | विवाह प्रस्ताव</title>
+  <title>Shubham_Kharche | विवाह प्रस्ताव</title>
   
   <meta name="theme-color" content="#881337"/>
   <meta name="description" content="चि. शुभम अनिल खर्चे (B.E. Mechanical, Senior QA Engineer, Pune) यांचा सविस्तर विवाह प्रस्ताव."/>
   
   <!-- Open Graph for Rich WhatsApp / Social Preview -->
-  <meta property="og:title" content="चि. शुभम अनिल खर्चे | विवाह प्रस्ताव"/>
-  <meta property="og:description" content="B.E. Mechanical • Sr. QA Engineer, Pune (7.8 LPA) • गोत्र: वशिष्ठ • मूळगाव: शेलगाव बाजार, बुलडाणा."/>
+  <meta property="og:title" content="Shubham_Kharche"/>
+  <meta property="og:site_name" content="Shubham_Kharche"/>
+  <meta property="og:url" content="https://shubham-bi.github.io/Anubandh/biodata.html"/>
+  <meta property="og:description" content="चि. शुभम अनिल खर्चे • B.E. Mechanical • Sr. QA Engineer, Pune (7.8 LPA) • गोत्र: वशिष्ठ • मूळगाव: शेलगाव बाजार, बुलडाणा."/>
   <meta property="og:image" content="https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg"/>
   <meta property="og:type" content="profile"/>
 
@@ -317,29 +319,31 @@
       color: var(--primary);
     }
 
-    /* Sticky Bottom Action Bar */
+    /* Sticky Bottom Action Bar: WhatsApp Share & Hyperlink */
     .sticky-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
       border-top: 1.5px solid #e2e8f0;
-      padding: 10px 14px;
+      padding: 10px 16px;
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       z-index: 999;
-      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      max-width: 650px;
+      margin: 0 auto;
     }
-    .sticky-btn-wa {
-      flex: 1.2;
+    .sticky-btn-wa-share {
+      flex: 1.5;
       background: #25d366;
       color: white;
-      text-decoration: none;
-      padding: 11px 12px;
+      border: none;
+      padding: 12px 16px;
       border-radius: 10px;
       font-size: 14px;
       font-weight: 800;
@@ -347,33 +351,34 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
-    }
-    .sticky-btn-call {
-      flex: 1;
-      background: #0284c7;
-      color: white;
-      text-decoration: none;
-      padding: 11px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 800;
-      text-align: center;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .sticky-btn-share {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1.5px solid #cbd5e1;
-      padding: 11px 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 800;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(37, 211, 102, 0.35);
       cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .sticky-btn-wa-share:active {
+      transform: scale(0.98);
+      background: #1eb855;
+    }
+    .sticky-btn-copy-link {
+      flex: 1;
+      background: #f8fafc;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+    }
+    .sticky-btn-copy-link:active {
+      background: #e2e8f0;
     }
 
     /* Fullscreen Modal for Original Photo */
@@ -797,16 +802,16 @@
 
     </div>
 
-    <!-- Sticky Bottom Bar -->
+    <!-- Sticky Bottom Bar: WhatsApp Share with Link Name Shubham_Kharche -->
     <div class="sticky-bar">
-      <a id="stickyWaBtn" href="https://api.whatsapp.com/send/?phone=919420539396&text=सस्नेह%20नमस्कार,%20आम्ही%20चि.%20शुभम%20खर्चे%20यांचा%20बायोडाटा%20पाहिला.%20आम्हाला%20पुढील%20चर्चा%20करायची%20आहे." class="sticky-btn-wa" target="_blank">
-        💬 WhatsApp वर बोला
-      </a>
-      <a id="stickyCallBtn" href="tel:9420539396" class="sticky-btn-call">
-        📞 थेट कॉल करा
-      </a>
-      <button type="button" class="sticky-btn-share" onclick="shareProfile()" title="शेअर करा">
-        🔗 शेअर
+      <button type="button" class="sticky-btn-wa-share" onclick="shareProfileOnWhatsApp()" title="WhatsApp वर शेअर करा">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+        </svg>
+        <span>WhatsApp वर शेअर करा</span>
+      </button>
+      <button type="button" class="sticky-btn-copy-link" onclick="copyHyperlink()" title="हायपरलिंक कॉपी करा (Shubham_Kharche)">
+        <span>🔗 लिंक कॉपी</span>
       </button>
     </div>
 
@@ -1106,19 +1111,6 @@
       if (closingBox) {
         closingBox.innerHTML = data.closingNote || '';
       }
-
-      // 6. Update Sticky Bar Links
-      const waBtn = document.getElementById('stickyWaBtn');
-      const callBtn = document.getElementById('stickyCallBtn');
-      if (waBtn && data.stickyActions) {
-        const waPhone = data.stickyActions.whatsappPhone || '9420539396';
-        const waText = encodeURIComponent(data.stickyActions.whatsappText || '');
-        waBtn.href = `https://api.whatsapp.com/send/?phone=91${waPhone}&text=${waText}`;
-      }
-      if (callBtn && data.stickyActions) {
-        const callPhone = data.stickyActions.callPhone || '9420539396';
-        callBtn.href = `tel:${callPhone}`;
-      }
     }
 
     function initProfileData() {
@@ -1164,21 +1156,61 @@
       document.getElementById('fullImgModal').classList.remove('open');
     }
 
+    const SHARE_LINK_NAME = 'Shubham_Kharche';
+    const SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
+
+    function shareProfileOnWhatsApp() {
+      // Hyperlink formatted message: [Shubham_Kharche](URL)
+      const text = `[${SHARE_LINK_NAME}](${SHARE_URL})`;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    function copyHyperlink() {
+      if (navigator.clipboard && window.ClipboardItem) {
+        const htmlBlob = new Blob([`<a href="${SHARE_URL}">${SHARE_LINK_NAME}</a>`], { type: 'text/html' });
+        const textBlob = new Blob([`[${SHARE_LINK_NAME}](${SHARE_URL})`], { type: 'text/plain' });
+        navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': htmlBlob,
+            'text/plain': textBlob
+          })
+        ]).then(() => {
+          showToast('✅ हायपरलिंक कॉपी केली! (Shubham_Kharche)');
+        }).catch(() => {
+          fallbackCopy();
+        });
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    function fallbackCopy() {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(`[${SHARE_LINK_NAME}](${SHARE_URL})`).then(() => {
+          showToast('✅ हायपरलिंक कॉपी केली! (Shubham_Kharche)');
+        });
+      } else {
+        alert(`हायपरलिंक: [${SHARE_LINK_NAME}](${SHARE_URL})`);
+      }
+    }
+
+    function showToast(msg) {
+      let toast = document.getElementById('bioToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'bioToast';
+        toast.style.cssText = 'position:fixed; bottom:75px; left:50%; transform:translateX(-50%); background:#0f172a; color:#fff; padding:10px 18px; border-radius:30px; font-size:13px; font-weight:700; z-index:99999; box-shadow:0 6px 20px rgba(0,0,0,0.25); transition:opacity 0.3s; opacity:0; pointer-events:none; white-space:nowrap;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
+
     // Share Profile
     function shareProfile() {
-      const p = currentProfile || DEFAULT_PROFILE_DATA;
-      const shareData = {
-        title: `${p.hero?.name || 'चि. शुभम अनिल खर्चे'} | ${p.title || 'विवाह प्रस्ताव'}`,
-        text: `${p.hero?.name || 'चि. शुभम अनिल खर्चे'} (${p.hero?.role || 'B.E. Mechanical'}) यांचा विवाह प्रस्ताव पहा:`,
-        url: window.location.href.split('?')[0]
-      };
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareData.url).then(() => {
-          alert('बायोडाटा लिंक कॉपी केली आहे! आपण कोणालाही पाठवू शकता.');
-        });
-      }
+      shareProfileOnWhatsApp();
     }
   
     let activePhoneAction = null;

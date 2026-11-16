@@ -205,6 +205,14 @@ try {
   // Contact Name and Address separation assertion
   assert(indexCode.includes('contact-person-name') && indexCode.includes('contact-person-addr'), "index.html defines contact-person-name and contact-person-addr classes");
   assert(indexCode.includes('addrStartIdx') || indexCode.includes('raMatch'), "index.html implements name and address line separation for contacts");
+
+  // WhatsApp Hyperlink & Share Shubham_Kharche assertions
+  assert(bioCode.includes('Shubham_Kharche'), "biodata.html uses link name Shubham_Kharche");
+  assert(bioCode.includes('shareProfileOnWhatsApp') && bioCode.includes('copyHyperlink'), "biodata.html has WhatsApp share and hyperlink copy options");
+  assert(!bioCode.includes('class="sticky-btn-call"') && !bioCode.includes('class="sticky-btn-wa"'), "biodata.html has removed bottom call and whatsapp direct chat options");
+  assert(shubhamCode.includes('shareProfileOnWhatsApp') && shubhamCode.includes('copyHyperlink'), "shubham-kharche.html has WhatsApp share and hyperlink copy options");
+  assert(indexCode.includes('shareProfileOnWhatsApp') && indexCode.includes('copyProfileHyperlink'), "index.html provides options to share profile as Shubham_Kharche");
+  assert(indexCode.includes('[Shubham_Kharche]('), "index.html WhatsApp message formats profile link as [Shubham_Kharche]");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
