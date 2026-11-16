@@ -839,6 +839,203 @@
         max-height: 90vh;
       }
     }
+  
+    /* Floating Scroll-to-Top Button */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #881337, #be123c);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 18px rgba(136, 19, 55, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .scroll-top-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Single Mobile Phone Chip Button */
+    .phone-chip-single {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      color: #15803d;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .phone-chip-single:active {
+      background: #dcfce7;
+      transform: scale(0.96);
+    }
+
+    /* Action Modal Sheet when Phone Number is clicked */
+    .phone-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      animation: fadeInBackdrop 0.2s ease;
+    }
+    .phone-modal-backdrop.open {
+      display: flex;
+    }
+    @keyframes fadeInBackdrop {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .phone-modal-sheet {
+      background: white;
+      width: 100%;
+      max-width: 460px;
+      border-radius: 20px 20px 0 0;
+      padding: 16px 20px 24px;
+      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.2);
+      animation: slideUpSheet 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .phone-modal-drag-bar {
+      width: 40px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      margin: 0 auto 12px;
+    }
+    .phone-modal-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .phone-modal-icon {
+      font-size: 32px;
+      margin-bottom: 4px;
+    }
+    .phone-modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .phone-modal-subtitle {
+      font-size: 13.5px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .phone-modal-number {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+    .phone-modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .phone-modal-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .phone-modal-btn:active {
+      transform: scale(0.98);
+    }
+    .phone-btn-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .phone-btn-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .phone-btn-text strong {
+      font-size: 15px;
+      font-weight: 800;
+    }
+    .phone-btn-text small {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+    .phone-btn-call {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #bae6fd;
+    }
+    .phone-btn-call:active {
+      background: #bae6fd;
+    }
+    .phone-btn-wa {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #bbf7d0;
+    }
+    .phone-btn-wa:active {
+      background: #bbf7d0;
+    }
+    .phone-btn-copy {
+      background: #f8fafc;
+      color: #334155;
+      border-color: #e2e8f0;
+    }
+    .phone-btn-copy:active {
+      background: #f1f5f9;
+    }
+    .phone-modal-cancel {
+      width: 100%;
+      padding: 11px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 14.5px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .phone-modal-cancel:active {
+      background: #e2e8f0;
+    }
+  
   </style>
 </head>
 <body>
@@ -1892,6 +2089,60 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       return contacts;
     }
 
+    
+    // Active Phone Action state
+    let activePhoneAction = null;
+
+    function openPhoneActionPrompt(cleanDigits, displayPhone, candName, srNo, roleName) {
+      activePhoneAction = { cleanDigits, displayPhone, candName, srNo, roleName };
+      
+      document.getElementById('phoneModalSubtitle').textContent = `${candName} (अ.क्र. ${srNo}) • ${roleName || 'पालक'}`;
+      document.getElementById('phoneModalDisplayNumber').textContent = `📞 ${displayPhone}`;
+      document.getElementById('phoneModalCallBtn').href = `tel:${cleanDigits}`;
+
+      document.getElementById('phoneActionModal').classList.add('open');
+    }
+
+    function closePhoneActionModal(event) {
+      if (event && event.target && event.target !== event.currentTarget) return;
+      document.getElementById('phoneActionModal').classList.remove('open');
+    }
+
+    function executeModalWhatsApp() {
+      if (!activePhoneAction) return;
+      const { cleanDigits, candName, srNo } = activePhoneAction;
+      closePhoneActionModal();
+      openWhatsAppChat(cleanDigits, candName, srNo);
+    }
+
+    function executeModalCopy() {
+      if (!activePhoneAction) return;
+      const num = activePhoneAction.cleanDigits || activePhoneAction.displayPhone;
+      navigator.clipboard.writeText(num).then(() => {
+        showToast(`नंबर ${activePhoneAction.displayPhone} कॉपी केला!`);
+        closePhoneActionModal();
+      }).catch(() => {
+        showToast(`नंबर: ${activePhoneAction.displayPhone}`);
+        closePhoneActionModal();
+      });
+    }
+
+    // Scroll to Top Listener
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('scrollToTopBtn');
+      if (btn) {
+        if (window.scrollY > 280) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      }
+    }, { passive: true });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  
     function renderCards(list) {
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
@@ -1911,10 +2162,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               </div>
               <div class="contact-row-right">
                 ${cs.phone ? `
-                  <div class="phone-chip-group">
-                    <a href="tel:${cs.phone.clean}" class="phone-chip" title="थेट कॉल करा">📞 ${cs.phone.display}</a>
-                    <button type="button" class="phone-chip-wa" onclick="openWhatsAppChat('${cs.phone.clean}', '${escapedName}', '${c.sr}')" title="WhatsApp वर बायोडाटा पाठवा">💬</button>
-                  </div>
+                  <button type="button" class="phone-chip-single" onclick="openPhoneActionPrompt('${cs.phone.clean}', '${cs.phone.display}', '${escapedName}', '${c.sr}', '${cs.role}')" title="कॉल किंवा WhatsApp पर्याय">
+                    📞 ${cs.phone.display}
+                  </button>
                 ` : '<span style="font-size:11px; color:#94a3b8;">फोन नाही</span>'}
               </div>
             </div>
@@ -2017,10 +2267,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const phoneButtons = (c.phones || []).map(p => {
           const cleanP = toEnglishDigits(p);
           return `
-            <div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;">
-              <a href="tel:${cleanP}" style="font-weight:700; font-size:12px; text-decoration:none; color:#0f172a;">${p}</a>
-              <a href="tel:${cleanP}" class="btn-action-call" style="padding:3px 7px; font-size:11px;">📞</a>
-              <button type="button" class="btn-action-wa" style="padding:3px 7px; font-size:11px;" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')">💬</button>
+            <div style="margin-bottom:4px;">
+              <button type="button" class="phone-chip-single" style="font-size:12px; padding:4px 8px;" onclick="openPhoneActionPrompt('${cleanP}', '${p}', '${escapedName}', '${c.sr}', 'पालक')" title="कॉल किंवा WhatsApp">
+                📞 ${p}
+              </button>
             </div>
           `;
         }).join('');
@@ -2277,5 +2527,57 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       renderView();
     });
   </script>
+
+  <!-- Floating Scroll to Top Button -->
+  <button id="scrollToTopBtn" class="scroll-top-btn" onclick="scrollToTop()" title="वर जा" aria-label="वर स्क्रोल करा">
+    <span style="font-size:20px;">⬆️</span>
+  </button>
+
+  <!-- Interactive Phone Action Sheet Modal -->
+  <div id="phoneActionModal" class="phone-modal-backdrop" onclick="closePhoneActionModal(event)">
+    <div class="phone-modal-sheet" onclick="event.stopPropagation()">
+      <div class="phone-modal-drag-bar"></div>
+      <div class="phone-modal-header">
+        <div class="phone-modal-icon">📱</div>
+        <h3 class="phone-modal-title">संपर्क पर्याय निवडा</h3>
+        <div id="phoneModalSubtitle" class="phone-modal-subtitle">पालक किंवा नातेवाईक</div>
+        <div id="phoneModalDisplayNumber" class="phone-modal-number">📞 ----------</div>
+      </div>
+      
+      <div class="phone-modal-actions">
+        <!-- Direct Phone Call Option -->
+        <a id="phoneModalCallBtn" href="#" class="phone-modal-btn phone-btn-call" onclick="closePhoneActionModal()">
+          <span class="phone-btn-icon">📞</span>
+          <div class="phone-btn-text">
+            <strong>थेट फोन कॉल करा</strong>
+            <small>डायलर उघडून कॉल लागेल</small>
+          </div>
+        </a>
+        
+        <!-- WhatsApp Proposal Message Option -->
+        <button id="phoneModalWaBtn" type="button" class="phone-modal-btn phone-btn-wa" onclick="executeModalWhatsApp()">
+          <span class="phone-btn-icon">💬</span>
+          <div class="phone-btn-text">
+            <strong>WhatsApp मेसेज पाठवा</strong>
+            <small>बायोडाटा व फोटो लिंकसह मेसेज जाईल</small>
+          </div>
+        </button>
+
+        <!-- Copy Number Option -->
+        <button id="phoneModalCopyBtn" type="button" class="phone-modal-btn phone-btn-copy" onclick="executeModalCopy()">
+          <span class="phone-btn-icon">📋</span>
+          <div class="phone-btn-text">
+            <strong>नंबर कॉपी करा</strong>
+            <small>क्लिपबोर्डवर कॉपी होईल</small>
+          </div>
+        </button>
+      </div>
+
+      <button type="button" class="phone-modal-cancel" onclick="closePhoneActionModal()">
+        रद्द करा
+      </button>
+    </div>
+  </div>
+
 </body>
 </html>
