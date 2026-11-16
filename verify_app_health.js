@@ -223,6 +223,10 @@ try {
   // Phone Action Modal (संपर्क पर्याय निवडा) Contact Person Name assertions
   assert(indexCode.includes('phoneModalContactName') && indexCode.includes('phone-modal-contact-name'), "index.html phone action modal defines phoneModalContactName element and CSS");
   assert(indexCode.includes('contactPersonName') && indexCode.includes('contactName'), "index.html passes and binds contact person name in openPhoneActionPrompt");
+
+  // Admin Portal Full Page assertions
+  assert(indexCode.includes('full-page-view'), "index.html adminSettingsModal has full-page-view class");
+  assert(indexCode.includes('.modal-overlay.full-page-view'), "index.html defines .modal-overlay.full-page-view CSS for full page view");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
