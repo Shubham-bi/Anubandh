@@ -5,10 +5,10 @@
   "hero": {
     "avatar": "🤵",
     "name": "चि. शुभम अनिल खर्चे",
-    "role": "B.E. Mechanical • Senior QA Engineer, Pune",
+    "role": "B.E. Mechanical • Sr. QA Engineer IT, Pune",
     "tags": [
       { "text": "🎂 २५/०८/१९९६ (वय: ३० वर्षे)", "type": "highlight" },
-      { "text": "📏 उंची: ५' ७\"", "type": "default" },
+      { "text": "📏 उंची: ५' ६\"", "type": "default" },
       { "text": "🩸 रक्तगट: B+ve", "type": "default" },
       { "text": "💰 वार्षिक उत्पन्न: ७.८ लाख", "type": "primary" }
     ]
@@ -36,7 +36,7 @@
       "items": [
         { "label": "शिक्षण", "val": "B.E. Mechanical", "color": "#701a75" },
         { "label": "हुद्दा (Role)", "val": "Sr. QA Engineer IT" },
-        { "label": "कंपनी (Company)", "val": "Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे" },
+        { "label": "कंपनी (Company)", "val": "Shaurya Technosoft Pvt. Ltd., Pune" },
         { "label": "वार्षिक उत्पन्न", "val": "रु. ७.८ लाख वार्षिक", "color": "#15803d" },
         { "label": "सध्याचे वास्तव्य", "val": "पुणे" }
       ]
