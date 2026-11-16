@@ -3053,9 +3053,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         if (sec.type === 'table') {
           const rows = (sec.items || []).map((it, rIdx) => `
             <div class="cms-row-item">
-              <input type="text" class="form-control cms-row-label" style="font-size:13px; padding:7px 10px; font-weight:700;" value="${escapeHtml(it.label)}" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'label', this.value)" placeholder="रकान्याचे नाव (उदा. गोत्र)"/>
+              <input type="text" class="form-control cms-row-label cms-row-label-inp" style="font-size:13px; padding:7px 10px; font-weight:700;" value="${escapeHtml(it.label)}" oninput="updateCmsTableRow(${sIdx}, ${rIdx}, 'label', this.value)" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'label', this.value)" placeholder="रकान्याचे नाव (उदा. गोत्र)"/>
               <div class="cms-row-item-inputs">
-                <input type="text" class="form-control" style="flex:1; font-size:13px; padding:7px 10px;" value="${escapeHtml(it.val)}" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'val', this.value)" placeholder="माहिती (उदा. वशिष्ठ)"/>
+                <input type="text" class="form-control cms-row-val-inp" style="flex:1; font-size:13px; padding:7px 10px;" value="${escapeHtml(it.val)}" oninput="updateCmsTableRow(${sIdx}, ${rIdx}, 'val', this.value)" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'val', this.value)" placeholder="माहिती (उदा. वशिष्ठ)"/>
                 <button type="button" class="cms-btn-icon cms-btn-del" onclick="removeCmsTableRow(${sIdx}, ${rIdx})" title="ओळ हटवा">&times;</button>
               </div>
             </div>
@@ -3074,12 +3074,12 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           const elders = (sec.elders || []).map((el, eIdx) => `
             <div class="cms-contact-card">
               <div class="cms-contact-grid-top">
-                <input type="text" class="form-control" style="font-size:13px; padding:7px 10px; font-weight:700;" value="${escapeHtml(el.name)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'name', this.value)" placeholder="व्यक्तीचे नाव (उदा. श्री. नामदेव पाटील)..."/>
-                <input type="text" class="form-control" style="font-size:13px; padding:7px 10px;" value="${escapeHtml(el.sub || el.relation || '')}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'sub', this.value)" placeholder="नाते व गाव (उदा. काका • शेलगाव)..."/>
+                <input type="text" class="form-control cms-contact-name-inp" style="font-size:13px; padding:7px 10px; font-weight:700;" value="${escapeHtml(el.name)}" oninput="updateCmsContact(${sIdx}, ${eIdx}, 'name', this.value)" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'name', this.value)" placeholder="व्यक्तीचे नाव (उदा. श्री. नामदेव पाटील)..."/>
+                <input type="text" class="form-control cms-contact-sub-inp" style="font-size:13px; padding:7px 10px;" value="${escapeHtml(el.sub || el.relation || '')}" oninput="updateCmsContact(${sIdx}, ${eIdx}, 'sub', this.value)" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'sub', this.value)" placeholder="नाते व गाव (उदा. काका • शेलगाव)..."/>
               </div>
               <div class="cms-contact-grid-bottom">
-                <input type="text" class="form-control cms-contact-phone-inp" style="font-size:13px; padding:7px 10px;" value="${escapeHtml(el.phone)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'phone', this.value)" placeholder="फोन (10 अंक)..."/>
-                <input type="text" class="form-control" style="flex:1; font-size:13px; padding:7px 10px;" value="${escapeHtml(el.displayPhone || el.phone)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'displayPhone', this.value)" placeholder="मराठी डिस्प्ले (उदा. ९४२०५३९३९६)..."/>
+                <input type="text" class="form-control cms-contact-phone-inp" style="font-size:13px; padding:7px 10px;" value="${escapeHtml(el.phone)}" oninput="updateCmsContact(${sIdx}, ${eIdx}, 'phone', this.value)" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'phone', this.value)" placeholder="फोन (10 अंक)..."/>
+                <input type="text" class="form-control cms-contact-disp-inp" style="flex:1; font-size:13px; padding:7px 10px;" value="${escapeHtml(el.displayPhone || el.phone)}" oninput="updateCmsContact(${sIdx}, ${eIdx}, 'displayPhone', this.value)" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'displayPhone', this.value)" placeholder="मराठी डिस्प्ले (उदा. ९४२०५३९३९६)..."/>
                 <button type="button" class="cms-btn-icon cms-btn-del" onclick="removeCmsContact(${sIdx}, ${eIdx})" title="व्यक्ती हटवा">🗑️</button>
               </div>
             </div>
@@ -3098,7 +3098,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           bodyHtml = `
             <div>
               <div style="font-size:11.5px; color:#64748b; font-weight:700; margin-bottom:4px;">मजकूर / माहिती (Text):</div>
-              <textarea class="form-control" style="min-height:75px; font-size:13px; line-height:1.45;" onchange="updateCmsSectionProp(${sIdx}, 'content', this.value)" placeholder="येथे माहिती, अपेक्षा किंवा टीप लिहा...">${escapeHtml(sec.content || '')}</textarea>
+              <textarea class="form-control cms-text-inp" style="min-height:75px; font-size:13px; line-height:1.45;" oninput="updateCmsSectionProp(${sIdx}, 'content', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'content', this.value)" placeholder="येथे माहिती, अपेक्षा किंवा टीप लिहा...">${escapeHtml(sec.content || '')}</textarea>
             </div>
           `;
         } else if (sec.type === 'photo') {
@@ -3106,11 +3106,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             <div class="cms-grid-2">
               <div>
                 <label class="form-label" style="font-size:11px;">फोटो फाईल मार्ग (Photo URL):</label>
-                <input type="text" class="form-control" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" onchange="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)"/>
+                <input type="text" class="form-control cms-photo-url-inp" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" oninput="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)"/>
               </div>
               <div>
                 <label class="form-label" style="font-size:11px;">डाउनलोड बटण मजकूर:</label>
-                <input type="text" class="form-control" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}" onchange="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)"/>
+                <input type="text" class="form-control cms-photo-dl-inp" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}" oninput="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)"/>
               </div>
             </div>
           `;
@@ -3120,12 +3120,12 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           <div class="cms-sec-card ${sec.hidden ? 'is-sec-hidden' : ''}" id="cmsCardSec_${sIdx}" style="${sec.hidden ? 'opacity:0.75; border:1.5px dashed #cbd5e1; background:#f8fafc;' : ''}">
             <div class="cms-sec-head">
               <div class="cms-sec-head-main">
-                <input type="text" value="${escapeHtml(sec.icon || '📋')}" style="width:38px; min-width:38px; height:38px; text-align:center; font-size:18px; padding:2px; border:1px solid #cbd5e1; border-radius:8px;" onchange="updateCmsSectionProp(${sIdx}, 'icon', this.value)" title="इमोजी चिन्ह"/>
-                <input type="text" value="${escapeHtml(sec.title)}" class="form-control" style="flex:1; font-weight:700; font-size:14px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:8px;" onchange="updateCmsSectionProp(${sIdx}, 'title', this.value)" placeholder="विभागाचे नाव (उदा. शैक्षणिक माहिती)..."/>
+                <input type="text" class="cms-sec-icon-inp" value="${escapeHtml(sec.icon || '📋')}" style="width:38px; min-width:38px; height:38px; text-align:center; font-size:18px; padding:2px; border:1px solid #cbd5e1; border-radius:8px;" oninput="updateCmsSectionProp(${sIdx}, 'icon', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'icon', this.value)" title="इमोजी चिन्ह"/>
+                <input type="text" value="${escapeHtml(sec.title)}" class="form-control cms-sec-title-inp" style="flex:1; font-weight:700; font-size:14px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:8px;" oninput="updateCmsSectionProp(${sIdx}, 'title', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'title', this.value)" placeholder="विभागाचे नाव (उदा. शैक्षणिक माहिती)..."/>
               </div>
               <div class="cms-sec-head-actions">
                 <label style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:700; cursor:pointer; background:${sec.hidden ? '#fee2e2' : '#f0fdf4'}; color:${sec.hidden ? '#991b1b' : '#166534'}; padding:3px 8px; border-radius:6px; border:1px solid ${sec.hidden ? '#fca5a5' : '#bbf7d0'}; margin-right:4px;" title="${sec.hidden ? 'हा विभाग वेबपेजवर लपवला आहे. दाखवण्यासाठी क्लिक करा.' : 'हा विभाग वेबपेजवर दिसत आहे. लपवण्यासाठी क्लिक करा.'}">
-                  <input type="checkbox" ${sec.hidden ? '' : 'checked'} onchange="toggleCmsSectionHidden(${sIdx}, !this.checked)" style="cursor:pointer; accent-color:#16a34a; width:13px; height:13px;"/>
+                  <input type="checkbox" class="cms-sec-hidden-chk" ${sec.hidden ? '' : 'checked'} onchange="toggleCmsSectionHidden(${sIdx}, !this.checked)" style="cursor:pointer; accent-color:#16a34a; width:13px; height:13px;"/>
                   <span>${sec.hidden ? '🙈 लपवला' : '👁️ दाखवा'}</span>
                 </label>
                 <span style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:4px 8px; border-radius:999px; font-weight:700; white-space:nowrap;">${typeLabel}</span>
@@ -3291,53 +3291,114 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         try { document.activeElement.blur(); } catch(err) {}
       }
 
-      // Gather Header & Hero
-      shareableProfileData.title = document.getElementById('cmsProfileTitle')?.value.trim() || DEFAULT_PROFILE_DATA.title;
-      shareableProfileData.subtitle = document.getElementById('cmsProfileSubtitle')?.value.trim() || DEFAULT_PROFILE_DATA.subtitle;
-      shareableProfileData.devGreeting = document.getElementById('cmsProfileGreeting')?.value.trim() || DEFAULT_PROFILE_DATA.devGreeting;
+      // 1. Gather Header & Hero from DOM
+      shareableProfileData.title = document.getElementById('cmsProfileTitle')?.value.trim() ?? DEFAULT_PROFILE_DATA.title;
+      shareableProfileData.subtitle = document.getElementById('cmsProfileSubtitle')?.value.trim() ?? DEFAULT_PROFILE_DATA.subtitle;
+      shareableProfileData.devGreeting = document.getElementById('cmsProfileGreeting')?.value.trim() ?? DEFAULT_PROFILE_DATA.devGreeting;
 
       if (!shareableProfileData.hero) shareableProfileData.hero = {};
-      shareableProfileData.hero.name = document.getElementById('cmsProfileGroomName')?.value.trim() || DEFAULT_PROFILE_DATA.hero.name;
-      shareableProfileData.hero.role = document.getElementById('cmsProfileRole')?.value.trim() || DEFAULT_PROFILE_DATA.hero.role;
+      shareableProfileData.hero.name = document.getElementById('cmsProfileGroomName')?.value.trim() ?? DEFAULT_PROFILE_DATA.hero.name;
+      shareableProfileData.hero.role = document.getElementById('cmsProfileRole')?.value.trim() ?? DEFAULT_PROFILE_DATA.hero.role;
       shareableProfileData.hero.avatar = document.getElementById('cmsProfileAvatar')?.value.trim() || '🤵';
 
-      // Gather Footer & Sticky (allow empty strings)
-      shareableProfileData.closingNote = document.getElementById('cmsProfileClosingNote')?.value || DEFAULT_PROFILE_DATA.closingNote;
+      // 2. Gather Footer & Sticky (allow empty strings)
+      shareableProfileData.closingNote = document.getElementById('cmsProfileClosingNote')?.value ?? DEFAULT_PROFILE_DATA.closingNote;
       if (!shareableProfileData.stickyActions) shareableProfileData.stickyActions = {};
       const waPhoneVal = document.getElementById('cmsProfileWaPhone')?.value;
       const callPhoneVal = document.getElementById('cmsProfileCallPhone')?.value;
       shareableProfileData.stickyActions.whatsappPhone = waPhoneVal !== undefined ? waPhoneVal.trim() : '';
-      shareableProfileData.stickyActions.whatsappText = document.getElementById('cmsProfileWaText')?.value || '';
+      shareableProfileData.stickyActions.whatsappText = document.getElementById('cmsProfileWaText')?.value ?? '';
       shareableProfileData.stickyActions.callPhone = callPhoneVal !== undefined ? callPhoneVal.trim() : '';
 
-      // Timestamp ensures freshest version in biodata viewer
+      // 3. Direct Full DOM Harvest for all Sections & Inputs
+      const secCards = document.querySelectorAll('.cms-sec-card');
+      secCards.forEach((card, sIdx) => {
+        const sec = shareableProfileData.sections[sIdx];
+        if (!sec) return;
+
+        const iconInput = card.querySelector('.cms-sec-icon-inp');
+        if (iconInput) sec.icon = iconInput.value.trim() || '📋';
+        const titleInput = card.querySelector('.cms-sec-title-inp');
+        if (titleInput) sec.title = titleInput.value.trim() || 'विभाग';
+        const hiddenCheckbox = card.querySelector('.cms-sec-hidden-chk');
+        if (hiddenCheckbox) sec.hidden = !hiddenCheckbox.checked;
+
+        if (sec.type === 'table') {
+          const rowEls = card.querySelectorAll('.cms-row-item');
+          if (rowEls.length > 0) {
+            sec.items = [];
+            rowEls.forEach(rowEl => {
+              const labelInp = rowEl.querySelector('.cms-row-label-inp');
+              const valInp = rowEl.querySelector('.cms-row-val-inp');
+              sec.items.push({
+                label: labelInp ? labelInp.value.trim() : '',
+                val: valInp ? valInp.value.trim() : ''
+              });
+            });
+          }
+        } else if (sec.type === 'contacts') {
+          const contactEls = card.querySelectorAll('.cms-contact-card');
+          if (contactEls.length > 0) {
+            sec.elders = [];
+            contactEls.forEach(cEl => {
+              const nameInp = cEl.querySelector('.cms-contact-name-inp');
+              const subInp = cEl.querySelector('.cms-contact-sub-inp');
+              const phoneInp = cEl.querySelector('.cms-contact-phone-inp');
+              const dispInp = cEl.querySelector('.cms-contact-disp-inp');
+              const phone = phoneInp ? phoneInp.value.trim() : '';
+              sec.elders.push({
+                name: nameInp ? nameInp.value.trim() : '',
+                sub: subInp ? subInp.value.trim() : '',
+                phone: phone,
+                displayPhone: dispInp && dispInp.value.trim() ? dispInp.value.trim() : phone,
+                relation: subInp ? subInp.value.trim() : 'नातेवाईक'
+              });
+            });
+          }
+        } else if (sec.type === 'text') {
+          const textEl = card.querySelector('.cms-text-inp');
+          if (textEl) sec.content = textEl.value;
+        } else if (sec.type === 'photo') {
+          const photoUrlEl = card.querySelector('.cms-photo-url-inp');
+          const dlTextEl = card.querySelector('.cms-photo-dl-inp');
+          if (photoUrlEl) sec.photoUrl = photoUrlEl.value.trim();
+          if (dlTextEl) sec.downloadText = dlTextEl.value.trim();
+        }
+      });
+
+      // 4. Timestamp ensures freshest version in biodata viewer
       shareableProfileData.updatedAt = Date.now();
 
-      // 1. Save to LocalStorage
+      // 5. Save to LocalStorage
       localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
 
-      // 2. Direct API save to disk via Node.js server (if active)
+      // 6. Direct API save to disk via Node.js server (if active)
       fetch('/api/save-profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(shareableProfileData, null, 2)
       }).then(r => r.json()).then(res => {
-        if (res && res.success) console.log('Disk JSON updated successfully!');
-      }).catch(() => {});
+        if (res && res.success) {
+          showToast('✅ बदल ब्राऊझर आणि डिस्कवर (profile_data.json) सेव्ह झाले!');
+        } else {
+          showToast('✅ बदल ब्राऊझरमध्ये सेव्ह झाले! (GitHub साठी 📥 JSON डाऊनलोड करा)');
+        }
+      }).catch(() => {
+        showToast('✅ बदल या ब्राऊझरमध्ये सेव्ह झाले! (GitHub साठी 📥 JSON डाऊनलोड करा)');
+      });
 
-      // 3. Save to Firebase Cloud (if active)
+      // 7. Save to Firebase Cloud (if active)
       if (firebaseDb && isCloudConnected) {
         try {
           firebaseDb.ref('anubandh_tracker/shareable_profile').set(shareableProfileData);
         } catch(e) {}
       }
 
-      // 4. Also keep waSettings in sync
+      // 8. Also keep waSettings in sync
       if (shareableProfileData.hero.name) waSettings.groomName = shareableProfileData.hero.name;
       localStorage.setItem(WA_SETTINGS_KEY, JSON.stringify(waSettings));
 
       closeAdminSettingsModal();
-      showToast('✅ शेअर बायोडाटा वेबपेज यशस्वीरीत्या सेव्ह झाले!');
     }
 
     function previewProfilePage() {
