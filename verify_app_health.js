@@ -26,6 +26,8 @@ const requiredFiles = [
   'manifest.json',
   'sw.js',
   'icon.svg',
+  'biodata.html',
+  'shubham-kharche.html',
   'shubham_kharche_biodata.jpg',
   'server.js',
   'start-pwa.bat'
