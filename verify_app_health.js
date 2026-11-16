@@ -244,7 +244,8 @@ try {
   assert(indexCode.includes('main-nav-tabs') && indexCode.includes('tabShortlisted') && indexCode.includes('tabAllCandidates'), "index.html defines main-nav-tabs with Shortlist and All tabs");
   assert(indexCode.includes('switchMainListTab') && indexCode.includes('updateNavTabs'), "index.html provides functions to switch tabs and update counts");
   assert(indexCode.includes('toggleShortlist') && indexCode.includes('SHORTLIST_STORAGE_KEY'), "index.html supports toggling shortlist and persists in localStorage");
-  assert(indexCode.includes('btn-shortlist-star') && indexCode.includes('shortlist-badge'), "index.html defines shortlist star button and badge styling");
+  assert(indexCode.includes('btn-shortlist-star') && indexCode.includes('getStarSvg'), "index.html defines compact shortlist star button and getStarSvg renderer");
+  assert(!indexCode.includes('<span class="shortlist-badge">⭐ शॉर्टलिस्ट</span>'), "index.html card header no longer displays redundant text label for shortlisted");
   assert(indexCode.includes("currentListTab = 'shortlisted'"), "index.html defaults to shortlisted tab first if shortlist is not empty");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);

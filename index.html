@@ -349,41 +349,37 @@
 
     /* Shortlist Star Toggle Button */
     .btn-shortlist-star {
-      background: white;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      width: 36px;
-      height: 36px;
-      font-size: 18px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      width: 26px;
+      height: 26px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: #94a3b8;
-      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.15s ease;
       touch-action: manipulation;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      line-height: 1;
       padding: 0;
+      flex-shrink: 0;
     }
     .btn-shortlist-star:hover {
       border-color: #f59e0b;
-      color: #f59e0b;
       background: #fffbeb;
-      transform: scale(1.08);
     }
     .btn-shortlist-star.active {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      border-color: #f59e0b;
-      color: #b45309;
-      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25);
+      background: #fffbeb;
+      border-color: #fde68a;
+      box-shadow: 0 1px 3px rgba(245, 158, 11, 0.15);
     }
-    .btn-shortlist-star.active:active {
+    .btn-shortlist-star:active {
       transform: scale(0.92);
     }
 
-    /* Shortlist Badge on Card */
+    /* Shortlist Badge */
     .shortlist-badge {
       display: inline-flex;
       align-items: center;
@@ -2511,7 +2507,9 @@
             <span class="cand-sr-badge" id="mCandSrBadge">अ.क्र. -</span>
             <div class="modal-head-title" id="mCandName" style="color:#0f172a;">कु. नाव</div>
             <span class="age-badge" id="mCandAgeBadge" style="display:none;">वय: -</span>
-            <button type="button" id="mCandShortlistBtn" class="btn-shortlist-star" onclick="toggleShortlistModalCurrent()" title="शॉर्टलिस्ट करा" style="width:32px; height:32px; font-size:16px;">☆</button>
+            <button type="button" id="mCandShortlistBtn" class="btn-shortlist-star" onclick="toggleShortlistModalCurrent()" title="शॉर्टलिस्ट करा">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
           </div>
           <div style="font-size:12px; color:var(--text-muted); margin-top:2px;" id="mCandSubtitle">वधू संशोधन व संभाषण नोंदवही</div>
         </div>
@@ -3776,6 +3774,13 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (countAllEl) countAllEl.textContent = toMarathiDigits(allCount);
     }
 
+    function getStarSvg(isShortlisted, size = 15) {
+      if (isShortlisted) {
+        return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+      }
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+    }
+
     function toggleShortlist(candId, event) {
       if (event) {
         event.stopPropagation();
@@ -3815,7 +3820,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       const btn = document.getElementById('mCandShortlistBtn');
       if (btn && c) {
         btn.classList.toggle('active', !!c.shortlisted);
-        btn.textContent = c.shortlisted ? '⭐' : '☆';
+        btn.innerHTML = getStarSvg(!!c.shortlisted, 15);
         btn.title = c.shortlisted ? 'शॉर्टलिस्ट मधून काढा' : 'शॉर्टलिस्ट करा';
       }
     }
@@ -4161,7 +4166,6 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             <div>
               <div style="display:flex; align-items:center; gap:6px;">
                 <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
-                ${c.shortlisted ? '<span class="shortlist-badge">⭐ शॉर्टलिस्ट</span>' : ''}
               </div>
               <h3 class="cand-name">
                 ${c.name}
@@ -4171,7 +4175,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             </div>
             <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
               <button type="button" class="btn-shortlist-star ${c.shortlisted ? 'active' : ''}" onclick="toggleShortlist('${c.id}', event)" title="${c.shortlisted ? 'शॉर्टलिस्ट मधून काढा' : 'शॉर्टलिस्ट करा'}">
-                ${c.shortlisted ? '⭐' : '☆'}
+                ${getStarSvg(!!c.shortlisted, 15)}
               </button>
               <span class="status-badge ${sInfo.cls}">
                 ${sInfo.icon} ${sInfo.label}
@@ -4275,8 +4279,8 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="white-space:nowrap;">
-            <button type="button" class="btn-shortlist-star ${c.shortlisted ? 'active' : ''}" style="width:28px; height:28px; font-size:14px; margin-right:4px;" onclick="toggleShortlist('${c.id}', event)" title="${c.shortlisted ? 'शॉर्टलिस्ट मधून काढा' : 'शॉर्टलिस्ट करा'}">
-              ${c.shortlisted ? '⭐' : '☆'}
+            <button type="button" class="btn-shortlist-star ${c.shortlisted ? 'active' : ''}" style="margin-right:4px;" onclick="toggleShortlist('${c.id}', event)" title="${c.shortlisted ? 'शॉर्टलिस्ट मधून काढा' : 'शॉर्टलिस्ट करा'}">
+              ${getStarSvg(!!c.shortlisted, 13)}
             </button>
             <span style="font-weight:700; color:var(--primary);">${c.sr}</span>
           </td>
@@ -4365,7 +4369,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       const shortBtn = document.getElementById('mCandShortlistBtn');
       if (shortBtn) {
         shortBtn.classList.toggle('active', !!cand.shortlisted);
-        shortBtn.textContent = cand.shortlisted ? '⭐' : '☆';
+        shortBtn.innerHTML = getStarSvg(!!cand.shortlisted, 15);
         shortBtn.title = cand.shortlisted ? 'शॉर्टलिस्ट मधून काढा' : 'शॉर्टलिस्ट करा';
       }
 
