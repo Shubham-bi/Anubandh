@@ -786,7 +786,7 @@
     <div class="search-row">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input" placeholder="नाव, गाव, गोत्र, शिक्षण किंवा फोनने शोधा..." oninput="handleSearch()"/>
+        <input type="text" id="searchInput" class="search-input" placeholder="नाव, जन्म ठिकाण, गोत्र, शिक्षण किंवा फोनने शोधा..." oninput="handleSearch()"/>
         <button id="searchClearBtn" class="search-clear-btn" onclick="clearSearch()">&times;</button>
       </div>
 
@@ -806,7 +806,7 @@
           <tr>
             <th>अ.क्र.</th>
             <th>नाव</th>
-            <th>मूळगाव</th>
+            <th>जन्म ठिकाण</th>
             <th>उंची/वर्ण</th>
             <th>गोत्र/मामकुळ</th>
             <th>जन्म तारीख</th>
@@ -1080,7 +1080,7 @@
       <div class="modal-head">
         <div>
           <div class="modal-head-title" id="mCandName">कु. नाव</div>
-          <div style="font-size:11.5px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • मूळगाव</div>
+          <div style="font-size:11.5px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • जन्म ठिकाण</div>
         </div>
         <button class="close-btn" onclick="closeTrackModal()">&times;</button>
       </div>
@@ -1946,7 +1946,7 @@ ${waSettings.photoNote}
     }
 
     function exportDataCsv() {
-      const headers = ["अ.क्र.", "नाव", "मूळगाव", "उंची", "वर्ण", "गोत्र", "मामकुळ", "जन्म तारीख", "वेळ", "रक्त", "शिक्षण", "कुटुंब", "अपेक्षा", "संपर्क", "फोन", "स्थिती"];
+      const headers = ["अ.क्र.", "नाव", "जन्म ठिकाण", "उंची", "वर्ण", "गोत्र", "मामकुळ", "जन्म तारीख", "वेळ", "रक्त", "शिक्षण", "कुटुंब", "अपेक्षा", "संपर्क", "फोन", "स्थिती"];
       const rows = candidates.map(c => [
         `"${c.sr}"`,
         `"${(c.name || '').replace(/"/g, '""')}"`,
