@@ -179,6 +179,24 @@ try {
   const candJson = JSON.parse(candJsonRaw);
   assert(Array.isArray(candJson) && candJson.length === 83, "candidates.json is valid array containing exactly 83 records");
   assert(indexCode.includes('calculateAge(') && indexCode.includes('age-badge'), "index.html calculates and displays age based on DOB");
+  // 8. Validate Shareable Profile CMS & Dynamic Profile Rendering
+  const profileJsonRaw = fs.readFileSync(path.join(repoDir, 'profile_data.json'), 'utf8');
+  const profileJson = JSON.parse(profileJsonRaw);
+  assert(profileJson && profileJson.hero && Array.isArray(profileJson.sections), "profile_data.json contains valid hero and sections");
+
+  assert(bioCode.includes('DEFAULT_PROFILE_DATA') && bioCode.includes('renderProfile'), "biodata.html supports dynamic profile rendering");
+  assert(shubhamCode.includes('DEFAULT_PROFILE_DATA') && shubhamCode.includes('renderProfile'), "shubham-kharche.html supports dynamic profile rendering");
+
+  assert(indexCode.includes('secProfileCmsSettings'), "index.html contains Shareable Profile CMS section");
+  assert(indexCode.includes('saveProfileCmsData'), "index.html contains saveProfileCmsData handler");
+  assert(indexCode.includes('confirmAddCmsSection'), "index.html supports adding custom sections dynamically");
+  assert(indexCode.includes('deleteCmsSection'), "index.html supports removing sections dynamically");
+
+  const serverCode = fs.readFileSync(path.join(repoDir, 'server.js'), 'utf8');
+  assert(serverCode.includes('/api/save-profile'), "server.js provides POST /api/save-profile endpoint");
+
+  const swCode2 = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
+  assert(swCode2.includes('profile_data.json'), "sw.js caches profile_data.json");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

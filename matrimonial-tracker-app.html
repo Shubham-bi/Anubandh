@@ -1048,6 +1048,75 @@
     .phone-modal-cancel:active {
       background: #e2e8f0;
     }
+
+    /* Shareable Profile CMS Editor Styles */
+    .cms-sec-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: border-color 0.15s ease;
+    }
+    .cms-sec-card:hover {
+      border-color: #cbd5e1;
+    }
+    .cms-sec-head {
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cms-btn-icon {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background 0.1s;
+    }
+    .cms-btn-icon:hover {
+      background: #f1f5f9;
+    }
+    .cms-btn-icon:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .cms-btn-del {
+      color: #dc2626 !important;
+      border-color: #fca5a5 !important;
+      background: #fff5f5 !important;
+    }
+    .cms-btn-del:hover {
+      background: #fee2e2 !important;
+    }
+    .cms-row-item {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .cms-pill-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
   
   
     /* Fullscreen Password Lock Overlay for Web & App (Password: 258) */
@@ -1478,6 +1547,13 @@
           <span>मोबाईलमध्ये ॲप इन्स्टॉल करा</span>
         </div>
 
+        <!-- Shareable Profile Editor in Menu -->
+        <div class="menu-item" onclick="requestAdminAccess('profile_cms')">
+          <span>📄</span>
+          <span>शेअर बायोडाटा वेबपेज संपादन</span>
+          <span class="menu-item-lock">🔒 पासवर्ड</span>
+        </div>
+
         <!-- Password Protected Setting in Menu -->
         <div class="menu-item" onclick="requestAdminAccess()">
           <span>⚙️</span>
@@ -1542,20 +1618,205 @@
 
   <!-- Unified Admin Settings Modal -->
   <div id="adminSettingsModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 650px;">
+    <div class="modal-box" style="max-width: 780px;">
       <div class="modal-head">
-        <div class="modal-head-title">⚙️ अ‍ॅडमिन सेटिंग्ज व मेसेज कस्टमायझर</div>
+        <div class="modal-head-title">⚙️ अ‍ॅडमिन पोर्टल व बायोडाटा कस्टमायझर</div>
         <button class="close-btn" onclick="closeAdminSettingsModal()">&times;</button>
       </div>
       <div class="modal-content-body">
         
-        <div style="display:flex; gap:8px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px;">
-          <button id="tabWaBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 14px; font-size:13px;" onclick="switchAdminTab('wa')">
-            💬 WhatsApp मेसेज व बायोडाटा
+        <div style="display:flex; gap:6px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px; overflow-x:auto;">
+          <button id="tabProfileCmsBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('profile_cms')">
+            📄 शेअर बायोडाटा वेबपेज संपादन
           </button>
-          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 14px; font-size:13px;" onclick="switchAdminTab('sync')">
+          <button id="tabWaBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('wa')">
+            💬 WhatsApp मेसेज
+          </button>
+          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('sync')">
             🔄 Firebase क्लाउड सिंक
           </button>
+        </div>
+
+        <!-- TAB 1: Shareable Profile CMS & Section Builder -->
+        <div id="secProfileCmsSettings">
+          <!-- Live Info Bar -->
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#1e40af; margin-bottom:12px; display:flex; flex-direction:column; gap:6px;">
+            <div>
+              📄 <strong>शेअर बायोडाटा वेबपेज संपादन (CMS):</strong> वधू पक्षाला पाठवल्या जाणाऱ्या वेबपेजमधील (<code>biodata.html</code>) सर्व माहिती, फोटो व नवीन विभाग (sections) येथून थेट जोडा किंवा हटवा. कोड बदलण्याची गरज नाही.
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+              <a href="./biodata.html" target="_blank" style="color:#0369a1; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:4px; background:white; padding:4px 10px; border-radius:6px; border:1px solid #bae6fd;">
+                🔗 लाईव्ह वेबपेज उघडा (biodata.html) ↗
+              </a>
+              <span style="color:#64748b; font-size:11.5px;">(बदल सेव्ह करण्यासाठी खालील '💾 सेव्ह करा' बटण दाबा)</span>
+            </div>
+          </div>
+
+          <!-- Top Action Buttons -->
+          <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:center; margin-bottom:14px; background:#fafaf9; border:1px solid #e7e5e4; border-radius:10px; padding:8px 12px;">
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="action-btn action-btn-primary" style="background:linear-gradient(135deg, #15803d, #16a34a); padding:7px 14px; font-size:13px;" onclick="saveProfileCmsData(event)">
+                💾 सर्व बदल सेव्ह करा
+              </button>
+              <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:13px;" onclick="previewProfilePage()">
+                👁️ प्रिव्ह्यू पहा
+              </button>
+              <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:13px;" onclick="downloadProfileJson()" title="JSON फाईल डाऊनलोड करा">
+                📥 JSON सेव्ह
+              </button>
+            </div>
+            <button type="button" class="action-btn action-btn-outline" style="color:var(--danger); border-color:#fca5a5; padding:6px 10px; font-size:12px;" onclick="resetProfileCmsToDefault()">
+              ↺ मूळ रीसेट
+            </button>
+          </div>
+
+          <form id="profileCmsForm" onsubmit="saveProfileCmsData(event)">
+            <!-- Header & Hero Block -->
+            <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+              <div style="font-weight:800; font-size:14px; color:var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                <span>🤵</span>
+                <span>१. हेडर व मुख्य प्रोफाईल माहिती (Header & Hero)</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div class="form-group">
+                  <label class="form-label">पेज मुख्य शीर्षक:</label>
+                  <input type="text" id="cmsProfileTitle" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">उपशीर्षक:</label>
+                  <input type="text" id="cmsProfileSubtitle" class="form-control"/>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 2fr; gap:8px; margin-top:6px;">
+                <div class="form-group">
+                  <label class="form-label">देव वंदना / Greeting:</label>
+                  <input type="text" id="cmsProfileGreeting" class="form-control"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">मुलाचे संपूर्ण नाव:</label>
+                  <input type="text" id="cmsProfileGroomName" class="form-control" required/>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 80px 1fr; gap:8px; margin-top:6px;">
+                <div class="form-group">
+                  <label class="form-label">अवतार:</label>
+                  <input type="text" id="cmsProfileAvatar" class="form-control" style="text-align:center; font-size:18px;"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">पद / हुद्दा / करिअर सारांश:</label>
+                  <input type="text" id="cmsProfileRole" class="form-control" required/>
+                </div>
+              </div>
+
+              <!-- Tags / Pills Manager -->
+              <div style="margin-top:10px; padding-top:10px; border-top:1px dashed #e2e8f0;">
+                <label class="form-label" style="margin-bottom:6px;">ठळक बॅजेस (Tags / Highlights):</label>
+                <div id="cmsTagsList" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;"></div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <input type="text" id="cmsNewTagText" class="form-control" style="flex:1; font-size:12.5px; padding:6px 10px;" placeholder="उदा. 🎂 २५/०८/१९९६ (२९ वर्षे)..."/>
+                  <select id="cmsNewTagType" class="form-control" style="width:110px; font-size:12.5px; padding:6px 8px;">
+                    <option value="highlight">हायलाइट (पिवळा)</option>
+                    <option value="primary">प्राथमिक (गुलाबी)</option>
+                    <option value="default">सामान्य (राखाडी)</option>
+                  </select>
+                  <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px;" onclick="addCmsTag()">
+                    ➕ टॅग जोडा
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Sections Builder Block -->
+            <div style="margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div style="font-weight:800; font-size:14px; color:var(--primary); display:flex; align-items:center; gap:6px;">
+                  <span>📑</span>
+                  <span>२. विभाग व्यवस्थापक (Add / Remove / Reorder Sections)</span>
+                </div>
+                <button type="button" class="action-btn action-btn-outline" style="padding:5px 10px; font-size:12px; border-color:#f59e0b; color:#b45309; background:#fffbeb; font-weight:800;" onclick="openAddSectionPrompt()">
+                  ➕ नवीन विभाग जोडा
+                </button>
+              </div>
+
+              <!-- Container for all sections -->
+              <div id="cmsSectionsListContainer"></div>
+
+              <!-- Add Section Prompt Form (Collapsible) -->
+              <div id="cmsAddSectionBox" style="display:none; background:#fffbeb; border:1.5px dashed #f59e0b; border-radius:10px; padding:12px 14px; margin-top:10px;">
+                <div style="font-weight:800; font-size:13.5px; color:#92400e; margin-bottom:8px;">
+                  ➕ नवीन विभाग तयार करा:
+                </div>
+                <div style="display:grid; grid-template-columns: 60px 1fr 140px; gap:8px;">
+                  <div class="form-group">
+                    <label class="form-label">चिन्ह:</label>
+                    <input type="text" id="cmsNewSecIcon" class="form-control" style="text-align:center;" value="🎯"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">विभागाचे नाव (शीर्षक):</label>
+                    <input type="text" id="cmsNewSecTitle" class="form-control" placeholder="उदा. वधू पक्षाकडून अपेक्षा..."/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">प्रकार:</label>
+                    <select id="cmsNewSecType" class="form-control">
+                      <option value="table">तक्ता (Table)</option>
+                      <option value="text">मजकूर (Text/Note)</option>
+                      <option value="contacts">संपर्क यादी</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+                  <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px;" onclick="closeAddSectionPrompt()">
+                    रद्द करा
+                  </button>
+                  <button type="button" class="action-btn action-btn-primary" style="background:#b45309; padding:6px 14px; font-size:12.5px;" onclick="confirmAddCmsSection()">
+                    तयार करा
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer & Sticky Bar Block -->
+            <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:14px;">
+              <div style="font-weight:800; font-size:14px; color:var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                <span>📱</span>
+                <span>३. तळटीप व संपर्क कृती बटणे (Footer & Sticky Actions)</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">शेवटचा निरोप / टीप (Closing Note HTML):</label>
+                <textarea id="cmsProfileClosingNote" class="form-control" style="min-height:55px;"></textarea>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:6px;">
+                <div class="form-group">
+                  <label class="form-label">WhatsApp संपर्क नंबर:</label>
+                  <input type="text" id="cmsProfileWaPhone" class="form-control"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">थेट फोन कॉल नंबर:</label>
+                  <input type="text" id="cmsProfileCallPhone" class="form-control"/>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top:6px;">
+                <label class="form-label">WhatsApp डीफॉल्ट मेसेज मजकूर:</label>
+                <input type="text" id="cmsProfileWaText" class="form-control"/>
+              </div>
+            </div>
+
+            <!-- Bottom Save Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+              <button type="button" class="action-btn action-btn-outline" onclick="previewProfilePage()">
+                👁️ प्रिव्ह्यू उघडा
+              </button>
+              <button type="submit" class="action-btn action-btn-primary" style="background:linear-gradient(135deg, #15803d, #16a34a); padding:10px 20px; font-size:14px;">
+                💾 सर्व बदल सेव्ह करा
+              </button>
+            </div>
+          </form>
         </div>
 
         <div id="secWaSettings">
@@ -1964,11 +2225,522 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('sideMenuOverlay').classList.remove('open');
     }
 
-    let targetAdminSection = 'wa';
+    // ==========================================
+    // SHAREABLE PROFILE CMS (ZERO-CODE PAGE BUILDER)
+    // ==========================================
+    const PROFILE_STORAGE_KEY = 'anubandh_shareable_profile';
+    const DEFAULT_PROFILE_DATA = {
+      title: "विवाह प्रस्ताव",
+      subtitle: "खर्चे परिवार (पुणे / शेलगाव बाजार)",
+      devGreeting: "॥ श्री गणेशाय नमः ॥",
+      hero: {
+        avatar: "🤵",
+        name: "चि. शुभम अनिल खर्चे",
+        role: "B.E. Mechanical • Senior QA Engineer, Pune",
+        tags: [
+          { text: "🎂 २५/०८/१९९६ (२९ वर्षे)", type: "highlight" },
+          { text: "📏 उंची: ५' ७\"", type: "default" },
+          { text: "🩸 रक्तगट: B+ve", type: "default" },
+          { text: "💰 वार्षिक उत्पन्न: ७.८ लाख", type: "primary" }
+        ]
+      },
+      sections: [
+        {
+          id: "sec-personal",
+          title: "वैयक्तिक व जन्मपत्रिका माहिती",
+          icon: "📋",
+          type: "table",
+          items: [
+            { label: "संपूर्ण नाव", val: "चि. शुभम अनिल खर्चे" },
+            { label: "जन्मतारीख व वेळ", val: "२५ ऑगस्ट १९९६ (सकाळी ११:५६ वा.)" },
+            { label: "जन्म ठिकाण", val: "शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा" },
+            { label: "उंची व वर्ण", val: "५ फूट ७ इंच • गोरा" },
+            { label: "गोत्र", val: "वशिष्ठ", color: "var(--primary)" },
+            { label: "मामांचे कुळ (मामकुळ)", val: "चोपडे (रा. दाताळा, ता. मलकापूर)" }
+          ]
+        },
+        {
+          id: "sec-education-job",
+          title: "शिक्षण, नोकरी व करिअर",
+          icon: "🎓",
+          type: "table",
+          items: [
+            { label: "शिक्षण", val: "B.E. Mechanical (अभियांत्रिकी पदवी)", color: "#701a75" },
+            { label: "हुद्दा (Role)", val: "Senior QA Engineer" },
+            { label: "कंपनी (Company)", val: "Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे" },
+            { label: "वार्षिक उत्पन्न", val: "रु. ७.८ लाख वार्षिक (7.8 LPA)", color: "#15803d" },
+            { label: "सध्याचे वास्तव्य", val: "पुणे (हल्ली मुक्काम)" }
+          ]
+        },
+        {
+          id: "sec-family",
+          title: "कौटुंबिक माहिती व शेती",
+          icon: "👨‍👩‍👧‍👦",
+          type: "table",
+          items: [
+            { label: "वडिलांचे नाव", val: "कै. अनिल पुंजाजी खर्चे" },
+            { label: "आईचे नाव", val: "श्रीमती अनिता अनिल खर्चे (गृहिणी)" },
+            { label: "बहिणी", val: "२ बहिणी (दोन्ही सुविद्य व विवाहित)" },
+            { label: "शेती व संपत्ती", val: "५.५ एकर बागायती शेती (शेलगाव बाजार)" },
+            { label: "मूळगाव", val: "शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा" }
+          ]
+        },
+        {
+          id: "sec-contacts",
+          title: "कुटुंबातील ज्येष्ठ संपर्क व्यक्ती",
+          icon: "📞",
+          type: "contacts",
+          elders: [
+            {
+              name: "श्री. विजय पुंजाजी खर्चे",
+              sub: "काका • शेलगाव बाजार",
+              phone: "9420539396",
+              displayPhone: "९४२०५३९३९६",
+              relation: "काका"
+            },
+            {
+              name: "श्री. गजानन नरहरी खर्चे",
+              sub: "काका • शेलगाव बाजार",
+              phone: "9422152231",
+              displayPhone: "९४२२१५२२३१",
+              relation: "काका"
+            },
+            {
+              name: "श्री. महेंद्र प्रल्हाद पाटील",
+              sub: "नातेवाईक • मलकापूर",
+              phone: "9921639872",
+              displayPhone: "९९२१६३९८७२",
+              relation: "नातेवाईक"
+            }
+          ]
+        },
+        {
+          id: "sec-photo",
+          title: "मूळ बायोडाटा पत्रिका फोटो",
+          icon: "🖼️",
+          type: "photo",
+          photoUrl: "./shubham_kharche_biodata.jpg",
+          hint: "👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा",
+          downloadText: "📥 बायोडाटा फोटो सेव्ह करा"
+        }
+      ],
+      closingNote: "आपणास स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी वर दिलेल्या संपर्क क्रमांकावर कॉल अथवा WhatsApp करावा, ही नम्र विनंती.<br/><strong>— खर्चे परिवार, शेलगाव बाजार</strong>",
+      stickyActions: {
+        whatsappPhone: "9420539396",
+        whatsappText: "सस्नेह नमस्कार, आम्ही चि. शुभम खर्चे यांचा बायोडाटा पाहिला. आम्हाला पुढील चर्चा करायची आहे.",
+        callPhone: "9420539396"
+      }
+    };
+
+    let shareableProfileData = null;
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function loadShareableProfileData() {
+      const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed && parsed.hero && Array.isArray(parsed.sections)) {
+            shareableProfileData = parsed;
+          }
+        } catch(e) {}
+      }
+      if (!shareableProfileData) {
+        shareableProfileData = JSON.parse(JSON.stringify(DEFAULT_PROFILE_DATA));
+      }
+    }
+
+    function renderProfileCmsForm() {
+      loadShareableProfileData();
+      const p = shareableProfileData;
+
+      // Populate Header & Hero Inputs
+      const titleInp = document.getElementById('cmsProfileTitle');
+      if (titleInp) titleInp.value = p.title || '';
+      const subInp = document.getElementById('cmsProfileSubtitle');
+      if (subInp) subInp.value = p.subtitle || '';
+      const greetInp = document.getElementById('cmsProfileGreeting');
+      if (greetInp) greetInp.value = p.devGreeting || '';
+      const nameInp = document.getElementById('cmsProfileGroomName');
+      if (nameInp) nameInp.value = p.hero?.name || '';
+      const roleInp = document.getElementById('cmsProfileRole');
+      if (roleInp) roleInp.value = p.hero?.role || '';
+      const avatarInp = document.getElementById('cmsProfileAvatar');
+      if (avatarInp) avatarInp.value = p.hero?.avatar || '🤵';
+
+      // Closing Note & Sticky
+      const noteInp = document.getElementById('cmsProfileClosingNote');
+      if (noteInp) noteInp.value = p.closingNote || '';
+      const waPhoneInp = document.getElementById('cmsProfileWaPhone');
+      if (waPhoneInp) waPhoneInp.value = p.stickyActions?.whatsappPhone || '';
+      const waTextInp = document.getElementById('cmsProfileWaText');
+      if (waTextInp) waTextInp.value = p.stickyActions?.whatsappText || '';
+      const callPhoneInp = document.getElementById('cmsProfileCallPhone');
+      if (callPhoneInp) callPhoneInp.value = p.stickyActions?.callPhone || '';
+
+      renderCmsTags();
+      renderCmsSections();
+    }
+
+    function renderCmsTags() {
+      const container = document.getElementById('cmsTagsList');
+      if (!container || !shareableProfileData?.hero) return;
+      const tags = shareableProfileData.hero.tags || [];
+
+      container.innerHTML = tags.map((t, idx) => `
+        <span class="cms-pill-chip">
+          <span>${escapeHtml(t.text)}</span>
+          <button type="button" onclick="removeCmsTag(${idx})" style="background:none; border:none; color:#ef4444; font-weight:800; cursor:pointer; font-size:13px; line-height:1;" title="हा टॅग हटवा">&times;</button>
+        </span>
+      `).join('');
+    }
+
+    function addCmsTag() {
+      const textInp = document.getElementById('cmsNewTagText');
+      const typeSel = document.getElementById('cmsNewTagType');
+      if (!textInp || !textInp.value.trim()) return;
+
+      if (!shareableProfileData.hero.tags) shareableProfileData.hero.tags = [];
+      shareableProfileData.hero.tags.push({
+        text: textInp.value.trim(),
+        type: typeSel.value || 'default'
+      });
+      textInp.value = '';
+      renderCmsTags();
+    }
+
+    function removeCmsTag(idx) {
+      if (!shareableProfileData.hero.tags) return;
+      shareableProfileData.hero.tags.splice(idx, 1);
+      renderCmsTags();
+    }
+
+    function renderCmsSections() {
+      const container = document.getElementById('cmsSectionsListContainer');
+      if (!container) return;
+      const sections = shareableProfileData.sections || [];
+
+      if (sections.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:16px; color:#94a3b8; font-size:13px; border:1px dashed #cbd5e1; border-radius:8px;">कोणताही विभाग नाही. नवीन विभाग जोडण्यासाठी वरील बटण दाबा.</div>`;
+        return;
+      }
+
+      const typeLabels = {
+        table: 'तक्ता (Table)',
+        contacts: 'संपर्क यादी (Contacts)',
+        text: 'मजकूर (Text)',
+        photo: 'बायोडाटा फोटो (Photo)'
+      };
+
+      let html = '';
+      sections.forEach((sec, sIdx) => {
+        const typeLabel = typeLabels[sec.type] || sec.type;
+        const isFirst = sIdx === 0;
+        const isLast = sIdx === sections.length - 1;
+
+        let bodyHtml = '';
+        if (sec.type === 'table') {
+          const rows = (sec.items || []).map((it, rIdx) => `
+            <div class="cms-row-item">
+              <input type="text" class="form-control" style="width:38%; font-size:12.5px; padding:6px 8px; font-weight:700;" value="${escapeHtml(it.label)}" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'label', this.value)" placeholder="लेबल (उदा. गोत्र)"/>
+              <input type="text" class="form-control" style="flex:1; font-size:12.5px; padding:6px 8px;" value="${escapeHtml(it.val)}" onchange="updateCmsTableRow(${sIdx}, ${rIdx}, 'val', this.value)" placeholder="माहिती (उदा. वशिष्ठ)"/>
+              <button type="button" class="cms-btn-icon cms-btn-del" onclick="removeCmsTableRow(${sIdx}, ${rIdx})" title="ओळ हटवा">&times;</button>
+            </div>
+          `).join('');
+
+          bodyHtml = `
+            <div>
+              <div style="font-size:11.5px; color:#64748b; font-weight:700; margin-bottom:6px;">रकाने व माहिती:</div>
+              ${rows}
+              <button type="button" class="action-btn action-btn-outline" style="padding:4px 10px; font-size:12px; margin-top:4px;" onclick="addCmsTableRow(${sIdx})">
+                ➕ नवीन ओळ जोडा (Add Row)
+              </button>
+            </div>
+          `;
+        } else if (sec.type === 'contacts') {
+          const elders = (sec.elders || []).map((el, eIdx) => `
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px; margin-bottom:6px;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:6px;">
+                <input type="text" class="form-control" style="font-size:12.5px; padding:5px 8px; font-weight:700;" value="${escapeHtml(el.name)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'name', this.value)" placeholder="व्यक्तीचे नाव..."/>
+                <input type="text" class="form-control" style="font-size:12.5px; padding:5px 8px;" value="${escapeHtml(el.sub || el.relation || '')}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'sub', this.value)" placeholder="नाते व गाव (उदा. काका • शेलगाव)..."/>
+              </div>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <input type="text" class="form-control" style="width:130px; font-size:12.5px; padding:5px 8px;" value="${escapeHtml(el.phone)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'phone', this.value)" placeholder="फोन (10 अंक)..."/>
+                <input type="text" class="form-control" style="flex:1; font-size:12.5px; padding:5px 8px;" value="${escapeHtml(el.displayPhone || el.phone)}" onchange="updateCmsContact(${sIdx}, ${eIdx}, 'displayPhone', this.value)" placeholder="मराठी डिस्प्ले (उदा. ९४२०५३९३९६)..."/>
+                <button type="button" class="cms-btn-icon cms-btn-del" onclick="removeCmsContact(${sIdx}, ${eIdx})" title="व्यक्ती हटवा">&times;</button>
+              </div>
+            </div>
+          `).join('');
+
+          bodyHtml = `
+            <div>
+              <div style="font-size:11.5px; color:#64748b; font-weight:700; margin-bottom:6px;">ज्येष्ठ संपर्क व्यक्ती:</div>
+              ${elders}
+              <button type="button" class="action-btn action-btn-outline" style="padding:4px 10px; font-size:12px; margin-top:4px;" onclick="addCmsContact(${sIdx})">
+                ➕ नवीन व्यक्ती जोडा (Add Contact)
+              </button>
+            </div>
+          `;
+        } else if (sec.type === 'text') {
+          bodyHtml = `
+            <div>
+              <div style="font-size:11.5px; color:#64748b; font-weight:700; margin-bottom:4px;">मजकूर / माहिती (Text):</div>
+              <textarea class="form-control" style="min-height:65px; font-size:13px;" onchange="updateCmsSectionProp(${sIdx}, 'content', this.value)" placeholder="येथे माहिती, अपेक्षा किंवा टीप लिहा...">${escapeHtml(sec.content || '')}</textarea>
+            </div>
+          `;
+        } else if (sec.type === 'photo') {
+          bodyHtml = `
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+              <div>
+                <label class="form-label" style="font-size:11px;">फोटो फाईल मार्ग (Photo URL):</label>
+                <input type="text" class="form-control" style="font-size:12px; padding:5px 8px;" value="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" onchange="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)"/>
+              </div>
+              <div>
+                <label class="form-label" style="font-size:11px;">डाउनलोड बटण मजकूर:</label>
+                <input type="text" class="form-control" style="font-size:12px; padding:5px 8px;" value="${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}" onchange="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)"/>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="cms-sec-card" id="cmsCardSec_${sIdx}">
+            <div class="cms-sec-head">
+              <input type="text" value="${escapeHtml(sec.icon || '📋')}" style="width:34px; text-align:center; font-size:16px; padding:2px; border:1px solid #cbd5e1; border-radius:6px;" onchange="updateCmsSectionProp(${sIdx}, 'icon', this.value)" title="इमोजी चिन्ह"/>
+              <input type="text" value="${escapeHtml(sec.title)}" style="flex:1; font-weight:700; font-size:13.5px; padding:4px 8px; border:1px solid #cbd5e1; border-radius:6px;" onchange="updateCmsSectionProp(${sIdx}, 'title', this.value)" placeholder="विभागाचे नाव..."/>
+              <span style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:3px 7px; border-radius:999px; font-weight:700; white-space:nowrap;">${typeLabel}</span>
+              <button type="button" class="cms-btn-icon" onclick="moveCmsSection(${sIdx}, -1)" ${isFirst ? 'disabled' : ''} title="वर घ्या">▲</button>
+              <button type="button" class="cms-btn-icon" onclick="moveCmsSection(${sIdx}, 1)" ${isLast ? 'disabled' : ''} title="खाली घ्या">▼</button>
+              <button type="button" class="cms-btn-icon cms-btn-del" onclick="deleteCmsSection(${sIdx})" title="हा विभाग हटवा">🗑️</button>
+            </div>
+            <div style="padding:10px 12px;">
+              ${bodyHtml}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function updateCmsSectionProp(secIdx, prop, value) {
+      if (shareableProfileData.sections[secIdx]) {
+        shareableProfileData.sections[secIdx][prop] = value;
+      }
+    }
+
+    function updateCmsTableRow(secIdx, rowIdx, field, value) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec && sec.items && sec.items[rowIdx]) {
+        sec.items[rowIdx][field] = value;
+      }
+    }
+
+    function addCmsTableRow(secIdx) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec) {
+        if (!sec.items) sec.items = [];
+        sec.items.push({ label: 'नवीन माहिती', val: '---' });
+        renderCmsSections();
+      }
+    }
+
+    function removeCmsTableRow(secIdx, rowIdx) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec && sec.items) {
+        sec.items.splice(rowIdx, 1);
+        renderCmsSections();
+      }
+    }
+
+    function updateCmsContact(secIdx, contactIdx, field, value) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec && sec.elders && sec.elders[contactIdx]) {
+        sec.elders[contactIdx][field] = value;
+        if (field === 'phone' && !sec.elders[contactIdx].displayPhone) {
+          sec.elders[contactIdx].displayPhone = value;
+        }
+      }
+    }
+
+    function addCmsContact(secIdx) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec) {
+        if (!sec.elders) sec.elders = [];
+        sec.elders.push({
+          name: 'श्री. ',
+          sub: 'नातेवाईक',
+          phone: '',
+          displayPhone: '',
+          relation: 'नातेवाईक'
+        });
+        renderCmsSections();
+      }
+    }
+
+    function removeCmsContact(secIdx, contactIdx) {
+      const sec = shareableProfileData.sections[secIdx];
+      if (sec && sec.elders) {
+        sec.elders.splice(contactIdx, 1);
+        renderCmsSections();
+      }
+    }
+
+    function moveCmsSection(secIdx, dir) {
+      const targetIdx = secIdx + dir;
+      const secs = shareableProfileData.sections;
+      if (targetIdx < 0 || targetIdx >= secs.length) return;
+      const temp = secs[secIdx];
+      secs[secIdx] = secs[targetIdx];
+      secs[targetIdx] = temp;
+      renderCmsSections();
+    }
+
+    function deleteCmsSection(secIdx) {
+      const sec = shareableProfileData.sections[secIdx];
+      const title = sec?.title || 'हा विभाग';
+      if (confirm(`'${title}' हा विभाग निश्चित हटवायचा आहे का?`)) {
+        shareableProfileData.sections.splice(secIdx, 1);
+        renderCmsSections();
+        showToast('विभाग हटवला!');
+      }
+    }
+
+    function openAddSectionPrompt() {
+      const box = document.getElementById('cmsAddSectionBox');
+      if (box) {
+        box.style.display = 'block';
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function closeAddSectionPrompt() {
+      const box = document.getElementById('cmsAddSectionBox');
+      if (box) box.style.display = 'none';
+    }
+
+    function confirmAddCmsSection() {
+      const iconInp = document.getElementById('cmsNewSecIcon');
+      const titleInp = document.getElementById('cmsNewSecTitle');
+      const typeSel = document.getElementById('cmsNewSecType');
+
+      const title = titleInp?.value.trim() || 'नवीन विभाग';
+      const icon = iconInp?.value.trim() || '📑';
+      const type = typeSel?.value || 'table';
+
+      const newSec = {
+        id: 'sec-' + Date.now(),
+        title: title,
+        icon: icon,
+        type: type
+      };
+
+      if (type === 'table') {
+        newSec.items = [
+          { label: 'माहिती १', val: '---' }
+        ];
+      } else if (type === 'contacts') {
+        newSec.elders = [
+          { name: 'श्री. ', sub: 'नातेवाईक', phone: '', displayPhone: '', relation: 'नातेवाईक' }
+        ];
+      } else if (type === 'text') {
+        newSec.content = 'येथे माहिती लिहा...';
+      }
+
+      shareableProfileData.sections.push(newSec);
+      if (titleInp) titleInp.value = '';
+      closeAddSectionPrompt();
+      renderCmsSections();
+      showToast('नवीन विभाग जोडला!');
+    }
+
+    function saveProfileCmsData(e) {
+      if (e && e.preventDefault) e.preventDefault();
+
+      // Gather Header & Hero
+      shareableProfileData.title = document.getElementById('cmsProfileTitle')?.value.trim() || DEFAULT_PROFILE_DATA.title;
+      shareableProfileData.subtitle = document.getElementById('cmsProfileSubtitle')?.value.trim() || DEFAULT_PROFILE_DATA.subtitle;
+      shareableProfileData.devGreeting = document.getElementById('cmsProfileGreeting')?.value.trim() || DEFAULT_PROFILE_DATA.devGreeting;
+
+      if (!shareableProfileData.hero) shareableProfileData.hero = {};
+      shareableProfileData.hero.name = document.getElementById('cmsProfileGroomName')?.value.trim() || DEFAULT_PROFILE_DATA.hero.name;
+      shareableProfileData.hero.role = document.getElementById('cmsProfileRole')?.value.trim() || DEFAULT_PROFILE_DATA.hero.role;
+      shareableProfileData.hero.avatar = document.getElementById('cmsProfileAvatar')?.value.trim() || '🤵';
+
+      // Gather Footer & Sticky
+      shareableProfileData.closingNote = document.getElementById('cmsProfileClosingNote')?.value || DEFAULT_PROFILE_DATA.closingNote;
+      if (!shareableProfileData.stickyActions) shareableProfileData.stickyActions = {};
+      shareableProfileData.stickyActions.whatsappPhone = document.getElementById('cmsProfileWaPhone')?.value.trim() || '9420539396';
+      shareableProfileData.stickyActions.whatsappText = document.getElementById('cmsProfileWaText')?.value || '';
+      shareableProfileData.stickyActions.callPhone = document.getElementById('cmsProfileCallPhone')?.value.trim() || '9420539396';
+
+      // 1. Save to LocalStorage
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
+
+      // 2. Direct API save to disk via Node.js server (if active)
+      fetch('/api/save-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(shareableProfileData, null, 2)
+      }).then(r => r.json()).then(res => {
+        if (res && res.success) console.log('Disk JSON updated successfully!');
+      }).catch(() => {});
+
+      // 3. Save to Firebase Cloud (if active)
+      if (firebaseDb && isCloudConnected) {
+        try {
+          firebaseDb.ref('anubandh_tracker/shareable_profile').set(shareableProfileData);
+        } catch(e) {}
+      }
+
+      // 4. Also keep waSettings in sync
+      if (shareableProfileData.hero.name) waSettings.groomName = shareableProfileData.hero.name;
+      localStorage.setItem(WA_SETTINGS_KEY, JSON.stringify(waSettings));
+
+      closeAdminSettingsModal();
+      showToast('✅ शेअर बायोडाटा वेबपेज यशस्वीरीत्या सेव्ह झाले!');
+    }
+
+    function previewProfilePage() {
+      // Save current state first
+      saveProfileCmsData();
+      window.open('./biodata.html', '_blank');
+    }
+
+    function downloadProfileJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(shareableProfileData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "profile_data.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('profile_data.json डाऊनलोड केले!');
+    }
+
+    function resetProfileCmsToDefault() {
+      if (confirm('शेअर बायोडाटा वेबपेज मूळ रचनेवर रीसेट करायचे का? केलेले सर्व नवीन बदल निघून जातील.')) {
+        shareableProfileData = JSON.parse(JSON.stringify(DEFAULT_PROFILE_DATA));
+        localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
+        renderProfileCmsForm();
+        showToast('मूळ रचनेवर रीसेट झाले!');
+      }
+    }
+
+    let targetAdminSection = 'profile_cms';
 
     function requestAdminAccess(targetSec) {
       closeSideMenu();
-      targetAdminSection = targetSec || 'wa';
+      targetAdminSection = targetSec || 'profile_cms';
       document.getElementById('adminPwdInput').value = '';
       document.getElementById('pwdErrorMsg').style.display = 'none';
       document.getElementById('pwdModal').classList.add('open');
@@ -1997,6 +2769,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     function openAdminSettingsModal(section) {
+      loadShareableProfileData();
+      renderProfileCmsForm();
+
       document.getElementById('waGroomName').value = waSettings.groomName || '';
       document.getElementById('waGroomBirthName').value = waSettings.groomBirthName || '';
       document.getElementById('waGroomDob').value = waSettings.groomDob || '';
@@ -2017,7 +2792,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('waPhotoNote').value = waSettings.photoNote || '';
 
       updateWaPreview();
-      switchAdminTab(section || 'wa');
+      switchAdminTab(section || 'profile_cms');
       document.getElementById('adminSettingsModal').classList.add('open');
     }
 
@@ -2026,11 +2801,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     function switchAdminTab(tab) {
+      const isCms = tab === 'profile_cms';
       const isWa = tab === 'wa';
+      const isSync = tab === 'sync';
+
+      document.getElementById('secProfileCmsSettings').style.display = isCms ? 'block' : 'none';
       document.getElementById('secWaSettings').style.display = isWa ? 'block' : 'none';
-      document.getElementById('secSyncSettings').style.display = isWa ? 'none' : 'block';
+      document.getElementById('secSyncSettings').style.display = isSync ? 'block' : 'none';
+
+      document.getElementById('tabProfileCmsBtn').className = isCms ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
       document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      document.getElementById('tabSyncBtn').className = isWa ? 'action-btn action-btn-outline' : 'action-btn action-btn-primary';
+      document.getElementById('tabSyncBtn').className = isSync ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
     }
 
     function updateWaPreview() {
@@ -2088,6 +2869,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     function initData() {
       loadWaSettings();
+      loadShareableProfileData();
 
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {

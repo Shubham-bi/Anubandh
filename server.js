@@ -15,6 +15,24 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
+
+  // API to save profile data directly from Admin Portal
+  if (req.method === 'POST' && reqPath === '/api/save-profile') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        JSON.parse(body); // validate JSON
+        fs.writeFileSync(path.join(__dirname, 'profile_data.json'), body, 'utf8');
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, message: 'profile_data.json saved successfully!' }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+    });
+    return;
+  }
   
   const filePath = path.join(__dirname, reqPath);
   const ext = path.extname(filePath).toLowerCase();
