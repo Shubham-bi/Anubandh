@@ -1425,9 +1425,26 @@ ${waSettings.photoNote}
 खर्चे परिवार`;
     }
 
+    // Robust digit converter (handles Devanagari ०-९ and English 0-9)
+    function toEnglishDigits(str) {
+      if (!str) return '';
+      const devanagari = ['०','१','२','३','४','५','६','७','८','९'];
+      let res = String(str);
+      for (let i = 0; i < 10; i++) {
+        res = res.split(devanagari[i]).join(String(i));
+      }
+      return res.replace(/\D/g, '');
+    }
+
     function openWhatsAppChat(phone, candidateName, srNo) {
       const text = buildWhatsAppText(candidateName, srNo);
-      const url = `https://wa.me/91${phone}?text=${encodeURIComponent(text)}`;
+      let digits = toEnglishDigits(phone);
+      if (digits.length === 10) {
+        digits = '91' + digits;
+      } else if (digits.length === 11 && digits.startsWith('0')) {
+        digits = '91' + digits.slice(1);
+      }
+      const url = `https://api.whatsapp.com/send/?phone=${digits}&text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
 
@@ -1817,7 +1834,7 @@ ${waSettings.photoNote}
 
         // Phone chips matching user screenshot: direct call on number + WhatsApp icon button
         const phoneChipsHtml = (c.phones || []).map(p => {
-          const cleanP = p.replace(/[^0-9]/g, '');
+          const cleanP = toEnglishDigits(p);
           return `
             <div class="phone-chip-group">
               <!-- Direct Phone Dial: NEVER redirects to WhatsApp -->
@@ -1919,7 +1936,7 @@ ${waSettings.photoNote}
         const escapedName = c.name.replace(/'/g, "\'");
 
         const phoneButtons = (c.phones || []).map(p => {
-          const cleanP = p.replace(/[^0-9]/g, '');
+          const cleanP = toEnglishDigits(p);
           return `
             <div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;">
               <a href="tel:${cleanP}" style="font-weight:700; font-size:12px; text-decoration:none; color:#0f172a;">${p}</a>
@@ -1994,7 +2011,7 @@ ${waSettings.photoNote}
       const escapedName = cand.name.replace(/'/g, "\'");
 
       (cand.phones || []).forEach(p => {
-        const cleanP = p.replace(/[^0-9]/g, '');
+        const cleanP = toEnglishDigits(p);
         const pRow = document.createElement('div');
         pRow.className = 'phone-touch-row';
         pRow.innerHTML = `
