@@ -2,7 +2,7 @@
 <html lang="mr">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>अनुबंध | दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध</title>
   
   <!-- PWA Manifest & App Meta -->
@@ -16,11 +16,15 @@
 
   <style>
     :root {
-      --primary: #e11d48;
-      --primary-dark: #be123c;
+      --primary: #be123c;
+      --primary-dark: #881337;
       --primary-light: #fff1f2;
-      --accent: #4f46e5;
-      --accent-light: #eef2ff;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      --wa-green: #25d366;
+      --wa-dark: #128c7e;
+      --call-blue: #0284c7;
+      --call-dark: #0369a1;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
@@ -32,260 +36,244 @@
       --warning-light: #fef3c7;
       --danger: #dc2626;
       --danger-light: #fee2e2;
-      --info: #0284c7;
-      --info-light: #e0f2fe;
-      --radius: 12px;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.12);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Mangal", sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      padding-bottom: 40px;
+      line-height: 1.55;
+      padding-bottom: 50px;
+      font-size: 15px;
     }
 
-    /* Portal Header */
+    /* Mobile-Optimized Portal Header */
     .portal-header {
-      background: linear-gradient(135deg, #881337 0%, #be123c 50%, #e11d48 100%);
+      background: linear-gradient(135deg, #881337 0%, #be123c 60%, #e11d48 100%);
       color: white;
-      padding: 26px 20px 22px;
-      box-shadow: 0 4px 20px rgba(190, 18, 60, 0.2);
+      padding: 16px 16px 18px;
+      box-shadow: 0 4px 18px rgba(190, 18, 60, 0.22);
+      position: sticky;
+      top: 0;
+      z-index: 99;
     }
     .header-content {
-      max-width: 1350px;
+      max-width: 1250px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
-    .header-left {
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .portal-emblem {
+      font-size: 26px;
+      background: rgba(255, 255, 255, 0.2);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+    .header-title-box {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-    }
-    .tag-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 4px;
-    }
-    .portal-tag {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(5px);
-      padding: 3px 10px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .creator-pill {
-      background: #fef08a;
-      color: #854d0e;
-      padding: 3px 12px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
     }
     .header-title {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .header-sub {
-      font-size: 13.5px;
+    .header-title-en {
+      font-size: 14px;
+      opacity: 0.88;
+      font-weight: 500;
+    }
+    .header-tagline {
+      font-size: 12px;
       opacity: 0.92;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
     }
+
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 9px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
-    .hbtn {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 7px 13px;
-      border-radius: 8px;
+    .hbtn-quick {
+      background: #fef08a;
+      color: #854d0e;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+    .hbtn-menu {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
-      text-decoration: none;
+      backdrop-filter: blur(5px);
     }
-    .hbtn:hover {
-      background: rgba(255, 255, 255, 0.28);
-      transform: translateY(-1px);
-    }
-    .hbtn-install {
-      background: #10b981;
-      border-color: #059669;
-      color: white;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
-    }
-    .hbtn-install:hover {
-      background: #059669;
-    }
-    .hbtn-bio {
-      background: #f59e0b;
-      border-color: #d97706;
-      color: #78350f;
-      font-weight: 700;
-      background: #fef3c7;
-    }
-    .hbtn-bio:hover {
-      background: #fde68a;
-    }
-    .hbtn-wa {
-      background: #25d366;
-      border-color: #128c7e;
-      color: #064e3b;
-      font-weight: 700;
-      background: #dcfce7;
-    }
-    .hbtn-wa:hover {
-      background: #bbf7d0;
-    }
-    .hbtn-sync {
-      background: #3b82f6;
-      border-color: #2563eb;
-    }
-    .sync-status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #cbd5e1;
-      display: inline-block;
-    }
-    .sync-status-dot.active {
-      background: #4ade80;
-      box-shadow: 0 0 6px #4ade80;
+    .hbtn-menu:active {
+      background: rgba(255, 255, 255, 0.35);
     }
 
     /* Main Container */
     .app-container {
-      max-width: 1350px;
-      margin: -14px auto 0;
-      padding: 0 16px;
+      max-width: 1250px;
+      margin: 14px auto 0;
+      padding: 0 12px;
     }
 
-    /* Stats Overview Bar */
-    .stats-bar {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 14px 20px;
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 12px;
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
-    .stat-card {
+    /* Quick Filter Chips for Mobile (Scrollable Bar) */
+    .quick-status-scroll {
       display: flex;
-      flex-direction: column;
-      border-right: 1px solid var(--border);
-      padding-right: 10px;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .quick-status-scroll::-webkit-scrollbar { display: none; }
+    .status-pill {
+      background: white;
+      border: 1.5px solid var(--border);
+      color: #334155;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      flex-shrink: 0;
     }
-    .stat-card:last-child { border-right: none; }
-    .stat-num {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary);
-      line-height: 1.1;
+    .status-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(190, 18, 60, 0.3);
     }
-    .stat-label {
+    .pill-count {
+      background: rgba(0, 0, 0, 0.08);
+      padding: 1px 7px;
+      border-radius: 999px;
       font-size: 11.5px;
-      color: var(--text-muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-top: 3px;
+    }
+    .status-pill.active .pill-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
     }
 
-    /* Control Panel */
-    .controls-card {
+    /* Mobile Search Bar */
+    .search-card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 16px 20px;
+      padding: 12px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
-    .search-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-    .search-box-wrapper {
-      flex: 1 1 300px;
+    .search-input-wrap {
       position: relative;
+      display: flex;
+      align-items: center;
     }
     .search-icon {
       position: absolute;
       left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
+      font-size: 17px;
       color: var(--text-muted);
-      font-size: 16px;
+      pointer-events: none;
     }
     .search-input {
       width: 100%;
-      padding: 10px 14px 10px 40px;
-      border-radius: 8px;
+      padding: 12px 38px 12px 42px;
+      border-radius: 10px;
       border: 1.5px solid var(--border);
-      font-size: 14.5px;
+      font-size: 15px;
       outline: none;
-      transition: all 0.2s ease;
       background: #fdfdfd;
     }
     .search-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+      box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.12);
       background: #ffffff;
     }
-    .filter-group {
+    .search-clear-btn {
+      position: absolute;
+      right: 12px;
+      background: #e2e8f0;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 13px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+    }
+
+    .filter-options-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
+      gap: 8px;
       align-items: center;
     }
     .filter-select {
-      padding: 9px 12px;
+      flex: 1;
+      padding: 9px 10px;
       border-radius: 8px;
       border: 1.5px solid var(--border);
       font-size: 13.5px;
       background: white;
       color: var(--text);
-      cursor: pointer;
       outline: none;
-    }
-    .filter-select:focus {
-      border-color: var(--primary);
     }
     .view-switch {
       display: inline-flex;
@@ -293,20 +281,16 @@
       padding: 3px;
       border-radius: 8px;
       border: 1px solid var(--border);
-      margin-left: auto;
     }
     .view-btn {
-      padding: 6px 12px;
-      font-size: 12.5px;
-      font-weight: 600;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
       border: none;
       background: transparent;
       border-radius: 6px;
       cursor: pointer;
       color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
     }
     .view-btn.active {
       background: white;
@@ -314,11 +298,11 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Candidates Grid (Cards View) */
+    /* Candidates Grid (Mobile First Profile Cards) */
     .candidates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 14px;
     }
     .profile-card {
       background: var(--card-bg);
@@ -327,14 +311,8 @@
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
-      transition: all 0.2s ease;
       position: relative;
       overflow: hidden;
-    }
-    .profile-card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
-      border-color: #cbd5e1;
     }
     .card-top {
       padding: 14px 16px 12px;
@@ -342,41 +320,40 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 10px;
+      gap: 8px;
+      background: #fff;
     }
     .cand-sr-badge {
       font-size: 12px;
-      font-weight: 700;
-      color: var(--primary-dark);
+      font-weight: 800;
+      color: var(--primary);
       background: var(--primary-light);
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 6px;
       display: inline-block;
+      margin-bottom: 2px;
     }
     .cand-name {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      margin-top: 3px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
     }
     .cand-village {
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
       margin-top: 2px;
     }
     .status-badge {
       padding: 4px 10px;
       border-radius: 9999px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .status-pending { background: #f1f5f9; color: #475569; }
     .status-contacted { background: #e0f2fe; color: #0369a1; }
@@ -391,15 +368,14 @@
       flex-direction: column;
       gap: 10px;
       flex: 1;
-      font-size: 13.5px;
     }
     .detail-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px 12px;
+      gap: 6px 10px;
       background: #f8fafc;
-      padding: 9px 12px;
-      border-radius: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
       border: 1px solid #f1f5f9;
     }
     .detail-item {
@@ -407,142 +383,166 @@
       flex-direction: column;
     }
     .detail-lbl {
-      font-size: 11px;
+      font-size: 11.5px;
       color: var(--text-muted);
       font-weight: 600;
     }
     .detail-val {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 13.5px;
+      font-weight: 700;
       color: #1e293b;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .edu-box {
       background: #fdf4ff;
-      border-left: 3px solid #d946ef;
-      padding: 7px 10px;
-      border-radius: 4px 6px 6px 4px;
-      font-size: 12.5px;
+      border-left: 3.5px solid #d946ef;
+      padding: 8px 11px;
+      border-radius: 4px 8px 8px 4px;
+      font-size: 13px;
       line-height: 1.45;
       color: #701a75;
       white-space: pre-line;
     }
     .contact-box {
       background: #f0fdf4;
-      border-left: 3px solid #22c55e;
-      padding: 7px 10px;
-      border-radius: 4px 6px 6px 4px;
-      font-size: 12.5px;
-      line-height: 1.4;
-      color: #14532d;
-      white-space: pre-line;
-    }
-    .phone-chips {
+      border-left: 3.5px solid #22c55e;
+      padding: 10px 12px;
+      border-radius: 4px 8px 8px 4px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
+      flex-direction: column;
+      gap: 8px;
     }
-    .phone-chip {
-      background: white;
-      border: 1px solid #86efac;
-      padding: 3px 8px;
-      border-radius: 6px;
+    .contact-title {
       font-size: 12px;
       font-weight: 700;
       color: #166534;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      text-decoration: none;
-      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
-    .phone-chip:hover {
-      background: #22c55e;
-      color: white;
-      border-color: #22c55e;
+    .contact-person-text {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #14532d;
+      white-space: pre-line;
     }
 
-    /* Last Log Summary on Card */
+    /* Dual Action Phone Rows for Mobile */
+    .phone-actions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 4px;
+    }
+    .phone-action-card {
+      background: white;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 9px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .phone-number-display {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.3px;
+    }
+    .phone-button-pair {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .btn-phone-call {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .btn-phone-call:active {
+      background: #0369a1;
+    }
+    .btn-phone-wa {
+      background: #25d366;
+      color: white;
+      border: none;
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .btn-phone-wa:active {
+      background: #128c7e;
+    }
+
+    /* Last Log Summary */
     .last-log-box {
       background: #fffbeb;
       border: 1px dashed #fcd34d;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
+      border-radius: 8px;
+      padding: 8px 11px;
+      font-size: 12.5px;
       color: #92400e;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
     .last-log-title {
       font-weight: 700;
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
+      font-size: 11.5px;
     }
 
+    /* Card Footer: Prominent Single Action Button */
     .card-footer {
-      padding: 10px 16px;
+      padding: 10px 14px;
       background: #fafafa;
       border-top: 1px solid var(--border);
-      display: flex;
-      gap: 8px;
     }
-    .btn-track {
-      flex: 1;
+    .btn-log-action {
+      width: 100%;
       background: var(--primary);
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 11px 16px;
+      border-radius: 9px;
+      font-size: 14.5px;
+      font-weight: 700;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: background 0.2s ease;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(190, 18, 60, 0.18);
     }
-    .btn-track:hover {
+    .btn-log-action:active {
       background: var(--primary-dark);
     }
-    .btn-wa-direct {
-      background: #25d366;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    }
-    .btn-wa-direct:hover {
-      background: #128c7e;
-    }
 
-    /* Dense Table View */
+    /* Table View for larger screens */
     .table-container {
       background: var(--card-bg);
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
       overflow-x: auto;
     }
     .custom-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
-      text-align: left;
     }
     .custom-table th {
       background: #f8fafc;
@@ -551,37 +551,138 @@
       font-weight: 700;
       color: #334155;
       white-space: nowrap;
-      position: sticky;
-      top: 0;
-      z-index: 2;
     }
     .custom-table td {
       padding: 10px 12px;
       border-bottom: 1px solid #f1f5f9;
       vertical-align: top;
-      color: var(--text);
-    }
-    .custom-table tr:hover td {
-      background: #fdf2f4;
     }
 
-    /* Drawer / Modal for Tracking Logs */
-    .modal-overlay {
+    /* Side Menu Drawer */
+    .drawer-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .menu-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 85%;
+      max-width: 340px;
+      background: white;
+      z-index: 1001;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-overlay.open .menu-drawer {
+      transform: translateX(0);
+    }
+    .drawer-head {
+      background: linear-gradient(135deg, #881337 0%, #be123c 100%);
+      color: white;
+      padding: 20px 18px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-title {
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .drawer-close-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .drawer-body {
+      padding: 14px 12px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      transition: background 0.15s ease;
+    }
+    .menu-item:active {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .menu-item-icon {
+      font-size: 20px;
+      width: 28px;
+      text-align: center;
+    }
+    .menu-item-lock {
+      margin-left: auto;
+      font-size: 13px;
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 800;
+    }
+    .drawer-footer {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: #fafafa;
+    }
+
+    /* Modals & Dialogs (Mobile Optimized Bottom Sheets / Dialogs) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1050;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
-      padding: 16px;
+      padding: 12px;
     }
     .modal-overlay.open {
       opacity: 1;
@@ -589,31 +690,33 @@
     }
     .modal-box {
       background: white;
-      border-radius: 16px;
+      border-radius: 18px;
       width: 100%;
-      max-width: 680px;
-      max-height: 90vh;
+      max-width: 620px;
+      max-height: 88vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
-      transform: translateY(20px);
+      transform: translateY(15px);
       transition: transform 0.25s ease;
     }
     .modal-overlay.open .modal-box {
       transform: translateY(0);
     }
     .modal-head {
-      padding: 18px 22px;
+      padding: 16px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: #f8fafc;
-      border-radius: 16px 16px 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 5;
     }
     .modal-head-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--text);
     }
@@ -630,17 +733,17 @@
       justify-content: center;
       color: var(--text-muted);
     }
-    .close-btn:hover { background: #e2e8f0; color: var(--text); }
     .modal-content-body {
-      padding: 20px 22px;
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
+
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
     .form-label {
       font-size: 13px;
@@ -648,216 +751,138 @@
       color: #334155;
     }
     .form-control {
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 11px 13px;
+      border-radius: 9px;
       border: 1.5px solid var(--border);
-      font-size: 14px;
+      font-size: 14.5px;
       font-family: inherit;
       outline: none;
     }
     .form-control:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+      box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.1);
     }
     textarea.form-control {
-      resize: vertical;
       min-height: 80px;
     }
 
-    /* Logs History in Modal */
-    .history-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-top: 10px;
+    /* Password Dialog */
+    .pwd-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #fee2e2;
+      color: #be123c;
+      font-size: 24px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      margin: 0 auto 6px;
+    }
+    .pwd-error-msg {
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+      margin-top: 4px;
+    }
+
+    /* Modal Action Buttons */
+    .action-btn {
+      padding: 11px 18px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 6px;
     }
+    .action-btn-primary { background: var(--primary); color: white; }
+    .action-btn-outline { background: white; border: 1.5px solid var(--border); color: var(--text); }
+
+    /* Timeline */
     .timeline {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       border-left: 2px solid #e2e8f0;
-      padding-left: 14px;
+      padding-left: 12px;
       margin-left: 6px;
     }
     .timeline-item {
-      position: relative;
       background: #f8fafc;
       padding: 10px 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
       font-size: 13px;
     }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -21px;
-      top: 14px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--primary);
-      border: 2px solid white;
-    }
-    .timeline-date {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-    }
-    .timeline-text {
-      margin-top: 4px;
-      line-height: 1.45;
-      white-space: pre-wrap;
-    }
-    .timeline-user-tag {
-      background: #e2e8f0;
-      color: #334155;
-      font-size: 10.5px;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
 
-    /* Modal Action Buttons */
-    .modal-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-    }
-    .action-btn {
-      padding: 9px 18px;
-      border-radius: 8px;
-      font-size: 13.5px;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .action-btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    .action-btn-primary:hover { background: var(--primary-dark); }
-    .action-btn-outline {
-      background: white;
-      border: 1.5px solid var(--border);
-      color: var(--text);
-    }
-    .action-btn-outline:hover { background: #f8fafc; }
-
-    /* Toast Notification */
+    /* Toast */
     .toast-msg {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
       background: #0f172a;
       color: white;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 11px 20px;
+      border-radius: 30px;
       font-size: 13.5px;
-      font-weight: 600;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      z-index: 2000;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      z-index: 2500;
       opacity: 0;
-      transform: translateY(10px);
       transition: all 0.25s ease;
       pointer-events: none;
+      white-space: nowrap;
     }
     .toast-msg.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(-50%) translateY(0);
     }
 
-    /* Radio tabs */
-    .method-radio-box {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background: white;
-    }
-    .method-radio-box.active {
-      border-color: #25d366;
-      background: #f0fdf4;
-    }
-
-    /* Footer */
-    .portal-footer {
-      max-width: 1350px;
-      margin: 32px auto 0;
-      text-align: center;
-      padding: 18px 20px;
-      font-size: 13px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-    }
-    .footer-author {
-      font-weight: 700;
-      color: var(--primary-dark);
-    }
-
-    @media (max-width: 768px) {
-      .header-title { font-size: 21px; }
+    @media (max-width: 600px) {
+      .header-title { font-size: 20px; }
+      .header-tagline { display: none; }
       .candidates-grid { grid-template-columns: 1fr; }
-      .stats-bar { grid-template-columns: 1fr 1fr; }
-      .stat-card { border-right: none; }
       .view-switch { display: none; }
+      .modal-overlay { align-items: flex-end; padding: 0; }
+      .modal-box {
+        border-radius: 20px 20px 0 0;
+        max-height: 92vh;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Portal Header -->
+  <!-- Mobile-Friendly Sticky Portal Header -->
   <header class="portal-header">
     <div class="header-content">
-      <div class="header-left">
-        <div class="tag-row">
-          <span class="portal-tag">💍 अनुबंध • खर्चे परिवार</span>
-          <span class="creator-pill">✨ Created by: Shubham Kharche</span>
+      <div class="header-brand">
+        <div class="portal-emblem">💍</div>
+        <div class="header-title-box">
+          <h1 class="header-title">
+            <span>अनुबंध</span>
+            <span class="header-title-en">(Anubandh)</span>
+          </h1>
+          <p class="header-tagline">दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध • खर्चे परिवार</p>
         </div>
-        <h1 class="header-title" style="font-size: 28px; display:flex; align-items:center; gap:8px;">
-          <span>अनुबंध</span> <span style="font-size:16px; opacity:0.85; font-weight:500;">(Anubandh)</span>
-        </h1>
-        <p class="header-sub" style="font-size: 14px; font-weight: 500;">दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध जुळवणारे व्यासपीठ • खर्चे परिवार</p>
       </div>
 
       <div class="header-actions">
-        <!-- PWA Install Button -->
-        <button id="pwaInstallBtn" class="hbtn hbtn-install" style="display:none;" onclick="triggerPwaInstall()">
-          📲 ॲप इन्स्टॉल करा
+        <!-- Quick Biodata View Button -->
+        <button class="hbtn-quick" onclick="openBioViewModal()" title="शुभमचा मूळ बायोडाटा फोटो पहा">
+          🖼️ बायोडाटा
         </button>
 
-        <!-- View Original Biodata Button -->
-        <button class="hbtn hbtn-bio" onclick="openBioViewModal()">
-          🖼️ माझा बायोडाटा पहा
-        </button>
-
-        <!-- WhatsApp Proposal Settings Button -->
-        <button class="hbtn hbtn-wa" onclick="openWaConfigModal()">
-          💬 WhatsApp मेसेज सेटिंग्ज
-        </button>
-
-        <!-- Multi-user sync button -->
-        <button class="hbtn hbtn-sync" onclick="openSyncModal()">
-          <span id="syncDot" class="sync-status-dot"></span>
-          🔄 मल्टी-युझर सिंक
-        </button>
-
-        <!-- Backup & Export -->
-        <button class="hbtn" onclick="exportDataJson()" title="संपूर्ण डेटा बॅकअप डाऊनलोड करा">
-          💾 बॅकअप
-        </button>
-        <button class="hbtn" onclick="exportDataCsv()" title="एक्सेल CSV एक्सपोर्ट करा">
-          📊 Excel
+        <!-- Main Slide-In Menu Button -->
+        <button class="hbtn-menu" onclick="openSideMenu()" title="मेन्यू उघडा">
+          ☰ मेन्यू
         </button>
       </div>
     </div>
@@ -865,84 +890,69 @@
 
   <main class="app-container">
 
-    <!-- Overview Statistics Bar -->
-    <section class="stats-bar">
-      <div class="stat-card" onclick="filterByStatus('all')">
-        <span class="stat-num" id="statTotal">८३</span>
-        <span class="stat-label">एकूण उमेदवार</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('pending')">
-        <span class="stat-num" id="statPending" style="color:#64748b;">०</span>
-        <span class="stat-label">बाकी (Pending)</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('contacted')">
-        <span class="stat-num" id="statContacted" style="color:#0284c7;">०</span>
-        <span class="stat-label">संपर्क झाला</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('interested')">
-        <span class="stat-num" id="statInterested" style="color:#16a34a;">०</span>
-        <span class="stat-label">सकारात्मक (Interested)</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('followup')">
-        <span class="stat-num" id="statFollowup" style="color:#d97706;">०</span>
-        <span class="stat-label">पुढील पाठपुरावा</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('not_interested')">
-        <span class="stat-num" id="statNotInterested" style="color:#dc2626;">०</span>
-        <span class="stat-label">नकार (Closed)</span>
-      </div>
-      <div class="stat-card" onclick="filterByStatus('matched')">
-        <span class="stat-num" id="statMatched" style="color:#7e22ce;">०</span>
-        <span class="stat-label">स्थळ जुळले 💐</span>
-      </div>
-    </section>
+    <!-- Mobile Scrollable Status Filter Bar -->
+    <div class="quick-status-scroll">
+      <button class="status-pill active" onclick="filterByStatus('all', this)">
+        <span>सर्व उमेदवार</span>
+        <span class="pill-count" id="pillTotal">८३</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('pending', this)">
+        <span>⏳ संपर्क बाकी</span>
+        <span class="pill-count" id="pillPending">०</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('contacted', this)">
+        <span>📞 संपर्क झाला</span>
+        <span class="pill-count" id="pillContacted">०</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('interested', this)">
+        <span>👍 सकारात्मक</span>
+        <span class="pill-count" id="pillInterested">०</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('followup', this)">
+        <span>⏰ पुन्हा बोलायचे</span>
+        <span class="pill-count" id="pillFollowup">०</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('not_interested', this)">
+        <span>❌ नकार</span>
+        <span class="pill-count" id="pillNotInterested">०</span>
+      </button>
+      <button class="status-pill" onclick="filterByStatus('matched', this)">
+        <span>💐 स्थळ जुळले</span>
+        <span class="pill-count" id="pillMatched">०</span>
+      </button>
+    </div>
 
-    <!-- Controls (Search, Filters, View Modes) -->
-    <section class="controls-card">
-      <div class="search-row">
-        <div class="search-box-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="नाव, मूळगाव, गोत्र, शिक्षण, नोकरी किंवा फोन नंबरने शोधा..." oninput="handleSearch()"/>
-        </div>
+    <!-- Mobile Touch Search & Filter Bar -->
+    <section class="search-card">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="नाव, मूळगाव, गोत्र किंवा फोन नंबरने शोधा..." oninput="handleSearch()"/>
+        <button id="searchClearBtn" class="search-clear-btn" onclick="clearSearch()">&times;</button>
+      </div>
 
-        <div class="filter-group">
-          <select id="statusFilter" class="filter-select" onchange="handleFilter()">
-            <option value="all">सर्व स्थिती (All Status)</option>
-            <option value="pending">संपर्क बाकी (Pending)</option>
-            <option value="contacted">संपर्क झाला (Contacted)</option>
-            <option value="interested">सकारात्मक (Interested)</option>
-            <option value="followup">पुन्हा बोलणे बाकी (Follow-up)</option>
-            <option value="not_interested">नकार (Not Interested)</option>
-            <option value="matched">स्थळ निश्चित (Matched)</option>
-          </select>
+      <div class="filter-options-row">
+        <select id="gotraFilter" class="filter-select" onchange="handleFilter()">
+          <option value="all">सर्व गोत्र (All Gotra)</option>
+        </select>
 
-          <select id="gotraFilter" class="filter-select" onchange="handleFilter()">
-            <option value="all">सर्व गोत्र (All Gotra)</option>
-          </select>
-
-          <select id="sortOrder" class="filter-select" onchange="handleSort()">
-            <option value="sr_asc">अ.क्र. (लहान ते मोठा)</option>
-            <option value="sr_desc">अ.क्र. (मोठा ते लहान)</option>
-            <option value="name_asc">मुलीचे नाव (A-Z)</option>
-            <option value="logs_desc">नुकताच संवाद झालेले</option>
-          </select>
-        </div>
+        <select id="sortOrder" class="filter-select" onchange="handleSort()">
+          <option value="sr_asc">अ.क्र. (१ ते ८३)</option>
+          <option value="sr_desc">अ.क्र. (उलटा क्रम)</option>
+          <option value="name_asc">मुलीचे नाव (A-Z)</option>
+          <option value="logs_desc">नुकताच संवाद झालेले</option>
+        </select>
 
         <div class="view-switch">
-          <button id="viewCardsBtn" class="view-btn active" onclick="setViewMode('cards')">
-            📇 कार्ड्स व्ह्यू
-          </button>
-          <button id="viewTableBtn" class="view-btn" onclick="setViewMode('table')">
-            📑 सविस्तर टेबल व्ह्यू
-          </button>
+          <button id="viewCardsBtn" class="view-btn active" onclick="setViewMode('cards')">कार्ड्स</button>
+          <button id="viewTableBtn" class="view-btn" onclick="setViewMode('table')">टेबल</button>
         </div>
       </div>
     </section>
 
-    <!-- View Mode 1: Profile Cards Container -->
+    <!-- Candidate Cards View -->
     <section id="cardsContainer" class="candidates-grid"></section>
 
-    <!-- View Mode 2: Detailed Dense Table Container -->
+    <!-- Detailed Table View -->
     <section id="tableContainer" class="table-container" style="display: none;">
       <table class="custom-table">
         <thead>
@@ -955,225 +965,150 @@
             <th>जन्म तारीख / वेळ</th>
             <th>रक्तगट</th>
             <th>शिक्षण व नोकरी</th>
-            <th>कुटुंब माहिती</th>
+            <th>कुटुंब</th>
             <th>अपेक्षा</th>
-            <th>पालक / संपर्क</th>
-            <th>ट्रॅकिंग स्थिती</th>
-            <th>संवाद इतिहास</th>
-            <th>कृती (Actions)</th>
+            <th>पालक व संपर्क</th>
+            <th>स्थिती</th>
+            <th>कृती</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </section>
 
-    <!-- Empty State -->
-    <div id="noResults" style="display:none; text-align:center; padding: 40px; background:white; border-radius:12px; margin-top:20px; border:1px solid #e2e8f0;">
-      <h3 style="color:#64748b; font-size:18px;">कोणतेही जुळणारे उमेदवार सापडले नाहीत</h3>
-      <p style="color:#94a3b8; font-size:13.5px; margin-top:6px;">कृपया शोध शब्द बदलून पहा किंवा फिल्टर क्लिअर करा.</p>
+    <!-- No Results State -->
+    <div id="noResults" style="display:none; text-align:center; padding: 40px 20px; background:white; border-radius:14px; margin-top:14px; border:1px solid #e2e8f0;">
+      <h3 style="color:#64748b; font-size:18px;">कोणतेही उमेदवार सापडले नाहीत</h3>
+      <p style="color:#94a3b8; font-size:13.5px; margin-top:6px;">शोध बदलून पहा किंवा सर्व फिल्टर्स क्लिअर करा.</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="portal-footer">
-      <p><strong>अनुबंध (Anubandh)</strong> • दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध जुळवणारे व्यासपीठ • Crafted with ❤️ by <span class="footer-author">Shubham Kharche</span></p>
-      <p style="font-size:11.5px; margin-top:4px; opacity:0.8;">Data is saved locally in your browser and synced securely via Firebase (when configured).</p>
+    <!-- Mobile Footer -->
+    <footer style="text-align: center; margin-top: 30px; font-size: 13px; color: var(--text-muted);">
+      <p><strong>अनुबंध (Anubandh)</strong> • खर्चे परिवार</p>
+      <p style="font-size:12px; margin-top:2px;">Crafted with ❤️ by Shubham Kharche</p>
     </footer>
 
   </main>
 
-  <!-- Interactive Tracking Drawer / Modal -->
-  <div id="trackModal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-head">
-        <div>
-          <div class="modal-head-title" id="mCandName">कु. नाव</div>
-          <div style="font-size:12.5px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • मूळगाव</div>
+  <!-- Mobile Side-Over Menu Drawer -->
+  <div id="sideMenuOverlay" class="drawer-overlay" onclick="closeSideMenu()">
+    <div class="menu-drawer" onclick="event.stopPropagation()">
+      <div class="drawer-head">
+        <div class="drawer-title">
+          <span>💍 अनुबंध मेन्यू</span>
         </div>
-        <button class="close-btn" onclick="closeTrackModal()">&times;</button>
+        <button class="drawer-close-btn" onclick="closeSideMenu()">&times;</button>
       </div>
 
-      <div class="modal-content-body">
-        
-        <!-- Quick Candidate Summary Card inside modal -->
-        <div style="background:#f1f5f9; padding:10px 14px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-          <div><strong>गोत्र:</strong> <span id="mCandGotra">-</span> | <strong>मामकुळ:</strong> <span id="mCandMamkul">-</span></div>
-          <div><strong>शिक्षण:</strong> <span id="mCandEdu">-</span></div>
+      <div class="drawer-body">
+        <!-- Option 1: View Biodata -->
+        <div class="menu-item" onclick="openBioViewModal(); closeSideMenu();">
+          <span class="menu-item-icon">🖼️</span>
+          <span>माझा मूळ बायोडाटा पहा</span>
         </div>
 
-        <!-- Phone numbers with quick WhatsApp / Call links -->
-        <div class="form-group">
-          <label class="form-label">📞 उपलब्ध संपर्क क्रमांक (Direct Call / WhatsApp):</label>
-          <div id="mCandPhones" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+        <!-- Option 2: Install App (PWA) -->
+        <div class="menu-item" id="menuInstallBtn" style="display:none;" onclick="triggerPwaInstall(); closeSideMenu();">
+          <span class="menu-item-icon">📲</span>
+          <span>मोबाईलमध्ये ॲप इन्स्टॉल करा</span>
         </div>
 
-        <hr style="border:0; border-top:1px solid #f1f5f9;"/>
-
-        <!-- Add New Call Log Form -->
-        <form id="logForm" onsubmit="saveLogEntry(event)">
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <div class="form-group" style="flex:1 1 200px;">
-              <label class="form-label">कोणाशी संपर्क झाला? (Whom Contacted)</label>
-              <input type="text" id="fContactPerson" class="form-control" placeholder="उदा. मुलीचे वडील / मामा / आजोबा" required/>
-            </div>
-
-            <div class="form-group" style="flex:1 1 180px;">
-              <label class="form-label">सध्याची स्थिती (Status Outcome)</label>
-              <select id="fStatus" class="form-control" required>
-                <option value="contacted">संपर्क झाला (Contacted)</option>
-                <option value="interested">सकारात्मक - अनुकूल (Interested)</option>
-                <option value="followup">पुन्हा संपर्क करावा (Follow-up)</option>
-                <option value="not_interested">नकार - जुळत नाही (Not Interested)</option>
-                <option value="matched">स्थळ जुळले (Matched)</option>
-                <option value="pending">संपर्क बाकी (Pending)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">काय संभाषण झाले? (Conversation Details)</label>
-            <textarea id="fDiscussion" class="form-control" placeholder="उदा. पत्रिका दाखवली आहे, फोटो पाहिले, वराविषयी प्राथमिक चर्चा झाली..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">काय अतिरिक्त माहिती मिळाली? (Additional Info Collected)</label>
-            <textarea id="fAdditionalInfo" class="form-control" style="min-height:60px;" placeholder="उदा. नोकरीचे ठिकाण, कुटुंब पार्श्वभूमी, पत्रिका गुण, अपेक्षा..."></textarea>
-          </div>
-
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <div class="form-group" style="flex:1 1 180px;">
-              <label class="form-label">पुढील कृती / कॉल तारीख (Next Action Date)</label>
-              <input type="date" id="fNextDate" class="form-control"/>
-            </div>
-
-            <div class="form-group" style="flex:1 1 180px;">
-              <label class="form-label">नोंद करणारी व्यक्ती (Logged by)</label>
-              <input type="text" id="fCallerUser" class="form-control" placeholder="उदा. शुभम / वडील / भाऊ"/>
-            </div>
-          </div>
-
-          <div class="modal-actions" style="margin-top:10px;">
-            <button type="button" class="action-btn action-btn-outline" onclick="closeTrackModal()">बंद करा</button>
-            <button type="submit" class="action-btn action-btn-primary">💾 संभाषण नोंद सेव्ह करा</button>
-          </div>
-        </form>
-
-        <!-- Chronological Call History -->
-        <div>
-          <div class="history-title">
-            <span>📜 या उमेदवाराचा संभाषण इतिहास (Call History)</span>
-            <span id="mLogCount" style="font-size:12px; color:var(--text-muted); font-weight:normal;">(० नोंदी)</span>
-          </div>
-          <div id="mTimeline" class="timeline" style="margin-top:10px;"></div>
+        <!-- Option 3: Admin Settings (Password Protected) -->
+        <div class="menu-item" onclick="requestAdminAccess()">
+          <span class="menu-item-icon">⚙️</span>
+          <span>अ‍ॅडमिन सेटिंग्ज</span>
+          <span class="menu-item-lock">🔒 पासवर्ड</span>
         </div>
 
+        <!-- Option 4: Cloud Sync Status / Connect -->
+        <div class="menu-item" onclick="requestAdminAccess('sync')">
+          <span class="menu-item-icon">🔄</span>
+          <span>मल्टी-युझर क्लाउड सिंक</span>
+          <span id="menuSyncDot" style="width:8px; height:8px; border-radius:50%; background:#cbd5e1; margin-left:auto;"></span>
+        </div>
+
+        <!-- Option 5: Backup Download -->
+        <div class="menu-item" onclick="exportDataJson(); closeSideMenu();">
+          <span class="menu-item-icon">💾</span>
+          <span>डेटा बॅकअप डाऊनलोड (JSON)</span>
+        </div>
+
+        <!-- Option 6: CSV Export -->
+        <div class="menu-item" onclick="exportDataCsv(); closeSideMenu();">
+          <span class="menu-item-icon">📊</span>
+          <span>Excel CSV फाईल डाऊनलोड</span>
+        </div>
+
+        <!-- Option 7: About / Instructions -->
+        <div class="menu-item" onclick="openAboutModal(); closeSideMenu();">
+          <span class="menu-item-icon">ℹ️</span>
+          <span>ॲप वापरण्याविषयी माहिती</span>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div>अनुबंध v2.0 • सुरक्षित कौटुंबिक आवृत्ती</div>
+        <div style="font-weight:700; color:#881337; margin-top:2px;">Created by: Shubham Kharche</div>
       </div>
     </div>
   </div>
 
-  <!-- Multi-User Sync Configuration Modal -->
-  <div id="syncModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 580px;">
+  <!-- Password Security Modal (Requires 'ekdant' to unlock settings) -->
+  <div id="pwdModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 380px;">
       <div class="modal-head">
-        <div class="modal-head-title">🔄 रिअल-टाईम मल्टी-युझर क्लाउड सिंक</div>
-        <button class="close-btn" onclick="closeSyncModal()">&times;</button>
+        <div class="modal-head-title">🔒 सुरक्षा संकेतशब्द (Password)</div>
+        <button class="close-btn" onclick="closePwdModal()">&times;</button>
       </div>
-      <div class="modal-content-body">
-        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5;">
-          तुमचे कुटुंबीय किंवा नातेवाईक वेगवेगळ्या ठिकाणाहून (मोबाईल किंवा लॅपटॉप) हा डेटा वापरत असल्यास, <strong>Firebase Realtime Database</strong> द्वारे सर्व नोंदी एका सेकंदात एकमेकांना दिसू शकतात.
+      <div class="modal-content-body" style="text-align: center;">
+        <div class="pwd-icon-box">🔐</div>
+        <p style="font-size: 14px; color: #334155;">
+          सेटिंग्ज व मेसेज बदलण्यासाठी कृपया पासवर्ड टाका:
         </p>
 
-        <form id="firebaseConfigForm" onsubmit="saveFirebaseConfig(event)">
-          <div class="form-group">
-            <label class="form-label">Firebase Database URL:</label>
-            <input type="url" id="fbDbUrl" class="form-control" placeholder="https://your-project-id-default-rtdb.firebaseio.com" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Firebase API Key (Optional):</label>
-            <input type="text" id="fbApiKey" class="form-control" placeholder="AIzaSy..."/>
+        <form id="pwdForm" onsubmit="verifyAdminPassword(event)">
+          <div class="form-group" style="margin-top: 10px;">
+            <input type="password" id="adminPwdInput" class="form-control" style="text-align:center; font-size:18px; letter-spacing:2px;" placeholder="पासवर्ड टाका..." autocomplete="off" required/>
+            <div id="pwdErrorMsg" class="pwd-error-msg">❌ चुकीचा पासवर्ड! कृपया पुन्हा प्रयत्न करा.</div>
           </div>
 
-          <div class="modal-actions">
-            <button type="button" class="action-btn action-btn-outline" style="color:var(--danger);" onclick="disconnectFirebase()">डिस्कनेक्ट करा</button>
-            <div style="display:flex; gap:8px;">
-              <button type="button" class="action-btn action-btn-outline" style="flex: initial;" onclick="closeSyncModal()">रद्द करा</button>
-              <button type="submit" class="action-btn action-btn-primary" style="flex: initial; padding: 9px 18px;">🔗 कनेक्ट करा</button>
-            </div>
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button type="button" class="action-btn action-btn-outline" style="flex:1;" onclick="closePwdModal()">रद्द करा</button>
+            <button type="submit" class="action-btn action-btn-primary" style="flex:1;">🔓 उघडा</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- View Original Biodata Image Modal -->
-  <div id="bioViewModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 780px;">
+  <!-- Unified Admin Settings Modal (Unlocked with 'ekdant') -->
+  <div id="adminSettingsModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 720px;">
       <div class="modal-head">
-        <div>
-          <div class="modal-head-title">📋 श्री. शुभम अनिल खर्चे - मूळ बायोडाटा</div>
-          <div style="font-size:12.5px; color:var(--text-muted);">वधू-वर संशोधन परिचय पत्रक</div>
-        </div>
-        <button class="close-btn" onclick="closeBioViewModal()">&times;</button>
-      </div>
-      <div class="modal-content-body" style="align-items: center; text-align: center;">
-        <div style="width:100%; max-height:70vh; overflow-y:auto; border-radius:8px; border:1px solid #e2e8f0; background:#f8fafc; padding:8px;">
-          <img src="shubham_kharche_biodata.jpg" alt="Shubham Kharche Biodata" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"/>
-        </div>
-        <div style="display:flex; justify-content:space-between; width:100%; margin-top:8px;">
-          <a href="shubham_kharche_biodata.jpg" target="_blank" download="Shubham_Kharche_Biodata.jpg" class="action-btn action-btn-primary" style="text-decoration:none;">
-            📥 बायोडाटा फोटो डाऊनलोड करा
-          </a>
-          <button type="button" class="action-btn action-btn-outline" onclick="closeBioViewModal()">बंद करा</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WhatsApp Proposal Message & Groom Biodata Settings Modal (Method B Integrated) -->
-  <div id="waConfigModal" class="modal-overlay">
-    <div class="modal-box" style="max-width: 780px;">
-      <div class="modal-head">
-        <div class="modal-head-title">💬 WhatsApp प्रस्ताव संदेश व बायोडाटा सेटिंग्ज</div>
-        <button class="close-btn" onclick="closeWaConfigModal()">&times;</button>
+        <div class="modal-head-title">⚙️ अ‍ॅडमिन सेटिंग्ज व मेसेज कस्टमायझर</div>
+        <button class="close-btn" onclick="closeAdminSettingsModal()">&times;</button>
       </div>
       <div class="modal-content-body">
         
-        <!-- Send Mode Selector: Method B vs Method A -->
-        <div class="form-group">
-          <label class="form-label">संदेश पाठवण्याची पद्धत (WhatsApp Proposal Method):</label>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div id="optMethodB" class="method-radio-box active" onclick="setWaMethod('full_method_b')">
-              <div style="font-weight: 700; color: #166534; font-size: 13.5px; display:flex; align-items:center; gap:6px;">
-                <span>✅ पद्धत 'ब' (Method B)</span>
-                <span style="font-size: 11px; background: #22c55e; color: white; padding: 1px 6px; border-radius: 4px;">सक्रिय</span>
-              </div>
-              <p style="font-size: 12px; color: #14532d; margin-top: 4px; line-height: 1.35;">
-                मेसेजमध्ये थेट <strong>संपूर्ण सविस्तर बायोडाटा</strong> जाईल. मुलाचे फोटो खाली मॅन्युअली पाठवले जातील अशी स्पष्ट नोंद असेल.
-              </p>
-            </div>
-
-            <div id="optMethodA" class="method-radio-box" onclick="setWaMethod('short')">
-              <div style="font-weight: 700; color: #334155; font-size: 13.5px;">
-                <span>📄 पद्धत 'अ' (Method A)</span>
-              </div>
-              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.35;">
-                केवळ संक्षिप्त माहिती + गुगल ड्राईव्ह (Google Drive) लिंक पाठवली जाईल.
-              </p>
-            </div>
-          </div>
+        <!-- Tabs within Settings: WhatsApp vs Cloud Sync -->
+        <div style="display:flex; gap:8px; border-bottom:2px solid #f1f5f9; padding-bottom:10px;">
+          <button id="tabWaBtn" type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px;" onclick="switchAdminTab('wa')">
+            💬 WhatsApp मेसेज व बायोडाटा
+          </button>
+          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:8px 14px; font-size:13px;" onclick="switchAdminTab('sync')">
+            🔄 Firebase क्लाउड सिंक
+          </button>
         </div>
 
-        <form id="waSettingsForm" onsubmit="saveWaSettings(event)">
-          
-          <!-- Personal & Horoscope Info -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display:flex; flex-direction:column; gap:10px;">
-            <div style="font-size:13px; font-weight:800; color:var(--primary); display:flex; justify-content:space-between; align-items:center;">
-              <span>📋 वैयक्तिक व जन्म माहिती (Shubham's Details)</span>
-              <button type="button" onclick="openBioViewModal()" style="background:none; border:none; color:#2563eb; font-size:12px; cursor:pointer; text-decoration:underline;">
-                🖼️ मूळ बायोडाटा फोटो पहा
-              </button>
+        <!-- Section 1: WhatsApp Proposal Form -->
+        <div id="secWaSettings">
+          <form id="waSettingsForm" onsubmit="saveWaSettings(event)">
+            
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px 12px; font-size:13px; color:#14532d; margin-bottom:12px;">
+              ✅ <strong>Method B सक्रिय:</strong> प्रत्येक वधूच्या प्रोफाइलवरील WhatsApp बटनावर क्लिक केल्यावर खालील सविस्तर बायोडाटा मेसेज आपोआप टाईप होईल.
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div class="form-group">
                 <label class="form-label">मुलाचे नाव:</label>
                 <input type="text" id="waGroomName" class="form-control" oninput="updateWaPreview()" required/>
@@ -1182,13 +1117,13 @@
                 <label class="form-label">जन्मनाव:</label>
                 <input type="text" id="waGroomBirthName" class="form-control" oninput="updateWaPreview()"/>
               </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
               <div class="form-group">
                 <label class="form-label">जन्म तारीख:</label>
                 <input type="text" id="waGroomDob" class="form-control" oninput="updateWaPreview()"/>
               </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
               <div class="form-group">
                 <label class="form-label">जन्म वेळ:</label>
                 <input type="text" id="waGroomTime" class="form-control" oninput="updateWaPreview()"/>
@@ -1197,42 +1132,40 @@
                 <label class="form-label">जन्म ठिकाण:</label>
                 <input type="text" id="waGroomPlace" class="form-control" oninput="updateWaPreview()"/>
               </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div class="form-group">
                 <label class="form-label">गोत्र:</label>
                 <input type="text" id="waGroomGotra" class="form-control" oninput="updateWaPreview()"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">वर्ण व रक्तगट:</label>
+                <input type="text" id="waGroomComplexionBlood" class="form-control" oninput="updateWaPreview()"/>
               </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div class="form-group">
-                <label class="form-label">वर्ण व रक्तगट:</label>
-                <input type="text" id="waGroomComplexionBlood" class="form-control" placeholder="उदा. गोरा | B+ve" oninput="updateWaPreview()"/>
-              </div>
-              <div class="form-group">
                 <label class="form-label">शिक्षण (Education):</label>
                 <input type="text" id="waGroomEdu" class="form-control" oninput="updateWaPreview()" required/>
               </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
               <div class="form-group">
-                <label class="form-label">नोकरी / पद (Job):</label>
+                <label class="form-label">नोकरी व पद:</label>
                 <input type="text" id="waGroomJob" class="form-control" oninput="updateWaPreview()" required/>
               </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div class="form-group">
                 <label class="form-label">कंपनी व शहर:</label>
                 <input type="text" id="waGroomCompany" class="form-control" oninput="updateWaPreview()"/>
               </div>
               <div class="form-group">
-                <label class="form-label">वार्षिक उत्पन्न (Package):</label>
+                <label class="form-label">वार्षिक उत्पन्न:</label>
                 <input type="text" id="waGroomSalary" class="form-control" oninput="updateWaPreview()"/>
               </div>
             </div>
-          </div>
-
-          <!-- Family Info -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display:flex; flex-direction:column; gap:10px; margin-top:10px;">
-            <div style="font-size:13px; font-weight:800; color:#334155;">👨‍👩‍👧‍👦 कौटुंबिक माहिती व संपर्क</div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div class="form-group">
@@ -1251,7 +1184,7 @@
                 <input type="text" id="waGroomLand" class="form-control" oninput="updateWaPreview()"/>
               </div>
               <div class="form-group">
-                <label class="form-label">बहीण / भाऊ:</label>
+                <label class="form-label">भावंडे:</label>
                 <input type="text" id="waGroomSiblings" class="form-control" oninput="updateWaPreview()"/>
               </div>
               <div class="form-group">
@@ -1261,42 +1194,186 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">संपर्क क्रमांक (Contact Persons & Numbers):</label>
-              <textarea id="waGroomContacts" class="form-control" style="min-height:75px;" oninput="updateWaPreview()"></textarea>
+              <label class="form-label">संपर्क क्रमांक (Contact Persons):</label>
+              <textarea id="waGroomContacts" class="form-control" style="min-height:70px;" oninput="updateWaPreview()"></textarea>
             </div>
-          </div>
 
-          <!-- Photo & Drive link section -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top:10px;">
             <div class="form-group">
-              <label class="form-label">📸 फोटो विषयी टीप (Photo Note in message):</label>
+              <label class="form-label">📸 फोटो विषयी टीप:</label>
               <input type="text" id="waPhotoNote" class="form-control" oninput="updateWaPreview()"/>
             </div>
-            <div class="form-group">
-              <label class="form-label">🔗 Google Drive बायोडाटा लिंक (पर्यायी):</label>
-              <input type="url" id="waDriveLink" class="form-control" placeholder="https://drive.google.com/..." oninput="updateWaPreview()"/>
+
+            <!-- WhatsApp Message Live Preview -->
+            <div class="form-group" style="margin-top:10px;">
+              <label class="form-label">व्हॉट्सॲप मेसेज प्रिव्ह्यू (Live Preview):</label>
+              <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; font-size:12.5px; color:#14532d; white-space:pre-wrap; max-height:180px; overflow-y:auto; line-height:1.45;"></div>
             </div>
-          </div>
 
-          <!-- WhatsApp Message Live Preview -->
-          <div class="form-group" style="margin-top:12px;">
-            <label class="form-label" style="display:flex; justify-content:space-between;">
-              <span>💬 व्हॉट्सॲप मेसेज प्रिव्ह्यू (WhatsApp Message Preview):</span>
-              <span style="font-size:11.5px; color:#16a34a; font-weight:normal;">हा संदेश आपोआप चॅटमध्ये टाईप होईल</span>
-            </label>
-            <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:12px; font-size:12.5px; color:#14532d; white-space:pre-wrap; max-height:220px; overflow-y:auto; line-height:1.5; font-family: monospace, sans-serif;"></div>
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-            <button type="button" class="action-btn action-btn-outline" onclick="resetWaToDefault()">
-              ↺ मूळ माहितीवर रीसेट करा
-            </button>
-            <div style="display: flex; gap: 8px;">
-              <button type="button" class="action-btn action-btn-outline" onclick="closeWaConfigModal()">रद्द करा</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+              <button type="button" class="action-btn action-btn-outline" onclick="resetWaToDefault()">↺ मूळ बायोडाटा रीसेट</button>
               <button type="submit" class="action-btn action-btn-primary">💾 सेव्ह करा</button>
             </div>
+          </form>
+        </div>
+
+        <!-- Section 2: Firebase Sync Form -->
+        <div id="secSyncSettings" style="display:none;">
+          <p style="font-size:13.5px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
+            कुटुंबातील अनेक व्यक्ती वेगवेगळ्या मोबाईलवरून डेटा वापरत असल्यास, रिअल-टाईम सिंकसाठी Firebase Database URL टाका:
+          </p>
+          <form id="firebaseConfigForm" onsubmit="saveFirebaseConfig(event)">
+            <div class="form-group">
+              <label class="form-label">Firebase Database URL:</label>
+              <input type="url" id="fbDbUrl" class="form-control" placeholder="https://your-rtdb.firebaseio.com" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Firebase API Key (Optional):</label>
+              <input type="text" id="fbApiKey" class="form-control" placeholder="AIzaSy..."/>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:16px;">
+              <button type="button" class="action-btn action-btn-outline" style="color:var(--danger);" onclick="disconnectFirebase()">डिस्कनेक्ट करा</button>
+              <button type="submit" class="action-btn action-btn-primary">🔗 सिंक कनेक्ट करा</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Call Logging Modal -->
+  <div id="trackModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <div class="modal-head-title" id="mCandName">कु. नाव</div>
+          <div style="font-size:12.5px; color:var(--text-muted);" id="mCandSrMulgaon">अ.क्र. • मूळगाव</div>
+        </div>
+        <button class="close-btn" onclick="closeTrackModal()">&times;</button>
+      </div>
+
+      <div class="modal-content-body">
+        
+        <!-- Summary Strip -->
+        <div style="background:#f1f5f9; padding:10px 12px; border-radius:8px; font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+          <div><strong>गोत्र:</strong> <span id="mCandGotra">-</span> | <strong>मामकुळ:</strong> <span id="mCandMamkul">-</span></div>
+          <div><strong>शिक्षण:</strong> <span id="mCandEdu">-</span></div>
+        </div>
+
+        <!-- Phone Action Strip inside Modal -->
+        <div class="form-group">
+          <label class="form-label">📞 संपर्क क्रमांक (कॉल किंवा WhatsApp):</label>
+          <div id="mCandPhones" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+
+        <hr style="border:0; border-top:1px solid #f1f5f9;"/>
+
+        <!-- Log Entry Form -->
+        <form id="logForm" onsubmit="saveLogEntry(event)">
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div class="form-group" style="flex:1 1 180px;">
+              <label class="form-label">कोणाशी संपर्क झाला? (Whom Contacted)</label>
+              <input type="text" id="fContactPerson" class="form-control" placeholder="उदा. मुलीचे वडील / मामा" required/>
+            </div>
+
+            <div class="form-group" style="flex:1 1 160px;">
+              <label class="form-label">सध्याची स्थिती (Status Outcome)</label>
+              <select id="fStatus" class="form-control" required>
+                <option value="contacted">संपर्क झाला (Contacted)</option>
+                <option value="interested">सकारात्मक - अनुकूल (Interested)</option>
+                <option value="followup">पुन्हा संपर्क करावा (Follow-up)</option>
+                <option value="not_interested">नकार - जुळत नाही (Not Interested)</option>
+                <option value="matched">स्थळ जुळले (Matched)</option>
+                <option value="pending">संपर्क बाकी (Pending)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">काय संभाषण झाले? (Conversation Details)</label>
+            <textarea id="fDiscussion" class="form-control" placeholder="उदा. पत्रिका पाहिली, फोटो पाहिले, प्राथमिक बोलणे झाले..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">काय अतिरिक्त माहिती मिळाली? (Additional Info)</label>
+            <textarea id="fAdditionalInfo" class="form-control" style="min-height:55px;" placeholder="उदा. नोकरीचे ठिकाण, कुटुंब पार्श्वभूमी, पत्रिका गुण..."></textarea>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div class="form-group" style="flex:1 1 150px;">
+              <label class="form-label">पुढील कॉल तारीख (Next Date)</label>
+              <input type="date" id="fNextDate" class="form-control"/>
+            </div>
+
+            <div class="form-group" style="flex:1 1 150px;">
+              <label class="form-label">नोंद करणारी व्यक्ती (Logged by)</label>
+              <input type="text" id="fCallerUser" class="form-control" placeholder="उदा. वडील / आई / शुभम"/>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+            <button type="button" class="action-btn action-btn-outline" onclick="closeTrackModal()">रद्द करा</button>
+            <button type="submit" class="action-btn action-btn-primary">💾 नोंद सेव्ह करा</button>
           </div>
         </form>
+
+        <!-- Chronological Call History -->
+        <div>
+          <div style="font-size:14px; font-weight:800; color:#1e293b; margin-top:10px; display:flex; justify-content:space-between;">
+            <span>📜 संभाषण इतिहास (Call History)</span>
+            <span id="mLogCount" style="font-size:12px; color:var(--text-muted); font-weight:normal;">(० नोंदी)</span>
+          </div>
+          <div id="mTimeline" class="timeline" style="margin-top:10px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- View Original Biodata Image Modal -->
+  <div id="bioViewModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-head">
+        <div>
+          <div class="modal-head-title">📋 शुभम अनिल खर्चे - मूळ बायोडाटा</div>
+          <div style="font-size:12px; color:var(--text-muted);">वधू-वर संशोधन परिचय पत्रक</div>
+        </div>
+        <button class="close-btn" onclick="closeBioViewModal()">&times;</button>
+      </div>
+      <div class="modal-content-body" style="align-items: center; text-align: center;">
+        <div style="width:100%; max-height:70vh; overflow-y:auto; border-radius:10px; border:1px solid #e2e8f0; background:#f8fafc; padding:6px;">
+          <img src="shubham_kharche_biodata.jpg" alt="Shubham Kharche Biodata" style="max-width: 100%; height: auto; border-radius: 6px;"/>
+        </div>
+        <div style="display:flex; justify-content:space-between; width:100%; margin-top:8px;">
+          <a href="shubham_kharche_biodata.jpg" target="_blank" download="Shubham_Kharche_Biodata.jpg" class="action-btn action-btn-primary" style="text-decoration:none;">
+            📥 फोटो डाऊनलोड करा
+          </a>
+          <button type="button" class="action-btn action-btn-outline" onclick="closeBioViewModal()">बंद करा</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About App Modal -->
+  <div id="aboutModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 460px;">
+      <div class="modal-head">
+        <div class="modal-head-title">ℹ️ अनुबंध ॲप विषयी</div>
+        <button class="close-btn" onclick="closeAboutModal()">&times;</button>
+      </div>
+      <div class="modal-content-body" style="font-size: 14px; line-height: 1.6;">
+        <p><strong>अनुबंध (Anubandh)</strong> हे खर्चे परिवारासाठी खास तयार केलेले खाजगी वधू संशोधन व संभाषण नोंद पोर्टल आहे.</p>
+        <ul style="padding-left: 20px; margin: 8px 0; color: #334155;">
+          <li>८३ वधू उमेदवारांची संपूर्ण १४ रकान्यांची माहिती</li>
+          <li>थेट फोन कॉल व WhatsApp मेसेजचे स्वतंत्र बटन्स</li>
+          <li>कोणाशी काय बोलणे झाले याची वेळेनुसार नोंद</li>
+          <li>ऑफलाइन PWA सपोर्ट (मोबाईलमध्ये ॲपसारखे चालते)</li>
+          <li>सुरक्षित अ‍ॅडमिन पासवर्ड संरक्षण (ekdant)</li>
+        </ul>
+        <div style="background:#f1f5f9; padding:10px; border-radius:8px; text-align:center; margin-top:8px;">
+          <strong>संकल्पना व निर्मिती:</strong> शुभम खर्चे
+        </div>
+        <button type="button" class="action-btn action-btn-primary" style="margin-top:12px; width:100%;" onclick="closeAboutModal()">समजले</button>
       </div>
     </div>
   </div>
@@ -1310,15 +1387,16 @@
     const FIREBASE_CONFIG_KEY = 'matrimonial_firebase_cfg_v1';
     const USER_NAME_KEY = 'matrimonial_username_v1';
     const WA_SETTINGS_KEY = 'matrimonial_wa_settings_v2';
+    const ADMIN_PASSWORD = 'ekdant'; // Dedicated Password to access Admin Settings
 
     let candidates = [];
     let activeView = 'cards';
     let firebaseDb = null;
     let isCloudConnected = false;
 
-    // Shubham Anil Kharche's Full Verified Biodata & WhatsApp Template Defaults (Method B)
+    // Shubham's Complete Biodata Defaults
     const DEFAULT_WA_SETTINGS = {
-      sendMode: 'full_method_b', // 'full_method_b' (Method B) or 'short' (Method A)
+      sendMode: 'full_method_b',
       groomName: 'शुभम अनिल खर्चे',
       groomBirthName: 'धनंजय',
       groomDob: '२५/०८/१९९६ (25/08/1996)',
@@ -1336,8 +1414,7 @@
       groomSiblings: 'बहीण २ (विवाहित)',
       groomMamkul: 'चोपडे, दाताळा',
       groomContacts: '• श्री. विजय पुंजाजी खर्चे (शेलगाव बाजार) - मो. 9420539396\n• श्री. गजानन नरहरी खर्चे (शेलगाव बाजार) - मो. 9422152231\n• श्री. महेंद्र प्रल्हाद पाटील (मलकापूर) - मो. 9921639872\n• श्री. उमेश एकनाथ फेंगडे (वाडी-पोफळी) - मो. 9604458015',
-      photoNote: '📸 (मुलाचे फोटो खाली सोबत मॅन्युअली जोडत आहोत)',
-      driveLink: ''
+      photoNote: '📸 (मुलाचे फोटो खाली सोबत मॅन्युअली जोडत आहोत)'
     };
 
     let waSettings = { ...DEFAULT_WA_SETTINGS };
@@ -1351,29 +1428,8 @@
       }
     }
 
+    // Build Marathi WhatsApp Proposal Message (Method B)
     function buildWhatsAppText(candidateName, srNo) {
-      if (waSettings.sendMode === 'short') {
-        const linkText = waSettings.driveLink ? `\n\n📄 मुलाचा सविस्तर बायोडाटा व फोटो पाहण्यासाठी खालील लिंक उघडा:\n🔗 ${waSettings.driveLink}` : '';
-        return `सस्नेह जय जिजाऊ / नमस्कार 🙏
-
-आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या बायोडाटा संदर्भात संपर्क करत आहोत.
-
-आमच्या मुलाची (वराची) प्राथमिक माहिती:
-• नाव: ${waSettings.groomName}
-• शिक्षण: ${waSettings.groomEdu}
-• नोकरी: ${waSettings.groomJob} (${waSettings.groomCompany})
-• पॅकेज: ${waSettings.groomSalary}
-• संपर्क क्रमांक:
-${waSettings.groomContacts}${linkText}
-
-आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील माहितीसाठी व चर्चेसाठी संपर्क करावा किंवा आपला अनुकूल प्रतिसाद द्यावा, ही नम्र विनंती.
-
-धन्यवाद! 🙏
-खर्चे परिवार`;
-      }
-
-      // Method B (Full Biodata in message + photo manual note)
-      const driveText = waSettings.driveLink ? `\n🔗 PDF बायोडाटा लिंक: ${waSettings.driveLink}` : '';
       return `सस्नेह जय जिजाऊ / नमस्कार 🙏
 
 आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.
@@ -1404,7 +1460,7 @@ ${waSettings.groomContacts}${linkText}
 *संपर्क क्रमांक:*
 ${waSettings.groomContacts}
 ━━━━━━━━━━━━━━━━━━━━
-${waSettings.photoNote}${driveText}
+${waSettings.photoNote}
 
 आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील चर्चेसाठी संपर्क करावा किंवा आपला अनुकूल प्रतिसाद कळवावा, ही नम्र विनंती.
 
@@ -1412,35 +1468,56 @@ ${waSettings.photoNote}${driveText}
 खर्चे परिवार`;
     }
 
+    // WhatsApp Launcher: ONLY triggers when WhatsApp icon/button is explicitly clicked
     function openWhatsAppChat(phone, candidateName, srNo) {
       const text = buildWhatsAppText(candidateName, srNo);
       const url = `https://wa.me/91${phone}?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
 
-    function setWaMethod(method) {
-      waSettings.sendMode = method;
-      const optB = document.getElementById('optMethodB');
-      const optA = document.getElementById('optMethodA');
-      if (method === 'full_method_b') {
-        optB.classList.add('active');
-        optA.classList.remove('active');
+    // Side Menu Controls
+    function openSideMenu() {
+      document.getElementById('sideMenuOverlay').classList.add('open');
+    }
+    function closeSideMenu() {
+      document.getElementById('sideMenuOverlay').classList.remove('open');
+    }
+
+    // Password Protected Admin Access
+    let targetAdminSection = 'wa';
+
+    function requestAdminAccess(targetSec) {
+      closeSideMenu();
+      targetAdminSection = targetSec || 'wa';
+      document.getElementById('adminPwdInput').value = '';
+      document.getElementById('pwdErrorMsg').style.display = 'none';
+      document.getElementById('pwdModal').classList.add('open');
+      setTimeout(() => {
+        document.getElementById('adminPwdInput').focus();
+      }, 250);
+    }
+
+    function closePwdModal() {
+      document.getElementById('pwdModal').classList.remove('open');
+    }
+
+    function verifyAdminPassword(e) {
+      e.preventDefault();
+      const entered = document.getElementById('adminPwdInput').value.trim().toLowerCase();
+      if (entered === ADMIN_PASSWORD) {
+        closePwdModal();
+        openAdminSettingsModal(targetAdminSection);
+        showToast('🔓 ॲक्सेस मंजूर!');
       } else {
-        optA.classList.add('active');
-        optB.classList.remove('active');
+        const errMsg = document.getElementById('pwdErrorMsg');
+        errMsg.style.display = 'block';
+        document.getElementById('adminPwdInput').value = '';
+        document.getElementById('adminPwdInput').focus();
       }
-      updateWaPreview();
     }
 
-    function openBioViewModal() {
-      document.getElementById('bioViewModal').classList.add('open');
-    }
-
-    function closeBioViewModal() {
-      document.getElementById('bioViewModal').classList.remove('open');
-    }
-
-    function openWaConfigModal() {
+    function openAdminSettingsModal(section) {
+      // Load WA Fields
       document.getElementById('waGroomName').value = waSettings.groomName || '';
       document.getElementById('waGroomBirthName').value = waSettings.groomBirthName || '';
       document.getElementById('waGroomDob').value = waSettings.groomDob || '';
@@ -1459,15 +1536,22 @@ ${waSettings.photoNote}${driveText}
       document.getElementById('waGroomMamkul').value = waSettings.groomMamkul || '';
       document.getElementById('waGroomContacts').value = waSettings.groomContacts || '';
       document.getElementById('waPhotoNote').value = waSettings.photoNote || '';
-      document.getElementById('waDriveLink').value = waSettings.driveLink || '';
-      
-      setWaMethod(waSettings.sendMode || 'full_method_b');
+
       updateWaPreview();
-      document.getElementById('waConfigModal').classList.add('open');
+      switchAdminTab(section || 'wa');
+      document.getElementById('adminSettingsModal').classList.add('open');
     }
 
-    function closeWaConfigModal() {
-      document.getElementById('waConfigModal').classList.remove('open');
+    function closeAdminSettingsModal() {
+      document.getElementById('adminSettingsModal').classList.remove('open');
+    }
+
+    function switchAdminTab(tab) {
+      const isWa = tab === 'wa';
+      document.getElementById('secWaSettings').style.display = isWa ? 'block' : 'none';
+      document.getElementById('secSyncSettings').style.display = isWa ? 'none' : 'block';
+      document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
+      document.getElementById('tabSyncBtn').className = isWa ? 'action-btn action-btn-outline' : 'action-btn action-btn-primary';
     }
 
     function updateWaPreview() {
@@ -1489,26 +1573,39 @@ ${waSettings.photoNote}${driveText}
       waSettings.groomMamkul = document.getElementById('waGroomMamkul').value || DEFAULT_WA_SETTINGS.groomMamkul;
       waSettings.groomContacts = document.getElementById('waGroomContacts').value || DEFAULT_WA_SETTINGS.groomContacts;
       waSettings.photoNote = document.getElementById('waPhotoNote').value || DEFAULT_WA_SETTINGS.photoNote;
-      waSettings.driveLink = document.getElementById('waDriveLink').value.trim();
 
       const previewText = buildWhatsAppText('कु. प्रियंका (डॉली)', '१८१.');
       document.getElementById('waPreviewBox').textContent = previewText;
-    }
-
-    function resetWaToDefault() {
-      if (confirm('सर्व माहिती मूळ शुभम अनिल खर्चे यांच्या बायोडाटा माहितीवर रीसेट करायची का?')) {
-        waSettings = { ...DEFAULT_WA_SETTINGS };
-        openWaConfigModal();
-        showToast('मूळ बायोडाटा माहिती रीसेट झाली!');
-      }
     }
 
     function saveWaSettings(e) {
       e.preventDefault();
       updateWaPreview();
       localStorage.setItem(WA_SETTINGS_KEY, JSON.stringify(waSettings));
-      closeWaConfigModal();
-      showToast('WhatsApp बायोडाटा मेसेज सेटिंग्ज यशस्वीरित्या सेव्ह झाल्या!');
+      closeAdminSettingsModal();
+      showToast('सेटिंग्ज यशस्वीरित्या सेव्ह झाल्या!');
+    }
+
+    function resetWaToDefault() {
+      if (confirm('मूळ बायोडाटा माहितीवर रीसेट करायचे का?')) {
+        waSettings = { ...DEFAULT_WA_SETTINGS };
+        openAdminSettingsModal('wa');
+        showToast('माहिती रीसेट झाली!');
+      }
+    }
+
+    // Modal view helpers
+    function openBioViewModal() {
+      document.getElementById('bioViewModal').classList.add('open');
+    }
+    function closeBioViewModal() {
+      document.getElementById('bioViewModal').classList.remove('open');
+    }
+    function openAboutModal() {
+      document.getElementById('aboutModal').classList.add('open');
+    }
+    function closeAboutModal() {
+      document.getElementById('aboutModal').classList.remove('open');
     }
 
     // Load Data
@@ -1554,7 +1651,7 @@ ${waSettings.photoNote}${driveText}
       }
     }
 
-    // Firebase Realtime Sync
+    // Firebase Cloud Sync
     function initFirebaseIfConfigured() {
       const configStr = localStorage.getItem(FIREBASE_CONFIG_KEY);
       if (!configStr) return;
@@ -1567,9 +1664,7 @@ ${waSettings.photoNote}${driveText}
             connectFirebase(config);
           }
         }
-      } catch (e) {
-        console.warn('Firebase config error:', e);
-      }
+      } catch (e) {}
     }
 
     function loadFirebaseSdk(callback) {
@@ -1591,7 +1686,7 @@ ${waSettings.photoNote}${driveText}
           firebase.initializeApp(config);
         }
         firebaseDb = firebase.database();
-        const rootRef = firebaseDb.ref('matrimonial_tracker/candidates');
+        const rootRef = firebaseDb.ref('anubandh_tracker/candidates');
         
         rootRef.on('value', (snapshot) => {
           const cloudData = snapshot.val();
@@ -1611,31 +1706,25 @@ ${waSettings.photoNote}${driveText}
               localStorage.setItem(STORAGE_KEY, JSON.stringify(candidates));
               renderView();
               updateStats();
-              showToast('क्लाउडवरील ताज्या नोंदी सिंक झाल्या!');
+              showToast('क्लाउड डेटा सिंक झाला!');
             }
           }
         });
 
         isCloudConnected = true;
-        document.getElementById('syncDot').classList.add('active');
+        const mDot = document.getElementById('menuSyncDot');
+        if (mDot) { mDot.style.background = '#4ade80'; mDot.title = 'क्लाउड कनेक्टेड'; }
         document.getElementById('fbDbUrl').value = config.databaseURL || '';
-        document.getElementById('fbApiKey').value = config.apiKey || '';
       } catch(e) {
-        console.error('Firebase connection error:', e);
+        console.error('Firebase error:', e);
       }
     }
 
     function syncToFirebase() {
       if (!firebaseDb) return;
-      firebaseDb.ref('matrimonial_tracker/candidates').set(candidates);
+      firebaseDb.ref('anubandh_tracker/candidates').set(candidates);
     }
 
-    function openSyncModal() {
-      document.getElementById('syncModal').classList.add('open');
-    }
-    function closeSyncModal() {
-      document.getElementById('syncModal').classList.remove('open');
-    }
     function saveFirebaseConfig(e) {
       e.preventDefault();
       const url = document.getElementById('fbDbUrl').value.trim();
@@ -1645,20 +1734,22 @@ ${waSettings.photoNote}${driveText}
       loadFirebaseSdk(() => {
         connectFirebase(config);
         syncToFirebase();
-        closeSyncModal();
-        showToast('Firebase क्लाउड सिंक कनेक्ट झाले!');
+        closeAdminSettingsModal();
+        showToast('Firebase सिंक यशस्वीरित्या जोडले!');
       });
     }
+
     function disconnectFirebase() {
       localStorage.removeItem(FIREBASE_CONFIG_KEY);
       isCloudConnected = false;
       firebaseDb = null;
-      document.getElementById('syncDot').classList.remove('active');
-      closeSyncModal();
-      showToast('Firebase सिंक डिस्कनेक्ट केले.');
+      const mDot = document.getElementById('menuSyncDot');
+      if (mDot) mDot.style.background = '#cbd5e1';
+      closeAdminSettingsModal();
+      showToast('Firebase डिस्कनेक्ट केले.');
     }
 
-    // Populate Gotra Dropdown
+    // Populate Gotra
     function populateGotras() {
       const gotras = new Set();
       INITIAL_DATA.forEach(c => {
@@ -1675,13 +1766,12 @@ ${waSettings.photoNote}${driveText}
       });
     }
 
-    // Status mapping helpers
     const STATUS_MAP = {
       pending: { label: 'संपर्क बाकी', cls: 'status-pending', icon: '⏳' },
       contacted: { label: 'संपर्क झाला', cls: 'status-contacted', icon: '📞' },
       interested: { label: 'सकारात्मक', cls: 'status-interested', icon: '👍' },
       followup: { label: 'पुन्हा बोलायचे', cls: 'status-followup', icon: '⏰' },
-      not_interested: { label: 'नकार (Closed)', cls: 'status-not_interested', icon: '❌' },
+      not_interested: { label: 'नकार', cls: 'status-not_interested', icon: '❌' },
       matched: { label: 'स्थळ जुळले 💐', cls: 'status-matched', icon: '💍' }
     };
 
@@ -1692,16 +1782,15 @@ ${waSettings.photoNote}${driveText}
         if (counts[s] !== undefined) counts[s]++;
         else counts.pending++;
       });
-      document.getElementById('statTotal').textContent = counts.total;
-      document.getElementById('statPending').textContent = counts.pending;
-      document.getElementById('statContacted').textContent = counts.contacted;
-      document.getElementById('statInterested').textContent = counts.interested;
-      document.getElementById('statFollowup').textContent = counts.followup;
-      document.getElementById('statNotInterested').textContent = counts.not_interested;
-      document.getElementById('statMatched').textContent = counts.matched;
+      document.getElementById('pillTotal').textContent = counts.total;
+      document.getElementById('pillPending').textContent = counts.pending;
+      document.getElementById('pillContacted').textContent = counts.contacted;
+      document.getElementById('pillInterested').textContent = counts.interested;
+      document.getElementById('pillFollowup').textContent = counts.followup;
+      document.getElementById('pillNotInterested').textContent = counts.not_interested;
+      document.getElementById('pillMatched').textContent = counts.matched;
     }
 
-    // Filtering & Searching
     let currentFilterStatus = 'all';
     let currentFilterGotra = 'all';
     let currentSearchTerm = '';
@@ -1709,17 +1798,29 @@ ${waSettings.photoNote}${driveText}
 
     function handleSearch() {
       currentSearchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+      document.getElementById('searchClearBtn').style.display = currentSearchTerm ? 'flex' : 'none';
       renderView();
     }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      currentSearchTerm = '';
+      document.getElementById('searchClearBtn').style.display = 'none';
+      renderView();
+    }
+
     function handleFilter() {
-      currentFilterStatus = document.getElementById('statusFilter').value;
       currentFilterGotra = document.getElementById('gotraFilter').value;
       renderView();
     }
-    function filterByStatus(status) {
-      document.getElementById('statusFilter').value = status;
-      handleFilter();
+
+    function filterByStatus(status, pillEl) {
+      currentFilterStatus = status;
+      document.querySelectorAll('.status-pill').forEach(p => p.classList.remove('active'));
+      if (pillEl) pillEl.classList.add('active');
+      renderView();
     }
+
     function handleSort() {
       currentSortOrder = document.getElementById('sortOrder').value;
       renderView();
@@ -1727,16 +1828,13 @@ ${waSettings.photoNote}${driveText}
 
     function getFilteredList() {
       let list = candidates.filter(c => {
-        // Status filter
         if (currentFilterStatus !== 'all') {
           const s = c.status || 'pending';
           if (s !== currentFilterStatus) return false;
         }
-        // Gotra filter
         if (currentFilterGotra !== 'all') {
           if (c.gotra !== currentFilterGotra) return false;
         }
-        // Search term
         if (currentSearchTerm) {
           const haystack = [
             c.sr, c.name, c.mulgaon, c.gotra, c.mamkul, c.edu, c.contact,
@@ -1749,7 +1847,6 @@ ${waSettings.photoNote}${driveText}
         return true;
       });
 
-      // Sorting
       list.sort((a, b) => {
         if (currentSortOrder === 'sr_asc') {
           return parseInt(a.sr.replace(/[^0-9]/g, '')) - parseInt(b.sr.replace(/[^0-9]/g, ''));
@@ -1777,7 +1874,7 @@ ${waSettings.photoNote}${driveText}
       renderView();
     }
 
-    // Render Cards View
+    // Render Cards View (With Dedicated Call & WhatsApp Buttons per number)
     function renderCards(list) {
       const container = document.getElementById('cardsContainer');
       container.innerHTML = '';
@@ -1785,18 +1882,37 @@ ${waSettings.photoNote}${driveText}
       list.forEach(c => {
         const sInfo = STATUS_MAP[c.status || 'pending'] || STATUS_MAP.pending;
         const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
+        const logCount = (c.logs || []).length;
+        const escapedName = c.name.replace(/'/g, "\'");
 
         const card = document.createElement('div');
         card.className = 'profile-card';
 
-        // Extract primary clean digits for direct WA
-        const firstPhone = c.phones && c.phones.length ? c.phones[0].replace(/[^0-9]/g, '') : '';
+        // Render each phone number with its own distinct [ 📞 कॉल ] and [ 💬 WhatsApp ] buttons
+        const phoneListHtml = (c.phones || []).map(p => {
+          const cleanP = p.replace(/[^0-9]/g, '');
+          return `
+            <div class="phone-action-card">
+              <span class="phone-number-display">📞 ${p}</span>
+              <div class="phone-button-pair">
+                <!-- Direct Phone Dialer: Never redirects to WhatsApp -->
+                <a href="tel:${cleanP}" class="btn-phone-call" title="थेट फोन कॉल करा">
+                  📞 कॉल
+                </a>
+                <!-- Direct WhatsApp with Marathi Method B proposal -->
+                <button type="button" class="btn-phone-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')" title="WhatsApp वर सविस्तर बायोडाटा पाठवा">
+                  💬 WhatsApp
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
 
         card.innerHTML = `
           <div class="card-top">
             <div>
               <span class="cand-sr-badge">अ.क्र. ${c.sr}</span>
-              <h3 class="cand-name">${c.name}</h3>
+              <h2 class="cand-name">${c.name}</h2>
               <div class="cand-village">📍 मूळगाव: <strong>${c.mulgaon || '-'}</strong></div>
             </div>
             <span class="status-badge ${sInfo.cls}">
@@ -1808,7 +1924,7 @@ ${waSettings.photoNote}${driveText}
             <div class="detail-grid">
               <div class="detail-item">
                 <span class="detail-lbl">उंची / वर्ण:</span>
-                <span class="detail-val">${c.height || '-'} / ${c.complexion || '-'}</span>
+                <span class="detail-val">${c.height || '-'} • ${c.complexion || '-'}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">जन्म तारीख / वेळ:</span>
@@ -1816,7 +1932,7 @@ ${waSettings.photoNote}${driveText}
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">गोत्र:</span>
-                <span class="detail-val" style="color:var(--primary-dark);">${c.gotra || '-'}</span>
+                <span class="detail-val" style="color:var(--primary);">${c.gotra || '-'}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-lbl">मामकुळ:</span>
@@ -1829,14 +1945,12 @@ ${waSettings.photoNote}${driveText}
               <div>${c.edu || '-'}</div>
             </div>
 
+            <!-- Contact Box with Individual Dual Action Call & WhatsApp Buttons -->
             <div class="contact-box">
-              <strong>👨‍👩‍👧 संपर्क व पालक:</strong>
-              <div>${c.contact || '-'}</div>
-              <div class="phone-chips">
-                ${(c.phones || []).map(p => {
-                  const cleanP = p.replace(/[^0-9]/g, '');
-                  return `<a href="tel:${cleanP}" class="phone-chip" title="कॉल करा">📞 ${p}</a>`;
-                }).join('')}
+              <div class="contact-title">👨‍👩‍👧 पालक व संपर्क माहिती:</div>
+              <div class="contact-person-text">${c.contact || '-'}</div>
+              <div class="phone-actions-container">
+                ${phoneListHtml}
               </div>
             </div>
 
@@ -1853,15 +1967,11 @@ ${waSettings.photoNote}${driveText}
 
           </div>
 
+          <!-- Prominent Single Touch Action Button -->
           <div class="card-footer">
-            <button class="btn-track" onclick="openTrackModal('${c.id}')">
-              ✍️ संभाषण नोंद व इतिहास (${(c.logs || []).length})
+            <button class="btn-log-action" onclick="openTrackModal('${c.id}')">
+              ✍️ काय बोलणे झाले? नोंद करा (${logCount})
             </button>
-            ${firstPhone ? `
-              <button class="btn-wa-direct" onclick="openWhatsAppChat('${firstPhone}', '${c.name.replace(/'/g, "\\'")}', '${c.sr}')" title="WhatsApp वर प्रस्ताव मेसेज पाठवा">
-                💬 WhatsApp
-              </button>
-            ` : ''}
           </div>
         `;
 
@@ -1869,7 +1979,7 @@ ${waSettings.photoNote}${driveText}
       });
     }
 
-    // Render Table View
+    // Render Dense Table View
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
@@ -1877,52 +1987,44 @@ ${waSettings.photoNote}${driveText}
       list.forEach(c => {
         const sInfo = STATUS_MAP[c.status || 'pending'] || STATUS_MAP.pending;
         const logCount = (c.logs || []).length;
-        const lastLog = logCount ? c.logs[logCount - 1] : null;
-        const firstPhone = c.phones && c.phones.length ? c.phones[0].replace(/[^0-9]/g, '') : '';
+        const escapedName = c.name.replace(/'/g, "\'");
+
+        const phoneButtons = (c.phones || []).map(p => {
+          const cleanP = p.replace(/[^0-9]/g, '');
+          return `
+            <div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;">
+              <span style="font-weight:700; font-size:12px;">${p}</span>
+              <a href="tel:${cleanP}" class="btn-phone-call" style="padding:3px 6px; font-size:11px;">📞</a>
+              <button type="button" class="btn-phone-wa" style="padding:3px 6px; font-size:11px;" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${c.sr}')">💬</button>
+            </div>
+          `;
+        }).join('');
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="font-weight:700; color:var(--primary-dark);">${c.sr}</td>
-          <td style="font-weight:700; min-width:140px;">${c.name}</td>
+          <td style="font-weight:700; color:var(--primary);">${c.sr}</td>
+          <td style="font-weight:700; min-width:130px;">${c.name}</td>
           <td>${c.mulgaon || '-'}</td>
           <td>${c.height || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.complexion || '-'}</span></td>
           <td><strong>${c.gotra || '-'}</strong><br/><span style="color:var(--text-muted); font-size:11.5px;">${c.mamkul || '-'}</span></td>
           <td>${c.date || '-'}<br/><span style="color:var(--text-muted); font-size:11.5px;">${c.time || '-'}</span></td>
           <td><span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-weight:700; font-size:11px;">${c.blood || '-'}</span></td>
-          <td style="white-space:pre-line; max-width:220px; font-size:12px;">${c.edu || '-'}</td>
+          <td style="white-space:pre-line; max-width:200px; font-size:12px;">${c.edu || '-'}</td>
           <td style="white-space:pre-line; font-size:12px;">${c.fam || '-'}</td>
           <td style="font-size:12px;">${c.exp || '-'}</td>
           <td style="white-space:pre-line; font-size:12px; min-width:200px;">
             ${c.contact || '-'}
-            <div style="margin-top:4px;">
-              ${(c.phones || []).map(p => {
-                const cleanP = p.replace(/[^0-9]/g, '');
-                return `<a href="tel:${cleanP}" class="phone-chip" style="margin:2px 2px 2px 0;">📞 ${p}</a>`;
-              }).join('')}
-            </div>
+            <div style="margin-top:6px;">${phoneButtons}</div>
           </td>
           <td>
             <span class="status-badge ${sInfo.cls}" style="font-size:11px;">
               ${sInfo.icon} ${sInfo.label}
             </span>
           </td>
-          <td style="font-size:11.5px; max-width:160px;">
-            ${lastLog ? `
-              <strong>${lastLog.contactPerson || 'पालक'}:</strong> ${(lastLog.discussion || '').substring(0, 45)}...
-              <div style="color:var(--text-muted);">${new Date(lastLog.timestamp).toLocaleDateString('mr-IN')}</div>
-            ` : '<span style="color:var(--text-muted);">नोंद नाही</span>'}
-          </td>
           <td>
-            <div style="display:flex; flex-direction:column; gap:4px; min-width:110px;">
-              <button class="btn-track" style="padding:5px 8px; font-size:12px;" onclick="openTrackModal('${c.id}')">
-                ✍️ नोंद (${logCount})
-              </button>
-              ${firstPhone ? `
-                <button class="btn-wa-direct" style="padding:5px 8px; font-size:12px;" onclick="openWhatsAppChat('${firstPhone}', '${c.name.replace(/'/g, "\\'")}', '${c.sr}')">
-                  💬 WhatsApp
-                </button>
-              ` : ''}
-            </div>
+            <button class="action-btn action-btn-primary" style="padding:6px 10px; font-size:12px;" onclick="openTrackModal('${c.id}')">
+              ✍️ नोंद (${logCount})
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1946,7 +2048,7 @@ ${waSettings.photoNote}${driveText}
       }
     }
 
-    // Modal Interaction (Call Tracking)
+    // Modal Interaction (Call Logging)
     let currentEditCandidateId = null;
 
     function openTrackModal(candId) {
@@ -1960,22 +2062,25 @@ ${waSettings.photoNote}${driveText}
       document.getElementById('mCandMamkul').textContent = cand.mamkul || '-';
       document.getElementById('mCandEdu').textContent = (cand.edu || '-').replace(/\n/g, ' ');
 
-      // Phone list in modal
+      // Phone list in modal with separate Call and WhatsApp buttons
       const phonesBox = document.getElementById('mCandPhones');
       phonesBox.innerHTML = '';
+      const escapedName = cand.name.replace(/'/g, "\'");
+
       (cand.phones || []).forEach(p => {
         const cleanP = p.replace(/[^0-9]/g, '');
-        const pChip = document.createElement('div');
-        pChip.style.display = 'inline-flex';
-        pChip.style.gap = '4px';
-        pChip.innerHTML = `
-          <a href="tel:${cleanP}" class="phone-chip">📞 ${p}</a>
-          <button type="button" class="phone-chip" style="background:#25d366; color:white; border-color:#25d366; cursor:pointer;" onclick="openWhatsAppChat('${cleanP}', '${cand.name.replace(/'/g, "\\'")}', '${cand.sr}')">💬 WA</button>
+        const pCard = document.createElement('div');
+        pCard.className = 'phone-action-card';
+        pCard.innerHTML = `
+          <span class="phone-number-display">📞 ${p}</span>
+          <div class="phone-button-pair">
+            <a href="tel:${cleanP}" class="btn-phone-call">📞 कॉल करा</a>
+            <button type="button" class="btn-phone-wa" onclick="openWhatsAppChat('${cleanP}', '${escapedName}', '${cand.sr}')">💬 WhatsApp</button>
+          </div>
         `;
-        phonesBox.appendChild(pChip);
+        phonesBox.appendChild(pCard);
       });
 
-      // Status selector
       document.getElementById('fStatus').value = cand.status || 'pending';
       document.getElementById('fDiscussion').value = '';
       document.getElementById('fAdditionalInfo').value = '';
@@ -1983,7 +2088,6 @@ ${waSettings.photoNote}${driveText}
       document.getElementById('fNextDate').value = '';
 
       renderTimeline(cand.logs || []);
-
       document.getElementById('trackModal').classList.add('open');
     }
 
@@ -1998,7 +2102,7 @@ ${waSettings.photoNote}${driveText}
       document.getElementById('mLogCount').textContent = `(${logs.length} नोंदी)`;
 
       if (!logs || logs.length === 0) {
-        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:8px 0;">अद्याप कोणतीही संभाषण नोंद झालेली नाही.</div>';
+        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:6px 0;">अद्याप कोणतीही नोंद झालेली नाही.</div>';
         return;
       }
 
@@ -2007,16 +2111,14 @@ ${waSettings.photoNote}${driveText}
         const item = document.createElement('div');
         item.className = 'timeline-item';
         item.innerHTML = `
-          <div class="timeline-date">
-            <span><strong>${log.contactPerson || 'पालक'}</strong> शी संभाषण • <span class="status-badge ${sInfo.cls}" style="font-size:10.5px; padding:1px 6px;">${sInfo.label}</span></span>
-            <span>${new Date(log.timestamp).toLocaleString('mr-IN', { dateStyle:'short', timeStyle:'short' })}</span>
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-muted); font-weight:700;">
+            <span>${log.contactPerson || 'पालक'} शी संभाषण • <span class="status-badge ${sInfo.cls}" style="font-size:10.5px; padding:1px 6px;">${sInfo.label}</span></span>
+            <span>${new Date(log.timestamp).toLocaleDateString('mr-IN')}</span>
           </div>
-          ${log.discussion ? `<div class="timeline-text"><strong>बोलणे:</strong> ${log.discussion}</div>` : ''}
-          ${log.additionalInfo ? `<div class="timeline-text" style="color:#0369a1;"><strong>अतिरिक्त माहिती:</strong> ${log.additionalInfo}</div>` : ''}
-          ${log.nextDate ? `<div style="margin-top:4px; font-size:11.5px; color:#b45309;"><strong>⏰ पुढील कृती तारीख:</strong> ${log.nextDate}</div>` : ''}
-          <div style="margin-top:6px; display:flex; justify-content:flex-end;">
-            <span class="timeline-user-tag">👤 ${log.loggedBy || 'शुभम'}</span>
-          </div>
+          ${log.discussion ? `<div style="margin-top:4px; line-height:1.45;"><strong>बोलणे:</strong> ${log.discussion}</div>` : ''}
+          ${log.additionalInfo ? `<div style="margin-top:3px; color:#0369a1; line-height:1.45;"><strong>अतिरिक्त माहिती:</strong> ${log.additionalInfo}</div>` : ''}
+          ${log.nextDate ? `<div style="margin-top:4px; font-size:11.5px; color:#b45309;"><strong>⏰ पुढील कॉल:</strong> ${log.nextDate}</div>` : ''}
+          <div style="margin-top:4px; text-align:right; font-size:11px; color:var(--text-muted);">नोंद: 👤 ${log.loggedBy || 'शुभम'}</div>
         `;
         container.appendChild(item);
       });
@@ -2036,7 +2138,6 @@ ${waSettings.photoNote}${driveText}
       const nextDate = document.getElementById('fNextDate').value;
       const loggedBy = document.getElementById('fCallerUser').value.trim() || 'शुभम';
 
-      // Remember caller username
       localStorage.setItem(USER_NAME_KEY, loggedBy);
 
       const newLog = {
@@ -2058,59 +2159,53 @@ ${waSettings.photoNote}${driveText}
       renderView();
       renderTimeline(cand.logs);
 
-      // Reset form fields
       document.getElementById('fDiscussion').value = '';
       document.getElementById('fAdditionalInfo').value = '';
       document.getElementById('fNextDate').value = '';
 
-      showToast('संभाषण नोंद यशस्वीरित्या जतन झाली!');
+      showToast('संभाषण नोंद यशस्वीरित्या सेव्ह झाली!');
     }
 
-    // Backup & Export Features
+    // Backup & Export
     function exportDataJson() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(candidates, null, 2));
       const a = document.createElement('a');
       a.href = dataStr;
-      a.download = "matrimonial_tracker_backup_" + new Date().toISOString().slice(0, 10) + ".json";
+      a.download = "anubandh_backup_" + new Date().toISOString().slice(0, 10) + ".json";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      showToast('बॅकअप JSON फाईल डाऊनलोड झाली!');
+      showToast('बॅकअप JSON डाऊनलोड झाले!');
     }
 
     function exportDataCsv() {
-      const headers = ["अ.क्र.", "मुलीचे नाव", "मूळगाव", "उंची", "वर्ण", "गोत्र", "मामकुळ", "जन्म तारीख", "जन्म वेळ", "रक्तगट", "शिक्षण", "कुटुंब", "अपेक्षा", "संपर्क", "फोन", "स्थिती", "संभाषण नोंदी संख्या", "शेवटचा संवाद"];
-      const rows = candidates.map(c => {
-        const lastLog = c.logs && c.logs.length ? c.logs[c.logs.length - 1] : null;
-        const lastLogStr = lastLog ? `[${lastLog.contactPerson}]: ${lastLog.discussion || ''} (${lastLog.additionalInfo || ''})` : '';
-        return [
-          `"${c.sr}"`,
-          `"${(c.name || '').replace(/"/g, '""')}"`,
-          `"${(c.mulgaon || '').replace(/"/g, '""')}"`,
-          `"${(c.height || '').replace(/"/g, '""')}"`,
-          `"${(c.complexion || '').replace(/"/g, '""')}"`,
-          `"${(c.gotra || '').replace(/"/g, '""')}"`,
-          `"${(c.mamkul || '').replace(/"/g, '""')}"`,
-          `"${(c.date || '').replace(/"/g, '""')}"`,
-          `"${(c.time || '').replace(/"/g, '""')}"`,
-          `"${(c.blood || '').replace(/"/g, '""')}"`,
-          `"${(c.edu || '').replace(/"/g, '""')}"`,
-          `"${(c.fam || '').replace(/"/g, '""')}"`,
-          `"${(c.exp || '').replace(/"/g, '""')}"`,
-          `"${(c.contact || '').replace(/"/g, '""')}"`,
-          `"${(c.phones || []).join(', ')}"`,
-          `"${c.status || 'pending'}"`,
-          (c.logs || []).length,
-          `"${lastLogStr.replace(/"/g, '""')}"`
-        ].join(',');
-      });
+      const headers = ["अ.क्र.", "मुलीचे नाव", "मूळगाव", "उंची", "वर्ण", "गोत्र", "मामकुळ", "जन्म तारीख", "जन्म वेळ", "रक्तगट", "शिक्षण", "कुटुंब", "अपेक्षा", "संपर्क", "फोन", "स्थिती", "नोंदी संख्या"];
+      const rows = candidates.map(c => [
+        `"${c.sr}"`,
+        `"${(c.name || '').replace(/"/g, '""')}"`,
+        `"${(c.mulgaon || '').replace(/"/g, '""')}"`,
+        `"${(c.height || '').replace(/"/g, '""')}"`,
+        `"${(c.complexion || '').replace(/"/g, '""')}"`,
+        `"${(c.gotra || '').replace(/"/g, '""')}"`,
+        `"${(c.mamkul || '').replace(/"/g, '""')}"`,
+        `"${(c.date || '').replace(/"/g, '""')}"`,
+        `"${(c.time || '').replace(/"/g, '""')}"`,
+        `"${(c.blood || '').replace(/"/g, '""')}"`,
+        `"${(c.edu || '').replace(/"/g, '""')}"`,
+        `"${(c.fam || '').replace(/"/g, '""')}"`,
+        `"${(c.exp || '').replace(/"/g, '""')}"`,
+        `"${(c.contact || '').replace(/"/g, '""')}"`,
+        `"${(c.phones || []).join(', ')}"`,
+        `"${c.status || 'pending'}"`,
+        (c.logs || []).length
+      ].join(','));
 
       const csvContent = "﻿" + headers.join(',') + "\n" + rows.join('\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = "matrimonial_shortlist_export_" + new Date().toISOString().slice(0, 10) + ".csv";
+      a.download = "anubandh_candidates_" + new Date().toISOString().slice(0, 10) + ".csv";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -2124,23 +2219,21 @@ ${waSettings.photoNote}${driveText}
       setTimeout(() => toast.classList.remove('show'), 3500);
     }
 
-    // PWA Service Worker Registration & Install Prompt Handling
+    // PWA Service Worker Registration
     let deferredPrompt = null;
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').then(reg => {
-          console.log('PWA ServiceWorker registered successfully:', reg.scope);
-        }).catch(err => {
-          console.log('PWA ServiceWorker registration skipped or failed:', err);
-        });
+          console.log('PWA ServiceWorker registered');
+        }).catch(() => {});
       });
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      const installBtn = document.getElementById('pwaInstallBtn');
-      if (installBtn) installBtn.style.display = 'inline-flex';
+      const mInstall = document.getElementById('menuInstallBtn');
+      if (mInstall) mInstall.style.display = 'flex';
     });
 
     function triggerPwaInstall() {
@@ -2148,26 +2241,18 @@ ${waSettings.photoNote}${driveText}
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the PWA install');
-            showToast('ॲप यशस्वीरित्या इन्स्टॉल झाले!');
+            showToast('अनुबंध ॲप इन्स्टॉल झाले!');
           }
           deferredPrompt = null;
-          const installBtn = document.getElementById('pwaInstallBtn');
-          if (installBtn) installBtn.style.display = 'none';
+          const mInstall = document.getElementById('menuInstallBtn');
+          if (mInstall) mInstall.style.display = 'none';
         });
       } else {
-        alert('ॲप आधीच इन्स्टॉल झालेले आहे किंवा ब्राउझर मेन्यूमधून "Install / Add to Home screen" निवडा.');
+        alert('मोबाईल ब्राऊझरच्या मेन्यूमधून (तीन डॉट्स ⋮) "Add to Home Screen" किंवा "Install App" निवडा.');
       }
     }
 
-    window.addEventListener('appinstalled', () => {
-      deferredPrompt = null;
-      const installBtn = document.getElementById('pwaInstallBtn');
-      if (installBtn) installBtn.style.display = 'none';
-      showToast('अनुबंध (Anubandh) ॲप इन्स्टॉल झाले!');
-    });
-
-    // Initialize on Page Load
+    // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
       initData();
       populateGotras();
