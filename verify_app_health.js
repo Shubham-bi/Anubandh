@@ -239,6 +239,13 @@ try {
   assert(indexCode.includes('BACK_EXIT_DELAY_MS') && indexCode.includes('lastBackPressTime'), "index.html tracks back button timing for double press exit");
   assert(indexCode.includes('popstate') && indexCode.includes('getOpenModal'), "index.html listens to popstate and closes open modals on back");
   assert(bioCode.includes('popstate') && bioCode.includes('closeFullImg'), "biodata.html handles back button to close open modals");
+
+  // Shortlist Feature and Navigation Tabs assertions
+  assert(indexCode.includes('main-nav-tabs') && indexCode.includes('tabShortlisted') && indexCode.includes('tabAllCandidates'), "index.html defines main-nav-tabs with Shortlist and All tabs");
+  assert(indexCode.includes('switchMainListTab') && indexCode.includes('updateNavTabs'), "index.html provides functions to switch tabs and update counts");
+  assert(indexCode.includes('toggleShortlist') && indexCode.includes('SHORTLIST_STORAGE_KEY'), "index.html supports toggling shortlist and persists in localStorage");
+  assert(indexCode.includes('btn-shortlist-star') && indexCode.includes('shortlist-badge'), "index.html defines shortlist star button and badge styling");
+  assert(indexCode.includes("currentListTab = 'shortlisted'"), "index.html defaults to shortlisted tab first if shortlist is not empty");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
