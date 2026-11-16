@@ -829,15 +829,15 @@
     // Default Profile Data (Can be customized via Admin Portal without changing code)
     const DEFAULT_PROFILE_DATA = {
       title: "विवाह प्रस्ताव",
-      subtitle: "खर्चे परिवार (पुणे / शेलगाव बाजार)",
+      subtitle: "खर्चे परिवार (शेलगाव बाजार)",
       devGreeting: "॥ श्री गणेशाय नमः ॥",
       hero: {
         avatar: "🤵",
         name: "चि. शुभम अनिल खर्चे",
-        role: "B.E. Mechanical • Senior QA Engineer, Pune",
+        role: "B.E. Mechanical • Sr. QA Engineer IT, Pune",
         tags: [
           { text: "🎂 २५/०८/१९९६ (वय: ३० वर्षे)", type: "highlight" },
-          { text: "📏 उंची: ५' ७\"", type: "default" },
+          { text: "📏 उंची: ५' ६\"", type: "default" },
           { text: "🩸 रक्तगट: B+ve", type: "default" },
           { text: "💰 वार्षिक उत्पन्न: ७.८ लाख", type: "primary" }
         ]
@@ -863,11 +863,11 @@
           icon: "🎓",
           type: "table",
           items: [
-            { label: "शिक्षण", val: "B.E. Mechanical (अभियांत्रिकी पदवी)", color: "#701a75" },
-            { label: "हुद्दा (Role)", val: "Senior QA Engineer" },
-            { label: "कंपनी (Company)", val: "Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे" },
-            { label: "वार्षिक उत्पन्न", val: "रु. ७.८ लाख वार्षिक (7.8 LPA)", color: "#15803d" },
-            { label: "सध्याचे वास्तव्य", val: "पुणे (हल्ली मुक्काम)" }
+            { label: "शिक्षण", val: "B.E. Mechanical", color: "#701a75" },
+            { label: "हुद्दा (Role)", val: "Sr. QA Engineer IT" },
+            { label: "कंपनी (Company)", val: "Shaurya Technosoft Pvt. Ltd., Pune" },
+            { label: "वार्षिक उत्पन्न", val: "रु. ७.८ लाख वार्षिक", color: "#15803d" },
+            { label: "सध्याचे वास्तव्य", val: "पुणे" }
           ]
         },
         {
@@ -877,9 +877,9 @@
           type: "table",
           items: [
             { label: "वडिलांचे नाव", val: "कै. अनिल पुंजाजी खर्चे" },
-            { label: "आईचे नाव", val: "श्रीमती अनिता अनिल खर्चे (गृहिणी)" },
-            { label: "बहिणी", val: "२ बहिणी (दोन्ही सुविद्य व विवाहित)" },
-            { label: "शेती व संपत्ती", val: "५.५ एकर बागायती शेती (शेलगाव बाजार)" },
+            { label: "आईचे नाव", val: "श्रीमती अनिता अनिल खर्चे" },
+            { label: "बहिणी", val: "२ बहिणी (विवाहित)" },
+            { label: "शेती व संपत्ती", val: "५.५ एकर" },
             { label: "मूळगाव", val: "शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा" }
           ]
         },
@@ -888,6 +888,7 @@
           title: "कुटुंबातील ज्येष्ठ संपर्क व्यक्ती",
           icon: "📞",
           type: "contacts",
+          hidden: false,
           elders: [
             {
               name: "श्री. विजय पुंजाजी खर्चे",
@@ -905,10 +906,17 @@
             },
             {
               name: "श्री. महेंद्र प्रल्हाद पाटील",
-              sub: "नातेवाईक • मलकापूर",
+              sub: "काका • मलकापूर",
               phone: "9921639872",
               displayPhone: "९९२१६३९८७२",
               relation: "नातेवाईक"
+            },
+            {
+              name: "श्री. उमेश एकनाथ फेंगडे",
+              sub: "जीजाजी • वाडी-पोफळी",
+              phone: "9604458015",
+              displayPhone: "९६०४४५८०१५",
+              relation: "जीजाजी"
             }
           ]
         },
@@ -924,9 +932,9 @@
       ],
       closingNote: "आपणास स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी वर दिलेल्या संपर्क क्रमांकावर कॉल अथवा WhatsApp करावा, ही नम्र विनंती.<br/><strong>— खर्चे परिवार, शेलगाव बाजार</strong>",
       stickyActions: {
-        whatsappPhone: "9420539396",
+        whatsappPhone: "",
         whatsappText: "सस्नेह नमस्कार, आम्ही चि. शुभम खर्चे यांचा बायोडाटा पाहिला. आम्हाला पुढील चर्चा करायची आहे.",
-        callPhone: "9420539396"
+        callPhone: ""
       }
     };
 
@@ -1032,6 +1040,7 @@
       if (secContainer && Array.isArray(data.sections)) {
         let html = '';
         data.sections.forEach(sec => {
+          if (sec.hidden === true || sec.visible === false) return;
           if (sec.type === 'table') {
             const rows = (sec.items || []).map(it => `
               <tr>
@@ -1116,11 +1125,12 @@
     function initProfileData() {
       // 1. Check localStorage first (instant response for admin customizations)
       const localSaved = localStorage.getItem('anubandh_shareable_profile');
+      let localParsed = null;
       if (localSaved) {
         try {
-          const parsed = JSON.parse(localSaved);
-          if (parsed && parsed.hero && parsed.sections) {
-            renderProfile(parsed);
+          localParsed = JSON.parse(localSaved);
+          if (localParsed && localParsed.hero && Array.isArray(localParsed.sections)) {
+            renderProfile(localParsed);
           }
         } catch(e) {}
       } else {
@@ -1134,10 +1144,14 @@
           return res.json();
         })
         .then(data => {
-          if (data && data.hero && data.sections) {
-            // If local storage is empty or matches default, sync with json
-            renderProfile(data);
-            localStorage.setItem('anubandh_shareable_profile', JSON.stringify(data));
+          if (data && data.hero && Array.isArray(data.sections)) {
+            const localTime = (localParsed && localParsed.updatedAt) || 0;
+            const remoteTime = data.updatedAt || 0;
+            // Only update from server if remote data is newer or local is empty/unset
+            if (!localParsed || remoteTime > localTime) {
+              renderProfile(data);
+              localStorage.setItem('anubandh_shareable_profile', JSON.stringify(data));
+            }
           }
         })
         .catch(err => {

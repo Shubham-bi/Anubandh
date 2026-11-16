@@ -247,6 +247,21 @@ try {
   assert(indexCode.includes('btn-shortlist-star') && indexCode.includes('getStarSvg'), "index.html defines compact shortlist star button and getStarSvg renderer");
   assert(!indexCode.includes('<span class="shortlist-badge">⭐ शॉर्टलिस्ट</span>'), "index.html card header no longer displays redundant text label for shortlisted");
   assert(indexCode.includes("currentListTab = 'shortlisted'"), "index.html defaults to shortlisted tab first if shortlist is not empty");
+
+  // Section show/hide and CMS sync assertions
+  assert(indexCode.includes('toggleCmsSectionHidden'), "index.html provides toggleCmsSectionHidden to show/hide sections");
+  assert(bioCode.includes('sec.hidden'), "biodata.html checks sec.hidden to hide/show sections dynamically");
+  
+  // Master file parity assertions
+  const trackerA = fs.readFileSync('index.html');
+  const trackerB = fs.readFileSync('datalab-convert-Suchi-SHortlist.html');
+  const trackerC = fs.readFileSync('matrimonial-tracker-app.html');
+  assert(trackerA.equals(trackerB) && trackerA.equals(trackerC), "Primary master index.html is 100% synchronized with datalab-convert-Suchi-SHortlist.html and matrimonial-tracker-app.html");
+
+  const bioA = fs.readFileSync('biodata.html');
+  const bioB = fs.readFileSync('shubham-kharche.html');
+  const bioC = fs.readFileSync('Shubham_Kharche.html');
+  assert(bioA.equals(bioB) && bioA.equals(bioC), "Primary master biodata.html is 100% synchronized with shubham-kharche.html and Shubham_Kharche.html");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

@@ -2809,15 +2809,15 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     const PROFILE_STORAGE_KEY = 'anubandh_shareable_profile';
     const DEFAULT_PROFILE_DATA = {
       title: "विवाह प्रस्ताव",
-      subtitle: "खर्चे परिवार (पुणे / शेलगाव बाजार)",
+      subtitle: "खर्चे परिवार (शेलगाव बाजार)",
       devGreeting: "॥ श्री गणेशाय नमः ॥",
       hero: {
         avatar: "🤵",
         name: "चि. शुभम अनिल खर्चे",
-        role: "B.E. Mechanical • Senior QA Engineer, Pune",
+        role: "B.E. Mechanical • Sr. QA Engineer IT, Pune",
         tags: [
           { text: "🎂 २५/०८/१९९६ (वय: ३० वर्षे)", type: "highlight" },
-          { text: "📏 उंची: ५' ७\"", type: "default" },
+          { text: "📏 उंची: ५' ६\"", type: "default" },
           { text: "🩸 रक्तगट: B+ve", type: "default" },
           { text: "💰 वार्षिक उत्पन्न: ७.८ लाख", type: "primary" }
         ]
@@ -2843,11 +2843,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           icon: "🎓",
           type: "table",
           items: [
-            { label: "शिक्षण", val: "B.E. Mechanical (अभियांत्रिकी पदवी)", color: "#701a75" },
-            { label: "हुद्दा (Role)", val: "Senior QA Engineer" },
-            { label: "कंपनी (Company)", val: "Shaurya Technosoft Pvt. Ltd., बाणेर, पुणे" },
-            { label: "वार्षिक उत्पन्न", val: "रु. ७.८ लाख वार्षिक (7.8 LPA)", color: "#15803d" },
-            { label: "सध्याचे वास्तव्य", val: "पुणे (हल्ली मुक्काम)" }
+            { label: "शिक्षण", val: "B.E. Mechanical", color: "#701a75" },
+            { label: "हुद्दा (Role)", val: "Sr. QA Engineer IT" },
+            { label: "कंपनी (Company)", val: "Shaurya Technosoft Pvt. Ltd., Pune" },
+            { label: "वार्षिक उत्पन्न", val: "रु. ७.८ लाख वार्षिक", color: "#15803d" },
+            { label: "सध्याचे वास्तव्य", val: "पुणे" }
           ]
         },
         {
@@ -2857,9 +2857,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           type: "table",
           items: [
             { label: "वडिलांचे नाव", val: "कै. अनिल पुंजाजी खर्चे" },
-            { label: "आईचे नाव", val: "श्रीमती अनिता अनिल खर्चे (गृहिणी)" },
-            { label: "बहिणी", val: "२ बहिणी (दोन्ही सुविद्य व विवाहित)" },
-            { label: "शेती व संपत्ती", val: "५.५ एकर बागायती शेती (शेलगाव बाजार)" },
+            { label: "आईचे नाव", val: "श्रीमती अनिता अनिल खर्चे" },
+            { label: "बहिणी", val: "२ बहिणी (विवाहित)" },
+            { label: "शेती व संपत्ती", val: "५.५ एकर" },
             { label: "मूळगाव", val: "शेलगाव बाजार, ता. मोताळा, जि. बुलडाणा" }
           ]
         },
@@ -2868,6 +2868,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           title: "कुटुंबातील ज्येष्ठ संपर्क व्यक्ती",
           icon: "📞",
           type: "contacts",
+          hidden: false,
           elders: [
             {
               name: "श्री. विजय पुंजाजी खर्चे",
@@ -2885,10 +2886,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             },
             {
               name: "श्री. महेंद्र प्रल्हाद पाटील",
-              sub: "नातेवाईक • मलकापूर",
+              sub: "काका • मलकापूर",
               phone: "9921639872",
               displayPhone: "९९२१६३९८७२",
               relation: "नातेवाईक"
+            },
+            {
+              name: "श्री. उमेश एकनाथ फेंगडे",
+              sub: "जीजाजी • वाडी-पोफळी",
+              phone: "9604458015",
+              displayPhone: "९६०४४५८०१५",
+              relation: "जीजाजी"
             }
           ]
         },
@@ -2904,9 +2912,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       ],
       closingNote: "आपणास स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी वर दिलेल्या संपर्क क्रमांकावर कॉल अथवा WhatsApp करावा, ही नम्र विनंती.<br/><strong>— खर्चे परिवार, शेलगाव बाजार</strong>",
       stickyActions: {
-        whatsappPhone: "9420539396",
+        whatsappPhone: "",
         whatsappText: "सस्नेह नमस्कार, आम्ही चि. शुभम खर्चे यांचा बायोडाटा पाहिला. आम्हाला पुढील चर्चा करायची आहे.",
-        callPhone: "9420539396"
+        callPhone: ""
       }
     };
 
@@ -2924,17 +2932,33 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
     function loadShareableProfileData() {
       const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+      let localData = null;
       if (stored) {
         try {
-          const parsed = JSON.parse(stored);
-          if (parsed && parsed.hero && Array.isArray(parsed.sections)) {
-            shareableProfileData = parsed;
+          localData = JSON.parse(stored);
+          if (localData && localData.hero && Array.isArray(localData.sections)) {
+            shareableProfileData = localData;
           }
         } catch(e) {}
       }
       if (!shareableProfileData) {
         shareableProfileData = JSON.parse(JSON.stringify(DEFAULT_PROFILE_DATA));
       }
+
+      // Sync if profile_data.json on disk/git has newer updatedAt
+      fetch('./profile_data.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(diskData => {
+          if (diskData && diskData.hero && Array.isArray(diskData.sections)) {
+            const diskTime = diskData.updatedAt || 0;
+            const localTime = (localData && localData.updatedAt) || 0;
+            if (!localData || diskTime > localTime) {
+              shareableProfileData = diskData;
+              localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(diskData));
+            }
+          }
+        })
+        .catch(() => {});
     }
 
     function renderProfileCmsForm() {
@@ -3093,13 +3117,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         }
 
         html += `
-          <div class="cms-sec-card" id="cmsCardSec_${sIdx}">
+          <div class="cms-sec-card ${sec.hidden ? 'is-sec-hidden' : ''}" id="cmsCardSec_${sIdx}" style="${sec.hidden ? 'opacity:0.75; border:1.5px dashed #cbd5e1; background:#f8fafc;' : ''}">
             <div class="cms-sec-head">
               <div class="cms-sec-head-main">
                 <input type="text" value="${escapeHtml(sec.icon || '📋')}" style="width:38px; min-width:38px; height:38px; text-align:center; font-size:18px; padding:2px; border:1px solid #cbd5e1; border-radius:8px;" onchange="updateCmsSectionProp(${sIdx}, 'icon', this.value)" title="इमोजी चिन्ह"/>
                 <input type="text" value="${escapeHtml(sec.title)}" class="form-control" style="flex:1; font-weight:700; font-size:14px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:8px;" onchange="updateCmsSectionProp(${sIdx}, 'title', this.value)" placeholder="विभागाचे नाव (उदा. शैक्षणिक माहिती)..."/>
               </div>
               <div class="cms-sec-head-actions">
+                <label style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:700; cursor:pointer; background:${sec.hidden ? '#fee2e2' : '#f0fdf4'}; color:${sec.hidden ? '#991b1b' : '#166534'}; padding:3px 8px; border-radius:6px; border:1px solid ${sec.hidden ? '#fca5a5' : '#bbf7d0'}; margin-right:4px;" title="${sec.hidden ? 'हा विभाग वेबपेजवर लपवला आहे. दाखवण्यासाठी क्लिक करा.' : 'हा विभाग वेबपेजवर दिसत आहे. लपवण्यासाठी क्लिक करा.'}">
+                  <input type="checkbox" ${sec.hidden ? '' : 'checked'} onchange="toggleCmsSectionHidden(${sIdx}, !this.checked)" style="cursor:pointer; accent-color:#16a34a; width:13px; height:13px;"/>
+                  <span>${sec.hidden ? '🙈 लपवला' : '👁️ दाखवा'}</span>
+                </label>
                 <span style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:4px 8px; border-radius:999px; font-weight:700; white-space:nowrap;">${typeLabel}</span>
                 <button type="button" class="cms-btn-icon" onclick="moveCmsSection(${sIdx}, -1)" ${isFirst ? 'disabled' : ''} title="वर घ्या">▲</button>
                 <button type="button" class="cms-btn-icon" onclick="moveCmsSection(${sIdx}, 1)" ${isLast ? 'disabled' : ''} title="खाली घ्या">▼</button>
@@ -3114,6 +3142,14 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       });
 
       container.innerHTML = html;
+    }
+
+    function toggleCmsSectionHidden(secIdx, isHidden) {
+      if (shareableProfileData && shareableProfileData.sections && shareableProfileData.sections[secIdx]) {
+        shareableProfileData.sections[secIdx].hidden = !!isHidden;
+        renderCmsSections();
+        showToast(isHidden ? '🙈 विभाग लपवला (Hidden)' : '👁️ विभाग दाखवला (Visible)');
+      }
     }
 
     function updateCmsSectionProp(secIdx, prop, value) {
@@ -3250,6 +3286,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     function saveProfileCmsData(e) {
       if (e && e.preventDefault) e.preventDefault();
 
+      // Force any active element to blur to commit input changes
+      if (document.activeElement && document.activeElement.blur) {
+        try { document.activeElement.blur(); } catch(err) {}
+      }
+
       // Gather Header & Hero
       shareableProfileData.title = document.getElementById('cmsProfileTitle')?.value.trim() || DEFAULT_PROFILE_DATA.title;
       shareableProfileData.subtitle = document.getElementById('cmsProfileSubtitle')?.value.trim() || DEFAULT_PROFILE_DATA.subtitle;
@@ -3260,12 +3301,17 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       shareableProfileData.hero.role = document.getElementById('cmsProfileRole')?.value.trim() || DEFAULT_PROFILE_DATA.hero.role;
       shareableProfileData.hero.avatar = document.getElementById('cmsProfileAvatar')?.value.trim() || '🤵';
 
-      // Gather Footer & Sticky
+      // Gather Footer & Sticky (allow empty strings)
       shareableProfileData.closingNote = document.getElementById('cmsProfileClosingNote')?.value || DEFAULT_PROFILE_DATA.closingNote;
       if (!shareableProfileData.stickyActions) shareableProfileData.stickyActions = {};
-      shareableProfileData.stickyActions.whatsappPhone = document.getElementById('cmsProfileWaPhone')?.value.trim() || '9420539396';
+      const waPhoneVal = document.getElementById('cmsProfileWaPhone')?.value;
+      const callPhoneVal = document.getElementById('cmsProfileCallPhone')?.value;
+      shareableProfileData.stickyActions.whatsappPhone = waPhoneVal !== undefined ? waPhoneVal.trim() : '';
       shareableProfileData.stickyActions.whatsappText = document.getElementById('cmsProfileWaText')?.value || '';
-      shareableProfileData.stickyActions.callPhone = document.getElementById('cmsProfileCallPhone')?.value.trim() || '9420539396';
+      shareableProfileData.stickyActions.callPhone = callPhoneVal !== undefined ? callPhoneVal.trim() : '';
+
+      // Timestamp ensures freshest version in biodata viewer
+      shareableProfileData.updatedAt = Date.now();
 
       // 1. Save to LocalStorage
       localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
@@ -3297,7 +3343,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     function previewProfilePage() {
       // Save current state first
       saveProfileCmsData();
-      window.open('./biodata.html', '_blank');
+      window.open('./biodata.html?v=' + Date.now(), '_blank');
     }
 
     const PROFILE_SHARE_NAME = 'Shubham_Kharche';
