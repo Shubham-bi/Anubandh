@@ -163,6 +163,13 @@ try {
   
   const shubhamCode = fs.readFileSync(path.join(repoDir, 'shubham-kharche.html'), 'utf8');
   assert(shubhamCode.includes("PROFILE_PASS = '258'"), "shubham-kharche.html enforces password '258'");
+
+  // 6. Validate Main Portal Authentication & App Install Banner & SVG Up Arrow
+  const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
+  assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
+  assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
+  assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
+  assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

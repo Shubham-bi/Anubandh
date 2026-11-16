@@ -847,36 +847,7 @@
       }
     }
   
-    /* Floating Scroll-to-Top Button */
-    .scroll-top-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #881337, #be123c);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 4px 18px rgba(136, 19, 55, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 998;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(16px);
-      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-    }
-    .scroll-top-btn.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    .scroll-top-btn:active {
-      transform: scale(0.92);
-    }
+    
 
     /* Single Mobile Phone Chip Button */
     .phone-chip-single {
@@ -1043,9 +1014,258 @@
       background: #e2e8f0;
     }
   
+  
+    /* Fullscreen Password Lock Overlay for Web & App (Password: 258) */
+    .auth-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #4c0519 0%, #881337 60%, #be123c 100%);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 380px;
+      width: 100%;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 2px solid #fef08a;
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .auth-emblem {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+    .auth-title {
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .auth-subtitle {
+      font-size: 13.5px;
+      color: #64748b;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+    .auth-input-wrap {
+      margin-bottom: 14px;
+    }
+    .auth-input {
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 8px;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      outline: none;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+    .auth-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(136, 19, 55, 0.12);
+    }
+    .auth-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #881337, #be123c);
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(136, 19, 55, 0.25);
+      transition: transform 0.1s ease;
+    }
+    .auth-btn:active {
+      transform: scale(0.98);
+    }
+    .auth-error {
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 10px;
+      display: none;
+    }
+    .auth-hint {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* PWA Install Banner when opening page */
+    .pwa-install-banner {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1.5px solid #fcd34d;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 12px 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12);
+      animation: slideDownBanner 0.3s ease;
+    }
+    @keyframes slideDownBanner {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pwa-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .pwa-banner-icon img {
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      display: block;
+    }
+    .pwa-banner-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .pwa-banner-text strong {
+      font-size: 14px;
+      color: #78350f;
+      font-weight: 800;
+    }
+    .pwa-banner-text span {
+      font-size: 12px;
+      color: #92400e;
+      font-weight: 600;
+    }
+    .pwa-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-banner-install {
+      background: linear-gradient(135deg, #b45309, #d97706);
+      color: white;
+      border: none;
+      padding: 8px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(180, 83, 9, 0.3);
+      white-space: nowrap;
+    }
+    .btn-banner-install:active {
+      transform: scale(0.96);
+    }
+    .btn-banner-close {
+      background: transparent;
+      border: none;
+      color: #92400e;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 6px;
+    }
+
+    /* Modern Professional Floating Up-Arrow Button */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #881337 0%, #be123c 100%);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 20px rgba(136, 19, 55, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .scroll-top-btn:active {
+      transform: scale(0.92);
+      box-shadow: 0 2px 8px rgba(136, 19, 55, 0.3);
+    }
+    .scroll-top-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: #ffffff;
+      transition: transform 0.2s ease;
+    }
+    .scroll-top-btn:hover svg {
+      transform: translateY(-2px);
+    }
+  
   </style>
 </head>
 <body>
+
+  <!-- Fullscreen Password Protection Overlay (Password: 258) -->
+  <div id="appAuthGate" class="auth-gate-overlay" style="display:none;">
+    <div class="auth-card">
+      <div class="auth-emblem">💍</div>
+      <h2 class="auth-title">अनुबंध</h2>
+      <div class="auth-subtitle">
+        दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध<br/>
+        <strong style="color:var(--primary);">खर्चे परिवार वधू-वर सूची</strong><br/>
+        गोपनीयतेसाठी हा डेटा पासवर्डने सुरक्षित आहे. कृपया ३-अंकी पासवर्ड टाका:
+      </div>
+
+      <div class="auth-input-wrap">
+        <input 
+          type="password" 
+          id="appPassInput" 
+          class="auth-input" 
+          maxlength="6" 
+          inputmode="numeric" 
+          pattern="[0-9]*"
+          placeholder="•••"
+          autocomplete="off"
+          autofocus
+        />
+      </div>
+
+      <button type="button" class="auth-btn" onclick="verifyAppPassword()">
+        प्रवेश करा &rarr;
+      </button>
+
+      <div id="appPassError" class="auth-error">
+        ❌ चुकीचा पासवर्ड! कृपया योग्य ३-अंकी पासवर्ड टाका.
+      </div>
+
+      <div class="auth-hint">
+        💡 एकदा पासवर्ड टाकल्यावर आपल्या फोनवर कायम सेव्ह राहील.
+      </div>
+    </div>
+  </div>
+
 
   <!-- Sticky Mobile Header -->
   <header class="portal-header">
@@ -1075,6 +1295,28 @@
   </header>
 
   <main class="app-container">
+
+      <!-- PWA Install Prompt Banner when opening page -->
+      <div id="pwaInstallBanner" class="pwa-install-banner" style="display:none;">
+        <div class="pwa-banner-content">
+          <div class="pwa-banner-icon">
+            <img src="./icon.svg" alt="अनुबंध" width="38" height="38"/>
+          </div>
+          <div class="pwa-banner-text">
+            <strong>📲 अनुबंध ॲप इन्स्टॉल करा</strong>
+            <span>आपल्या मोबाईलवर ॲपप्रमाणे जलद व ऑफलाइन वापरा</span>
+          </div>
+        </div>
+        <div class="pwa-banner-actions">
+          <button type="button" class="btn-banner-install" onclick="triggerPwaInstall()">
+            📥 इन्स्टॉल करा
+          </button>
+          <button type="button" class="btn-banner-close" onclick="dismissInstallBanner()" title="बंद करा">
+            ✕
+          </button>
+        </div>
+      </div>
+
 
     <!-- Status Filter Pills Bar -->
     <div class="quick-status-scroll">
@@ -2531,7 +2773,75 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       }
     }
 
+    
+    const APP_PASS = '258';
+    const APP_AUTH_KEY = 'anubandh_app_auth';
+
+    function checkAppAuth() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryPass = urlParams.get('pass') || urlParams.get('p');
+        if (queryPass === APP_PASS) {
+          localStorage.setItem(APP_AUTH_KEY, APP_PASS);
+        }
+
+        const saved = localStorage.getItem(APP_AUTH_KEY);
+        if (saved === APP_PASS) {
+          const gate = document.getElementById('appAuthGate');
+          if (gate) gate.style.display = 'none';
+          return true;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      const gate = document.getElementById('appAuthGate');
+      if (gate) gate.style.display = 'flex';
+      const inp = document.getElementById('appPassInput');
+      if (inp) inp.focus();
+      return false;
+    }
+
+    function verifyAppPassword() {
+      const inp = document.getElementById('appPassInput');
+      const val = (inp.value || '').trim();
+      const err = document.getElementById('appPassError');
+
+      if (val === APP_PASS) {
+        try {
+          localStorage.setItem(APP_AUTH_KEY, APP_PASS);
+        } catch (e) {}
+        if (err) err.style.display = 'none';
+        const gate = document.getElementById('appAuthGate');
+        if (gate) gate.style.display = 'none';
+        showToast('स्वागत आहे! पासवर्ड सुरक्षितरित्या सेव्ह झाला.');
+      } else {
+        if (err) err.style.display = 'block';
+        inp.value = '';
+        inp.focus();
+      }
+    }
+
+    function setupInstallPromptBanner() {
+      // Show install banner if not in standalone mode and not dismissed this session
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+      const dismissed = sessionStorage.getItem('anubandh_install_dismissed');
+      const banner = document.getElementById('pwaInstallBanner');
+
+      if (!isStandalone && !dismissed && banner) {
+        banner.style.display = 'flex';
+      }
+    }
+
+    function dismissInstallBanner() {
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.style.display = 'none';
+      sessionStorage.setItem('anubandh_install_dismissed', 'true');
+    }
+  
     document.addEventListener('DOMContentLoaded', () => {
+      checkAppAuth();
+      setupInstallPromptBanner();
       initData();
       updateStats();
       renderView();
@@ -2539,8 +2849,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
   </script>
 
   <!-- Floating Scroll to Top Button -->
-  <button id="scrollToTopBtn" class="scroll-top-btn" onclick="scrollToTop()" title="वर जा" aria-label="वर स्क्रोल करा">
-    <span style="font-size:20px;">⬆️</span>
+  <button id="scrollToTopBtn" class="scroll-top-btn" onclick="scrollToTop()" title="वर स्क्रोल करा" aria-label="वर जा">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
   </button>
 
   <!-- Interactive Phone Action Sheet Modal -->
