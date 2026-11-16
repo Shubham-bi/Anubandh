@@ -1635,6 +1635,10 @@
       from { transform: scale(0.92); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+    @keyframes splashPop {
+      0% { transform: scale(0.88); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
     .auth-emblem {
       font-size: 40px;
       margin-bottom: 8px;
@@ -1838,6 +1842,19 @@
 </head>
 <body>
 
+  <!-- App Splash Screen -->
+  <div id="appSplashScreen" style="position:fixed; inset:0; z-index:999999; background:linear-gradient(135deg, #881337 0%, #9f1239 50%, #4c0519 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; transition:opacity 0.45s ease; touch-action:none; user-select:none;">
+    <div style="text-align:center; padding:24px 20px; max-width:440px; animation:splashPop 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div style="font-size:52px; margin-bottom:10px; filter:drop-shadow(0 6px 16px rgba(0,0,0,0.4));">💍</div>
+      <h1 style="font-size:34px; font-weight:900; margin:0; color:#fef08a; letter-spacing:1px; text-shadow:0 2px 10px rgba(0,0,0,0.3);">अनुबंध</h1>
+      <p style="font-size:14.5px; color:#fecdd3; margin:8px 0 0; font-weight:500;">दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध</p>
+      
+      <div style="margin-top:28px; background:rgba(0,0,0,0.28); border:1px solid rgba(254, 240, 138, 0.35); border-radius:999px; padding:9px 18px; font-size:12px; color:#fff1f2; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+        अनुबंध (Anubandh) • खर्चे परिवार • Crafted with ❤️ by Shubham Kharche
+      </div>
+    </div>
+  </div>
+
   <!-- Fullscreen Password Protection Overlay (Password: 258) -->
   <div id="appAuthGate" class="auth-gate-overlay" style="display:none;">
     <div class="auth-card">
@@ -1874,6 +1891,10 @@
 
       <div class="auth-hint">
         💡 एकदा पासवर्ड टाकल्यावर आपल्या फोनवर कायम सेव्ह राहील.
+      </div>
+
+      <div style="margin-top:20px; padding-top:14px; border-top:1px solid #f1f5f9; font-size:11.5px; color:#94a3b8; text-align:center;">
+        अनुबंध (Anubandh) • खर्चे परिवार • Crafted with ❤️ by Shubham Kharche
       </div>
     </div>
   </div>
@@ -2042,54 +2063,31 @@
       <div class="drawer-body">
         <a href="./biodata.html" target="_blank" class="menu-item" style="text-decoration:none; color:inherit;">
           <span>🤵</span>
-          <span>वधू पक्षासाठी प्रोफाईल पेज (Shareable)</span>
+          <span>वधू पक्षासाठी प्रोफाईल</span>
         </a>
         <div class="menu-item" onclick="shareProfileOnWhatsApp(); closeSideMenu();">
           <span>💬</span>
-          <span>WhatsApp वर प्रोफाईल शेअर करा (Shubham_Kharche)</span>
+          <span>WhatsApp शेअर</span>
         </div>
         <div class="menu-item" onclick="copyProfileHyperlink(); closeSideMenu();">
           <span>🔗</span>
-          <span>हायपरलिंक कॉपी करा (Shubham_Kharche)</span>
+          <span>प्रोफाईल लिंक कॉपी</span>
         </div>
         <div class="menu-item" onclick="openBioViewModal(); closeSideMenu();">
           <span>🖼️</span>
-          <span>माझा मूळ बायोडाटा पहा</span>
+          <span>मूळ बायोडाटा फोटो</span>
         </div>
 
         <div class="menu-item" id="menuInstallBtn" style="display:none;" onclick="triggerPwaInstall(); closeSideMenu();">
           <span>📲</span>
-          <span>मोबाईलमध्ये ॲप इन्स्टॉल करा</span>
+          <span>मोबाईल ॲप इन्स्टॉल</span>
         </div>
 
-        <!-- Shareable Profile Editor in Menu -->
-        <div class="menu-item" onclick="requestAdminAccess('profile_cms')">
-          <span>📄</span>
-          <span>शेअर बायोडाटा वेबपेज संपादन</span>
-          <span class="menu-item-lock">🔒 पासवर्ड</span>
-        </div>
-
-        <!-- Password Protected Setting in Menu -->
+        <!-- Password Protected Setting in Menu (Includes CMS, Cloud Sync, Backup JSON, Excel CSV) -->
         <div class="menu-item" onclick="requestAdminAccess()">
           <span>⚙️</span>
           <span>अ‍ॅडमिन सेटिंग्ज</span>
           <span class="menu-item-lock">🔒 पासवर्ड</span>
-        </div>
-
-        <div class="menu-item" onclick="requestAdminAccess('sync')">
-          <span>🔄</span>
-          <span>मल्टी-युझर क्लाउड सिंक</span>
-          <span id="menuSyncDot" style="width:9px; height:9px; border-radius:50%; background:#4ade80; margin-left:auto;"></span>
-        </div>
-
-        <div class="menu-item" onclick="exportDataJson(); closeSideMenu();">
-          <span>💾</span>
-          <span>डेटा बॅकअप (JSON)</span>
-        </div>
-
-        <div class="menu-item" onclick="exportDataCsv(); closeSideMenu();">
-          <span>📊</span>
-          <span>Excel CSV डाऊनलोड</span>
         </div>
 
         <div class="menu-item" onclick="openAboutModal(); closeSideMenu();">
@@ -2152,13 +2150,16 @@
         
         <div style="display:flex; gap:6px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px; overflow-x:auto;">
           <button id="tabProfileCmsBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('profile_cms')">
-            📄 शेअर बायोडाटा वेबपेज संपादन
+            📄 शेअर बायोडाटा संपादन
+          </button>
+          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('sync')">
+            🔄 मल्टी-युझर क्लाउड सिंक
+          </button>
+          <button id="tabBackupBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('backup')">
+            💾 डेटा बॅकअप व Excel
           </button>
           <button id="tabWaBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('wa')">
             💬 WhatsApp मेसेज
-          </button>
-          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('sync')">
-            🔄 Firebase क्लाउड सिंक
           </button>
         </div>
 
@@ -2492,6 +2493,37 @@
               <button type="submit" class="action-btn action-btn-primary">🔗 सिंक सेव्ह करा</button>
             </div>
           </form>
+        </div>
+
+        <!-- TAB 3: Data Backup & Excel CSV Download -->
+        <div id="secBackupSettings" style="display:none; padding-top:4px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+            <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-weight:800; font-size:15px; color:#0f172a; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:22px;">💾</span>
+                <span>डेटा बॅकअप (JSON)</span>
+              </div>
+              <p style="font-size:13px; color:#64748b; line-height:1.5; margin:0 0 14px;">
+                सर्व ८३ वधूंची माहिती, संभाषण नोंदी, स्टेटस आणि शॉर्टलिस्ट केलेल्या वधूंचा पूर्ण बॅकअप JSON फॉरमॅटमध्ये डाऊनलोड करा.
+              </p>
+              <button type="button" class="action-btn action-btn-primary" style="background:#0284c7; padding:9px 16px; font-size:13px; width:100%; justify-content:center;" onclick="exportDataJson()">
+                📥 संपूर्ण डेटा बॅकअप डाऊनलोड (JSON)
+              </button>
+            </div>
+
+            <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-weight:800; font-size:15px; color:#0f172a; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+                <span style="font-size:22px;">📊</span>
+                <span>Excel CSV डाऊनलोड</span>
+              </div>
+              <p style="font-size:13px; color:#64748b; line-height:1.5; margin:0 0 14px;">
+                सर्व वधूंची तपशीलवार यादी एक्सेल (CSV) फॉरमॅटमध्ये एक्सपोर्ट करा. ही फाईल थेट Microsoft Excel किंवा Google Sheets मध्ये उघडता येते.
+              </p>
+              <button type="button" class="action-btn action-btn-primary" style="background:#15803d; padding:9px 16px; font-size:13px; width:100%; justify-content:center;" onclick="exportDataCsv()">
+                📊 Excel CSV यादी डाऊनलोड
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -3601,14 +3633,19 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       const isCms = tab === 'profile_cms';
       const isWa = tab === 'wa';
       const isSync = tab === 'sync';
+      const isBackup = tab === 'backup';
 
       document.getElementById('secProfileCmsSettings').style.display = isCms ? 'block' : 'none';
       document.getElementById('secWaSettings').style.display = isWa ? 'block' : 'none';
       document.getElementById('secSyncSettings').style.display = isSync ? 'block' : 'none';
+      const backupSec = document.getElementById('secBackupSettings');
+      if (backupSec) backupSec.style.display = isBackup ? 'block' : 'none';
 
       document.getElementById('tabProfileCmsBtn').className = isCms ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
       document.getElementById('tabSyncBtn').className = isSync ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
+      const backupBtn = document.getElementById('tabBackupBtn');
+      if (backupBtn) backupBtn.className = isBackup ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
+      document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
     }
 
     function updateWaPreview() {
@@ -4982,7 +5019,18 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       });
     }
   
+    function hideSplashScreen() {
+      const splash = document.getElementById('appSplashScreen');
+      if (splash) {
+        setTimeout(() => {
+          splash.style.opacity = '0';
+          setTimeout(() => { splash.style.display = 'none'; }, 450);
+        }, 1100);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      hideSplashScreen();
       checkAppAuth();
       setupInstallPromptBanner();
       initData();

@@ -250,6 +250,10 @@ try {
   assert(indexCode.includes('toggleCmsSectionHidden'), "index.html provides toggleCmsSectionHidden to show/hide sections");
   assert(bioCode.includes('sec.hidden'), "biodata.html checks sec.hidden to hide/show sections dynamically");
   
+  // Splash screen & Admin organization assertions
+  assert(indexCode.includes('appSplashScreen') && indexCode.includes('Crafted with ❤️ by Shubham Kharche'), "index.html defines splash screen with creator credit");
+  assert(indexCode.includes('secBackupSettings') && indexCode.includes('tabBackupBtn'), "index.html defines backup and excel download section in admin portal");
+
   // Master file parity assertions
   assert(indexCode.includes('<!DOCTYPE html>') && indexCode.includes('INITIAL_DATA'), "index.html serves as the standalone primary single-source PWA entry");
   const currentSwCode = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
