@@ -324,6 +324,10 @@ try {
   assert(indexCode.includes('shareGeneratedCardNative') && indexCode.includes('copyProfileHyperlink') && indexCode.includes('openWhatsAppChat'), "index.html supports native app sharing and canvas image copy across all options");
   assert(bioCode.includes('shareGeneratedCardNative') && bioCode.includes('copyHyperlink'), "biodata.html supports native app sharing and canvas image copy across all options");
   assert(redesignedCode.includes('shareToAnyApp') && redesignedCode.includes('sbtn-share'), "shubham_biodata_redesigned.html supports universal cross-app sharing (shareToAnyApp)");
+
+  // 12. Candidate Additional Key-Value Details (+ Button)
+  assert(indexCode.includes('openAddCandidateDetailModal') && indexCode.includes('saveCandidateDetail') && indexCode.includes('candidateDetailModal'), "index.html defines additional key-value detail modal and handlers");
+  assert(indexCode.includes('➕ माहिती जोडा') && indexCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

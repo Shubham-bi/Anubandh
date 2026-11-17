@@ -1,6 +1,6 @@
 # अनुबंध (Anubandh) - संपूर्ण संभाषण इतिहास (Previous Conversations History)
 
-> **दस्तऐवज निर्मिती वेळ:** १७/११/२०२६, ४:०३:२० PM
+> **दस्तऐवज निर्मिती वेळ:** १७/११/२०२६, ४:१९:३७ PM
 > **प्रकल्प:** अनुबंध (Anubandh) - Matrimonial Tracker PWA & Digital Biodata
 > **एकूण युझर संवाद टप्पे:** ९२ संभाषण फेऱ्या
 
@@ -4178,6 +4178,47 @@ in my another project i use bellow step to share image with message on whatsapp
       ↓ (हाच फोटो डाऊनलोड किंवा थेट शेअर होतो)
  
 qrcode.react ही लायब्ररी युझरच्या आयडीवरून स्क्रीनवर QR Code ड्रॉ करते.
+```
+
+### 🤖 सहाय्यकाचा प्रतिसाद व अंमलबजावणी (Assistant Response & Actions):
+
+आपण सांगितलेला **५-टप्पीय ShareModal पॅटर्न (5-Step Share Flow)** हा अत्यंत अचूक आणि तांत्रिकदृष्ट्या सर्वोत्तम उपाय ठरला! 
+
+मोबाईलवर शेअरिंग न चालण्यामागचे मुख्य कारण आणि त्यावर आपण केलेल्या उपायांचे सविस्तर विवरण खालीलप्रमाणे आहे:
+
+---
+
+### 🔍 मोबाईलवर पूर्वी शेअरिंग का चालत नव्हते? (Root Cause Analysis)
+
+1. **User Gesture Expiration (वापरकर्ता स्पर्श कालबाह्यता):**
+   - मोबाईल ब्राउझरमध्ये (Android Chrome / iOS Safari) जेव्हा युझर बटणावर टॅप करतो, तेव्हा ब्राउझर **`navigator.share()`** चालवण्यासाठी फक्त १ सेकंदाची तात्पुरती परवानगी (Transient User Activation) देतो.
+   - पूर्वी बटणावर क्लिक केल्यानंतर `await html2canvas()` किंवा `await fetch()` केले जात होते. मोबाईल फोनवर हाय-क्वालिटी कॅनव्हास रेंडर व्हायला १.५ ते २ सेकंद लागायचे. त्यामुळे ब्राउझरचा गेस्चर टोकन कालबाह्य होऊन `NotAllowedError: Must be handling a user gesture to share` अशी त्रुटी येत होती.
+2. **Popup Blocker (पॉपअप ब्लॉकर):**
+   - त्रुटी आल्यानंतर फॉलबॅक म्हणून `window.open(waUrl, '_blank')` कॉल होत होते. म
+<truncated 3813 bytes>
+्या इमेज फाईलचा वापर करते.
+   - **उमेदवार कार्ड WhatsApp बटण (`openWhatsAppChat`):** मोबाईलवर थेट त्या पालकांच्या नंबरवर `window.location.href` द्वारे अधिकृत WhatsApp चॅट उघडले जाते. डेस्कटॉपवर इमेज क्लिपबोर्डवर ऑटो-कॉपी होते (`Ctrl+V` ने पेस्ट करण्यासाठी).
+   - सर्व मोडेल्समध्ये मोबाईल-सेफ फॉलबॅक लागू केला.
+
+---
+
+### 🧪 चाचणी व गिट सिंक (Verification & Git Sync)
+- **स्वयंचलित चाचणी संच:** [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) मधील सर्व **१३० च्या १३० चाचण्या १००% यशस्वी (130 PASSED, 0 FAILED)**.
+- **दस्तऐवज:** [context/previous_conversations.md](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/context/previous_conversations.md), [context/decisions_and_thought_process.md](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/context/decisions_and_thought_process.md) आणि [context/learnings.md](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/context/learnings.md) मध्ये हा ५-टप्पीय निर्णय व मोबाईल शिकवणी सविस्तर नोंदवल्या आहेत.
+- **गिटहब कमिट:** सर्व बदल कमिट करून `origin/main` वर सुरक्षितपणे पुश झाले आहेत (`c85dacb`).
+
+आता मोबाईल फोनवर (Android Chrome, iOS Safari) पत्रिका प्रिव्ह्यू मोडलसह WhatsApp शेअरिंग विनाअडथळा सुरळीत चालू होईल!
+
+---
+
+## 💬 संभाषण फेरी 97 [Step 4693]
+
+**वेळ (Timestamp):** `2026-11-17T10:14:54Z`
+
+### 👤 वापरकर्त्याची विचारणा (User Request):
+
+```text
+insted of ✏️ संपादन give + button and open option to enter additional detaisl in key name and detals
 ```
 
 ---

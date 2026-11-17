@@ -819,6 +819,26 @@
       transform: scale(0.98);
       box-shadow: 0 2px 6px rgba(190, 18, 60, 0.2);
     }
+
+    /* Quick Key Suggestion Chips for Additional Details Modal */
+    .quick-key-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .quick-key-chip:hover, .quick-key-chip:active {
+      background: #e0f2fe;
+      border-color: #38bdf8;
+      color: #0284c7;
+      transform: scale(0.96);
+    }
   
 
     /* Table View */
@@ -3267,6 +3287,92 @@
     </div>
   </div>
 
+  <!-- Add Candidate Additional Detail Modal (Key-Value) -->
+  <div id="candidateDetailModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 480px; max-height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; border-radius: 16px;">
+      <div class="modal-head" style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; background: #fff; flex-shrink: 0;">
+        <div>
+          <div id="candDetailModalTitle" class="modal-head-title" style="font-size: 15px; font-weight: 800; color: #881337;">
+            ➕ अतिरिक्त माहिती नोंदवा
+          </div>
+          <div id="candDetailModalSubtitle" style="font-size: 11.5px; color: #64748b;">
+            उमेदवाराविषयी नवीन माहितीचे शीर्षक व तपशील जोडा
+          </div>
+        </div>
+        <button class="close-btn" onclick="closeCandidateDetailModal()">&times;</button>
+      </div>
+
+      <div class="modal-content-body" style="flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc;">
+        <input type="hidden" id="candDetailTargetId" value="" />
+
+        <!-- Quick Suggestion Chips for Key -->
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px;">
+            जलद निवड (Quick Suggestions):
+          </label>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('💼 नोकरी')">💼 नोकरी</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('💰 पगार / उत्पन्न')">💰 पगार / उत्पन्न</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('📍 नोकरी ठिकाण')">📍 नोकरी ठिकाण</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('📜 पत्रिका / गुण')">📜 पत्रिका / गुण</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('🏠 पत्ता')">🏠 पत्ता</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('👨‍👩‍👦 मामा')">👨‍👩‍👦 मामा</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('🎯 विशेष अपेक्षा')">🎯 विशेष अपेक्षा</button>
+            <button type="button" class="quick-key-chip" onclick="selectQuickKey('📝 इतर माहिती')">📝 इतर माहिती</button>
+          </div>
+        </div>
+
+        <!-- Key Name Input -->
+        <div style="margin-bottom: 12px;">
+          <label for="candDetailKeyInput" style="display: block; font-size: 12.5px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">
+            शीर्षक / माहितीचे नाव (Key Name) <span style="color: #ef4444;">*</span>:
+          </label>
+          <input type="text" id="candDetailKeyInput" class="form-input" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13.5px; font-weight: 600;" placeholder="उदा. नोकरी, पगार, पत्रिका, मामा..." list="candDetailDatalist" />
+          <datalist id="candDetailDatalist">
+            <option value="💼 नोकरी">
+            <option value="💰 पगार / उत्पन्न">
+            <option value="📍 नोकरी ठिकाण">
+            <option value="📜 पत्रिका / गुण">
+            <option value="🏠 पत्ता">
+            <option value="👨‍👩‍👦 मामा">
+            <option value="🎯 विशेष अपेक्षा">
+            <option value="🎓 उच्च शिक्षण">
+            <option value="🚗 स्वतःचे वाहन / घर">
+            <option value="📝 इतर माहिती">
+          </datalist>
+        </div>
+
+        <!-- Value / Details Input -->
+        <div style="margin-bottom: 16px;">
+          <label for="candDetailValInput" style="display: block; font-size: 12.5px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">
+            सविस्तर तपशील (Details / Value) <span style="color: #ef4444;">*</span>:
+          </label>
+          <textarea id="candDetailValInput" class="form-input" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 13.5px; resize: vertical;" placeholder="येथे माहितीचा तपशील लिहा... (उदा. TCS Pune येथे Senior Software Engineer, पगार 8.5 LPA)"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 16px;">
+          <button type="button" class="action-btn action-btn-outline" style="padding: 8px 16px; font-size: 13px;" onclick="closeCandidateDetailModal()">
+            रद्द करा
+          </button>
+          <button type="button" class="action-btn action-btn-primary" style="padding: 8px 18px; font-size: 13px; font-weight: 800; background: #16a34a; border-color: #16a34a;" onclick="saveCandidateDetail()">
+            ➕ माहिती जतन करा
+          </button>
+        </div>
+
+        <!-- Existing Details Section -->
+        <div id="existingDetailsContainer" style="border-top: 1px dashed #cbd5e1; padding-top: 12px; margin-top: 6px;">
+          <div style="font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 8px;">
+            📋 आधी जोडलेली माहिती (Existing Details):
+          </div>
+          <div id="existingDetailsList" style="display: flex; flex-direction: column; gap: 6px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Branded Custom Confirmation Popup Modal -->
   <div id="customConfirmModal" class="modal-overlay" style="z-index: 100000;">
     <div class="modal-box" style="max-width: 400px; text-align: center; border-radius: 16px; padding: 24px 20px;">
@@ -4817,6 +4923,123 @@ ${introLine}
       requestAdminAccess('candidate_edit', candId);
     }
 
+    function openAddCandidateDetailModal(candId, event) {
+      if (event) event.stopPropagation();
+      const cand = candidates.find(c => c.id === candId);
+      if (!cand) return;
+
+      document.getElementById('candDetailTargetId').value = candId;
+      document.getElementById('candDetailModalTitle').textContent = `➕ [अ.क्र. ${cand.sr}] ${cand.name} - माहिती जोडा`;
+      document.getElementById('candDetailModalSubtitle').textContent = `उमेदवार: ${cand.name} (अ.क्र. ${cand.sr}) साठी नवीन तपशील जोडा`;
+
+      document.getElementById('candDetailKeyInput').value = '';
+      document.getElementById('candDetailValInput').value = '';
+
+      renderExistingDetails(cand);
+      document.getElementById('candidateDetailModal').classList.add('open');
+      setTimeout(() => {
+        const keyInp = document.getElementById('candDetailKeyInput');
+        if (keyInp) keyInp.focus();
+      }, 150);
+    }
+
+    function closeCandidateDetailModal() {
+      const modal = document.getElementById('candidateDetailModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function selectQuickKey(key) {
+      const keyInp = document.getElementById('candDetailKeyInput');
+      const valInp = document.getElementById('candDetailValInput');
+      if (keyInp) keyInp.value = key;
+      if (valInp) valInp.focus();
+    }
+
+    function renderExistingDetails(cand) {
+      const listEl = document.getElementById('existingDetailsList');
+      if (!listEl) return;
+      const details = cand.extraDetails || [];
+
+      if (details.length === 0) {
+        listEl.innerHTML = '<div style="font-size:12px; color:#94a3b8; font-style:italic;">कोणतीही अतिरिक्त माहिती जोडलेली नाही. वरील फॉर्ममधून नवीन माहिती जोडा.</div>';
+        return;
+      }
+
+      listEl.innerHTML = details.map(d => `
+        <div style="display:flex; justify-content:space-between; align-items:baseline; background:#fff; padding:7px 10px; border-radius:8px; border:1px solid #e2e8f0; font-size:12.5px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+          <div style="flex:1; word-break:break-word;">
+            <span style="font-weight:700; color:#0f172a; margin-right:6px;">${d.key}:</span>
+            <span style="color:#334155;">${d.value}</span>
+          </div>
+          <button type="button" onclick="deleteCandidateDetail('${cand.id}', '${d.id}', event)" style="background:none; border:none; color:#ef4444; font-size:16px; cursor:pointer; padding:0 4px; line-height:1; margin-left:8px;" title="माहिती हटवा">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function saveCandidateDetail() {
+      const candId = document.getElementById('candDetailTargetId').value;
+      const keyInp = document.getElementById('candDetailKeyInput');
+      const valInp = document.getElementById('candDetailValInput');
+      const key = keyInp.value.trim();
+      const val = valInp.value.trim();
+
+      if (!key) {
+        showToast('कृपया शीर्षक किंवा माहितीचे नाव (Key Name) टाका.');
+        keyInp.focus();
+        return;
+      }
+      if (!val) {
+        showToast('कृपया सविस्तर तपशील (Details) टाका.');
+        valInp.focus();
+        return;
+      }
+
+      const cand = candidates.find(c => c.id === candId);
+      if (!cand) return;
+
+      if (!Array.isArray(cand.extraDetails)) {
+        cand.extraDetails = [];
+      }
+
+      cand.extraDetails.push({
+        id: 'ed_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        key: key,
+        value: val,
+        createdAt: new Date().toISOString()
+      });
+
+      persistData();
+      renderView();
+      renderExistingDetails(cand);
+
+      keyInp.value = '';
+      valInp.value = '';
+      showToast(`✅ '${key}' माहिती यशस्वीरित्या जोडली!`);
+    }
+
+    function deleteCandidateDetail(candId, detailId, event) {
+      if (event) event.stopPropagation();
+      const cand = candidates.find(c => c.id === candId);
+      if (!cand || !Array.isArray(cand.extraDetails)) return;
+
+      showCustomConfirm({
+        title: 'माहिती हटवायची का?',
+        message: 'ही अतिरिक्त माहिती कायमची हटवली जाईल.',
+        icon: '🗑️',
+        iconBg: '#fee2e2',
+        iconColor: '#dc2626',
+        confirmText: 'होय, हटवा',
+        confirmBtnClass: 'action-btn-danger',
+        onConfirm: () => {
+          cand.extraDetails = cand.extraDetails.filter(d => d.id !== detailId);
+          persistData();
+          renderView();
+          renderExistingDetails(cand);
+          showToast('माहिती हटवली.');
+        }
+      });
+    }
+
     function openAdminSettingsModal(section, targetCandId) {
       loadShareableProfileData();
       renderProfileCmsForm();
@@ -5697,6 +5920,24 @@ ${introLine}
               </div>
             ` : ''}
 
+            ${(c.extraDetails && c.extraDetails.length > 0) ? `
+              <div class="extra-details-box" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-top:8px;">
+                <div style="font-size:12px; font-weight:800; color:#0f172a; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>📌 अतिरिक्त माहिती (Additional Details):</span>
+                  <button type="button" onclick="openAddCandidateDetailModal('${c.id}', event)" style="background:none; border:none; color:#0284c7; font-weight:800; cursor:pointer; font-size:12px;">+ जोडा</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                  ${c.extraDetails.map(ed => `
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; background:#fff; padding:6px 10px; border-radius:6px; border:1px solid #f1f5f9; font-size:12.5px; box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+                      <span style="font-weight:700; color:#475569; min-width:85px; margin-right:8px;">${ed.key}:</span>
+                      <span style="color:#0f172a; flex:1; font-weight:600; word-break:break-word;">${ed.value}</span>
+                      <button type="button" onclick="deleteCandidateDetail('${c.id}', '${ed.id}', event)" style="background:none; border:none; color:#94a3b8; font-size:16px; cursor:pointer; margin-left:8px; line-height:1;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'" title="हटवा">&times;</button>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
           </div>
 
           <div class="card-footer" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -5706,8 +5947,8 @@ ${introLine}
             <button type="button" class="btn-not-interested btn-reject-quick ${c.status === 'not_interested' ? 'active' : ''}" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested म्हणून नोंदवा'}" style="${c.status === 'not_interested' ? 'background:#fef2f2; border:1.5px solid #f87171; color:#dc2626;' : 'background:#f8fafc; border:1px solid #cbd5e1; color:#64748b;'} border-radius:8px; padding:7px 10px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;">
               ${c.status === 'not_interested' ? '🚫 Not Interested' : 'Not Interested'}
             </button>
-            <button type="button" class="btn-card-edit" onclick="openCandidateEditDirect('${c.id}', event)" title="माहिती दुरुस्त करा (Edit Candidate Profile)" style="background:#f1f5f9; border:1px solid #cbd5e1; color:#0f172a; border-radius:8px; padding:7px 10px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;" onmouseover="this.style.background='#e0f2fe'; this.style.borderColor='#7dd3fc';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';">
-              ✏️ संपादन
+            <button type="button" class="btn-card-edit btn-card-add-detail" onclick="openAddCandidateDetailModal('${c.id}', event)" title="अतिरिक्त माहिती जोडा (Add Additional Details)" style="background:#f1f5f9; border:1px solid #cbd5e1; color:#0f172a; border-radius:8px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; white-space:nowrap; transition:all 0.2s;" onmouseover="this.style.background='#e0f2fe'; this.style.borderColor='#7dd3fc';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';">
+              ➕ माहिती जोडा
             </button>
           </div>
         `;
@@ -5787,8 +6028,8 @@ ${introLine}
               <button class="action-btn action-btn-primary" style="padding:5px 9px; font-size:12px;" onclick="openTrackModal('${c.id}')" title="संभाषण नोंद">
                 ✍️ (${logCount})
               </button>
-              <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px;" onclick="openCandidateEditDirect('${c.id}', event)" title="माहिती संपादन">
-                ✏️
+              <button type="button" class="action-btn action-btn-outline btn-card-edit" style="padding:5px 8px; font-size:12px; font-weight:800;" onclick="openAddCandidateDetailModal('${c.id}', event)" title="अतिरिक्त माहिती जोडा (Add Detail)">
+                ➕
               </button>
               <button type="button" class="btn-not-interested ${c.status === 'not_interested' ? 'active' : ''}" style="padding:5px 7px; font-size:11.5px; border-radius:6px; cursor:pointer;" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested'}">
                 ${c.status === 'not_interested' ? '🚫' : 'Not Int.'}
@@ -6917,6 +7158,7 @@ ${introLine}
 
     function getOpenModal() {
       const modalList = [
+        { id: 'candidateDetailModal', close: closeCandidateDetailModal },
         { id: 'customConfirmModal', close: closeCustomConfirmModal },
         { id: 'canvasCardModal', close: closeCanvasCardModal },
         { id: 'biodataModal', close: closeBiodataModal },
