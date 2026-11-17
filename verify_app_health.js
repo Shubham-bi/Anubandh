@@ -367,6 +367,16 @@ try {
   assert(bioCode.includes('src="./messages.js"') || bioCode.includes('src="messages.js"'), 'biodata.html references messages.js');
   assert(redesignedCode.includes('src="./messages.js"') || redesignedCode.includes('src="messages.js"'), 'shubham_biodata_redesigned.html references messages.js');
   assert(swCodeCurrent.includes('messages.js'), 'sw.js caches messages.js for offline use');
+
+  // 15. Admin App Layout, Menu List Hub & Web Browser Fallback
+  assert(indexCode.includes('id="adminMenuHub"') && indexCode.includes('admin-menu-card') && indexCode.includes('admin-menu-list'), "index.html admin settings displays as proper app with menu list hub");
+  assert(indexCode.includes('openAdminInWebBrowser') && indexCode.includes('handleAdminHeaderBack'), "index.html provides open in web browser and app navigation back handler");
+  
+  // 16. cand_0 phone update
+  const candJsonData = JSON.parse(fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8'));
+  const candZero = candJsonData.find(c => c.id === 'cand_0');
+  assert(candZero && candZero.phones && candZero.phones.includes('9422152322'), "cand_0 (sr ०.) phones array includes 9422152322");
+  assert(indexCode.includes('"id":"cand_0"') && indexCode.includes('"phones":["9422152322"]'), "index.html INITIAL_DATA defines phones ['9422152322'] for cand_0");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
