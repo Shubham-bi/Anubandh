@@ -258,6 +258,13 @@
   .sbtn-dl:hover {
     background: #0369a1;
   }
+  .sbtn-share {
+    background: #4f46e5;
+    color: #ffffff;
+  }
+  .sbtn-share:hover {
+    background: #4338ca;
+  }
   .sbtn-copy {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
@@ -390,6 +397,9 @@
   <button type="button" class="sbtn sbtn-wa" onclick="shareOnWhatsAppAsImage()" title="WhatsApp वर थेट इमेज व मेसेज शेअर करा">
     <span>💬 WhatsApp वर इमेज पाठवा</span>
   </button>
+  <button type="button" class="sbtn sbtn-share" onclick="shareToAnyApp()" title="इतर ॲप्सवर इमेज व मेसेज शेअर करा">
+    <span>📤 इतर ॲप्स (Share)</span>
+  </button>
   <button type="button" class="sbtn sbtn-dl" onclick="downloadSheetImage()" title="बायोडाटा इमेज PNG डाऊनलोड करा">
     <span>📥 इमेज डाऊनलोड</span>
   </button>
@@ -479,6 +489,40 @@
       if (err && err.name !== 'AbortError') {
         console.error('Share error:', err);
         showToast('इमेज शेअर करताना त्रुटी आली.');
+      }
+    }
+  }
+
+  async function shareToAnyApp() {
+    showToast('⏳ इमेज तयार होत आहे...');
+    try {
+      const blob = await generateSheetBlob();
+      const file = new File([blob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+          text: PROPOSAL_TEXT
+        });
+        showToast('✅ इमेज व मेसेज इतर ॲपमध्ये शेअर झाला!');
+        return;
+      }
+
+      if (navigator.share) {
+        await copySheetImageToClipboard();
+        await navigator.share({
+          title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+          text: PROPOSAL_TEXT
+        });
+        return;
+      }
+
+      await copySheetImageToClipboard();
+    } catch (err) {
+      if (err && err.name !== 'AbortError') {
+        console.error('Share error:', err);
+        showToast('शेअर करताना त्रुटी आली.');
       }
     }
   }

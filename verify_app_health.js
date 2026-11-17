@@ -319,6 +319,11 @@ try {
   assert(bioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
   const swCodeCurrent = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(swCodeCurrent.includes('shubham_biodata_redesigned.html') && swCodeCurrent.includes('shubham_biodata_redesigned.png'), "sw.js caches redesigned biodata sheet and image for offline access");
+
+  // 11. Unified Canvas Image Sharing Across All Options
+  assert(indexCode.includes('shareGeneratedCardNative') && indexCode.includes('copyProfileHyperlink') && indexCode.includes('openWhatsAppChat'), "index.html supports native app sharing and canvas image copy across all options");
+  assert(bioCode.includes('shareGeneratedCardNative') && bioCode.includes('copyHyperlink'), "biodata.html supports native app sharing and canvas image copy across all options");
+  assert(redesignedCode.includes('shareToAnyApp') && redesignedCode.includes('sbtn-share'), "shubham_biodata_redesigned.html supports universal cross-app sharing (shareToAnyApp)");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

@@ -3250,6 +3250,9 @@
           <button type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px; background:#16a34a; border-color:#16a34a;" onclick="shareGeneratedCardWhatsApp()">
             💬 WhatsApp वर शेअर करा
           </button>
+          <button type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px; background:#0284c7; border-color:#0284c7;" onclick="shareGeneratedCardNative()">
+            📤 इतर ॲप्स (Share)
+          </button>
           <button type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px;" onclick="downloadGeneratedCard()">
             📥 इमेज डाउनलोड (PNG)
           </button>
@@ -3415,12 +3418,7 @@
 
 ${introLine}
 
-आमच्या मुलाचा (${waSettings.groomName || 'शुभम अनिल खर्चे'}) सविस्तर विवाह प्रस्ताव खालील लिंकवर पाहू शकता:
-🌐 सविस्तर माहिती व प्रोफाईल वेबपेज:
-👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche
-
-📷 बायोडाटा पत्रिका फोटो:
-https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
+खर्चे परिवारातर्फे आमच्या मुलाची (${waSettings.groomName || 'शुभम अनिल खर्चे'}) सविस्तर विवाह परिचय पत्रिका (बायोडाटा फोटो) सोबत जोडली आहे.
 
 *थोडक्यात माहिती:*
 • नाव: ${waSettings.groomName || 'शुभम अनिल खर्चे'}
@@ -3447,7 +3445,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       return res.replace(/\D/g, '');
     }
 
-    function openWhatsAppChat(phone, candidateName, srNo, guardianName) {
+    async function openWhatsAppChat(phone, candidateName, srNo, guardianName) {
       const text = buildWhatsAppText(candidateName, srNo, guardianName);
       let digits = toEnglishDigits(phone);
       if (digits.length === 10) {
@@ -3455,8 +3453,40 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       } else if (digits.length === 11 && digits.startsWith('0')) {
         digits = '91' + digits.slice(1);
       }
+
+      const photoSrc = './shubham_biodata_redesigned.png';
+
+      // Level 1: Mobile Native Web Share API with photo file attachment
+      if (navigator.canShare) {
+        try {
+          const resp = await fetch(photoSrc);
+          if (resp.ok) {
+            const blob = await resp.blob();
+            const file = new File([blob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+                text: text
+              });
+              showToast('✅ पत्रिका फोटो व मेसेज शेअर झाला!');
+              return;
+            }
+          }
+        } catch (e) {
+          if (e.name !== 'AbortError') console.warn('Native candidate share error:', e);
+        }
+      }
+
+      // Level 2: Desktop / Direct Phone WhatsApp Web chat + Copy canvas image to clipboard!
+      const imgCopied = await copyImageToClipboard(photoSrc);
       const url = `https://api.whatsapp.com/send/?phone=${digits}&text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
+      if (imgCopied) {
+        showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
+      } else {
+        showToast('WhatsApp चॅट उघडले आहे!');
+      }
     }
 
     function openSideMenu() {
@@ -4379,18 +4409,21 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       }
     }
 
-    function copyProfileHyperlink() {
+    async function copyProfileHyperlink() {
       const fullMsg = getShareableProfileFullMessage();
-      if (navigator.clipboard && window.ClipboardItem) {
-        const htmlBlob = new Blob([`<a href="${PROFILE_SHARE_URL}">${PROFILE_SHARE_NAME}</a>`], { type: 'text/html' });
-        const textBlob = new Blob([fullMsg], { type: 'text/plain' });
-        navigator.clipboard.write([
-          new ClipboardItem({
-            'text/html': htmlBlob,
-            'text/plain': textBlob
-          })
-        ]).then(() => {
-          showToast('✅ बायोडाटा लिंक व संदेश कॉपी झाला!');
+      const photoSrc = './shubham_biodata_redesigned.png';
+
+      // Level 1: Copy canvas image directly to clipboard
+      const imgCopied = await copyImageToClipboard(photoSrc);
+      if (imgCopied) {
+        showToast('📸 बायोडाटा पत्रिका इमेज क्लिपबोर्डवर कॉपी झाली! (चॅटमध्ये Paste करा)');
+        return;
+      }
+
+      // Level 2: Fallback text copy
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(fullMsg).then(() => {
+          showToast('✅ बायोडाटा संदेश कॉपी झाला!');
         }).catch(() => {
           fallbackCopyProfileLink();
         });
@@ -6792,6 +6825,50 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! WhatsApp मध्ये Paste (Ctrl+V) करा.');
       } else {
         showToast('WhatsApp उघडले आहे!');
+      }
+    }
+
+    async function shareGeneratedCardNative() {
+      const shareMsg = getShareableProfileFullMessage();
+      if (navigator.canShare && generatedCardBlob) {
+        try {
+          const file = new File([generatedCardBlob], 'shubham_biodata_redesigned.png', { type: generatedCardBlob.type || 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+              text: shareMsg
+            });
+            showToast('शेअर यशस्वी!');
+            return;
+          }
+        } catch(e) {
+          if (e.name !== 'AbortError') console.warn('Native share error:', e);
+        }
+      }
+
+      const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+            text: shareMsg
+          });
+          if (imgCopied) {
+            showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! इतर ॲपमध्ये Paste करा.');
+          } else {
+            showToast('शेअर यशस्वी!');
+          }
+          return;
+        } catch(e) {
+          if (e.name !== 'AbortError') console.warn('Text share error:', e);
+        }
+      }
+
+      if (imgCopied) {
+        showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! कोणत्याही ॲपमध्ये Paste (Ctrl+V) करा.');
+      } else {
+        await copyProfileHyperlink();
       }
     }
 
