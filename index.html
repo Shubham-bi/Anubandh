@@ -13,6 +13,7 @@
   <meta name="apple-mobile-web-app-title" content="अनुबंध"/>
   <link rel="apple-touch-icon" href="icon.svg"/>
   <link rel="icon" type="image/svg+xml" href="icon.svg"/>
+  <link rel="prefetch" href="./biodata.html"/>
 
   <style>
     :root {
@@ -2061,10 +2062,14 @@
       </div>
 
       <div class="drawer-body">
-        <a href="./biodata.html" target="_blank" class="menu-item" style="text-decoration:none; color:inherit;">
+        <div class="menu-item" onclick="openBiodataModal(); closeSideMenu();">
           <span>🤵</span>
           <span>वधू पक्षासाठी प्रोफाईल</span>
-        </a>
+        </div>
+        <div class="menu-item" onclick="openCanvasCardModal(); closeSideMenu();">
+          <span>🖼️</span>
+          <span>बायोडाटा इमेज कार्ड</span>
+        </div>
         <div class="menu-item" onclick="shareProfileOnWhatsApp(); closeSideMenu();">
           <span>💬</span>
           <span>WhatsApp शेअर</span>
@@ -2608,6 +2613,50 @@
               <input type="text" id="waPhotoNote" class="form-control" oninput="updateWaPreview()"/>
             </div>
 
+            <!-- Custom Message Template Editor -->
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px; margin:12px 0;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:13px; font-weight:800; color:#0f172a;">📝 मेसेज टेम्पलेट संपादन (Custom Message Templates)</span>
+                <button type="button" class="action-btn action-btn-outline" style="font-size:11px; padding:3px 7px;" onclick="resetMessageTemplatesToDefault()" title="डीफॉल्ट टेम्पलेटवर रीसेट करा">↺ डीफॉल्ट टेम्पलेट</button>
+              </div>
+              <div style="font-size:11.5px; color:#64748b; margin-bottom:10px; line-height:1.4;">
+                खालील फील्डमध्ये तुम्ही व्हॉट्सॲप मेसेजचा मसुदा आवडीनुसार बदलू शकता. कंसामध्ये असलेले घटक (जसे की <code>{candidate_name}</code>) मेसेज पाठवताना स्वयंचलितपणे बदलले जातील.
+              </div>
+
+              <!-- 1. Proposal Template -->
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label class="form-label" style="font-size:12px; font-weight:700; color:#0369a1; margin:0;">१. स्थळांसाठी WhatsApp प्रस्ताव मेसेज:</label>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{candidate_name}')">+{candidate_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{guardian_name}')">+{guardian_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{intro_line}')">+{intro_line}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_name}')">+{groom_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_edu}')">+{groom_edu}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_job}')">+{groom_job}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_salary}')">+{groom_salary}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{profile_url}')">+{profile_url}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{family_contacts}')">+{family_contacts}</button>
+                </div>
+                <textarea id="waProposalTemplate" class="form-control" style="min-height:95px; font-size:12px; line-height:1.45;" oninput="updateWaPreview()" placeholder="येथे स्थळांसाठी पाठवायचा मेसेज सानुकूल करा..."></textarea>
+              </div>
+
+              <!-- 2. Share Profile Template -->
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label class="form-label" style="font-size:12px; font-weight:700; color:#15803d; margin:0;">२. बायोडाटा लिंक शेअर मेसेज (Menu & Link Share):</label>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_name}')">+{groom_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_edu}')">+{groom_edu}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_job}')">+{groom_job}</button>
+                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{profile_url}')">+{profile_url}</button>
+                </div>
+                <textarea id="waShareTemplate" class="form-control" style="min-height:80px; font-size:12px; line-height:1.45;" oninput="updateWaPreview()" placeholder="येथे बायोडाटा शेअर करताना पाठवायचा मेसेज सानुकूल करा..."></textarea>
+              </div>
+            </div>
+
             <div class="form-group" style="margin-top:8px;">
               <label class="form-label">व्हॉट्सॲप मेसेज प्रिव्ह्यू:</label>
               <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; font-size:12.5px; color:#14532d; white-space:pre-wrap; max-height:160px; overflow-y:auto; line-height:1.45;"></div>
@@ -2686,6 +2735,9 @@
             <span class="age-badge" id="mCandAgeBadge" style="display:none;">वय: -</span>
             <button type="button" id="mCandShortlistBtn" class="btn-shortlist-star" onclick="toggleShortlistModalCurrent()" title="शॉर्टलिस्ट करा">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+            <button type="button" id="mCandNotInterestedBtn" class="btn-not-interested" style="padding:3px 8px; font-size:11.5px; border-radius:6px; cursor:pointer;" onclick="toggleNotInterestedInsideTrackModal()" title="Not Interested स्टेटस बदला">
+              Not Interested
             </button>
           </div>
           <div style="font-size:12px; color:var(--text-muted); margin-top:2px;" id="mCandSubtitle">वधू संशोधन व संभाषण नोंदवही</div>
@@ -2822,6 +2874,95 @@
     </div>
   </div>
 
+  <!-- Seamless In-App Biodata Viewer Modal -->
+  <div id="biodataModal" class="modal-overlay full-page-view">
+    <div class="modal-box" style="max-width: 900px; height: 95vh; max-height: 95vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; border-radius: 16px;">
+      <div class="modal-head" style="padding: 10px 16px; border-bottom: 1px solid #e2e8f0; background: #ffffff; flex-shrink: 0; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:22px;">🤵</span>
+          <div>
+            <div class="modal-head-title" style="font-size:14.5px; font-weight:800; color:#0f172a;">वधू पक्षासाठी प्रोफाईल (बायोडाटा)</div>
+            <div style="font-size:11.5px; color:#64748b;">खर्चे परिवार • शुभम अनिल खर्चे</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="shareProfileOnWhatsApp()" title="WhatsApp शेअर">
+            💬 <span>WhatsApp</span>
+          </button>
+          <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="copyProfileHyperlink()" title="लिंक कॉपी करा">
+            🔗 <span>कॉपी लिंक</span>
+          </button>
+          <button type="button" class="action-btn action-btn-primary" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="openCanvasCardModal()" title="इमेज कार्ड तयार करा">
+            🖼️ <span>इमेज कार्ड</span>
+          </button>
+          <a href="./biodata.html" target="_blank" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; text-decoration:none;" title="नवीन ब्राऊझर टॅबमध्ये उघडा">
+            ↗️
+          </a>
+          <button class="close-btn" onclick="closeBiodataModal()" style="font-size:22px; line-height:1; padding:2px 8px;">&times;</button>
+        </div>
+      </div>
+      <div style="flex:1; width:100%; height:100%; position:relative; background:#f8fafc; overflow:hidden;">
+        <iframe id="biodataModalIframe" src="" style="width:100%; height:100%; border:none; display:block;" title="वधू पक्षासाठी प्रोफाईल"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML5 Canvas Biodata Share Card Modal -->
+  <div id="canvasCardModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 600px; max-height: 92vh; display:flex; flex-direction:column; padding:0; overflow:hidden; border-radius:16px;">
+      <div class="modal-head" style="padding:12px 16px; border-bottom:1px solid #e2e8f0; background:#fff; flex-shrink:0;">
+        <div>
+          <div class="modal-head-title" style="font-size:15px; font-weight:800; color:#881337;">🖼️ विवाह परिचय पत्रिका (इमेज कार्ड)</div>
+          <div style="font-size:11.5px; color:#64748b;">WhatsApp व इतर सोशल मीडियावर शेअर करण्यासाठी आकर्षक कार्ड</div>
+        </div>
+        <button class="close-btn" onclick="closeCanvasCardModal()">&times;</button>
+      </div>
+      <div class="modal-content-body" style="flex:1; overflow-y:auto; padding:14px; text-align:center; background:#f8fafc;">
+        <div id="canvasCardLoading" style="padding:40px 10px; color:#64748b; font-size:13.5px;">
+          <div style="font-size:24px; margin-bottom:8px;">🎨</div>
+          <div>बायोडाटा इमेज कार्ड तयार होत आहे, कृपया प्रतीक्षा करा...</div>
+        </div>
+        <div id="canvasCardContainer" style="display:none;">
+          <img id="canvasCardPreviewImg" src="" alt="शुभम खर्चे विवाह पत्रिका कार्ड" style="max-width:100%; max-height:65vh; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-bottom:12px;"/>
+        </div>
+        <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:10px;">
+          <button type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px; background:#16a34a; border-color:#16a34a;" onclick="shareGeneratedCardWhatsApp()">
+            💬 WhatsApp वर शेअर करा
+          </button>
+          <button type="button" class="action-btn action-btn-primary" style="padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px;" onclick="downloadGeneratedCard()">
+            📥 इमेज डाउनलोड (JPG)
+          </button>
+          <button type="button" class="action-btn action-btn-outline" style="padding:8px 14px; font-size:13px;" onclick="closeCanvasCardModal()">
+            बंद करा
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branded Custom Confirmation Popup Modal -->
+  <div id="customConfirmModal" class="modal-overlay" style="z-index: 100000;">
+    <div class="modal-box" style="max-width: 400px; text-align: center; border-radius: 16px; padding: 24px 20px;">
+      <div id="confirmIconContainer" style="width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #fee2e2; color: #dc2626;">
+        ⚠️
+      </div>
+      <div id="confirmTitle" style="font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">
+        तुम्हाला खात्री आहे का?
+      </div>
+      <div id="confirmMessage" style="font-size: 13.5px; color: #64748b; line-height: 1.5; margin-bottom: 20px;">
+        हा बदल पूर्ववत करता येणार नाही.
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button type="button" id="confirmCancelBtn" class="action-btn action-btn-outline" style="flex: 1; padding: 10px; font-size: 13.5px; font-weight: 700;" onclick="handleCustomConfirmCancel()">
+          रद्द करा
+        </button>
+        <button type="button" id="confirmOkBtn" class="action-btn action-btn-primary" style="flex: 1; padding: 10px; font-size: 13.5px; font-weight: 700; background: #dc2626; border-color: #dc2626;" onclick="handleCustomConfirmOk()">
+          होय, हटवा
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast-msg"></div>
 
   <!-- Application Logic -->
@@ -2888,7 +3029,9 @@
       groomSiblings: 'बहीण २ (विवाहित)',
       groomMamkul: 'चोपडे, दाताळा',
       groomContacts: '• श्री. विजय पुंजाजी खर्चे (शेलगाव बाजार) - मो. 9420539396\n• श्री. गजानन नरहरी खर्चे (शेलगाव बाजार) - मो. 9422152231\n• श्री. महेंद्र प्रल्हाद पाटील (मलकापूर) - मो. 9921639872\n• श्री. उमेश एकनाथ फेंगडे (वाडी-पोफळी) - मो. 9604458015',
-      photoNote: '📸 (मुलाचे फोटो खाली सोबत मॅन्युअली जोडत आहोत)'
+      photoNote: '📸 (मुलाचे फोटो खाली सोबत मॅन्युअली जोडत आहोत)',
+      customProposalTemplate: '',
+      customShareTemplate: ''
     };
 
     let waSettings = { ...DEFAULT_WA_SETTINGS };
@@ -2920,6 +3063,28 @@
         introLine = `आम्ही ${prefix}${cleanGuardian} यांची मुलगी ${candidateName} साठी संपर्क करत आहोत.`;
       } else {
         introLine = `आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.`;
+      }
+
+      if (waSettings.customProposalTemplate && waSettings.customProposalTemplate.trim()) {
+        const tplVars = {
+          candidate_name: candidateName || '',
+          sr_no: srNo || '',
+          guardian_name: cleanGuardian || '',
+          intro_line: introLine,
+          groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
+          groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
+          groom_job: waSettings.groomJob || 'Sr. QA Engineer',
+          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune',
+          groom_salary: waSettings.groomSalary || '7.8 LPA',
+          groom_dob: waSettings.groomDob || '२५/०८/१९९६',
+          groom_gotra: waSettings.groomGotra || 'वशिष्ठ',
+          profile_url: 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche',
+          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg',
+          family_contacts: waSettings.groomContacts || '9420539396 / 9422152231'
+        };
+        return waSettings.customProposalTemplate.replace(/\{(\w+)\}/g, (match, key) => {
+          return tplVars[key] !== undefined ? tplVars[key] : match;
+        });
       }
 
       return `सस्नेह नमस्कार 🙏
@@ -3276,15 +3441,32 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             </div>
           `;
         } else if (sec.type === 'photo') {
+          const curPhoto = sec.photoUrl || './shubham_kharche_biodata.jpg';
           bodyHtml = `
+            <div style="display:flex; gap:12px; align-items:center; margin-bottom:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+              <img src="${escapeHtml(curPhoto)}" id="cmsPhotoThumb_${sIdx}" alt="Shubham Photo" style="width:68px; height:84px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1; box-shadow:0 1px 3px rgba(0,0,0,0.1); background:#fff; flex-shrink:0;"/>
+              <div style="flex:1;">
+                <div style="font-size:12.5px; font-weight:800; color:#0f172a; margin-bottom:4px;">शुभमचा बायोडाटा फोटो</div>
+                <div style="font-size:11.5px; color:#64748b; margin-bottom:8px;">मोबाईल गॅलरी किंवा कॉम्प्युटरमधून नवा फोटो अपलोड करा:</div>
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                  <button type="button" class="action-btn action-btn-primary" style="font-size:12px; padding:6px 10px; display:inline-flex; align-items:center; gap:4px;" onclick="triggerPhotoUpload(${sIdx})">
+                    📷 नवीन फोटो निवडा
+                  </button>
+                  <button type="button" class="action-btn action-btn-outline" style="font-size:12px; padding:6px 10px;" onclick="resetPhotoToDefault(${sIdx})">
+                    🔄 मूळ फोटो
+                  </button>
+                  <input type="file" id="cmsPhotoFileInput_${sIdx}" accept="image/*" style="display:none;" onchange="handlePhotoUpload(${sIdx}, this)"/>
+                </div>
+              </div>
+            </div>
             <div class="cms-grid-2">
               <div>
-                <label class="form-label" style="font-size:11px;">फोटो फाईल मार्ग (Photo URL):</label>
-                <input type="text" class="form-control cms-photo-url-inp" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" oninput="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)"/>
+                <label class="form-label" style="font-size:11px;">फोटो फाईल मार्ग / Data URL:</label>
+                <input type="text" class="form-control cms-photo-url-inp" id="cmsPhotoUrlInp_${sIdx}" style="font-size:12px; padding:6px 9px;" value="${escapeHtml(curPhoto)}" oninput="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'photoUrl', this.value)"/>
               </div>
               <div>
                 <label class="form-label" style="font-size:11px;">डाउनलोड बटण मजकूर:</label>
-                <input type="text" class="form-control cms-photo-dl-inp" style="font-size:12.5px; padding:6px 9px;" value="${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}" oninput="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)"/>
+                <input type="text" class="form-control cms-photo-dl-inp" style="font-size:12px; padding:6px 9px;" value="${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}" oninput="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)" onchange="updateCmsSectionProp(${sIdx}, 'downloadText', this.value)"/>
               </div>
             </div>
           `;
@@ -3399,14 +3581,82 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       renderCmsSections();
     }
 
-    function deleteCmsSection(secIdx) {
+    function triggerPhotoUpload(sIdx) {
+      const inp = document.getElementById(`cmsPhotoFileInput_${sIdx}`);
+      if (inp) inp.click();
+    }
+
+    function handlePhotoUpload(sIdx, inputEl) {
+      if (!inputEl || !inputEl.files || !inputEl.files[0]) return;
+      const file = inputEl.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const rawDataUrl = e.target.result;
+        const img = new Image();
+        img.onload = function() {
+          const maxDim = 1200;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          const cvs = document.createElement('canvas');
+          cvs.width = w;
+          cvs.height = h;
+          const ctx = cvs.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressedDataUrl = cvs.toDataURL('image/jpeg', 0.85);
+
+          updateCmsSectionProp(sIdx, 'photoUrl', compressedDataUrl);
+          const urlInp = document.getElementById(`cmsPhotoUrlInp_${sIdx}`);
+          if (urlInp) urlInp.value = compressedDataUrl;
+          const thumb = document.getElementById(`cmsPhotoThumb_${sIdx}`);
+          if (thumb) thumb.src = compressedDataUrl;
+
+          // Attempt saving to server if local server is active
+          fetch('/api/upload-photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: compressedDataUrl })
+          }).catch(() => {});
+
+          showToast('फोटो यशस्वीरित्या लोड झाला!');
+        };
+        img.src = rawDataUrl;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetPhotoToDefault(sIdx) {
+      const defaultUrl = './shubham_kharche_biodata.jpg';
+      updateCmsSectionProp(sIdx, 'photoUrl', defaultUrl);
+      const urlInp = document.getElementById(`cmsPhotoUrlInp_${sIdx}`);
+      if (urlInp) urlInp.value = defaultUrl;
+      const thumb = document.getElementById(`cmsPhotoThumb_${sIdx}`);
+      if (thumb) thumb.src = defaultUrl;
+      showToast('मूळ फोटो रीसेट केला!');
+    }
+
+    async function deleteCmsSection(secIdx) {
       const sec = shareableProfileData.sections[secIdx];
       const title = sec?.title || 'हा विभाग';
-      if (confirm(`'${title}' हा विभाग निश्चित हटवायचा आहे का?`)) {
-        shareableProfileData.sections.splice(secIdx, 1);
-        renderCmsSections();
-        showToast('विभाग हटवला!');
-      }
+      const confirmed = await showCustomConfirm({
+        title: 'विभाग हटवायचा का?',
+        message: `'${title}' हा विभाग निश्चित हटवायचा आहे का?`,
+        confirmText: 'होय, विभाग हटवा',
+        cancelText: 'रद्द करा',
+        type: 'danger'
+      });
+      if (!confirmed) return;
+      shareableProfileData.sections.splice(secIdx, 1);
+      renderCmsSections();
+      showToast('विभाग हटवला!');
     }
 
     function openAddSectionPrompt() {
@@ -3578,13 +3828,40 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     function previewProfilePage() {
       // Save current state first
       saveProfileCmsData();
-      window.open('./biodata.html?v=' + Date.now(), '_blank');
+      openBiodataModal();
+    }
+
+    function openBiodataModal() {
+      const iframe = document.getElementById('biodataModalIframe');
+      if (iframe && (!iframe.src || iframe.src.indexOf('biodata.html') === -1)) {
+        iframe.src = './biodata.html';
+      } else if (iframe && iframe.contentWindow && iframe.contentWindow.renderProfile) {
+        try { iframe.contentWindow.renderProfile(); } catch(e) {}
+      }
+      document.getElementById('biodataModal').classList.add('open');
+    }
+
+    function closeBiodataModal() {
+      document.getElementById('biodataModal').classList.remove('open');
     }
 
     const PROFILE_SHARE_NAME = 'Shubham_Kharche';
     const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
 
     function getShareableProfileFullMessage() {
+      if (waSettings.customShareTemplate && waSettings.customShareTemplate.trim()) {
+        const tplVars = {
+          groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
+          groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
+          groom_job: waSettings.groomJob || 'Sr. QA Engineer',
+          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune',
+          profile_url: PROFILE_SHARE_URL,
+          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg'
+        };
+        return waSettings.customShareTemplate.replace(/\{(\w+)\}/g, (match, key) => {
+          return tplVars[key] !== undefined ? tplVars[key] : match;
+        });
+      }
       return `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव (बायोडाटा)*
 (B.E. Mechanical • Sr. QA Engineer, Pune)
 
@@ -3645,13 +3922,19 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       showToast('profile_data.json डाऊनलोड केले!');
     }
 
-    function resetProfileCmsToDefault() {
-      if (confirm('शेअर बायोडाटा वेबपेज मूळ रचनेवर रीसेट करायचे का? केलेले सर्व नवीन बदल निघून जातील.')) {
-        shareableProfileData = JSON.parse(JSON.stringify(DEFAULT_PROFILE_DATA));
-        localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
-        renderProfileCmsForm();
-        showToast('मूळ रचनेवर रीसेट झाले!');
-      }
+    async function resetProfileCmsToDefault() {
+      const confirmed = await showCustomConfirm({
+        title: 'वेबपेज मूळ रचनेवर रीसेट करायचे का?',
+        message: 'शेअर बायोडाटा वेबपेज मूळ रचनेवर रीसेट करायचे का? केलेले सर्व नवीन बदल निघून जातील.',
+        confirmText: 'होय, रीसेट करा',
+        cancelText: 'रद्द करा',
+        type: 'warning'
+      });
+      if (!confirmed) return;
+      shareableProfileData = JSON.parse(JSON.stringify(DEFAULT_PROFILE_DATA));
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(shareableProfileData));
+      renderProfileCmsForm();
+      showToast('मूळ रचनेवर रीसेट झाले!');
     }
 
     const ADMIN_ATTEMPTS_KEY = 'anubandh_admin_attempts';
@@ -3937,6 +4220,10 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('waGroomMamkul').value = waSettings.groomMamkul || '';
       document.getElementById('waGroomContacts').value = waSettings.groomContacts || '';
       document.getElementById('waPhotoNote').value = waSettings.photoNote || '';
+      const propTplEl = document.getElementById('waProposalTemplate');
+      if (propTplEl) propTplEl.value = waSettings.customProposalTemplate || '';
+      const shareTplEl = document.getElementById('waShareTemplate');
+      if (shareTplEl) shareTplEl.value = waSettings.customShareTemplate || '';
 
       updateWaPreview();
       switchAdminTab(section || 'candidate_edit');
@@ -3971,6 +4258,29 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
     }
 
+    function insertTemplatePlaceholder(textareaId, placeholder) {
+      const el = document.getElementById(textareaId);
+      if (!el) return;
+      const start = el.selectionStart || 0;
+      const end = el.selectionEnd || 0;
+      const text = el.value;
+      el.value = text.substring(0, start) + placeholder + text.substring(end);
+      el.focus();
+      el.selectionStart = el.selectionEnd = start + placeholder.length;
+      updateWaPreview();
+    }
+
+    function resetMessageTemplatesToDefault() {
+      const propTplEl = document.getElementById('waProposalTemplate');
+      if (propTplEl) propTplEl.value = '';
+      const shareTplEl = document.getElementById('waShareTemplate');
+      if (shareTplEl) shareTplEl.value = '';
+      waSettings.customProposalTemplate = '';
+      waSettings.customShareTemplate = '';
+      updateWaPreview();
+      showToast('मेसेज टेम्पलेट्स डीफॉल्टवर रीसेट केले!');
+    }
+
     function updateWaPreview() {
       waSettings.groomName = document.getElementById('waGroomName').value || DEFAULT_WA_SETTINGS.groomName;
       waSettings.groomBirthName = document.getElementById('waGroomBirthName').value || DEFAULT_WA_SETTINGS.groomBirthName;
@@ -3991,6 +4301,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       waSettings.groomContacts = document.getElementById('waGroomContacts').value || DEFAULT_WA_SETTINGS.groomContacts;
       waSettings.photoNote = document.getElementById('waPhotoNote').value || DEFAULT_WA_SETTINGS.photoNote;
 
+      const propTplEl = document.getElementById('waProposalTemplate');
+      if (propTplEl) waSettings.customProposalTemplate = propTplEl.value;
+      const shareTplEl = document.getElementById('waShareTemplate');
+      if (shareTplEl) waSettings.customShareTemplate = shareTplEl.value;
+
       const previewText = buildWhatsAppText('कु. प्रियंका (डॉली)', '१८१.');
       document.getElementById('waPreviewBox').textContent = previewText;
     }
@@ -4003,12 +4318,18 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       showToast('सेटिंग्ज सेव्ह झाल्या!');
     }
 
-    function resetWaToDefault() {
-      if (confirm('मूळ बायोडाटा माहितीवर रीसेट करायचे का?')) {
-        waSettings = { ...DEFAULT_WA_SETTINGS };
-        openAdminSettingsModal('wa');
-        showToast('माहिती रीसेट झाली!');
-      }
+    async function resetWaToDefault() {
+      const confirmed = await showCustomConfirm({
+        title: 'माहिती व टेम्पलेट रीसेट करायचे का?',
+        message: 'सर्व व्हॉट्सॲप माहिती व टेम्पलेट्स मूळ डीफॉल्ट मूल्यांवर पूर्ववत होतील.',
+        confirmText: 'होय, रीसेट करा',
+        cancelText: 'रद्द करा',
+        type: 'warning'
+      });
+      if (!confirmed) return;
+      waSettings = { ...DEFAULT_WA_SETTINGS };
+      openAdminSettingsModal('wa');
+      showToast('माहिती रीसेट झाली!');
     }
 
     function openBioViewModal() {
@@ -4834,6 +5155,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
               <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px;" onclick="openCandidateEditDirect('${c.id}', event)" title="माहिती संपादन">
                 ✏️
               </button>
+              <button type="button" class="btn-not-interested ${c.status === 'not_interested' ? 'active' : ''}" style="padding:5px 7px; font-size:11.5px; border-radius:6px; cursor:pointer;" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested'}">
+                ${c.status === 'not_interested' ? '🚫' : 'Not Int.'}
+              </button>
             </div>
           </td>
         `;
@@ -4992,9 +5316,47 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('fContactPerson').value = '';
       document.getElementById('fNextDate').value = '';
       document.getElementById('fCallerUser').value = localStorage.getItem(USER_NAME_KEY) || 'वडील';
+      updateTrackModalNotInterestedBtn(cand);
 
       renderTimeline(cand.logs || []);
       document.getElementById('trackModal').classList.add('open');
+    }
+
+    function updateTrackModalNotInterestedBtn(cand) {
+      const btn = document.getElementById('mCandNotInterestedBtn');
+      if (!btn || !cand) return;
+      const isNotInt = cand.status === 'not_interested';
+      btn.className = `btn-not-interested ${isNotInt ? 'active' : ''}`;
+      btn.textContent = isNotInt ? '🚫 Not Interested' : 'Not Interested';
+      btn.style.background = isNotInt ? '#fef2f2' : '#f8fafc';
+      btn.style.color = isNotInt ? '#dc2626' : '#64748b';
+      btn.style.borderColor = isNotInt ? '#f87171' : '#cbd5e1';
+    }
+
+    function toggleNotInterestedInsideTrackModal() {
+      if (!currentEditCandidateId) return;
+      const cand = candidates.find(c => c.id === currentEditCandidateId);
+      if (!cand) return;
+
+      if (cand.status === 'not_interested') {
+        cand.status = (cand.logs && cand.logs.length > 0) ? (cand.logs[cand.logs.length - 1].statusOutcome || 'contacted') : (isCandidateShortlisted(cand.id) ? 'shortlisted' : 'pending');
+        showToast(`अ.क्र. ${cand.sr} चा Not Interested स्टेटस काढला.`);
+      } else {
+        cand.status = 'not_interested';
+        showToast(`अ.क्र. ${cand.sr} ला Not Interested म्हणून नोंदवले.`);
+      }
+
+      const statusSelect = document.getElementById('fStatus');
+      if (statusSelect) statusSelect.value = (cand.status && cand.status !== 'pending') ? cand.status : 'contacted';
+      updateTrackModalNotInterestedBtn(cand);
+
+      persistData();
+      renderView();
+    }
+
+    function isCandidateShortlisted(candId) {
+      const cand = candidates.find(c => c.id === candId);
+      return !!(cand && cand.shortlisted);
     }
 
     function closeTrackModal() {
@@ -5044,12 +5406,19 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       });
     }
 
-    function deleteLogEntry(logId, logIndex) {
+    async function deleteLogEntry(logId, logIndex) {
       if (!currentEditCandidateId) return;
       const cand = candidates.find(c => c.id === currentEditCandidateId);
       if (!cand || !cand.logs || cand.logs.length === 0) return;
 
-      if (!confirm('ही संभाषण नोंद नक्की हटवायची आहे का?')) return;
+      const confirmed = await showCustomConfirm({
+        title: 'संभाषण नोंद हटवायची का?',
+        message: 'ही संभाषण नोंद कायमस्वरूपी हटवली जाईल.',
+        confirmText: 'होय, नोंद हटवा',
+        cancelText: 'रद्द करा',
+        type: 'danger'
+      });
+      if (!confirmed) return;
 
       let idx = -1;
       if (logId) {
@@ -5066,6 +5435,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         } else {
           cand.status = cand.logs[cand.logs.length - 1].statusOutcome || 'contacted';
         }
+        const statusSelect = document.getElementById('fStatus');
+        if (statusSelect) {
+          statusSelect.value = (cand.status && cand.status !== 'pending') ? cand.status : 'contacted';
+        }
+        updateTrackModalNotInterestedBtn(cand);
         persistData();
         renderView();
         renderTimeline(cand.logs);
@@ -5400,12 +5774,402 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       sessionStorage.setItem('anubandh_install_dismissed', 'true');
     }
 
+    // Custom Confirmation Dialog (Replaces native browser confirm())
+    let confirmResolveCallback = null;
+    function showCustomConfirm({ title, message, confirmText = 'होय, पुष्टी करा', cancelText = 'रद्द करा', type = 'danger' }) {
+      return new Promise((resolve) => {
+        confirmResolveCallback = resolve;
+        const modal = document.getElementById('customConfirmModal');
+        if (!modal) {
+          resolve(confirm(`${title}\n${message}`));
+          return;
+        }
+        document.getElementById('confirmTitle').textContent = title || 'पुष्टीकरण';
+        document.getElementById('confirmMessage').textContent = message || '';
+        const okBtn = document.getElementById('confirmOkBtn');
+        const cancelBtn = document.getElementById('confirmCancelBtn');
+        const iconContainer = document.getElementById('confirmIconContainer');
+
+        okBtn.textContent = confirmText;
+        cancelBtn.textContent = cancelText;
+
+        if (type === 'danger') {
+          iconContainer.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+          iconContainer.style.background = '#fee2e2';
+          okBtn.style.background = '#dc2626';
+          okBtn.style.borderColor = '#dc2626';
+        } else {
+          iconContainer.innerHTML = '⚠️';
+          iconContainer.style.background = '#fef3c7';
+          okBtn.style.background = '#d97706';
+          okBtn.style.borderColor = '#d97706';
+        }
+
+        modal.classList.add('open');
+      });
+    }
+
+    function handleCustomConfirmOk() {
+      const modal = document.getElementById('customConfirmModal');
+      if (modal) modal.classList.remove('open');
+      if (confirmResolveCallback) {
+        confirmResolveCallback(true);
+        confirmResolveCallback = null;
+      }
+    }
+
+    function handleCustomConfirmCancel() {
+      const modal = document.getElementById('customConfirmModal');
+      if (modal) modal.classList.remove('open');
+      if (confirmResolveCallback) {
+        confirmResolveCallback(false);
+        confirmResolveCallback = null;
+      }
+    }
+
+    function closeCustomConfirmModal() {
+      handleCustomConfirmCancel();
+    }
+
+    // HTML5 Canvas Biodata Card Generator
+    let generatedCardBlob = null;
+    let generatedCardDataUrl = null;
+
+    function generateBiodataCardBlob() {
+      return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1080;
+        canvas.height = 1440;
+        const ctx = canvas.getContext('2d');
+
+        // Background Gradient (Ivory Parchment)
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, 1440);
+        bgGrad.addColorStop(0, '#ffffff');
+        bgGrad.addColorStop(0.3, '#fffdf7');
+        bgGrad.addColorStop(1, '#fef9ee');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1080, 1440);
+
+        // Ornate Borders
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = '#881337'; // Maroon
+        ctx.strokeRect(24, 24, 1080 - 48, 1440 - 48);
+
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#d97706'; // Gold
+        ctx.strokeRect(36, 36, 1080 - 72, 1440 - 72);
+
+        // Corner accents
+        const drawCorner = (x, y, rot) => {
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(rot);
+          ctx.fillStyle = '#881337';
+          ctx.fillRect(0, 0, 24, 6);
+          ctx.fillRect(0, 0, 6, 24);
+          ctx.fillStyle = '#d97706';
+          ctx.beginPath();
+          ctx.arc(12, 12, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        };
+        drawCorner(44, 44, 0);
+        drawCorner(1080 - 44, 44, Math.PI / 2);
+        drawCorner(1080 - 44, 1440 - 44, Math.PI);
+        drawCorner(44, 1440 - 44, -Math.PI / 2);
+
+        // Helper for round rectangles
+        function roundRect(c, x, y, w, h, r, fill, stroke) {
+          c.beginPath();
+          c.moveTo(x + r, y);
+          c.arcTo(x + w, y, x + w, y + h, r);
+          c.arcTo(x + w, y + h, x, y + h, r);
+          c.arcTo(x, y + h, x, y, r);
+          c.arcTo(x, y + w, x, y, r);
+          c.closePath();
+          if (fill) c.fill();
+          if (stroke) c.stroke();
+        }
+
+        // Header Top Invocation
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#b45309';
+        ctx.font = 'bold 26px "Mukta", serif';
+        ctx.fillText('॥ श्री गणेशाय नमः ॥', 540, 85);
+
+        // Header Ribbon Badge
+        ctx.fillStyle = '#881337';
+        roundRect(ctx, 320, 105, 440, 42, 21, true, false);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px "Mukta", sans-serif';
+        ctx.fillText('विवाह प्रस्ताव • परिचय पत्रिका', 540, 133);
+
+        // Family Subtitle
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 18px "Mukta", sans-serif';
+        ctx.fillText('खर्चे परिवार (जळगाव / पुणे)', 540, 172);
+
+        // Photo Source
+        const photoSec = shareableProfileData?.sections?.find(s => s.type === 'photo');
+        const photoSrc = (photoSec && photoSec.photoUrl) ? photoSec.photoUrl : './shubham_kharche_biodata.jpg';
+
+        const photoImg = new Image();
+        photoImg.crossOrigin = 'anonymous';
+
+        const continueDrawing = (imgObj) => {
+          const photoX = 540;
+          const photoY = 285;
+          const radius = 95;
+
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.18)';
+          ctx.shadowBlur = 16;
+          ctx.shadowOffsetY = 6;
+
+          ctx.beginPath();
+          ctx.arc(photoX, photoY, radius + 7, 0, Math.PI * 2);
+          ctx.fillStyle = '#d97706';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(photoX, photoY, radius + 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#881337';
+          ctx.fill();
+          ctx.restore();
+
+          if (imgObj) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
+            ctx.clip();
+            try {
+              const aspect = imgObj.width / imgObj.height;
+              let drawW = radius * 2;
+              let drawH = radius * 2;
+              let dx = photoX - radius;
+              let dy = photoY - radius;
+              if (aspect > 1) {
+                drawW = drawH * aspect;
+                dx = photoX - drawW / 2;
+              } else {
+                drawH = drawW / aspect;
+                dy = photoY - drawH / 2;
+              }
+              ctx.drawImage(imgObj, dx, dy, drawW, drawH);
+            } catch(e) {
+              ctx.fillStyle = '#e2e8f0';
+              ctx.fillRect(photoX - radius, photoY - radius, radius * 2, radius * 2);
+            }
+            ctx.restore();
+          } else {
+            ctx.fillStyle = '#f1f5f9';
+            ctx.beginPath();
+            ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 70px "Mukta", sans-serif';
+            ctx.fillText('🤵', photoX, photoY + 25);
+          }
+
+          // Name & Profession
+          const name = waSettings.groomName || 'चि. शुभम अनिल खर्चे';
+          const edu = waSettings.groomEdu || 'B.E. Mechanical Engineering';
+          const job = `${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Pune'}`;
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#881337';
+          ctx.font = 'bold 44px "Mukta", sans-serif';
+          ctx.fillText(name.startsWith('चि.') ? name : 'चि. ' + name, 540, 435);
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText(edu, 540, 472);
+
+          ctx.fillStyle = '#334155';
+          ctx.font = '600 20px "Mukta", sans-serif';
+          ctx.fillText(job, 540, 502);
+
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(120, 525);
+          ctx.lineTo(960, 525);
+          ctx.stroke();
+
+          // 8 Vitals Cards Grid
+          const vitals = [
+            { label: 'जन्म तारीख व वेळ', val: `${waSettings.groomDob || '२५/०८/१९९६'} • ${waSettings.groomTime || 'स. १०:१५'}` },
+            { label: 'उंची व वर्ण', val: `५' ९" (१७५ सेमी) • ${waSettings.groomComplexionBlood ? waSettings.groomComplexionBlood.split('|')[0].trim() : 'गोरा'}` },
+            { label: 'वार्षिक पॅकेज', val: `${waSettings.groomSalary || '७.८ लाख'} (7.8 LPA)` },
+            { label: 'गोत्र व रक्तगट', val: `${waSettings.groomGotra || 'वशिष्ठ'} • B+ve` },
+            { label: 'मूळ गाव व वास्तव', val: `${waSettings.groomPlace || 'जळगाव'} • ह. मु. पुणे` },
+            { label: 'वडील व व्यवसाय', val: `${waSettings.groomFather || 'श्री. अनिल खर्चे'} (निवृत्त शिक्षक)` },
+            { label: 'आई व भावंडे', val: `${waSettings.groomMother || 'सौ. अनिता खर्चे'} • १ भाऊ (विवाहित)` },
+            { label: 'मामाचे कुळ', val: `${waSettings.groomMamkul || 'पाटील / महाजन'}` }
+          ];
+
+          const startY = 545;
+          const colW = 445;
+          const rowH = 88;
+          const gapX = 30;
+          const gapY = 14;
+
+          vitals.forEach((v, idx) => {
+            const col = idx % 2;
+            const row = Math.floor(idx / 2);
+            const vx = 80 + col * (colW + gapX);
+            const vy = startY + row * (rowH + gapY);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0,0,0,0.04)';
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetY = 2;
+            roundRect(ctx, vx, vy, colW, rowH, 10, true, false);
+            ctx.shadowColor = 'transparent';
+
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1.5;
+            roundRect(ctx, vx, vy, colW, rowH, 10, false, true);
+
+            ctx.fillStyle = col === 0 ? '#be123c' : '#0284c7';
+            roundRect(ctx, vx, vy + 14, 4, rowH - 28, 2, true, false);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 15px "Mukta", sans-serif';
+            ctx.fillText(v.label, vx + 18, vy + 32);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 18.5px "Mukta", sans-serif';
+            ctx.fillText(v.val, vx + 18, vy + 64);
+          });
+
+          // Family & Contacts
+          const footY = 980;
+          ctx.fillStyle = '#f8fafc';
+          roundRect(ctx, 80, footY, 920, 160, 12, true, false);
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1;
+          roundRect(ctx, 80, footY, 920, 160, 12, false, true);
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#881337';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText('📞 संपर्क: खर्चे परिवार', 540, footY + 40);
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText('श्री. अनिल सोपान खर्चे (वडील): ९४२०५३९३९६ / ९४२२१५२२३१', 540, footY + 80);
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '16px "Mukta", sans-serif';
+          ctx.fillText('पत्ता: सर्वे नं. ४२/२, खर्चे निवास, वडगाव शेरी, पुणे - ४११०१४', 540, footY + 120);
+
+          // Digital Profile Link Banner
+          const linkY = 1170;
+          ctx.fillStyle = '#f0fdf4';
+          roundRect(ctx, 80, linkY, 920, 130, 12, true, false);
+          ctx.strokeStyle = '#bbf7d0';
+          ctx.lineWidth = 1.5;
+          roundRect(ctx, 80, linkY, 920, 130, 12, false, true);
+
+          ctx.fillStyle = '#15803d';
+          ctx.font = 'bold 20px "Mukta", sans-serif';
+          ctx.fillText('🌐 सविस्तर डिजिटल बायोडाटा व कुंडली पाहण्यासाठी लिंक:', 540, linkY + 42);
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = 'bold 24px "Mukta", sans-serif';
+          ctx.fillText('👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche', 540, linkY + 85);
+
+          // Bottom Branding
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '600 16px "Mukta", sans-serif';
+          ctx.fillText('अनुबंध (Anubandh) • दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध', 540, 1375);
+
+          canvas.toBlob((blob) => {
+            resolve({ blob, dataUrl: canvas.toDataURL('image/jpeg', 0.92) });
+          }, 'image/jpeg', 0.92);
+        };
+
+        photoImg.onload = () => continueDrawing(photoImg);
+        photoImg.onerror = () => continueDrawing(null);
+        photoImg.src = photoSrc;
+        setTimeout(() => {
+          if (!photoImg.complete) continueDrawing(null);
+        }, 1500);
+      });
+    }
+
+    async function openCanvasCardModal() {
+      const modal = document.getElementById('canvasCardModal');
+      modal.classList.add('open');
+      const loader = document.getElementById('canvasCardLoading');
+      const container = document.getElementById('canvasCardContainer');
+      const img = document.getElementById('canvasCardPreviewImg');
+      loader.style.display = 'block';
+      container.style.display = 'none';
+
+      try {
+        const result = await generateBiodataCardBlob();
+        generatedCardBlob = result.blob;
+        generatedCardDataUrl = result.dataUrl;
+        img.src = result.dataUrl;
+        loader.style.display = 'none';
+        container.style.display = 'block';
+      } catch (err) {
+        console.error('Error generating card:', err);
+        loader.innerHTML = '<div style="color:#ef4444;">इमेज कार्ड तयार करताना त्रुटी आली. कृपया पुन्हा प्रयत्न करा.</div>';
+      }
+    }
+
+    function closeCanvasCardModal() {
+      document.getElementById('canvasCardModal').classList.remove('open');
+    }
+
+    function downloadGeneratedCard() {
+      if (!generatedCardDataUrl) return;
+      const link = document.createElement('a');
+      link.href = generatedCardDataUrl;
+      link.download = 'Shubham_Kharche_Biodata_Card.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('इमेज कार्ड डाऊनलोड झाले!');
+    }
+
+    async function shareGeneratedCardWhatsApp() {
+      const shareMsg = getShareableProfileFullMessage();
+      if (navigator.canShare && generatedCardBlob) {
+        try {
+          const file = new File([generatedCardBlob], 'Shubham_Kharche_Biodata_Card.jpg', { type: 'image/jpeg' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+              text: shareMsg
+            });
+            showToast('शेअर यशस्वी!');
+            return;
+          }
+        } catch(e) {
+          if (e.name !== 'AbortError') console.warn('Share error:', e);
+        }
+      }
+      downloadGeneratedCard();
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+      window.open(waUrl, '_blank');
+      showToast('इमेज सेव्ह झाली, WhatsApp उघडले!');
+    }
+
     // Double-press back button to exit app & close modals on back (PWA Native UX)
     let lastBackPressTime = 0;
     const BACK_EXIT_DELAY_MS = 2000;
 
     function getOpenModal() {
       const modalList = [
+        { id: 'customConfirmModal', close: closeCustomConfirmModal },
+        { id: 'canvasCardModal', close: closeCanvasCardModal },
+        { id: 'biodataModal', close: closeBiodataModal },
         { id: 'sideMenuOverlay', close: closeSideMenu },
         { id: 'phoneActionModal', close: () => closePhoneActionModal() },
         { id: 'aboutModal', close: closeAboutModal },

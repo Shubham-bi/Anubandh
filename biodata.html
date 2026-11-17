@@ -813,8 +813,39 @@
       <button type="button" class="sticky-btn-copy-link" onclick="copyHyperlink()" title="बायोडाटा लिंक व संदेश कॉपी करा (Shubham_Kharche)">
         <span>🔗 कॉपी लिंक</span>
       </button>
+      <button type="button" class="sticky-btn-copy-link" style="background:#0284c7; color:#fff;" onclick="openCanvasCardModal()" title="बायोडाटा इमेज कार्ड तयार करा">
+        <span>🖼️ इमेज कार्ड</span>
+      </button>
     </div>
 
+  </div>
+
+  <!-- HTML5 Canvas Biodata Share Card Modal -->
+  <div id="canvasCardModal" class="img-modal" style="background:rgba(15,23,42,0.85); display:none; align-items:center; justify-content:center; padding:16px;">
+    <div style="background:#fff; border-radius:16px; max-width:520px; width:100%; max-height:92vh; overflow-y:auto; padding:16px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+        <span style="font-weight:800; font-size:15px; color:#881337;">🖼️ विवाह परिचय पत्रिका (इमेज कार्ड)</span>
+        <button type="button" onclick="closeCanvasCardModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#64748b; line-height:1;">&times;</button>
+      </div>
+      <div id="canvasCardLoading" style="padding:40px 10px; color:#64748b; font-size:13.5px;">
+        <div style="font-size:24px; margin-bottom:8px;">🎨</div>
+        <div>बायोडाटा इमेज कार्ड तयार होत आहे, कृपया प्रतीक्षा करा...</div>
+      </div>
+      <div id="canvasCardContainer" style="display:none;">
+        <img id="canvasCardPreviewImg" src="" alt="शुभम खर्चे विवाह पत्रिका कार्ड" style="max-width:100%; max-height:60vh; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-bottom:12px;"/>
+      </div>
+      <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:10px;">
+        <button type="button" class="btn-hero-action" style="background:#16a34a; border-color:#16a34a; color:#fff; padding:8px 14px; font-size:13px;" onclick="shareGeneratedCardWhatsApp()">
+          💬 WhatsApp वर शेअर करा
+        </button>
+        <button type="button" class="btn-hero-action" style="background:#0284c7; border-color:#0284c7; color:#fff; padding:8px 14px; font-size:13px;" onclick="downloadGeneratedCard()">
+          📥 इमेज डाउनलोड
+        </button>
+        <button type="button" class="btn-hero-action" style="background:#f1f5f9; border-color:#cbd5e1; color:#334155; padding:8px 14px; font-size:13px;" onclick="closeCanvasCardModal()">
+          बंद करा
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Fullscreen Image Modal -->
@@ -1293,9 +1324,332 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Close open modal (full image or contact sheet) on phone back button
+    // HTML5 Canvas Biodata Card Generator
+    let generatedCardBlob = null;
+    let generatedCardDataUrl = null;
+
+    function generateBiodataCardBlob() {
+      return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1080;
+        canvas.height = 1440;
+        const ctx = canvas.getContext('2d');
+
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, 1440);
+        bgGrad.addColorStop(0, '#ffffff');
+        bgGrad.addColorStop(0.3, '#fffdf7');
+        bgGrad.addColorStop(1, '#fef9ee');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1080, 1440);
+
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = '#881337';
+        ctx.strokeRect(24, 24, 1080 - 48, 1440 - 48);
+
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#d97706';
+        ctx.strokeRect(36, 36, 1080 - 72, 1440 - 72);
+
+        const drawCorner = (x, y, rot) => {
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(rot);
+          ctx.fillStyle = '#881337';
+          ctx.fillRect(0, 0, 24, 6);
+          ctx.fillRect(0, 0, 6, 24);
+          ctx.fillStyle = '#d97706';
+          ctx.beginPath();
+          ctx.arc(12, 12, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        };
+        drawCorner(44, 44, 0);
+        drawCorner(1080 - 44, 44, Math.PI / 2);
+        drawCorner(1080 - 44, 1440 - 44, Math.PI);
+        drawCorner(44, 1440 - 44, -Math.PI / 2);
+
+        function roundRect(c, x, y, w, h, r, fill, stroke) {
+          c.beginPath();
+          c.moveTo(x + r, y);
+          c.arcTo(x + w, y, x + w, y + h, r);
+          c.arcTo(x + w, y + h, x, y + h, r);
+          c.arcTo(x, y + h, x, y, r);
+          c.arcTo(x, y + w, x, y, r);
+          c.closePath();
+          if (fill) c.fill();
+          if (stroke) c.stroke();
+        }
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#b45309';
+        ctx.font = 'bold 26px "Mukta", serif';
+        ctx.fillText('॥ श्री गणेशाय नमः ॥', 540, 85);
+
+        ctx.fillStyle = '#881337';
+        roundRect(ctx, 320, 105, 440, 42, 21, true, false);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px "Mukta", sans-serif';
+        ctx.fillText('विवाह प्रस्ताव • परिचय पत्रिका', 540, 133);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 18px "Mukta", sans-serif';
+        ctx.fillText('खर्चे परिवार (जळगाव / पुणे)', 540, 172);
+
+        const photoSec = activeProfileData?.sections?.find(s => s.type === 'photo');
+        const photoSrc = (photoSec && photoSec.photoUrl) ? photoSec.photoUrl : './shubham_kharche_biodata.jpg';
+
+        const photoImg = new Image();
+        photoImg.crossOrigin = 'anonymous';
+
+        const continueDrawing = (imgObj) => {
+          const photoX = 540;
+          const photoY = 285;
+          const radius = 95;
+
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.18)';
+          ctx.shadowBlur = 16;
+          ctx.shadowOffsetY = 6;
+
+          ctx.beginPath();
+          ctx.arc(photoX, photoY, radius + 7, 0, Math.PI * 2);
+          ctx.fillStyle = '#d97706';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(photoX, photoY, radius + 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#881337';
+          ctx.fill();
+          ctx.restore();
+
+          if (imgObj) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
+            ctx.clip();
+            try {
+              const aspect = imgObj.width / imgObj.height;
+              let drawW = radius * 2;
+              let drawH = radius * 2;
+              let dx = photoX - radius;
+              let dy = photoY - radius;
+              if (aspect > 1) {
+                drawW = drawH * aspect;
+                dx = photoX - drawW / 2;
+              } else {
+                drawH = drawW / aspect;
+                dy = photoY - drawH / 2;
+              }
+              ctx.drawImage(imgObj, dx, dy, drawW, drawH);
+            } catch(e) {
+              ctx.fillStyle = '#e2e8f0';
+              ctx.fillRect(photoX - radius, photoY - radius, radius * 2, radius * 2);
+            }
+            ctx.restore();
+          } else {
+            ctx.fillStyle = '#f1f5f9';
+            ctx.beginPath();
+            ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 70px "Mukta", sans-serif';
+            ctx.fillText('🤵', photoX, photoY + 25);
+          }
+
+          const h = activeProfileData?.hero || {};
+          const name = h.name || 'चि. शुभम अनिल खर्चे';
+          const role = h.role || 'B.E. Mechanical • Sr. QA Engineer IT, Pune';
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#881337';
+          ctx.font = 'bold 44px "Mukta", sans-serif';
+          ctx.fillText(name.startsWith('चि.') ? name : 'चि. ' + name, 540, 435);
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText(role, 540, 475);
+
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(120, 510);
+          ctx.lineTo(960, 510);
+          ctx.stroke();
+
+          const vitals = [
+            { label: 'जन्म तारीख व वेळ', val: '२५/०८/१९९६ • स. ११:५६ वा.' },
+            { label: 'उंची व वर्ण', val: "५' ९\" (१७५ सेमी) • गोरा" },
+            { label: 'वार्षिक पॅकेज', val: '७.८ लाख (7.8 LPA)' },
+            { label: 'गोत्र व रक्तगट', val: 'वशिष्ठ • B+ve' },
+            { label: 'मूळ गाव व वास्तव', val: 'शेलगाव बाजार • ह. मु. पुणे' },
+            { label: 'वडील व व्यवसाय', val: 'कै. अनिल खर्चे • शेती (५.५ एकर)' },
+            { label: 'आई व भावंडे', val: 'सौ. अनिता खर्चे • २ बहिणी (विवाहित)' },
+            { label: 'मामाचे कुळ', val: 'चोपडे, दाताळा' }
+          ];
+
+          const startY = 530;
+          const colW = 445;
+          const rowH = 88;
+          const gapX = 30;
+          const gapY = 14;
+
+          vitals.forEach((v, idx) => {
+            const col = idx % 2;
+            const row = Math.floor(idx / 2);
+            const vx = 80 + col * (colW + gapX);
+            const vy = startY + row * (rowH + gapY);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0,0,0,0.04)';
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetY = 2;
+            roundRect(ctx, vx, vy, colW, rowH, 10, true, false);
+            ctx.shadowColor = 'transparent';
+
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1.5;
+            roundRect(ctx, vx, vy, colW, rowH, 10, false, true);
+
+            ctx.fillStyle = col === 0 ? '#be123c' : '#0284c7';
+            roundRect(ctx, vx, vy + 14, 4, rowH - 28, 2, true, false);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 15px "Mukta", sans-serif';
+            ctx.fillText(v.label, vx + 18, vy + 32);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 18.5px "Mukta", sans-serif';
+            ctx.fillText(v.val, vx + 18, vy + 64);
+          });
+
+          const footY = 965;
+          ctx.fillStyle = '#f8fafc';
+          roundRect(ctx, 80, footY, 920, 160, 12, true, false);
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1;
+          roundRect(ctx, 80, footY, 920, 160, 12, false, true);
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#881337';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText('📞 संपर्क: खर्चे परिवार', 540, footY + 40);
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 22px "Mukta", sans-serif';
+          ctx.fillText('श्री. विजय खर्चे: ९४२०५३९३९६ | श्री. गजानन खर्चे: ९४२२१५२२३१', 540, footY + 80);
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '16px "Mukta", sans-serif';
+          ctx.fillText('ह. मु. पुणे / मूळगाव: शेलगाव बाजार, ता. मोताळा, जि. बुलढाणा', 540, footY + 120);
+
+          const linkY = 1155;
+          ctx.fillStyle = '#f0fdf4';
+          roundRect(ctx, 80, linkY, 920, 130, 12, true, false);
+          ctx.strokeStyle = '#bbf7d0';
+          ctx.lineWidth = 1.5;
+          roundRect(ctx, 80, linkY, 920, 130, 12, false, true);
+
+          ctx.fillStyle = '#15803d';
+          ctx.font = 'bold 20px "Mukta", sans-serif';
+          ctx.fillText('🌐 सविस्तर डिजिटल बायोडाटा व कुंडली पाहण्यासाठी लिंक:', 540, linkY + 42);
+
+          ctx.fillStyle = '#0369a1';
+          ctx.font = 'bold 24px "Mukta", sans-serif';
+          ctx.fillText('👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche', 540, linkY + 85);
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '600 16px "Mukta", sans-serif';
+          ctx.fillText('अनुबंध (Anubandh) • दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध', 540, 1365);
+
+          canvas.toBlob((blob) => {
+            resolve({ blob, dataUrl: canvas.toDataURL('image/jpeg', 0.92) });
+          }, 'image/jpeg', 0.92);
+        };
+
+        photoImg.onload = () => continueDrawing(photoImg);
+        photoImg.onerror = () => continueDrawing(null);
+        photoImg.src = photoSrc;
+        setTimeout(() => {
+          if (!photoImg.complete) continueDrawing(null);
+        }, 1500);
+      });
+    }
+
+    async function openCanvasCardModal() {
+      const modal = document.getElementById('canvasCardModal');
+      modal.style.display = 'flex';
+      modal.classList.add('open');
+      const loader = document.getElementById('canvasCardLoading');
+      const container = document.getElementById('canvasCardContainer');
+      const img = document.getElementById('canvasCardPreviewImg');
+      loader.style.display = 'block';
+      container.style.display = 'none';
+
+      try {
+        const result = await generateBiodataCardBlob();
+        generatedCardBlob = result.blob;
+        generatedCardDataUrl = result.dataUrl;
+        img.src = result.dataUrl;
+        loader.style.display = 'none';
+        container.style.display = 'block';
+      } catch (err) {
+        console.error('Error generating card:', err);
+        loader.innerHTML = '<div style="color:#ef4444;">इमेज कार्ड तयार करताना त्रुटी आली.</div>';
+      }
+    }
+
+    function closeCanvasCardModal() {
+      const modal = document.getElementById('canvasCardModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('open');
+      }
+    }
+
+    function downloadGeneratedCard() {
+      if (!generatedCardDataUrl) return;
+      const link = document.createElement('a');
+      link.href = generatedCardDataUrl;
+      link.download = 'Shubham_Kharche_Biodata_Card.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('इमेज कार्ड डाऊनलोड झाले!');
+    }
+
+    async function shareGeneratedCardWhatsApp() {
+      const shareMsg = getShareableProfileFullMessage();
+      if (navigator.canShare && generatedCardBlob) {
+        try {
+          const file = new File([generatedCardBlob], 'Shubham_Kharche_Biodata_Card.jpg', { type: 'image/jpeg' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+              text: shareMsg
+            });
+            showToast('शेअर यशस्वी!');
+            return;
+          }
+        } catch(e) {
+          if (e.name !== 'AbortError') console.warn('Share error:', e);
+        }
+      }
+      downloadGeneratedCard();
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+      window.open(waUrl, '_blank');
+      showToast('इमेज सेव्ह झाली, WhatsApp उघडले!');
+    }
+
+    // Close open modal (full image, card modal, or contact sheet) on phone back button
     // When no modal is open, back button simply navigates back or exits naturally (no traps/redirects)
     window.addEventListener('popstate', function() {
+      const cardModal = document.getElementById('canvasCardModal');
+      if (cardModal && cardModal.classList.contains('open')) {
+        closeCanvasCardModal();
+        return;
+      }
       const fullImg = document.getElementById('fullImgModal');
       const phoneModal = document.getElementById('phoneActionModal');
       if (fullImg && fullImg.classList.contains('open')) {

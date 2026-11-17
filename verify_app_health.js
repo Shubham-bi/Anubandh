@@ -273,10 +273,37 @@ try {
   const currentSwCode = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(!currentSwCode.includes('datalab-convert-Suchi-SHortlist.html') && !currentSwCode.includes('matrimonial-tracker-app.html'), "sw.js focuses on index.html and no longer caches redundant secondary files");
 
+  // Primary master synchronization
   const bioA = fs.readFileSync('biodata.html');
   const bioB = fs.readFileSync('shubham-kharche.html');
   const bioC = fs.readFileSync('Shubham_Kharche.html');
   assert(bioA.equals(bioB) && bioA.equals(bioC), "Primary master biodata.html is 100% synchronized with shubham-kharche.html and Shubham_Kharche.html");
+
+  // 1. Instant / Seamless In-App Biodata Viewer assertions
+  assert(indexCode.includes('id="biodataModal"') && indexCode.includes('openBiodataModal') && indexCode.includes('closeBiodataModal'), "index.html defines seamless in-app biodataModal and handlers");
+  assert(indexCode.includes('rel="prefetch"') && indexCode.includes('href="./biodata.html"'), "index.html pre-fetches biodata.html for instant opening");
+
+  // 2. Photo Upload for Shubham assertions
+  assert(indexCode.includes('handlePhotoUpload') && indexCode.includes('triggerPhotoUpload') && indexCode.includes('resetPhotoToDefault'), "index.html provides Shubham photo upload, preview, and reset handlers");
+  const srvCode = fs.readFileSync(path.join(repoDir, 'server.js'), 'utf8');
+  assert(srvCode.includes('/api/upload-photo'), "server.js provides POST /api/upload-photo endpoint");
+
+  // 3. HTML5 Canvas Biodata Card Generator assertions
+  assert(indexCode.includes('generateBiodataCardBlob') && indexCode.includes('openCanvasCardModal') && indexCode.includes('downloadGeneratedCard'), "index.html defines HTML5 Canvas biodata card generator and actions");
+  assert(bioCode.includes('generateBiodataCardBlob') && bioCode.includes('openCanvasCardModal'), "biodata.html defines HTML5 Canvas biodata card generator");
+
+  // 4. CMS Customizable Message Templates assertions
+  assert(indexCode.includes('waProposalTemplate') && indexCode.includes('waShareTemplate') && indexCode.includes('insertTemplatePlaceholder'), "index.html CMS provides editable message templates and placeholder chips");
+  assert(indexCode.includes('customProposalTemplate') && indexCode.includes('customShareTemplate'), "index.html interpolates custom proposal and share templates");
+
+  // 5. Custom Branded Confirmation Popup Modal assertions
+  assert(indexCode.includes('id="customConfirmModal"') && indexCode.includes('showCustomConfirm') && indexCode.includes('handleCustomConfirmOk'), "index.html provides custom styled confirmation popup modal");
+  assert(!indexCode.includes('if (!confirm(') && !indexCode.includes('if (confirm('), "index.html has replaced native browser confirm() dialogs with showCustomConfirm modal");
+
+  // 6. Single conversation delete bug fix & Not Interested toggle assertions
+  assert(indexCode.includes('function isCandidateShortlisted'), "index.html defines isCandidateShortlisted to prevent ReferenceError on single log delete");
+  assert(indexCode.includes('toggleNotInterestedInsideTrackModal') && indexCode.includes('updateTrackModalNotInterestedBtn'), "index.html provides Not Interested toggle inside trackModal");
+  assert(indexCode.includes('onclick="toggleNotInterestedCandidate(\'${c.id}\', event)"'), "index.html table view provides quick Not Interested toggle");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

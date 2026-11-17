@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anubandh-v45';
+const CACHE_NAME = 'anubandh-v46';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -31,26 +31,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First strategy: Always fetch newest updates from network, fall back to cache when offline
+// Stale-While-Revalidate strategy: Serve instantly from cache (<10ms) while fetching freshest in background
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-        }
-        return networkResponse;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) return cachedResponse;
-          return caches.match('./index.html');
-        });
-      })
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => cachedResponse);
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });
