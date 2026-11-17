@@ -1363,6 +1363,162 @@
       background: #e2e8f0;
     }
 
+    /* =========================================================
+       MODERN CMS PORTAL & DASHBOARD STYLES
+       ========================================================= */
+    .cms-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff1f2;
+      color: #be123c;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #fecdd3;
+    }
+    .cms-nav-scroll {
+      display: flex;
+      gap: 8px;
+      padding: 4px 2px 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      border-bottom: 1.5px solid #e2e8f0;
+      margin-bottom: 16px;
+    }
+    .cms-nav-scroll::-webkit-scrollbar { display: none; }
+    .cms-nav-tab-btn {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #334155;
+      padding: 9px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .cms-nav-tab-btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+    .cms-nav-tab-btn.cms-nav-active,
+    .cms-nav-tab-btn.action-btn-primary {
+      background: linear-gradient(135deg, #881337 0%, #be123c 100%) !important;
+      border-color: #9f1239 !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 10px rgba(190, 18, 60, 0.28) !important;
+    }
+    .cms-count-chip {
+      background: rgba(0, 0, 0, 0.08);
+      color: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 999px;
+    }
+    .cms-nav-tab-btn.cms-nav-active .cms-count-chip {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+    .cms-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      transition: border-color 0.15s ease;
+    }
+    .cms-card:hover {
+      border-color: #cbd5e1;
+    }
+    .cms-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .cms-card-title {
+      font-weight: 800;
+      font-size: 13.5px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cms-cand-picker-box {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1.5px solid #bae6fd;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .cms-step-btn {
+      background: #ffffff;
+      border: 1.5px solid #bae6fd;
+      color: #0369a1;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .cms-step-btn:hover {
+      background: #e0f2fe;
+    }
+    .cms-step-btn:active {
+      transform: scale(0.97);
+    }
+    .cms-wa-sim-box {
+      background: #efeae2;
+      background-image: radial-gradient(#dfd9cd 1px, transparent 1px);
+      background-size: 14px 14px;
+      border: 1px solid #d1d7db;
+      border-radius: 12px;
+      padding: 14px;
+      position: relative;
+    }
+    .cms-wa-bubble {
+      background: #dcf8c6;
+      border-radius: 8px 0 8px 8px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: #111b21;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+      max-width: 92%;
+      margin-left: auto;
+    }
+    .cms-wa-bubble-meta {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      color: #667781;
+      margin-top: 5px;
+    }
+
     /* Shareable Profile CMS Editor Styles & Mobile Responsiveness */
     .cms-sec-card {
       background: #ffffff;
@@ -2138,14 +2294,20 @@
   <div id="adminSettingsModal" class="modal-overlay full-page-view">
     <div class="modal-box">
       <div class="modal-head">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; display:inline-flex; align-items:center; gap:4px;" onclick="closeAdminSettingsModal()">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; display:inline-flex; align-items:center; gap:5px;" onclick="closeAdminSettingsModal()">
             ← परत जा (Exit)
           </button>
-          <div class="modal-head-title">⚙️ अ‍ॅडमिन पोर्टल व बायोडाटा कस्टमायझर</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="modal-head-title" style="font-size:15px; font-weight:800; color:#0f172a;">⚙️ अ‍ॅडमिन पोर्टल व कस्टमायझर</div>
+            <span class="cms-brand-badge">अनुबंध CMS v2.0</span>
+          </div>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
-          <button type="button" class="action-btn action-btn-primary" style="background:#15803d; padding:7px 16px; font-size:13px;" onclick="saveProfileCmsData(event)">
+          <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; display:inline-flex; align-items:center; gap:4px;" onclick="previewProfilePage()" title="लाईव्ह बायोडाटा पेज प्रिव्ह्यू पहा">
+            👁️ प्रिव्ह्यू
+          </button>
+          <button type="button" class="action-btn action-btn-primary" style="background:linear-gradient(135deg, #15803d, #16a34a); padding:7px 16px; font-size:13px; font-weight:800; box-shadow:0 2px 8px rgba(22,163,74,0.3);" onclick="saveProfileCmsData(event)">
             💾 सर्व बदल सेव्ह करा
           </button>
           <button type="button" class="close-btn" onclick="closeAdminSettingsModal()" title="बंद करा">&times;</button>
@@ -2153,27 +2315,30 @@
       </div>
       <div class="modal-content-body">
         
-        <div style="display:flex; gap:6px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px; overflow-x:auto;">
-          <button id="tabCandidateEditBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 12px; font-size:12.5px; white-space:nowrap; border-color:#0284c7;" onclick="switchAdminTab('candidate_edit')">
-            👰 वधू प्रोफाईल संपादन
+        <!-- Modern Segmented Pill Tabs Navigation -->
+        <div class="cms-nav-scroll">
+          <button id="tabCandidateEditBtn" type="button" class="cms-nav-tab-btn cms-nav-active action-btn-primary" onclick="switchAdminTab('candidate_edit')">
+            <span>👰 वधू प्रोफाईल संपादन</span>
+            <span class="cms-count-chip" id="cmsCandidateCountChip">८४</span>
           </button>
-          <button id="tabProfileCmsBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('profile_cms')">
-            📄 शेअर बायोडाटा संपादन
+          <button id="tabProfileCmsBtn" type="button" class="cms-nav-tab-btn action-btn-outline" onclick="switchAdminTab('profile_cms')">
+            <span>🤵 शुभम बायोडाटा संपादन</span>
           </button>
-          <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('sync')">
-            🔄 मल्टी-युझर क्लाउड सिंक
+          <button id="tabWaBtn" type="button" class="cms-nav-tab-btn action-btn-outline" onclick="switchAdminTab('wa')">
+            <span>💬 WhatsApp मेसेज व टेम्पलेट</span>
           </button>
-          <button id="tabBackupBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('backup')">
-            💾 डेटा बॅकअप व Excel
+          <button id="tabSyncBtn" type="button" class="cms-nav-tab-btn action-btn-outline" onclick="switchAdminTab('sync')">
+            <span>🔄 मल्टी-युझर क्लाउड सिंक</span>
           </button>
-          <button id="tabWaBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('wa')">
-            💬 WhatsApp मेसेज
+          <button id="tabBackupBtn" type="button" class="cms-nav-tab-btn action-btn-outline" onclick="switchAdminTab('backup')">
+            <span>💾 डेटा बॅकअप व Excel</span>
           </button>
         </div>
 
         <!-- TAB 0: Candidate Profiles CMS (Edit Wrong or Missing Details) -->
         <div id="secCandidateEditSettings">
-          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#166534; margin-bottom:12px; display:flex; flex-direction:column; gap:4px;">
+          <!-- Information Banner -->
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#166534; margin-bottom:14px; display:flex; flex-direction:column; gap:4px;">
             <div style="font-weight:800; font-size:13.5px; display:flex; align-items:center; gap:6px;">
               <span>👰</span>
               <span>वधू प्रोफाईल माहिती संपादन (Candidate CMS)</span>
@@ -2183,130 +2348,195 @@
             </div>
           </div>
 
-          <!-- Selector Bar -->
-          <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;">
-            <div style="flex:1 1 320px;">
-              <label class="form-label" style="font-weight:700; margin-bottom:4px; color:#0f172a;">दुरुस्तीसाठी वधू निवडा (Select Candidate):</label>
-              <select id="cmsCandidateSelect" class="form-control" style="font-weight:700; font-size:13.5px; border-color:#0284c7; background:#f0f9ff;" onchange="loadCandidateForEdit(this.value)">
+          <!-- Smart Candidate Picker Toolbar -->
+          <div class="cms-cand-picker-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+              <label class="form-label" style="font-weight:800; margin:0; color:#0369a1; font-size:13px; display:flex; align-items:center; gap:5px;">
+                <span>🎯</span>
+                <span>दुरुस्तीसाठी वधू निवडा (Candidate Selector):</span>
+              </label>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <button type="button" class="cms-step-btn" onclick="stepCmsCandidate(-1)" title="मागील वधू निवडा">
+                  ⬅️ मागील
+                </button>
+                <button type="button" class="cms-step-btn" onclick="stepCmsCandidate(1)" title="पुढील वधू निवडा">
+                  पुढील ➡️
+                </button>
+                <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12px; border-color:#0284c7; color:#0369a1; background:#ffffff;" onclick="downloadUpdatedCandidatesJson()" title="अपडेटेड candidates.json फाईल डाऊनलोड करा">
+                  📥 candidates.json डाऊनलोड
+                </button>
+              </div>
+            </div>
+
+            <!-- Search + Dropdown Bar -->
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <input type="text" id="cmsCandSearchInp" class="form-control" style="flex:1 1 240px; font-size:13px; border-color:#0284c7; background:#ffffff;" placeholder="🔍 नाव, गाव किंवा अ.क्र. ने शोधा..." oninput="filterCmsCandidates(this.value)"/>
+              <select id="cmsCandidateSelect" class="form-control" style="flex:2 1 320px; font-weight:700; font-size:13.5px; border-color:#0284c7; background:#ffffff;" onchange="loadCandidateForEdit(this.value)">
                 <!-- populated dynamically -->
               </select>
             </div>
-            <div style="display:flex; gap:6px; align-items:flex-end;">
-              <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; border-color:#0284c7; color:#0369a1;" onclick="downloadUpdatedCandidatesJson()" title="अपडेटेड candidates.json फाईल डाऊनलोड करा">
-                📥 candidates.json डाऊनलोड
-              </button>
-            </div>
+
+            <!-- Quick Selected Summary Strip -->
+            <div id="cmsCandQuickSummary" style="font-size:12px; color:#0369a1; font-weight:700; display:flex; align-items:center; gap:8px; flex-wrap:wrap;"></div>
           </div>
 
-          <!-- Edit Form Container -->
-          <form id="cmsCandidateEditForm" onsubmit="saveCandidateEditData(event)" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+          <!-- Edit Form Container with Grouped Cards -->
+          <form id="cmsCandidateEditForm" onsubmit="saveCandidateEditData(event)">
             <input type="hidden" id="editCandId"/>
             
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #f1f5f9; padding-bottom:8px; flex-wrap:wrap; gap:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:10px 14px; flex-wrap:wrap; gap:8px;">
               <div style="font-weight:800; font-size:14px; color:var(--primary); display:flex; align-items:center; gap:6px;">
                 <span>✏️</span>
                 <span id="editCandHeading">माहिती दुरुस्ती फॉर्म</span>
               </div>
-              <span id="editCandStatusBadge" class="status-badge" style="font-size:11.5px;">-</span>
-            </div>
-
-            <!-- Row 1: Sr No, Name -->
-            <div class="cms-grid-2" style="margin-bottom:10px;">
-              <div class="form-group">
-                <label class="form-label">अ.क्र. (Serial No.):</label>
-                <input type="text" id="editCandSr" class="form-control" placeholder="उदा. १८१." required/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">उमेदवाराचे नाव:</label>
-                <input type="text" id="editCandName" class="form-control" placeholder="उदा. कु. प्रियंका (डॉली)" required/>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span id="editCandStatusBadge" class="status-badge" style="font-size:12px;">-</span>
               </div>
             </div>
 
-            <!-- Row 2: Birth Date, Time, Mulgaon / Place -->
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:10px;">
-              <div class="form-group">
-                <label class="form-label">जन्मतारीख (Date of Birth):</label>
-                <input type="text" id="editCandDate" class="form-control" placeholder="उदा. २२-१-२०००"/>
+            <!-- CARD 1: Basic & Horoscope -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>👤</span>
+                  <span>१. प्राथमिक ओळख व जन्म तपशील (Basic & Birth Info)</span>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="form-label">जन्म वेळ (Birth Time):</label>
-                <input type="text" id="editCandTime" class="form-control" placeholder="उदा. स. ६ वा."/>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">अ.क्र. (Serial No.):</label>
+                  <input type="text" id="editCandSr" class="form-control" placeholder="उदा. १८१." required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">उमेदवाराचे नाव:</label>
+                  <input type="text" id="editCandName" class="form-control" placeholder="उदा. कु. प्रियंका (डॉली)" required/>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="form-label">जन्म ठिकाण / मूळगाव:</label>
-                <input type="text" id="editCandMulgaon" class="form-control" placeholder="उदा. मलकापूर / पुणे"/>
+
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+                <div class="form-group">
+                  <label class="form-label">जन्मतारीख (Date of Birth):</label>
+                  <input type="text" id="editCandDate" class="form-control" placeholder="उदा. २२-१-२०००"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">जन्म वेळ (Birth Time):</label>
+                  <input type="text" id="editCandTime" class="form-control" placeholder="उदा. स. ६ वा."/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">जन्म ठिकाण / मूळगाव:</label>
+                  <input type="text" id="editCandMulgaon" class="form-control" placeholder="उदा. मलकापूर / पुणे"/>
+                </div>
               </div>
             </div>
 
-            <!-- Row 3: Height, Complexion, Gotra, Mamkul, Blood -->
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:10px;">
-              <div class="form-group">
-                <label class="form-label">उंची (Height):</label>
-                <input type="text" id="editCandHeight" class="form-control" placeholder="उदा. ५'४''"/>
+            <!-- CARD 2: Physical & Family Info -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>🧬</span>
+                  <span>२. वैयक्तिक, शारीरिक व कौटुंबिक तपशील (Personal & Family)</span>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="form-label">वर्ण (Complexion):</label>
-                <input type="text" id="editCandComplexion" class="form-control" placeholder="उदा. गोरा / निमगोरा"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">गोत्र (Gotra):</label>
-                <input type="text" id="editCandGotra" class="form-control" placeholder="उदा. विश्वामित्र"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">मामकुळ (Mamkul):</label>
-                <input type="text" id="editCandMamkul" class="form-control" placeholder="उदा. कोलते (नरवेल)"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">रक्तगट (Blood Group):</label>
-                <input type="text" id="editCandBlood" class="form-control" placeholder="उदा. एबी+ / ओ+"/>
-              </div>
-            </div>
 
-            <!-- Row 4: Education & Job -->
-            <div class="form-group" style="margin-bottom:10px;">
-              <label class="form-label">🎓 शिक्षण, नोकरी व कंपनी / पॅकेज:</label>
-              <textarea id="editCandEdu" class="form-control" rows="3" placeholder="उदा. बी.ई. कॉम्प्युटर इंजीनियर&#10;नो-सिनियर सिस्टीम इंजी. इन्फोसिस लि. पुणे&#10;रु.६ लाख वार्षीक"></textarea>
-            </div>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">उंची (Height):</label>
+                  <input type="text" id="editCandHeight" class="form-control" placeholder="उदा. ५'४''"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">वर्ण (Complexion):</label>
+                  <input type="text" id="editCandComplexion" class="form-control" placeholder="उदा. गोरा / निमगोरा"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">गोत्र (Gotra):</label>
+                  <input type="text" id="editCandGotra" class="form-control" placeholder="उदा. विश्वामित्र"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">मामकुळ (Mamkul):</label>
+                  <input type="text" id="editCandMamkul" class="form-control" placeholder="उदा. कोलते (नरवेल)"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">रक्तगट (Blood Group):</label>
+                  <input type="text" id="editCandBlood" class="form-control" placeholder="उदा. एबी+ / ओ+"/>
+                </div>
+              </div>
 
-            <!-- Row 5: Family & Expectations -->
-            <div class="cms-grid-2" style="margin-bottom:10px;">
               <div class="form-group">
                 <label class="form-label">👨‍👩‍👧 कुटुंब / भावंडे माहिती:</label>
                 <textarea id="editCandFam" class="form-control" rows="2" placeholder="उदा. भाऊ- १&#10;बहिण- नाही"></textarea>
               </div>
+            </div>
+
+            <!-- CARD 3: Education & Career -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>🎓</span>
+                  <span>३. शिक्षण, नोकरी व करिअर (Education & Profession)</span>
+                </div>
+              </div>
+
               <div class="form-group">
-                <label class="form-label">🎯 अपेक्षा (Expectations):</label>
+                <label class="form-label">🎓 शिक्षण, नोकरी व कंपनी / पॅकेज:</label>
+                <textarea id="editCandEdu" class="form-control" rows="3" placeholder="उदा. बी.ई. कॉम्प्युटर इंजीनियर&#10;नो-सिनियर सिस्टीम इंजी. इन्फोसिस लि. पुणे&#10;रु.६ लाख वार्षीक"></textarea>
+              </div>
+            </div>
+
+            <!-- CARD 4: Expectations -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>🎯</span>
+                  <span>४. अपेक्षा (Expectations)</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">🎯 वधू / पालकांच्या अपेक्षा:</label>
                 <textarea id="editCandExp" class="form-control" rows="2" placeholder="उदा. अनुरूप / उच्चशिक्षित / नोकरी"></textarea>
               </div>
             </div>
 
-            <!-- Row 6: Contact & Phones -->
-            <div class="form-group" style="margin-bottom:10px;">
-              <label class="form-label">📞 पालक व संपर्क माहिती (संपूर्ण पत्ता व नावे):</label>
-              <textarea id="editCandContact" class="form-control" rows="4" placeholder="उदा. श्री. प्रकाश वसंत झोपे&#10;रा. निंपाणा, ता.मलकापूर&#10;मो. ८२६२९५९८५८..."></textarea>
+            <!-- CARD 5: Guardian, Contacts & Status -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>📞</span>
+                  <span>५. पालक, संपर्क व सद्यस्थिती (Contacts & Status)</span>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">📞 पालक व संपर्क माहिती (संपूर्ण पत्ता व नावे):</label>
+                <textarea id="editCandContact" class="form-control" rows="4" placeholder="उदा. श्री. प्रकाश वसंत झोपे&#10;रा. निंपाणा, ता.मलकापूर&#10;मो. ८२६२९५९८५८..."></textarea>
+              </div>
+
+              <div class="cms-grid-2">
+                <div class="form-group">
+                  <label class="form-label">मोबाईल नंबर (स्वल्पविरामाने वेगळे करा):</label>
+                  <input type="text" id="editCandPhones" class="form-control" placeholder="उदा. 9876543210, 9420539396"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">सध्याची स्थिती (Status):</label>
+                  <select id="editCandStatus" class="form-control" style="font-weight:700;">
+                    <option value="pending">⏳ संपर्क बाकी (Pending)</option>
+                    <option value="contacted">📞 संपर्क झाला (Contacted)</option>
+                    <option value="interested">⭐ सकारात्मक (Interested)</option>
+                    <option value="followup">⏰ पुन्हा संपर्क करावा (Follow-up)</option>
+                    <option value="not_interested">🚫 Not Interested</option>
+                    <option value="matched">💍 स्थळ जुळले (Matched)</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
-            <div class="cms-grid-2" style="margin-bottom:14px;">
-              <div class="form-group">
-                <label class="form-label">मोबाईल नंबर (स्वल्पविरामाने वेगळे करा):</label>
-                <input type="text" id="editCandPhones" class="form-control" placeholder="उदा. 9876543210, 9420539396"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">सध्याची स्थिती (Status):</label>
-                <select id="editCandStatus" class="form-control">
-                  <option value="pending">⏳ संपर्क बाकी (Pending)</option>
-                  <option value="contacted">📞 संपर्क झाला (Contacted)</option>
-                  <option value="interested">⭐ सकारात्मक (Interested)</option>
-                  <option value="followup">⏰ पुन्हा संपर्क करावा (Follow-up)</option>
-                  <option value="not_interested">🚫 Not Interested</option>
-                  <option value="matched">💍 स्थळ जुळले (Matched)</option>
-                </select>
-              </div>
-            </div>
-
-            <div style="display:flex; justify-content:flex-end; gap:8px;">
-              <button type="button" class="action-btn action-btn-outline" onclick="closeAdminSettingsModal()">रद्द करा</button>
-              <button type="submit" class="action-btn action-btn-primary" style="background:#15803d; font-size:13px; padding:8px 18px;">
+            <!-- Form Action Footer -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; flex-wrap:wrap; gap:8px;">
+              <button type="button" class="action-btn action-btn-outline" onclick="closeAdminSettingsModal()">
+                रद्द करा
+              </button>
+              <button type="submit" class="action-btn action-btn-primary" style="background:linear-gradient(135deg, #15803d, #16a34a); font-size:13.5px; font-weight:800; padding:9px 22px; box-shadow:0 2px 8px rgba(22,163,74,0.3);">
                 💾 ही प्रोफाईल माहिती सेव्ह करा
               </button>
             </div>
@@ -2514,157 +2744,196 @@
         <div id="secWaSettings">
           <form id="waSettingsForm" onsubmit="saveWaSettings(event)">
             
-            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:9px 12px; font-size:12.5px; color:#14532d; margin-bottom:10px;">
-              ✅ <strong>Method B सक्रिय:</strong> प्रत्येक वधूच्या WhatsApp बटनावर क्लिक केल्यावर खालील संपूर्ण बायोडाटा मेसेज आपोआप टाईप होईल.
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">मुलाचे नाव:</label>
-                <input type="text" id="waGroomName" class="form-control" oninput="updateWaPreview()" required/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">जन्मनाव:</label>
-                <input type="text" id="waGroomBirthName" class="form-control" oninput="updateWaPreview()"/>
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#14532d; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+              <span style="font-size:20px;">💬</span>
+              <div>
+                <strong>WhatsApp मेसेज व टेम्पलेट व्यवस्थापन:</strong> प्रत्येक वधूच्या WhatsApp बटनावर क्लिक केल्यावर खालील माहितीनुसार आपोआप मेसेज तयार होतो. येथे तुम्ही मूळ माहिती आणि मेसेजचा मसुदा आवडीनुसार बदलू शकता.
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">जन्म तारीख:</label>
-                <input type="text" id="waGroomDob" class="form-control" oninput="updateWaPreview()"/>
+            <!-- CARD 1: Groom Core Details -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>🤵</span>
+                  <span>१. वर (शुभम खर्चे) बायोडाटा फील्ड्स</span>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="form-label">जन्म वेळ:</label>
-                <input type="text" id="waGroomTime" class="form-control" oninput="updateWaPreview()"/>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">मुलाचे नाव:</label>
+                  <input type="text" id="waGroomName" class="form-control" oninput="updateWaPreview()" required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">जन्मनाव:</label>
+                  <input type="text" id="waGroomBirthName" class="form-control" oninput="updateWaPreview()"/>
+                </div>
               </div>
+
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">जन्म तारीख:</label>
+                  <input type="text" id="waGroomDob" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">जन्म वेळ:</label>
+                  <input type="text" id="waGroomTime" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">जन्म ठिकाण:</label>
+                  <input type="text" id="waGroomPlace" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+              </div>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">गोत्र:</label>
+                  <input type="text" id="waGroomGotra" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">वर्ण व रक्तगट:</label>
+                  <input type="text" id="waGroomComplexionBlood" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+              </div>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">शिक्षण:</label>
+                  <input type="text" id="waGroomEdu" class="form-control" oninput="updateWaPreview()" required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">नोकरी व पद:</label>
+                  <input type="text" id="waGroomJob" class="form-control" oninput="updateWaPreview()" required/>
+                </div>
+              </div>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">कंपनी व शहर:</label>
+                  <input type="text" id="waGroomCompany" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">वार्षिक उत्पन्न (पॅकेज):</label>
+                  <input type="text" id="waGroomSalary" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+              </div>
+
+              <div class="cms-grid-2" style="margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">वडिलांचे नाव:</label>
+                  <input type="text" id="waGroomFather" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">आईचे नाव:</label>
+                  <input type="text" id="waGroomMother" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label class="form-label">शेती / व्यवसाय:</label>
+                  <input type="text" id="waGroomLand" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">भावंडे:</label>
+                  <input type="text" id="waGroomSiblings" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">मामकुळ:</label>
+                  <input type="text" id="waGroomMamkul" class="form-control" oninput="updateWaPreview()"/>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">संपर्क क्रमांक (Contact Persons):</label>
+                <textarea id="waGroomContacts" class="form-control" style="min-height:65px;" oninput="updateWaPreview()"></textarea>
+              </div>
+
               <div class="form-group">
-                <label class="form-label">जन्म ठिकाण:</label>
-                <input type="text" id="waGroomPlace" class="form-control" oninput="updateWaPreview()"/>
+                <label class="form-label">📸 फोटो विषयी टीप:</label>
+                <input type="text" id="waPhotoNote" class="form-control" oninput="updateWaPreview()"/>
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">गोत्र:</label>
-                <input type="text" id="waGroomGotra" class="form-control" oninput="updateWaPreview()"/>
+            <!-- CARD 2: Custom Message Template Editor -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>📝</span>
+                  <span>२. मेसेज टेम्पलेट संपादन (Custom Message Templates)</span>
+                </div>
+                <button type="button" class="action-btn action-btn-outline" style="font-size:11px; padding:4px 8px;" onclick="resetMessageTemplatesToDefault()" title="डीफॉल्ट टेम्पलेटवर रीसेट करा">
+                  ↺ डीफॉल्ट टेम्पलेट
+                </button>
               </div>
-              <div class="form-group">
-                <label class="form-label">वर्ण व रक्तगट:</label>
-                <input type="text" id="waGroomComplexionBlood" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">शिक्षण:</label>
-                <input type="text" id="waGroomEdu" class="form-control" oninput="updateWaPreview()" required/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">नोकरी व पद:</label>
-                <input type="text" id="waGroomJob" class="form-control" oninput="updateWaPreview()" required/>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">कंपनी व शहर:</label>
-                <input type="text" id="waGroomCompany" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">वार्षिक उत्पन्न:</label>
-                <input type="text" id="waGroomSalary" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">वडिलांचे नाव:</label>
-                <input type="text" id="waGroomFather" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">आईचे नाव:</label>
-                <input type="text" id="waGroomMother" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label">शेती / व्यवसाय:</label>
-                <input type="text" id="waGroomLand" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">भावंडे:</label>
-                <input type="text" id="waGroomSiblings" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">मामकुळ:</label>
-                <input type="text" id="waGroomMamkul" class="form-control" oninput="updateWaPreview()"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">संपर्क क्रमांक (Contact Persons):</label>
-              <textarea id="waGroomContacts" class="form-control" style="min-height:65px;" oninput="updateWaPreview()"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">📸 फोटो विषयी टीप:</label>
-              <input type="text" id="waPhotoNote" class="form-control" oninput="updateWaPreview()"/>
-            </div>
-
-            <!-- Custom Message Template Editor -->
-            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px; margin:12px 0;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span style="font-size:13px; font-weight:800; color:#0f172a;">📝 मेसेज टेम्पलेट संपादन (Custom Message Templates)</span>
-                <button type="button" class="action-btn action-btn-outline" style="font-size:11px; padding:3px 7px;" onclick="resetMessageTemplatesToDefault()" title="डीफॉल्ट टेम्पलेटवर रीसेट करा">↺ डीफॉल्ट टेम्पलेट</button>
-              </div>
-              <div style="font-size:11.5px; color:#64748b; margin-bottom:10px; line-height:1.4;">
-                खालील फील्डमध्ये तुम्ही व्हॉट्सॲप मेसेजचा मसुदा आवडीनुसार बदलू शकता. कंसामध्ये असलेले घटक (जसे की <code>{candidate_name}</code>) मेसेज पाठवताना स्वयंचलितपणे बदलले जातील.
+              
+              <div style="font-size:12px; color:#64748b; margin-bottom:12px; line-height:1.45;">
+                खालील फील्डमध्ये तुम्ही व्हॉट्सॲप मेसेजचा मसुदा आवडीनुसार बदलू शकता. कंसामध्ये असलेले घटक (जसे की <code>{candidate_name}</code>) मेसेज पाठवताना स्वयंचलितपणे बदलले जातील. खालील चिप्सवर टॅप करून थेट जोडा.
               </div>
 
               <!-- 1. Proposal Template -->
-              <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                  <label class="form-label" style="font-size:12px; font-weight:700; color:#0369a1; margin:0;">१. स्थळांसाठी WhatsApp प्रस्ताव मेसेज:</label>
+              <div style="margin-bottom:16px;">
+                <label class="form-label" style="font-size:12.5px; font-weight:800; color:#0369a1; margin-bottom:6px; display:block;">
+                  १. स्थळांसाठी WhatsApp प्रस्ताव मेसेज:
+                </label>
+                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;">
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{candidate_name}')">+{candidate_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{guardian_name}')">+{guardian_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{intro_line}')">+{intro_line}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_name}')">+{groom_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_edu}')">+{groom_edu}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_job}')">+{groom_job}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_salary}')">+{groom_salary}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{profile_url}')">+{profile_url}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{family_contacts}')">+{family_contacts}</button>
                 </div>
-                <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{candidate_name}')">+{candidate_name}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{guardian_name}')">+{guardian_name}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{intro_line}')">+{intro_line}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_name}')">+{groom_name}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_edu}')">+{groom_edu}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_job}')">+{groom_job}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{groom_salary}')">+{groom_salary}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{profile_url}')">+{profile_url}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waProposalTemplate', '{family_contacts}')">+{family_contacts}</button>
-                </div>
-                <textarea id="waProposalTemplate" class="form-control" style="min-height:95px; font-size:12px; line-height:1.45;" oninput="updateWaPreview()" placeholder="येथे स्थळांसाठी पाठवायचा मेसेज सानुकूल करा..."></textarea>
+                <textarea id="waProposalTemplate" class="form-control" style="min-height:105px; font-size:12.5px; line-height:1.5;" oninput="updateWaPreview()" placeholder="येथे स्थळांसाठी पाठवायचा मेसेज सानुकूल करा..."></textarea>
               </div>
 
               <!-- 2. Share Profile Template -->
               <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                  <label class="form-label" style="font-size:12px; font-weight:700; color:#15803d; margin:0;">२. बायोडाटा लिंक शेअर मेसेज (Menu & Link Share):</label>
+                <label class="form-label" style="font-size:12.5px; font-weight:800; color:#15803d; margin-bottom:6px; display:block;">
+                  २. बायोडाटा लिंक शेअर मेसेज (Menu & Link Share):
+                </label>
+                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;">
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_name}')">+{groom_name}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_edu}')">+{groom_edu}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_job}')">+{groom_job}</button>
+                  <button type="button" class="quick-chip" style="font-size:11.5px; padding:3px 8px; border-radius:6px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0;" onclick="insertTemplatePlaceholder('waShareTemplate', '{profile_url}')">+{profile_url}</button>
                 </div>
-                <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_name}')">+{groom_name}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_edu}')">+{groom_edu}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{groom_job}')">+{groom_job}</button>
-                  <button type="button" class="quick-chip" style="font-size:11px; padding:2px 6px;" onclick="insertTemplatePlaceholder('waShareTemplate', '{profile_url}')">+{profile_url}</button>
-                </div>
-                <textarea id="waShareTemplate" class="form-control" style="min-height:80px; font-size:12px; line-height:1.45;" oninput="updateWaPreview()" placeholder="येथे बायोडाटा शेअर करताना पाठवायचा मेसेज सानुकूल करा..."></textarea>
+                <textarea id="waShareTemplate" class="form-control" style="min-height:85px; font-size:12.5px; line-height:1.5;" oninput="updateWaPreview()" placeholder="येथे बायोडाटा शेअर करताना पाठवायचा मेसेज सानुकूल करा..."></textarea>
               </div>
             </div>
 
-            <div class="form-group" style="margin-top:8px;">
-              <label class="form-label">व्हॉट्सॲप मेसेज प्रिव्ह्यू:</label>
-              <div id="waPreviewBox" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; font-size:12.5px; color:#14532d; white-space:pre-wrap; max-height:160px; overflow-y:auto; line-height:1.45;"></div>
+            <!-- CARD 3: Live WhatsApp Chat Simulator -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>📱</span>
+                  <span>३. थेट WhatsApp चॅट सिम्युलेटर (Live Preview)</span>
+                </div>
+                <span style="font-size:11.5px; color:#15803d; font-weight:700;">🟢 प्रत्यक्षात असा मेसेज दिसेल</span>
+              </div>
+
+              <div class="cms-wa-sim-box">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; background:#075e54; color:#ffffff; padding:8px 12px; border-radius:8px;">
+                  <span style="font-size:18px;">💬</span>
+                  <div style="font-size:12.5px; font-weight:700;">WhatsApp चॅट प्रिव्ह्यू (Shubham Kharche)</div>
+                </div>
+                <div class="cms-wa-bubble">
+                  <div id="waPreviewBox"></div>
+                  <div class="cms-wa-bubble-meta">
+                    <span>आत्ताच</span>
+                    <span style="color:#53bdeb; font-weight:800;">✓✓</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; flex-wrap:wrap; gap:8px;">
               <button type="button" class="action-btn action-btn-outline" onclick="resetWaToDefault()">↺ मूळ बायोडाटा</button>
-              <button type="submit" class="action-btn action-btn-primary">💾 सेव्ह करा</button>
+              <button type="submit" class="action-btn action-btn-primary" style="background:linear-gradient(135deg, #15803d, #16a34a); padding:9px 20px; font-size:13.5px; font-weight:800;">💾 मेसेज सेटिंग्ज सेव्ह करा</button>
             </div>
           </form>
         </div>
@@ -4036,6 +4305,12 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (!sel) return;
       sel.innerHTML = '';
       
+      const countChip = document.getElementById('cmsCandidateCountChip');
+      if (countChip) countChip.textContent = toMarathiDigits(candidates.length);
+
+      const searchInp = document.getElementById('cmsCandSearchInp');
+      if (searchInp && !selectedId) searchInp.value = '';
+
       const sorted = [...candidates].sort((a, b) => parseSrNo(a.sr) - parseSrNo(b.sr));
       sorted.forEach(c => {
         const opt = document.createElement('option');
@@ -4050,6 +4325,70 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         sel.value = targetId;
         loadCandidateForEdit(targetId);
       }
+    }
+
+    function filterCmsCandidates(query) {
+      const q = (query || '').trim().toLowerCase();
+      const sel = document.getElementById('cmsCandidateSelect');
+      if (!sel) return;
+      sel.innerHTML = '';
+
+      const sorted = [...candidates].sort((a, b) => parseSrNo(a.sr) - parseSrNo(b.sr));
+      const filtered = q ? sorted.filter(c => {
+        const srStr = (c.sr || '').toLowerCase();
+        const srEng = parseSrNo(c.sr).toString();
+        const nameStr = (c.name || '').toLowerCase();
+        const mulStr = (c.mulgaon || '').toLowerCase();
+        const gotraStr = (c.gotra || '').toLowerCase();
+        return srStr.includes(q) || srEng.includes(q) || nameStr.includes(q) || mulStr.includes(q) || gotraStr.includes(q);
+      }) : sorted;
+
+      if (filtered.length === 0) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = '❌ कोणतीही वधू सापडली नाही';
+        sel.appendChild(opt);
+        return;
+      }
+
+      filtered.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `[अ.क्र. ${c.sr}] ${c.name} (${c.mulgaon || 'गाव नाही'})`;
+        sel.appendChild(opt);
+      });
+
+      if (filtered.length > 0) {
+        sel.value = filtered[0].id;
+        loadCandidateForEdit(filtered[0].id);
+      }
+    }
+
+    function stepCmsCandidate(step) {
+      const sorted = [...candidates].sort((a, b) => parseSrNo(a.sr) - parseSrNo(b.sr));
+      if (sorted.length === 0) return;
+
+      let currentIndex = sorted.findIndex(c => c.id === currentEditingCandidateId);
+      if (currentIndex === -1) currentIndex = 0;
+
+      let newIndex = currentIndex + step;
+      if (newIndex < 0) newIndex = sorted.length - 1;
+      if (newIndex >= sorted.length) newIndex = 0;
+
+      const target = sorted[newIndex];
+      const sel = document.getElementById('cmsCandidateSelect');
+      if (sel) {
+        // If candidate selector was filtered and doesn't contain target, repopulate
+        let hasOpt = Array.from(sel.options).some(o => o.value === target.id);
+        if (!hasOpt) {
+          const searchInp = document.getElementById('cmsCandSearchInp');
+          if (searchInp) searchInp.value = '';
+          populateCmsCandidateSelect(target.id);
+        } else {
+          sel.value = target.id;
+        }
+      }
+      loadCandidateForEdit(target.id);
     }
 
     function loadCandidateForEdit(candId) {
@@ -4103,6 +4442,19 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       const heading = document.getElementById('editCandHeading');
       if (heading) {
         heading.textContent = `[अ.क्र. ${cand.sr}] ${cand.name} - संपादन`;
+      }
+
+      // Quick summary strip
+      const quickSummary = document.getElementById('cmsCandQuickSummary');
+      if (quickSummary) {
+        const sorted = [...candidates].sort((a, b) => parseSrNo(a.sr) - parseSrNo(b.sr));
+        const idx = sorted.findIndex(c => c.id === cand.id) + 1;
+        quickSummary.innerHTML = `
+          <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:999px;">क्रमांक ${toMarathiDigits(idx)} / ${toMarathiDigits(candidates.length)}</span>
+          <span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:999px;">🎂 ${cand.age ? 'वय: ' + toMarathiDigits(cand.age) + ' वर्षे' : (cand.date || 'जन्म नोंद नाही')}</span>
+          <span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:999px;">🏡 ${escapeHtml(cand.mulgaon || 'गाव नाही')}</span>
+          <span style="background:${sInfo.bg}; color:${sInfo.color}; padding:2px 8px; border-radius:999px;">${sInfo.icon} ${sInfo.label}</span>
+        `;
       }
     }
 
@@ -4240,12 +4592,25 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (backupSec) backupSec.style.display = isBackup ? 'block' : 'none';
 
       const btnCandEdit = document.getElementById('tabCandidateEditBtn');
-      if (btnCandEdit) btnCandEdit.className = isCandEdit ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      document.getElementById('tabProfileCmsBtn').className = isCms ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      document.getElementById('tabSyncBtn').className = isSync ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
+      if (btnCandEdit) {
+        btnCandEdit.className = isCandEdit ? 'cms-nav-tab-btn cms-nav-active action-btn-primary' : 'cms-nav-tab-btn action-btn-outline';
+      }
+      const btnProfileCms = document.getElementById('tabProfileCmsBtn');
+      if (btnProfileCms) {
+        btnProfileCms.className = isCms ? 'cms-nav-tab-btn cms-nav-active action-btn-primary' : 'cms-nav-tab-btn action-btn-outline';
+      }
+      const btnSync = document.getElementById('tabSyncBtn');
+      if (btnSync) {
+        btnSync.className = isSync ? 'cms-nav-tab-btn cms-nav-active action-btn-primary' : 'cms-nav-tab-btn action-btn-outline';
+      }
       const backupBtn = document.getElementById('tabBackupBtn');
-      if (backupBtn) backupBtn.className = isBackup ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      document.getElementById('tabWaBtn').className = isWa ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
+      if (backupBtn) {
+        backupBtn.className = isBackup ? 'cms-nav-tab-btn cms-nav-active action-btn-primary' : 'cms-nav-tab-btn action-btn-outline';
+      }
+      const btnWa = document.getElementById('tabWaBtn');
+      if (btnWa) {
+        btnWa.className = isWa ? 'cms-nav-tab-btn cms-nav-active action-btn-primary' : 'cms-nav-tab-btn action-btn-outline';
+      }
     }
 
     function insertTemplatePlaceholder(textareaId, placeholder) {
