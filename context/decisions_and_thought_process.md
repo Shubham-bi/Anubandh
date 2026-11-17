@@ -243,6 +243,27 @@
 
 ---
 
+## १५. मेसेज मसुद्यांचे एकल स्त्रोतात केंद्रीकरण (Single Source of Truth: messages.js)
+
+### निर्णय १५.१: सर्व संदेश एकाच ठिकाणी (`messages.js`) ठेवणे व इतर फायलींमधून संदर्भ घेणे
+* **पार्श्वभूमी व युझर आवश्यकता:** युझरने दोन अचूक संदेश मसुदे (उमेदवार प्रस्ताव मेसेज आणि सामान्य शोध मेसेज) निश्चित केले आणि कडक तांत्रिक नियम दिला: *"this message should apear in code at only one place and take referace to other files"*.
+* **विचारप्रक्रिया (Thought Process):**
+  - पूर्वी एकाच मेसेजचा मजकूर `index.html`, `biodata.html` आणि `shubham_biodata_redesigned.html` या तिन्ही पानांवर हार्डकोड केलेला होता. यामुळे भविष्यात एका अक्षराचा जरी बदल करायचा झाला, तर प्रत्येक फाईल उघडून बदल करावा लागायचा आणि विसंगती (code drift) निर्माण होण्याचा धोका होता.
+  - सर्व मेसेज जनरेशन, पॅरामीटरायझेशन आणि डीफॉल्ट व्हॅल्यूज एकाच मध्यवर्ती मोड्युलमध्ये (`messages.js`) बंदिस्त (encapsulate) करणे हे सॉफ्टवेअर डिझाइनचे सर्वोत्तम तत्त्व (DRY - Don't Repeat Yourself) आहे.
+* **अंमलबजावणी (Architecture & Implementation):**
+  1. **मध्यवर्ती मॉड्युल `messages.js` निर्मिती:**
+     - **`buildCandidateProposalMessage({ girlFatherName, girlName, listNumber, ... })`**: मुलीच्या वडिलांचे नाव, मुलीचे नाव आणि सूची क्रमांक आपोआप पॅरामीटरमधून घेते.
+     - **`buildGenericShareMessage(...)`**: सामान्य शोध मेसेज तयार करते.
+     - Node.js (CommonJS) आणि ब्राउझर (Global Window) या दोन्हीमध्ये चालणारा UMD पॅटर्न वापरला.
+  2. **इतर फायलींमधील संदर्भ (Referencing):**
+     - `index.html`, `biodata.html`, आणि `shubham_biodata_redesigned.html` या तिन्हींमध्ये `<script src="./messages.js"></script>` जोडले.
+     - प्रत्येक फाईलमधील हार्डकोडेड स्ट्रिंग काढून थेट `AnubandhMessages.buildCandidateProposalMessage()` आणि `AnubandhMessages.buildGenericShareMessage()` ला कॉल दिला.
+  3. **ऑफलाईन PWA सपोर्ट:** `sw.js` मधील कॅश यादीत `messages.js` समाविष्ट केले आणि आवृत्ती `anubandh-v49` केली.
+* **परिणाम:** संपूर्ण ॲप्लिकेशनमध्ये मेसेजचा मसुदा आता **केवळ एकाच ठिकाणी (`messages.js`)** अस्तित्वात आहे आणि इतर सर्व फायली केवळ त्याचा संदर्भ घेतात.
+
+---
+
+
 
 
 

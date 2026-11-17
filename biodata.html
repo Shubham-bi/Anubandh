@@ -878,6 +878,8 @@
     <img src="./shubham_kharche_biodata.jpg" alt="बायोडाटा पूर्ण फोटो"/>
   </div>
 
+  <!-- Messages Single Source of Truth -->
+  <script src="./messages.js"></script>
   <script>
     // Open to all - no password required
 
@@ -1232,23 +1234,11 @@
     const SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
 
     function getShareableProfileFullMessage() {
-      return `नमस्कार!
-
-आम्ही आमचा मुलगा चि. शुभम अनिल खर्चे याच्यासाठी योग्य वधूच्या शोधात आहोत.
-
-मुलाचा (शुभम अनिल खर्चे) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:
-${SHARE_URL}
-
-*थोडक्यात माहिती:*
-• नाव: चि. शुभम अनिल खर्चे
-• शिक्षण: B.E. Mechanical
-• नोकरी: Sr. QA Engineer, Shaurya Technosoft Pvt. Ltd., Pune
-• वार्षिक पॅकेज: 7.8 LPA
-• जन्मतारीख: 25/08/1996
-
-आपल्या परिचयात योग्य स्थळ असल्यास कृपया आम्हाला कळवावे.
-
-धन्यवाद! 🙏`;
+      const msgHandler = (typeof AnubandhMessages !== 'undefined') ? AnubandhMessages : (typeof window !== 'undefined' ? window.AnubandhMessages : null);
+      if (msgHandler && msgHandler.buildGenericShareMessage) {
+        return msgHandler.buildGenericShareMessage({ biodataUrl: SHARE_URL });
+      }
+      return '';
     }
 
     async function copyImageToClipboard(imageUrl) {

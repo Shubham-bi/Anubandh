@@ -3398,6 +3398,9 @@
 
   <div id="toast" class="toast-msg"></div>
 
+  <!-- Messages Single Source of Truth -->
+  <script src="./messages.js"></script>
+
   <!-- Application Logic -->
   <script>
 
@@ -3487,63 +3490,23 @@
         }
       }
 
-      const candDisplay = candidateName ? (candidateName.startsWith('कु.') ? candidateName : `कु. ${candidateName}`) : '';
-      const cleanSr = String(srNo || '').replace(/\.$/, '').trim();
-      const srPart = cleanSr ? ` (अ.क्र. ${cleanSr}.)` : '';
-
-      let introLine = '';
-      if (cleanGuardian) {
-        let prefix = '';
-        if (!cleanGuardian.startsWith('श्री') && !cleanGuardian.startsWith('सौ') && !cleanGuardian.startsWith('डॉ')) {
-          prefix = 'श्री. ';
-        }
-        introLine = `आम्ही ${prefix}${cleanGuardian} यांची मुलगी ${candDisplay}${srPart} हिच्यासाठी आपल्याशी संपर्क साधत आहोत.`;
-      } else {
-        introLine = `आम्ही वधू-वर सूचीमधील मुलगी ${candDisplay}${srPart} हिच्यासाठी आपल्याशी संपर्क साधत आहोत.`;
-      }
-
-      if (waSettings.customProposalTemplate && waSettings.customProposalTemplate.trim()) {
-        const tplVars = {
-          candidate_name: candidateName || '',
-          sr_no: srNo || '',
-          guardian_name: cleanGuardian || '',
-          intro_line: introLine,
-          groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
-          groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
-          groom_job: waSettings.groomJob || 'Sr. QA Engineer',
-          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune',
-          groom_salary: waSettings.groomSalary || '7.8 LPA',
-          groom_dob: waSettings.groomDob || '25/08/1996',
-          groom_gotra: waSettings.groomGotra || 'वशिष्ठ',
-          profile_url: 'https://shubham-bi.github.io/Anubandh/biodata.html',
-          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_biodata_redesigned.png',
-          family_contacts: waSettings.groomContacts || '9420539396 / 9422152231'
-        };
-        return waSettings.customProposalTemplate.replace(/\{(\w+)\}/g, (match, key) => {
-          return tplVars[key] !== undefined ? tplVars[key] : match;
+      const msgHandler = (typeof AnubandhMessages !== 'undefined') ? AnubandhMessages : (typeof window !== 'undefined' ? window.AnubandhMessages : null);
+      if (msgHandler && msgHandler.buildCandidateProposalMessage) {
+        return msgHandler.buildCandidateProposalMessage({
+          girlFatherName: cleanGuardian,
+          girlName: candidateName,
+          listNumber: srNo,
+          groomName: waSettings.groomName,
+          groomEdu: waSettings.groomEdu,
+          groomJob: waSettings.groomJob,
+          groomCompany: waSettings.groomCompany,
+          groomSalary: waSettings.groomSalary,
+          groomDob: waSettings.groomDob,
+          groomGotra: waSettings.groomGotra,
+          customTemplate: waSettings.customProposalTemplate
         });
       }
-
-      return `नमस्कार!
-
-${introLine}
-
-भट्रूमंडळ वधू-वर सूचीमध्ये आपल्या मुलीची विवाहासाठी दिलेली माहिती आम्ही वाचली. तिचे स्थळ आम्हाला योग्य वाटल्यामुळे आपणाशी संपर्क साधत आहोत.
-
-मुलाचा बायोडाटा सोबत जोडलेला आहे. तसेच, अधिक माहिती खालील लिंकवर पाहता येईल:
-https://shubham-bi.github.io/Anubandh/biodata.html
-
-*थोडक्यात माहिती:*
-• नाव: चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'}
-• शिक्षण: ${waSettings.groomEdu || 'B.E. Mechanical'}
-• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune'}
-• वार्षिक पॅकेज: ${waSettings.groomSalary || '7.8 LPA'}
-• जन्मतारीख: ${waSettings.groomDob || '25/08/1996'}
-• गोत्र: ${waSettings.groomGotra || 'वशिष्ठ'}
-
-आपणासही आमचे स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी कृपया संपर्क साधावा.
-
-धन्यवाद! 🙏`;
+      return '';
     }
 
     // Robust digit converter (handles Devanagari ०-९ and English 0-9)
@@ -4300,37 +4263,20 @@ https://shubham-bi.github.io/Anubandh/biodata.html
     const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
 
     function getShareableProfileFullMessage() {
-      if (waSettings.customShareTemplate && waSettings.customShareTemplate.trim()) {
-        const tplVars = {
-          groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
-          groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
-          groom_job: waSettings.groomJob || 'Sr. QA Engineer',
-          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune',
-          groom_salary: waSettings.groomSalary || '7.8 LPA',
-          groom_dob: waSettings.groomDob || '25/08/1996',
-          profile_url: PROFILE_SHARE_URL
-        };
-        return waSettings.customShareTemplate.replace(/\{(\w+)\}/g, (match, key) => {
-          return tplVars[key] !== undefined ? tplVars[key] : match;
+      const msgHandler = (typeof AnubandhMessages !== 'undefined') ? AnubandhMessages : (typeof window !== 'undefined' ? window.AnubandhMessages : null);
+      if (msgHandler && msgHandler.buildGenericShareMessage) {
+        return msgHandler.buildGenericShareMessage({
+          groomName: waSettings.groomName,
+          groomEdu: waSettings.groomEdu,
+          groomJob: waSettings.groomJob,
+          groomCompany: waSettings.groomCompany,
+          groomSalary: waSettings.groomSalary,
+          groomDob: waSettings.groomDob,
+          customTemplate: waSettings.customShareTemplate,
+          biodataUrl: PROFILE_SHARE_URL
         });
       }
-      return `नमस्कार!
-
-आम्ही आमचा मुलगा चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'} याच्यासाठी योग्य वधूच्या शोधात आहोत.
-
-मुलाचा (${waSettings.groomName || 'शुभम अनिल खर्चे'}) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:
-${PROFILE_SHARE_URL}
-
-*थोडक्यात माहिती:*
-• नाव: चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'}
-• शिक्षण: ${waSettings.groomEdu || 'B.E. Mechanical'}
-• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune'}
-• वार्षिक पॅकेज: ${waSettings.groomSalary || '7.8 LPA'}
-• जन्मतारीख: ${waSettings.groomDob || '25/08/1996'}
-
-आपल्या परिचयात योग्य स्थळ असल्यास कृपया आम्हाला कळवावे.
-
-धन्यवाद! 🙏`;
+      return '';
     }
 
     // =========================================================

@@ -28,6 +28,7 @@ const requiredFiles = [
   'shubham_biodata_redesigned.html',
   'shubham_biodata_redesigned.png',
   'shubham_kharche_biodata.jpg',
+  'messages.js',
   'candidates.json',
   'server.js',
   'start-pwa.bat'
@@ -57,8 +58,10 @@ assert(scriptMatch !== null, 'Found <script> block in index.html');
 
 if (scriptMatch) {
   const scriptCode = scriptMatch[1];
+  const AnubandhMessages = require('./messages.js');
 
   const sandbox = {
+    AnubandhMessages,
     console: { log: () => {}, warn: () => {}, error: () => {} },
     localStorage: {
       _data: {},
@@ -333,6 +336,23 @@ try {
   // 13. Direct wa.me Number Sharing Format
   assert(indexCode.includes('https://wa.me/${digits}?text='), "index.html uses https://wa.me/${digits} format for direct number sharing");
   assert(bioCode.includes('https://wa.me/'), "biodata.html uses https://wa.me format for WhatsApp sharing");
+
+  // 14. Single Source of Truth for Messages (messages.js)
+  const messagesMod = require('./messages.js');
+  const testProposal = messagesMod.buildCandidateProposalMessage({
+    girlFatherName: 'गजानन वामन वराडे',
+    girlName: 'अनुष्का',
+    listNumber: '१७१'
+  });
+  assert(testProposal.includes('आम्ही श्री. गजानन वामन वराडे यांची मुलगी कु. अनुष्का (अ.क्र. १७१.) हिच्यासाठी आपल्याशी संपर्क साधत आहोत.'), 'messages.js parameterizes girl father name, girl name, and list number');
+  assert(testProposal.includes('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:\nhttps://shubham-bi.github.io/Anubandh/biodata.html'), 'messages.js candidate proposal contains exact requested biodata link text');
+
+  const testGeneric = messagesMod.buildGenericShareMessage();
+  assert(testGeneric.includes('मुलाचा (शुभम अनिल खर्चे) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js generic share contains exact requested text');
+  assert(indexCode.includes('src="./messages.js"') || indexCode.includes('src="messages.js"'), 'index.html references messages.js');
+  assert(bioCode.includes('src="./messages.js"') || bioCode.includes('src="messages.js"'), 'biodata.html references messages.js');
+  assert(redesignedCode.includes('src="./messages.js"') || redesignedCode.includes('src="messages.js"'), 'shubham_biodata_redesigned.html references messages.js');
+  assert(swCodeCurrent.includes('messages.js'), 'sw.js caches messages.js for offline use');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
