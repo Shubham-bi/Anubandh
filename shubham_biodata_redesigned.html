@@ -26,41 +26,32 @@
   }
   .sheet {
     position: relative;
-    width: min(100%, 820px);
+    width: 724px;
+    max-width: 100%;
+    min-height: 1024px;
     margin: 0 auto;
-    padding: 34px 54px 42px;
-    background: var(--paper);
-    border: 1px solid #9d9a95;
-    outline: 1px solid #c9c4bd;
-    outline-offset: -8px;
+    padding: 34px 38px 38px;
+    background: #ffffff;
+    border: 2px solid #222222;
+    outline: 1px solid #444444;
+    outline-offset: -5px;
     box-shadow: 0 10px 32px rgba(45, 35, 25, .12);
+    box-sizing: border-box;
     overflow: hidden;
   }
-  .sheet::before, .sheet::after {
-    content: "❀";
+  .corner-flourish {
     position: absolute;
-    color: #aaa39b;
-    font-size: 34px;
-    line-height: 1;
+    width: 90px;
+    height: 90px;
     pointer-events: none;
   }
-  .sheet::before { top: 15px; left: 17px; }
-  .sheet::after { top: 15px; right: 17px; }
-  .corner-bottom {
-    position: absolute;
-    bottom: 14px;
-    left: 17px;
-    right: 17px;
-    display: flex;
-    justify-content: space-between;
-    color: #aaa39b;
-    font-size: 34px;
-    line-height: 1;
-    pointer-events: none;
-  }
+  .corner-tl { top: 6px; left: 6px; }
+  .corner-tr { top: 6px; right: 6px; transform: scaleX(-1); }
+  .corner-bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
+  .corner-br { bottom: 6px; right: 6px; transform: scale(-1, -1); }
   .header {
     text-align: center;
-    margin: 0 auto 22px;
+    margin: 0 auto 12px;
     position: relative;
     z-index: 1;
   }
@@ -69,96 +60,74 @@
     width: 66px;
     height: 66px;
     object-fit: contain;
-    margin: 0 auto 5px;
+    margin: 0 auto 4px;
   }
   .invocation {
     margin: 0;
-    color: #686868;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: .2px;
+    color: #1e293b;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .3px;
   }
   .ornament {
-    width: 105px;
-    height: 1px;
-    margin: 13px auto 0;
-    background: linear-gradient(90deg, transparent, #c9b8a9, transparent);
+    display: none;
   }
-  .section { margin: 0 0 20px; }
+  .section { margin: 0 0 16px; }
   .section-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 0 0 12px;
-    color: #77716b;
-    font-size: 19px;
+    text-align: center;
+    margin: 16px 0 10px;
+    color: #1e293b;
+    font-size: 18px;
     font-weight: 700;
+    letter-spacing: .2px;
   }
-  .section-title::before, .section-title::after {
-    content: "";
-    height: 1px;
-    width: 52px;
-    background: var(--line);
+  .details-box {
+    max-width: 480px;
+    margin: 0 auto;
   }
   .details {
     display: grid;
-    grid-template-columns: minmax(120px, 155px) 16px minmax(0, 1fr);
-    column-gap: 10px;
-    row-gap: 7px;
+    grid-template-columns: 135px 20px 1fr;
+    column-gap: 6px;
+    row-gap: 6.5px;
     align-items: start;
-    font-size: 15.5px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.5;
   }
-  .label { font-weight: 500; }
-  .colon { color: #8d8278; text-align: center; }
-  .value { min-width: 0; overflow-wrap: anywhere; }
+  .label { font-weight: 500; color: #1e293b; white-space: nowrap; }
+  .colon { color: #1e293b; text-align: center; font-weight: 500; }
+  .value { min-width: 0; overflow-wrap: anywhere; font-weight: 500; color: #1e293b; }
   .subvalue {
     display: block;
     margin-top: 1px;
-    color: var(--muted);
+    color: #1e293b;
     font-size: 14px;
   }
   .contacts {
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 4px 2px;
+    gap: 11px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 2px;
   }
   .contact-item {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
+    text-align: center;
     font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--ink);
-    border-bottom: 1px dashed #e6ddd5;
-    padding-bottom: 6px;
+    line-height: 1.45;
   }
-  .contact-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .contact-name-place {
+    font-weight: 500;
+    color: #1e293b;
   }
-  .contact-idx {
-    font-weight: 700;
-    color: #8f452f;
-    min-width: 22px;
+  .contact-phone {
+    font-weight: 500;
+    color: #1e293b;
+    letter-spacing: .2px;
   }
-  .contact-name { font-weight: 700; color: var(--ink); }
-  .contact-details {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .contact-place { color: var(--muted); }
-  .contact-sep { color: #c9b8a9; }
-  .phone { color: #8f452f; font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
   .bottom-rule {
-    width: 42%;
-    height: 1px;
-    margin: 20px auto 0;
-    background: linear-gradient(90deg, transparent, #c9b8a9, transparent);
+    display: none;
   }
   @media (max-width: 600px) {
     body { padding: 0; background: var(--paper); }
@@ -379,38 +348,106 @@
 </head>
 <body>
 <main class="sheet">
-  <div class="corner-bottom" aria-hidden="true"><span>❧</span><span>❧</span></div>
+  <!-- Corner Ornamental Flourishes (Matching Reference Design) -->
+  <svg class="corner-flourish corner-tl" viewBox="0 0 110 110" aria-hidden="true">
+    <path d="M 8 100 C 8 75 12 55 22 40 C 32 25 45 16 65 12 C 80 9 95 8 104 8" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 12 85 C 12 65 18 48 30 35 C 42 22 58 14 85 12" fill="none" stroke="#555555" stroke-width="1" stroke-linecap="round"/>
+    <path d="M 10 10 C 18 10 24 16 24 24 C 24 32 18 38 10 38 C 18 38 24 44 24 52 C 24 60 18 66 10 66" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 10 10 C 10 18 16 24 24 24 C 32 24 38 18 38 10 C 38 18 44 24 52 24 C 60 24 66 18 66 10" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 18 18 Q 38 38 52 52 Q 40 46 28 34 Z" fill="#333333"/>
+    <path d="M 22 22 Q 46 36 62 42 Q 46 44 32 40 Z" fill="#444444"/>
+    <path d="M 22 22 Q 36 46 42 62 Q 44 46 40 32 Z" fill="#444444"/>
+    <circle cx="28" cy="28" r="3.2" fill="#222222"/>
+    <circle cx="48" cy="18" r="2.4" fill="#333333"/>
+    <circle cx="18" cy="48" r="2.4" fill="#333333"/>
+    <circle cx="72" cy="14" r="2" fill="#444444"/>
+    <circle cx="14" cy="72" r="2" fill="#444444"/>
+    <circle cx="94" cy="10" r="1.8" fill="#555555"/>
+    <circle cx="10" cy="94" r="1.8" fill="#555555"/>
+  </svg>
+  <svg class="corner-flourish corner-tr" viewBox="0 0 110 110" aria-hidden="true">
+    <path d="M 8 100 C 8 75 12 55 22 40 C 32 25 45 16 65 12 C 80 9 95 8 104 8" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 12 85 C 12 65 18 48 30 35 C 42 22 58 14 85 12" fill="none" stroke="#555555" stroke-width="1" stroke-linecap="round"/>
+    <path d="M 10 10 C 18 10 24 16 24 24 C 24 32 18 38 10 38 C 18 38 24 44 24 52 C 24 60 18 66 10 66" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 10 10 C 10 18 16 24 24 24 C 32 24 38 18 38 10 C 38 18 44 24 52 24 C 60 24 66 18 66 10" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 18 18 Q 38 38 52 52 Q 40 46 28 34 Z" fill="#333333"/>
+    <path d="M 22 22 Q 46 36 62 42 Q 46 44 32 40 Z" fill="#444444"/>
+    <path d="M 22 22 Q 36 46 42 62 Q 44 46 40 32 Z" fill="#444444"/>
+    <circle cx="28" cy="28" r="3.2" fill="#222222"/>
+    <circle cx="48" cy="18" r="2.4" fill="#333333"/>
+    <circle cx="18" cy="48" r="2.4" fill="#333333"/>
+    <circle cx="72" cy="14" r="2" fill="#444444"/>
+    <circle cx="14" cy="72" r="2" fill="#444444"/>
+    <circle cx="94" cy="10" r="1.8" fill="#555555"/>
+    <circle cx="10" cy="94" r="1.8" fill="#555555"/>
+  </svg>
+  <svg class="corner-flourish corner-bl" viewBox="0 0 110 110" aria-hidden="true">
+    <path d="M 8 100 C 8 75 12 55 22 40 C 32 25 45 16 65 12 C 80 9 95 8 104 8" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 12 85 C 12 65 18 48 30 35 C 42 22 58 14 85 12" fill="none" stroke="#555555" stroke-width="1" stroke-linecap="round"/>
+    <path d="M 10 10 C 18 10 24 16 24 24 C 24 32 18 38 10 38 C 18 38 24 44 24 52 C 24 60 18 66 10 66" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 10 10 C 10 18 16 24 24 24 C 32 24 38 18 38 10 C 38 18 44 24 52 24 C 60 24 66 18 66 10" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 18 18 Q 38 38 52 52 Q 40 46 28 34 Z" fill="#333333"/>
+    <path d="M 22 22 Q 46 36 62 42 Q 46 44 32 40 Z" fill="#444444"/>
+    <path d="M 22 22 Q 36 46 42 62 Q 44 46 40 32 Z" fill="#444444"/>
+    <circle cx="28" cy="28" r="3.2" fill="#222222"/>
+    <circle cx="48" cy="18" r="2.4" fill="#333333"/>
+    <circle cx="18" cy="48" r="2.4" fill="#333333"/>
+    <circle cx="72" cy="14" r="2" fill="#444444"/>
+    <circle cx="14" cy="72" r="2" fill="#444444"/>
+    <circle cx="94" cy="10" r="1.8" fill="#555555"/>
+    <circle cx="10" cy="94" r="1.8" fill="#555555"/>
+  </svg>
+  <svg class="corner-flourish corner-br" viewBox="0 0 110 110" aria-hidden="true">
+    <path d="M 8 100 C 8 75 12 55 22 40 C 32 25 45 16 65 12 C 80 9 95 8 104 8" fill="none" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 12 85 C 12 65 18 48 30 35 C 42 22 58 14 85 12" fill="none" stroke="#555555" stroke-width="1" stroke-linecap="round"/>
+    <path d="M 10 10 C 18 10 24 16 24 24 C 24 32 18 38 10 38 C 18 38 24 44 24 52 C 24 60 18 66 10 66" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 10 10 C 10 18 16 24 24 24 C 32 24 38 18 38 10 C 38 18 44 24 52 24 C 60 24 66 18 66 10" fill="none" stroke="#333333" stroke-width="1.4"/>
+    <path d="M 18 18 Q 38 38 52 52 Q 40 46 28 34 Z" fill="#333333"/>
+    <path d="M 22 22 Q 46 36 62 42 Q 46 44 32 40 Z" fill="#444444"/>
+    <path d="M 22 22 Q 36 46 42 62 Q 44 46 40 32 Z" fill="#444444"/>
+    <circle cx="28" cy="28" r="3.2" fill="#222222"/>
+    <circle cx="48" cy="18" r="2.4" fill="#333333"/>
+    <circle cx="18" cy="48" r="2.4" fill="#333333"/>
+    <circle cx="72" cy="14" r="2" fill="#444444"/>
+    <circle cx="14" cy="72" r="2" fill="#444444"/>
+    <circle cx="94" cy="10" r="1.8" fill="#555555"/>
+    <circle cx="10" cy="94" r="1.8" fill="#555555"/>
+  </svg>
+
   <header class="header">
     <img class="ganesh" alt="श्री गणेश" src="data:image/jpeg;base64,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">
     <p class="invocation">॥ श्री गणेशाय नमः ॥</p>
-    <div class="ornament"></div>
   </header>
 
   <section class="section" aria-labelledby="personal-title">
     <h1 class="section-title" id="personal-title">वैयक्तिक माहिती</h1>
-    <div class="details">
-      <div class="label">मुलाचे नाव</div><div class="colon">:</div><div class="value">चि. शुभम अनिल खर्चे</div>
-      <div class="label">जन्मनाव</div><div class="colon">:</div><div class="value">धनंजय</div>
-      <div class="label">जन्म तारीख</div><div class="colon">:</div><div class="value">25/08/1996</div>
-      <div class="label">जन्म वेळ</div><div class="colon">:</div><div class="value">सकाळी 11.56</div>
-      <div class="label">जन्म ठिकाण</div><div class="colon">:</div><div class="value">शेलगाव बाजार</div>
-      <div class="label">गोत्र</div><div class="colon">:</div><div class="value">वशिष्ठ</div>
-      <div class="label">वर्ण</div><div class="colon">:</div><div class="value">गोरा</div>
-      <div class="label">रक्तगट</div><div class="colon">:</div><div class="value">B+ve</div>
-      <div class="label">शिक्षण</div><div class="colon">:</div><div class="value">B.E. Mechanical</div>
-      <div class="label">नोकरी</div><div class="colon">:</div><div class="value">Sr. QA Engineer IT<span class="subvalue">Shaurya Technosoft Pvt Ltd, Pune</span></div>
-      <div class="label">वार्षिक उत्पन्न</div><div class="colon">:</div><div class="value">7.8 LPA</div>
+    <div class="details-box">
+      <div class="details">
+        <div class="label">मुलाचे नाव</div><div class="colon">:</div><div class="value">शुभम अनिल खर्चे</div>
+        <div class="label">जन्मनाव</div><div class="colon">:</div><div class="value">धनंजय</div>
+        <div class="label">जन्म तारीख</div><div class="colon">:</div><div class="value">25/08/1996</div>
+        <div class="label">जन्म वेळ</div><div class="colon">:</div><div class="value">सकाळी 11.56</div>
+        <div class="label">जन्म ठिकाण</div><div class="colon">:</div><div class="value">शेलगाव बाजार</div>
+        <div class="label">गोत्र</div><div class="colon">:</div><div class="value">वशिष्ठ</div>
+        <div class="label">वर्ण</div><div class="colon">:</div><div class="value">गोरा</div>
+        <div class="label">रक्तगट</div><div class="colon">:</div><div class="value">B+ve</div>
+        <div class="label">शिक्षण</div><div class="colon">:</div><div class="value">B.E. Mechanical</div>
+        <div class="label">नोकरी</div><div class="colon">:</div><div class="value">Sr. QA Engineer<span class="subvalue">Shaurya Technosoft Pvt Ltd, Pune</span></div>
+        <div class="label">वार्षिक उत्पन्न</div><div class="colon">:</div><div class="value">7.8 LPA</div>
+      </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="family-title">
     <h2 class="section-title" id="family-title">कौटुंबिक माहिती</h2>
-    <div class="details">
-      <div class="label">वडिलांचे नाव</div><div class="colon">:</div><div class="value">कै. अनिल पुंजाजी खर्चे</div>
-      <div class="label">आईचे नाव</div><div class="colon">:</div><div class="value">श्रीमती अनिता अनिल खर्चे</div>
-      <div class="label">व्यवसाय</div><div class="colon">:</div><div class="value">शेती - 5.5 एकर</div>
-      <div class="label">बहीण/भाऊ</div><div class="colon">:</div><div class="value">बहीण 2 विवाहित</div>
-      <div class="label">मामकुळ</div><div class="colon">:</div><div class="value">चोपडे, दाताळा</div>
+    <div class="details-box">
+      <div class="details">
+        <div class="label">वडिलांचे नाव</div><div class="colon">:</div><div class="value">कै. अनिल पुंजाजी खर्चे</div>
+        <div class="label">आईचे नाव</div><div class="colon">:</div><div class="value">श्रीमती अनिता अनिल खर्चे</div>
+        <div class="label">व्यवसाय</div><div class="colon">:</div><div class="value">शेती - 5.5 एकर</div>
+        <div class="label">बहीण/भाऊ</div><div class="colon">:</div><div class="value">बहीण 2 विवाहित</div>
+        <div class="label">मामकुळ</div><div class="colon">:</div><div class="value">चोपडे, दाताळा</div>
+      </div>
     </div>
   </section>
 
@@ -418,44 +455,27 @@
     <h2 class="section-title" id="contact-title">संपर्क</h2>
     <div class="contacts">
       <div class="contact-item">
-        <span class="contact-idx">१.</span>
-        <div class="contact-details">
-          <span class="contact-name">श्री. विजय पुंजाजी खर्चे</span>
-          <span class="contact-place">(शेलगाव बाजार)</span>
-          <span class="contact-sep">•</span>
-          <span class="phone">मो. नं. ९४२०५३९३९६</span>
-        </div>
+        <span class="contact-idx" style="display:none">१.</span>
+        <div class="contact-name-place">श्री. विजय पुंजाजी खर्चे, शेलगाव बाजार</div>
+        <div class="contact-phone">मो. नं. 9420539396</div>
       </div>
       <div class="contact-item">
-        <span class="contact-idx">२.</span>
-        <div class="contact-details">
-          <span class="contact-name">श्री. गजानन नरहरी खर्चे</span>
-          <span class="contact-place">(शेलगाव बाजार)</span>
-          <span class="contact-sep">•</span>
-          <span class="phone">मो. नं. ९४२२१५२२३१</span>
-        </div>
+        <span class="contact-idx" style="display:none">२.</span>
+        <div class="contact-name-place">श्री. गजानन नरहरी खर्चे, शेलगाव बाजार</div>
+        <div class="contact-phone">मो. नं. 9422152231</div>
       </div>
       <div class="contact-item">
-        <span class="contact-idx">३.</span>
-        <div class="contact-details">
-          <span class="contact-name">श्री. महेंद्र प्रल्हाद पाटील</span>
-          <span class="contact-place">(मलकापूर)</span>
-          <span class="contact-sep">•</span>
-          <span class="phone">मो. नं. ९९२१६३९८७२</span>
-        </div>
+        <span class="contact-idx" style="display:none">३.</span>
+        <div class="contact-name-place">श्री. महेंद्र प्रल्हाद पाटील, मलकापूर</div>
+        <div class="contact-phone">मो. नं. 9921639872</div>
       </div>
       <div class="contact-item">
-        <span class="contact-idx">४.</span>
-        <div class="contact-details">
-          <span class="contact-name">श्री. उमेश एकनाथ फेंगडे</span>
-          <span class="contact-place">(वाडी-पोफळी)</span>
-          <span class="contact-sep">•</span>
-          <span class="phone">मो. नं. ९६०४४५८०१५</span>
-        </div>
+        <span class="contact-idx" style="display:none">४.</span>
+        <div class="contact-name-place">श्री. उमेश एकनाथ फेंगडे, वाडी- पोफळी</div>
+        <div class="contact-phone">मो. नं. 9604458015</div>
       </div>
     </div>
   </section>
-  <div class="bottom-rule"></div>
 </main>
 
 <!-- Floating Toast Notification -->
