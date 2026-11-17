@@ -2889,21 +2889,7 @@
             <div style="font-size:11.5px; color:#64748b;">खर्चे परिवार • शुभम अनिल खर्चे</div>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="shareProfileOnWhatsApp()" title="WhatsApp शेअर">
-            💬 <span>WhatsApp</span>
-          </button>
-          <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="copyProfileHyperlink()" title="लिंक कॉपी करा">
-            🔗 <span>कॉपी लिंक</span>
-          </button>
-          <button type="button" class="action-btn action-btn-primary" style="padding:5px 8px; font-size:12px; display:inline-flex; align-items:center; gap:4px;" onclick="openCanvasCardModal()" title="इमेज कार्ड तयार करा">
-            🖼️ <span>इमेज कार्ड</span>
-          </button>
-          <a href="./biodata.html" target="_blank" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px; text-decoration:none;" title="नवीन ब्राऊझर टॅबमध्ये उघडा">
-            ↗️
-          </a>
-          <button class="close-btn" onclick="closeBiodataModal()" style="font-size:22px; line-height:1; padding:2px 8px;">&times;</button>
-        </div>
+        <button class="close-btn" onclick="closeBiodataModal()" style="font-size:24px; line-height:1; padding:2px 8px; cursor:pointer;" title="बंद करा">&times;</button>
       </div>
       <div style="flex:1; width:100%; height:100%; position:relative; background:#f8fafc; overflow:hidden;">
         <iframe id="biodataModalIframe" src="" style="width:100%; height:100%; border:none; display:block;" title="वधू पक्षासाठी प्रोफाईल"></iframe>
@@ -5918,9 +5904,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         const photoSrc = (photoSec && photoSec.photoUrl) ? photoSec.photoUrl : './shubham_kharche_biodata.jpg';
 
         const photoImg = new Image();
-        photoImg.crossOrigin = 'anonymous';
+        if (photoSrc && !photoSrc.startsWith('data:image/')) {
+          photoImg.crossOrigin = 'anonymous';
+        }
 
-        const continueDrawing = (imgObj) => {
+        const continueDrawing = (imgObj, isFallback = false) => {
           const photoX = 540;
           const photoY = 285;
           const radius = 95;
@@ -5941,7 +5929,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           ctx.fill();
           ctx.restore();
 
-          if (imgObj) {
+          if (imgObj && !isFallback) {
             ctx.save();
             ctx.beginPath();
             ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
@@ -6090,9 +6078,23 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           ctx.font = '600 16px "Mukta", sans-serif';
           ctx.fillText('अनुबंध (Anubandh) • दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध', 540, 1375);
 
-          canvas.toBlob((blob) => {
-            resolve({ blob, dataUrl: canvas.toDataURL('image/jpeg', 0.92) });
-          }, 'image/jpeg', 0.92);
+          try {
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+            if (canvas.toBlob) {
+              canvas.toBlob((blob) => {
+                resolve({ blob, dataUrl });
+              }, 'image/jpeg', 0.92);
+            } else {
+              resolve({ blob: null, dataUrl });
+            }
+          } catch(taintErr) {
+            console.warn('Canvas export failed, redrawing with clean avatar:', taintErr);
+            if (!isFallback) {
+              continueDrawing(null, true);
+            } else {
+              resolve({ blob: null, dataUrl: '' });
+            }
+          }
         };
 
         photoImg.onload = () => continueDrawing(photoImg);
@@ -6100,7 +6102,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         photoImg.src = photoSrc;
         setTimeout(() => {
           if (!photoImg.complete) continueDrawing(null);
-        }, 1500);
+        }, 1200);
       });
     }
 

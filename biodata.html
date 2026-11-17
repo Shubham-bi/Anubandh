@@ -1395,13 +1395,16 @@
         ctx.font = '600 18px "Mukta", sans-serif';
         ctx.fillText('खर्चे परिवार (जळगाव / पुणे)', 540, 172);
 
-        const photoSec = activeProfileData?.sections?.find(s => s.type === 'photo');
+        const pData = (typeof currentProfile !== 'undefined' && currentProfile) ? currentProfile : DEFAULT_PROFILE_DATA;
+        const photoSec = pData?.sections?.find(s => s.type === 'photo');
         const photoSrc = (photoSec && photoSec.photoUrl) ? photoSec.photoUrl : './shubham_kharche_biodata.jpg';
 
         const photoImg = new Image();
-        photoImg.crossOrigin = 'anonymous';
+        if (photoSrc && !photoSrc.startsWith('data:image/')) {
+          photoImg.crossOrigin = 'anonymous';
+        }
 
-        const continueDrawing = (imgObj) => {
+        const continueDrawing = (imgObj, isFallback = false) => {
           const photoX = 540;
           const photoY = 285;
           const radius = 95;
@@ -1422,7 +1425,7 @@
           ctx.fill();
           ctx.restore();
 
-          if (imgObj) {
+          if (imgObj && !isFallback) {
             ctx.save();
             ctx.beginPath();
             ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
@@ -1456,7 +1459,7 @@
             ctx.fillText('🤵', photoX, photoY + 25);
           }
 
-          const h = activeProfileData?.hero || {};
+          const h = pData?.hero || DEFAULT_PROFILE_DATA.hero || {};
           const name = h.name || 'चि. शुभम अनिल खर्चे';
           const role = h.role || 'B.E. Mechanical • Sr. QA Engineer IT, Pune';
 
@@ -1562,9 +1565,23 @@
           ctx.font = '600 16px "Mukta", sans-serif';
           ctx.fillText('अनुबंध (Anubandh) • दोन मनांचे आणि दोन घराण्यांचे रेशीमबंध', 540, 1365);
 
-          canvas.toBlob((blob) => {
-            resolve({ blob, dataUrl: canvas.toDataURL('image/jpeg', 0.92) });
-          }, 'image/jpeg', 0.92);
+          try {
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+            if (canvas.toBlob) {
+              canvas.toBlob((blob) => {
+                resolve({ blob, dataUrl });
+              }, 'image/jpeg', 0.92);
+            } else {
+              resolve({ blob: null, dataUrl });
+            }
+          } catch(taintErr) {
+            console.warn('Canvas export failed, redrawing with clean avatar:', taintErr);
+            if (!isFallback) {
+              continueDrawing(null, true);
+            } else {
+              resolve({ blob: null, dataUrl: '' });
+            }
+          }
         };
 
         photoImg.onload = () => continueDrawing(photoImg);
@@ -1572,7 +1589,7 @@
         photoImg.src = photoSrc;
         setTimeout(() => {
           if (!photoImg.complete) continueDrawing(null);
-        }, 1500);
+        }, 1200);
       });
     }
 
