@@ -1216,10 +1216,69 @@
 (टीप: या लिंकवर शिक्षण, नोकरी, कौटुंबिक माहिती, कुंडली व संपर्क उपलब्ध आहेत.)`;
     }
 
-    function shareProfileOnWhatsApp() {
+    async function copyImageToClipboard(imageUrl) {
+      try {
+        if (!navigator.clipboard || !window.ClipboardItem) return false;
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = imageUrl;
+        });
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || img.width;
+        canvas.height = img.naturalHeight || img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const pngBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        if (pngBlob) {
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': pngBlob })
+          ]);
+          return true;
+        }
+      } catch (err) {
+        console.warn('copyImageToClipboard error:', err);
+      }
+      return false;
+    }
+
+    async function shareProfileOnWhatsApp() {
       const msg = getShareableProfileFullMessage();
+      const photoSrc = './shubham_kharche_biodata.jpg';
+
+      // Level 1: Mobile Native Web Share API with photo file attachment
+      if (navigator.canShare) {
+        try {
+          const resp = await fetch(photoSrc);
+          if (resp.ok) {
+            const blob = await resp.blob();
+            const file = new File([blob], 'Shubham_Kharche_Biodata.jpg', { type: blob.type || 'image/jpeg' });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+                text: msg
+              });
+              showToast('✅ फोटो व बायोडाटा मेसेज यशस्वीरित्या शेअर झाला!');
+              return;
+            }
+          }
+        } catch (e) {
+          if (e.name !== 'AbortError') console.warn('Native share error:', e);
+        }
+      }
+
+      // Level 2: Desktop / WhatsApp Web - Copy image to clipboard and open WhatsApp
+      const imgCopied = await copyImageToClipboard(photoSrc);
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank');
+      if (imgCopied) {
+        showToast('📸 फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
+      } else {
+        showToast('WhatsApp उघडले आहे!');
+      }
     }
 
     function copyHyperlink() {

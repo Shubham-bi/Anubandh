@@ -304,6 +304,17 @@ try {
   assert(indexCode.includes('function isCandidateShortlisted'), "index.html defines isCandidateShortlisted to prevent ReferenceError on single log delete");
   assert(indexCode.includes('toggleNotInterestedInsideTrackModal') && indexCode.includes('updateTrackModalNotInterestedBtn'), "index.html provides Not Interested toggle inside trackModal");
   assert(indexCode.includes('onclick="toggleNotInterestedCandidate(\'${c.id}\', event)"'), "index.html table view provides quick Not Interested toggle");
+
+  // 7. Accessibility (Dark Mode & Font Scalability) assertions
+  assert(indexCode.includes('body.theme-dark') && indexCode.includes('toggleDarkMode') && indexCode.includes('initAccessibilitySettings'), "index.html supports persistent Dark Mode with toggle and CSS variables");
+  assert(indexCode.includes('data-font-size') && indexCode.includes('setFontSize') && indexCode.includes('cycleFontSize'), "index.html supports 3-tier Font Size scalability (A-/A/A+)");
+
+  // 8. Voice Speech-to-Text (mr-IN) assertions
+  assert(indexCode.includes('toggleVoiceSpeechRecognition') && indexCode.includes('mr-IN') && indexCode.includes('voice-note-btn'), "index.html supports Speech-to-Text voice logging in Marathi (mr-IN)");
+
+  // 9. WhatsApp Multi-Attachment & Clipboard Copy assertions
+  assert(indexCode.includes('copyImageToClipboard') && indexCode.includes('navigator.share') && indexCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
+  assert(bioCode.includes('copyImageToClipboard') && bioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
