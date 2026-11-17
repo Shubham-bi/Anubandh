@@ -222,7 +222,10 @@ try {
   assert(indexCode.includes('mCandAgeBadge') && !indexCode.includes('<div class="track-cand-summary">'), "index.html trackModal displays clean header while hiding duplicate girl snapshot details");
   assert(indexCode.includes('quickContactChips') && indexCode.includes('selectTrackContact'), "index.html trackModal provides quick contact chips");
   assert(indexCode.includes('deleteLogEntry') && indexCode.includes('btn-del-log'), "index.html provides option to delete conversation log entries");
-  assert(indexCode.includes('toggleRejectCandidate') && indexCode.includes('btn-reject-quick'), "index.html provides quick option to reject non-shortlisted profiles");
+  assert(indexCode.includes('btn-del-log') && indexCode.includes('<polyline points="3 6 5 6 21 6">'), "index.html uses sleek SVG icon instead of emoji trash for log deletion");
+  assert(indexCode.includes('toggleRejectCandidate') && indexCode.includes('btn-not-interested'), "index.html provides Not Interested button for candidate rejection");
+  assert(indexCode.includes('APP_INSTALL_DATE_KEY') && indexCode.includes('isTestProfileVisible'), "index.html auto-hides test profile (sr 0) after 3 days of install");
+  assert(indexCode.includes('<span>कॉपी लिंक</span>') && bioCode.includes('<span>🔗 कॉपी लिंक</span>'), "index.html and biodata.html show 'कॉपी लिंक' instead of 'हायपरलिंक कॉपी करा'");
   assert(indexCode.includes('getShareableProfileFullMessage') && bioCode.includes('getShareableProfileFullMessage'), "index.html and biodata.html copy full accompanied message with profile link");
 
   // Phone Action Modal (संपर्क पर्याय निवडा) Contact Person Name assertions

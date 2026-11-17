@@ -2071,7 +2071,7 @@
         </div>
         <div class="menu-item" onclick="copyProfileHyperlink(); closeSideMenu();">
           <span>🔗</span>
-          <span>प्रोफाईल लिंक कॉपी</span>
+          <span>कॉपी लिंक</span>
         </div>
         <div class="menu-item" onclick="openBioViewModal(); closeSideMenu();">
           <span>🖼️</span>
@@ -2177,8 +2177,8 @@
               <button type="button" onclick="shareProfileOnWhatsApp()" style="color:#15803d; font-weight:800; background:white; padding:4px 10px; border-radius:6px; border:1px solid #86efac; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-size:12px;">
                 💬 WhatsApp वर शेअर करा (Shubham_Kharche)
               </button>
-              <button type="button" onclick="copyProfileHyperlink()" style="color:#0f172a; font-weight:700; background:white; padding:4px 10px; border-radius:6px; border:1px solid #cbd5e1; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-size:12px;">
-                🔗 हायपरलिंक कॉपी
+              <button type="button" onclick="copyProfileHyperlink()" style="color:#0f172a; font-weight:700; background:white; padding:4px 10px; border-radius:6px; border:1px solid #cbd5e1; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-size:12px;" title="बायोडाटा लिंक व संदेश कॉपी करा">
+                🔗 कॉपी लिंक
               </button>
               <span style="color:#64748b; font-size:11.5px;">(बदल सेव्ह करण्यासाठी खालील '💾 सेव्ह करा' बटण दाबा)</span>
             </div>
@@ -3890,9 +3890,34 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       matched: { label: 'जुळले 💐', cls: 'status-matched', icon: '💍' }
     };
 
+    const APP_INSTALL_DATE_KEY = 'anubandh_app_install_time';
+    function getAppInstallTime() {
+      let t = localStorage.getItem(APP_INSTALL_DATE_KEY);
+      if (!t) {
+        t = Date.now().toString();
+        localStorage.setItem(APP_INSTALL_DATE_KEY, t);
+      }
+      return parseInt(t, 10);
+    }
+
+    function isTestProfileVisible() {
+      const installTime = getAppInstallTime();
+      const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+      // If within 3 days of install, show test profile (sr 0)
+      if (Date.now() - installTime <= THREE_DAYS_MS) {
+        return true;
+      }
+      // If user specifically searches for '0' or 'चाचणी' or 'test', allow viewing
+      if (currentSearchTerm && (currentSearchTerm.includes('०') || currentSearchTerm.includes('0') || currentSearchTerm.includes('चाचणी') || currentSearchTerm.includes('test'))) {
+        return true;
+      }
+      return false;
+    }
+
     function updateStats() {
-      const counts = { total: candidates.length, pending: 0, contacted: 0, interested: 0, followup: 0, not_interested: 0, matched: 0 };
-      candidates.forEach(c => {
+      const visibleCandidates = candidates.filter(c => c.id !== 'cand_0' || isTestProfileVisible());
+      const counts = { total: visibleCandidates.length, pending: 0, contacted: 0, interested: 0, followup: 0, not_interested: 0, matched: 0 };
+      visibleCandidates.forEach(c => {
         const s = c.status || 'pending';
         if (counts[s] !== undefined) counts[s]++;
         else counts.pending++;
@@ -3916,8 +3941,9 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     function updateNavTabs() {
-      const shortCount = candidates.filter(c => c.shortlisted).length;
-      const allCount = candidates.length;
+      const visibleCandidates = candidates.filter(c => c.id !== 'cand_0' || isTestProfileVisible());
+      const shortCount = visibleCandidates.filter(c => c.shortlisted).length;
+      const allCount = visibleCandidates.length;
 
       const tabShortEl = document.getElementById('tabShortlisted');
       const tabAllEl = document.getElementById('tabAllCandidates');
@@ -4004,9 +4030,14 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       renderView();
     }
 
-    // Always sort by Serial Number Ascending only (१ ते ८३)
+    // Always sort by Serial Number Ascending only (० ते १८१)
     function getFilteredList() {
       let list = candidates.filter(c => {
+        // Auto-hide test profile (sr 0) after 3 days of install
+        if (c.id === 'cand_0' && !isTestProfileVisible()) {
+          return false;
+        }
+
         // Tab filtering: Shortlist vs All
         if (currentListTab === 'shortlisted' && !c.shortlisted) {
           return false;
@@ -4404,8 +4435,8 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             <button class="btn-track" style="flex:1;" onclick="openTrackModal('${c.id}')">
               ✍️ संभाषण नोंद (${(c.logs || []).length})
             </button>
-            <button type="button" class="btn-reject-quick ${c.status === 'not_interested' ? 'active' : ''}" onclick="toggleRejectCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'नकार मागे घ्या' : 'या स्थळाला नकार द्या (Not Interested)'}" style="${c.status === 'not_interested' ? 'background:#fef2f2; border:1.5px solid #f87171; color:#dc2626;' : 'background:#f8fafc; border:1px solid #cbd5e1; color:#64748b;'} border-radius:8px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;">
-              ${c.status === 'not_interested' ? '❌ नकार दिलेला' : '❌ नकार'}
+            <button type="button" class="btn-not-interested btn-reject-quick ${c.status === 'not_interested' ? 'active' : ''}" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested म्हणून नोंदवा'}" style="${c.status === 'not_interested' ? 'background:#fef2f2; border:1.5px solid #f87171; color:#dc2626;' : 'background:#f8fafc; border:1px solid #cbd5e1; color:#64748b;'} border-radius:8px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;">
+              ${c.status === 'not_interested' ? '🚫 Not Interested' : 'Not Interested'}
             </button>
           </div>
         `;
@@ -4414,21 +4445,22 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       });
     }
 
-    function toggleRejectCandidate(id, event) {
+    function toggleNotInterestedCandidate(id, event) {
       if (event) event.stopPropagation();
       const cand = candidates.find(c => c.id === id);
       if (!cand) return;
 
       if (cand.status === 'not_interested') {
         cand.status = (cand.logs && cand.logs.length > 0) ? (cand.logs[cand.logs.length - 1].statusOutcome || 'contacted') : (isCandidateShortlisted(cand.id) ? 'shortlisted' : 'pending');
-        showToast(`अ.क्र. ${cand.sr} चा नकार मागे घेतला.`);
+        showToast(`अ.क्र. ${cand.sr} चा Not Interested स्टेटस काढला.`);
       } else {
         cand.status = 'not_interested';
-        showToast(`अ.क्र. ${cand.sr} ला नकार (Not Interested) म्हणून नोंदवले.`);
+        showToast(`अ.क्र. ${cand.sr} ला Not Interested म्हणून नोंदवले.`);
       }
       persistData();
       renderView();
     }
+    const toggleRejectCandidate = toggleNotInterestedCandidate;
 
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
@@ -4673,8 +4705,11 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <span style="color:#64748b; font-size:11.5px;">📅 ${new Date(log.timestamp).toLocaleDateString('mr-IN', { day:'numeric', month:'short', year:'numeric' })}</span>
-              <button type="button" class="btn-del-log" onclick="deleteLogEntry('${log.id || ''}', ${actualIdx})" title="ही संभाषण नोंद हटवा" style="background:#fee2e2; border:1px solid #fca5a5; color:#b91c1c; font-size:11px; font-weight:700; padding:2px 6px; border-radius:4px; cursor:pointer;">
-                🗑️ हटवा
+              <button type="button" class="btn-del-log" onclick="deleteLogEntry('${log.id || ''}', ${actualIdx})" title="ही नोंद हटवा" style="background:#f8fafc; border:1px solid #cbd5e1; color:#64748b; width:26px; height:26px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; transition:all 0.2s;" onmouseover="this.style.background='#fee2e2'; this.style.color='#dc2626'; this.style.borderColor='#fca5a5';" onmouseout="this.style.background='#f8fafc'; this.style.color='#64748b'; this.style.borderColor='#cbd5e1';">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
               </button>
             </div>
           </div>
