@@ -129,7 +129,8 @@ if (scriptMatch) {
     assert(waMsg.includes('Shaurya Technosoft'), 'WhatsApp message contains company name');
     assert(waMsg.includes('7.8 LPA'), 'WhatsApp message contains salary (7.8 LPA)');
     assert(waMsg.includes('वशिष्ठ'), 'WhatsApp message contains gotra (वशिष्ठ)');
-    assert(waMsg.includes('9420539396'), 'WhatsApp message contains family phone number');
+    assert(!waMsg.includes('खर्चे परिवार (मो. 9420539396 / 9422152231)'), 'WhatsApp message excludes redundant family phone footer per user requirement');
+    assert(waMsg.includes('धन्यवाद! 🙏'), 'WhatsApp message cleanly ends with polite closing (धन्यवाद! 🙏)');
     assert(waMsg.includes(sampleCand.name), 'WhatsApp message incorporates target candidate name');
 
     // Test WhatsApp text generator with guardian name
