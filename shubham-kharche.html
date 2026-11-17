@@ -1164,6 +1164,7 @@
 
     // Image Zoom Modal
     function openFullImg() {
+      try { history.pushState({ modal: 'fullImg' }, '', window.location.href); } catch (e) {}
       document.getElementById('fullImgModal').classList.add('open');
     }
     function closeFullImg() {
@@ -1173,23 +1174,35 @@
     const SHARE_LINK_NAME = 'Shubham_Kharche';
     const SHARE_URL = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
 
+    function getShareableProfileFullMessage() {
+      return `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव (बायोडाटा)*
+(B.E. Mechanical • Sr. QA Engineer, Pune)
+
+सस्नेह नमस्कार 🙏
+खर्चे परिवारातर्फे चि. शुभम खर्चे यांचा सविस्तर डिजिटल बायोडाटा व माहिती पाहण्यासाठी खालील लिंकवर क्लिक करा:
+👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche
+
+(टीप: या लिंकवर शिक्षण, नोकरी, कौटुंबिक माहिती, कुंडली व संपर्क उपलब्ध आहेत.)`;
+    }
+
     function shareProfileOnWhatsApp() {
-      const msg = `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव*\n(B.E. Mechanical • Sr. QA Engineer, Pune)\n\n🌐 सविस्तर माहिती व प्रोफाईल वेबपेज:\n👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche`;
+      const msg = getShareableProfileFullMessage();
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank');
     }
 
     function copyHyperlink() {
+      const fullMsg = getShareableProfileFullMessage();
       if (navigator.clipboard && window.ClipboardItem) {
         const htmlBlob = new Blob([`<a href="${SHARE_URL}">${SHARE_LINK_NAME}</a>`], { type: 'text/html' });
-        const textBlob = new Blob([SHARE_URL], { type: 'text/plain' });
+        const textBlob = new Blob([fullMsg], { type: 'text/plain' });
         navigator.clipboard.write([
           new ClipboardItem({
             'text/html': htmlBlob,
             'text/plain': textBlob
           })
         ]).then(() => {
-          showToast('✅ हायपरलिंक कॉपी केली! (Shubham_Kharche)');
+          showToast('✅ बायोडाटा लिंक व संदेश कॉपी झाला!');
         }).catch(() => {
           fallbackCopy();
         });
@@ -1199,12 +1212,13 @@
     }
 
     function fallbackCopy() {
+      const fullMsg = getShareableProfileFullMessage();
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(SHARE_URL).then(() => {
-          showToast('✅ लिंक कॉपी केली: Shubham_Kharche');
+        navigator.clipboard.writeText(fullMsg).then(() => {
+          showToast('✅ बायोडाटा लिंक व संदेश कॉपी झाला!');
         });
       } else {
-        alert(`लिंक: ${SHARE_URL}`);
+        alert(`लिंक: ${SHARE_URL}\n\n${fullMsg}`);
       }
     }
 
@@ -1235,6 +1249,7 @@
       document.getElementById('phoneModalDisplayNumber').textContent = `📞 ${displayPhone}`;
       document.getElementById('phoneModalCallBtn').href = `tel:${cleanDigits}`;
 
+      try { history.pushState({ modal: 'phoneAction' }, '', window.location.href); } catch (e) {}
       document.getElementById('phoneActionModal').classList.add('open');
     }
 
@@ -1279,23 +1294,19 @@
     }
 
     // Close open modal (full image or contact sheet) on phone back button
-    try {
-      history.pushState({ page: 'biodata' }, '', window.location.href);
-      window.addEventListener('popstate', function() {
-        const fullImg = document.getElementById('fullImgModal');
-        const phoneModal = document.getElementById('phoneActionModal');
-        if (fullImg && fullImg.classList.contains('open')) {
-          try { history.pushState({ page: 'biodata' }, '', window.location.href); } catch (e) {}
-          closeFullImg();
-          return;
-        }
-        if (phoneModal && phoneModal.classList.contains('open')) {
-          try { history.pushState({ page: 'biodata' }, '', window.location.href); } catch (e) {}
-          closePhoneActionModal();
-          return;
-        }
-      });
-    } catch (e) {}
+    // When no modal is open, back button simply navigates back or exits naturally (no traps/redirects)
+    window.addEventListener('popstate', function() {
+      const fullImg = document.getElementById('fullImgModal');
+      const phoneModal = document.getElementById('phoneActionModal');
+      if (fullImg && fullImg.classList.contains('open')) {
+        closeFullImg();
+        return;
+      }
+      if (phoneModal && phoneModal.classList.contains('open')) {
+        closePhoneActionModal();
+        return;
+      }
+    });
 
   </script>
 

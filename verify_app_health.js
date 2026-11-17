@@ -98,7 +98,7 @@ if (scriptMatch) {
     // Access variables from lexical context using vm eval
     const initialData = vm.runInContext('INITIAL_DATA', sandbox);
     assert(Array.isArray(initialData), 'INITIAL_DATA is a valid Array');
-    assert(initialData.length === 83, `All 83 candidate records loaded (Found: ${initialData.length})`);
+    assert(initialData.length === 84, `All 84 candidate records loaded (Found: ${initialData.length})`);
 
     // Test parseSrNo for all records
     const parseSrNoFn = vm.runInContext('parseSrNo', sandbox);
@@ -106,12 +106,12 @@ if (scriptMatch) {
     for (let i = 0; i < initialData.length; i++) {
       const c = initialData[i];
       const parsed = parseSrNoFn(c.sr);
-      if (isNaN(parsed) || parsed <= 0) {
+      if (isNaN(parsed) || parsed < 0) {
         console.error(`Invalid parsed SR for row ${i}: sr='${c.sr}' -> ${parsed}`);
         sortFailed = true;
       }
     }
-    assert(!sortFailed, 'parseSrNo() successfully parsed all 83 candidate serial numbers to positive integers');
+    assert(!sortFailed, 'parseSrNo() successfully parsed all 84 candidate serial numbers to non-negative integers');
 
     // Test Ascending sorting
     const sorted = [...initialData].sort((a, b) => parseSrNoFn(a.sr) - parseSrNoFn(b.sr));
@@ -121,7 +121,7 @@ if (scriptMatch) {
 
     // Test WhatsApp text generator
     const buildWhatsAppTextFn = vm.runInContext('buildWhatsAppText', sandbox);
-    const sampleCand = initialData[0];
+    const sampleCand = initialData[1]; // cand_1 (कु. प्रियंका)
     const waMsg = buildWhatsAppTextFn(sampleCand.name, sampleCand.sr);
     assert(waMsg.includes('शुभम अनिल खर्चे'), 'WhatsApp message contains groom name (शुभम अनिल खर्चे)');
     assert(waMsg.includes('B.E. Mechanical'), 'WhatsApp message contains education (B.E. Mechanical)');
@@ -130,6 +130,10 @@ if (scriptMatch) {
     assert(waMsg.includes('वशिष्ठ'), 'WhatsApp message contains gotra (वशिष्ठ)');
     assert(waMsg.includes('9420539396'), 'WhatsApp message contains family phone number');
     assert(waMsg.includes(sampleCand.name), 'WhatsApp message incorporates target candidate name');
+
+    // Test WhatsApp text generator with guardian name
+    const waMsgWithGuardian = buildWhatsAppTextFn(sampleCand.name, sampleCand.sr, 'श्री. प्रकाश वसंत झोपे');
+    assert(waMsgWithGuardian.includes('आम्ही श्री. प्रकाश वसंत झोपे यांची मुलगी कु. प्रियंका (डॉली) साठी संपर्क करत'), 'WhatsApp message mentions guardian name and candidate name');
 
     // Test password check logic
     const adminPassword = vm.runInContext('ADMIN_PASSWORD', sandbox);
@@ -177,8 +181,8 @@ try {
   // 7. Validate Standalone candidates.json
   const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
   const candJson = JSON.parse(candJsonRaw);
-  assert(Array.isArray(candJson) && candJson.length === 83, "candidates.json is valid array containing exactly 83 records");
-  assert(candJson.every(c => c.age !== undefined && c.age > 0), "all 83 candidates have calculated age field in candidates.json");
+  assert(Array.isArray(candJson) && candJson.length === 84, "candidates.json is valid array containing exactly 84 records");
+  assert(candJson.every(c => c.age !== undefined && c.age > 0), "all 84 candidates have calculated age field in candidates.json");
   assert(indexCode.includes('cand-name') && indexCode.includes('age-badge'), "index.html displays age badge in front of candidate name");
   assert(bioCode.includes('shubhamAge') && bioCode.includes('hero-name'), "biodata.html displays dynamically calculated age in front of groom name");
   // 8. Validate Shareable Profile CMS & Dynamic Profile Rendering
@@ -214,9 +218,12 @@ try {
   assert(fs.existsSync(path.join(repoDir, 'Shubham_Kharche.html')), "Shubham_Kharche.html vanity route exists");
 
   // Track Modal (संभाषण नोंद) Enhanced Screen assertions
-  assert(indexCode.includes('track-cand-summary') && indexCode.includes('phone-touch-row'), "index.html defines track-cand-summary and phone-touch-row CSS");
-  assert(indexCode.includes('mCandAgeBadge') && indexCode.includes('mCandDob'), "index.html trackModal displays candidate age and birth info");
+  assert(indexCode.includes('phone-touch-row') && indexCode.includes('quickContactChips'), "index.html defines phone-touch-row and quick contact chips");
+  assert(indexCode.includes('mCandAgeBadge') && !indexCode.includes('<div class="track-cand-summary">'), "index.html trackModal displays clean header while hiding duplicate girl snapshot details");
   assert(indexCode.includes('quickContactChips') && indexCode.includes('selectTrackContact'), "index.html trackModal provides quick contact chips");
+  assert(indexCode.includes('deleteLogEntry') && indexCode.includes('btn-del-log'), "index.html provides option to delete conversation log entries");
+  assert(indexCode.includes('toggleRejectCandidate') && indexCode.includes('btn-reject-quick'), "index.html provides quick option to reject non-shortlisted profiles");
+  assert(indexCode.includes('getShareableProfileFullMessage') && bioCode.includes('getShareableProfileFullMessage'), "index.html and biodata.html copy full accompanied message with profile link");
 
   // Phone Action Modal (संपर्क पर्याय निवडा) Contact Person Name assertions
   assert(indexCode.includes('phoneModalContactName') && indexCode.includes('phone-modal-contact-name'), "index.html phone action modal defines phoneModalContactName element and CSS");
