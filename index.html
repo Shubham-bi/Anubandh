@@ -3454,34 +3454,19 @@ ${introLine}
         digits = '91' + digits.slice(1);
       }
 
-      const photoSrc = './shubham_biodata_redesigned.png';
+      const waUrl = `https://api.whatsapp.com/send/?phone=${digits}&text=${encodeURIComponent(text)}`;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // Level 1: Mobile Native Web Share API with photo file attachment
-      if (navigator.canShare) {
-        try {
-          const resp = await fetch(photoSrc);
-          if (resp.ok) {
-            const blob = await resp.blob();
-            const file = new File([blob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                files: [file],
-                title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
-                text: text
-              });
-              showToast('✅ पत्रिका फोटो व मेसेज शेअर झाला!');
-              return;
-            }
-          }
-        } catch (e) {
-          if (e.name !== 'AbortError') console.warn('Native candidate share error:', e);
-        }
+      // On mobile devices, always open WhatsApp directly with candidate's number
+      if (isMobile) {
+        window.location.href = waUrl;
+        return;
       }
 
-      // Level 2: Desktop / Direct Phone WhatsApp Web chat + Copy canvas image to clipboard!
+      // Desktop: Copy canvas image to clipboard for easy Ctrl+V pasting into WhatsApp Web
+      const photoSrc = './shubham_biodata_redesigned.png';
       const imgCopied = await copyImageToClipboard(photoSrc);
-      const url = `https://api.whatsapp.com/send/?phone=${digits}&text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
+      window.open(waUrl, '_blank');
       if (imgCopied) {
         showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
       } else {
@@ -4366,6 +4351,7 @@ ${introLine}
     async function shareProfileOnWhatsApp() {
       const msg = getShareableProfileFullMessage();
       let photoSrc = './shubham_biodata_redesigned.png';
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
       // Level 1: Mobile Native Web Share API with photo file attachment
       if (navigator.canShare) {
@@ -4391,21 +4377,40 @@ ${introLine}
             }
           }
         } catch (e) {
-          if (e.name !== 'AbortError') console.warn('Native share error:', e);
+          if (e.name === 'AbortError') return;
+          console.warn('Native share error:', e);
         }
       }
 
-      // Level 2: Desktop / WhatsApp Web - Copy image to clipboard and open WhatsApp
-      let imgCopied = await copyImageToClipboard(photoSrc);
-      if (!imgCopied && photoSrc !== './shubham_kharche_biodata.jpg') {
-        imgCopied = await copyImageToClipboard('./shubham_kharche_biodata.jpg');
+      // Level 2: Native text-only share fallback
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+            text: msg
+          });
+          showToast('शेअर यशस्वी!');
+          return;
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+        }
       }
+
+      // Level 3: Direct WhatsApp URL fallback (Mobile: window.location.href, Desktop: window.open + copy)
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
-      window.open(waUrl, '_blank');
-      if (imgCopied) {
-        showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
+      if (isMobile) {
+        window.location.href = waUrl;
       } else {
-        showToast('WhatsApp उघडले आहे!');
+        let imgCopied = await copyImageToClipboard(photoSrc);
+        if (!imgCopied && photoSrc !== './shubham_kharche_biodata.jpg') {
+          imgCopied = await copyImageToClipboard('./shubham_kharche_biodata.jpg');
+        }
+        window.open(waUrl, '_blank');
+        if (imgCopied) {
+          showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
+        } else {
+          showToast('WhatsApp उघडले आहे!');
+        }
       }
     }
 
@@ -6801,6 +6806,9 @@ ${introLine}
 
     async function shareGeneratedCardWhatsApp() {
       const shareMsg = getShareableProfileFullMessage();
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+
       if (navigator.canShare && generatedCardBlob) {
         try {
           const file = new File([generatedCardBlob], 'shubham_biodata_redesigned.png', { type: generatedCardBlob.type || 'image/png' });
@@ -6814,17 +6822,51 @@ ${introLine}
             return;
           }
         } catch(e) {
-          if (e.name !== 'AbortError') console.warn('Native share error:', e);
+          if (e.name === 'AbortError') return;
+          console.warn('Share error with file:', e);
+        }
+
+        // Try file-only share if file+text failed
+        try {
+          const file = new File([generatedCardBlob], 'shubham_biodata_redesigned.png', { type: generatedCardBlob.type || 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका'
+            });
+            showToast('शेअर यशस्वी!');
+            return;
+          }
+        } catch(e2) {
+          if (e2.name === 'AbortError') return;
         }
       }
 
-      const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
-      window.open(waUrl, '_blank');
-      if (imgCopied) {
-        showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! WhatsApp मध्ये Paste (Ctrl+V) करा.');
+      // Try text-only native share if file share failed
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
+            text: shareMsg
+          });
+          showToast('शेअर यशस्वी!');
+          return;
+        } catch (e3) {
+          if (e3.name === 'AbortError') return;
+        }
+      }
+
+      // WhatsApp URL fallback: Mobile uses location.href (never blocked), Desktop uses window.open + copy
+      if (isMobile) {
+        window.location.href = waUrl;
       } else {
-        showToast('WhatsApp उघडले आहे!');
+        const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
+        window.open(waUrl, '_blank');
+        if (imgCopied) {
+          showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! WhatsApp मध्ये Paste (Ctrl+V) करा.');
+        } else {
+          showToast('WhatsApp उघडले आहे!');
+        }
       }
     }
 
@@ -6843,28 +6885,25 @@ ${introLine}
             return;
           }
         } catch(e) {
-          if (e.name !== 'AbortError') console.warn('Native share error:', e);
+          if (e.name === 'AbortError') return;
+          console.warn('Native share error:', e);
         }
       }
 
-      const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
       if (navigator.share) {
         try {
           await navigator.share({
             title: 'चि. शुभम अनिल खर्चे - विवाह परिचय पत्रिका',
             text: shareMsg
           });
-          if (imgCopied) {
-            showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! इतर ॲपमध्ये Paste करा.');
-          } else {
-            showToast('शेअर यशस्वी!');
-          }
+          showToast('शेअर यशस्वी!');
           return;
-        } catch(e) {
-          if (e.name !== 'AbortError') console.warn('Text share error:', e);
+        } catch (e) {
+          if (e.name === 'AbortError') return;
         }
       }
 
+      const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
       if (imgCopied) {
         showToast('📸 कार्ड क्लिपबोर्डवर कॉपी झाले! कोणत्याही ॲपमध्ये Paste (Ctrl+V) करा.');
       } else {
