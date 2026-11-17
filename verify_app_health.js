@@ -134,7 +134,7 @@ if (scriptMatch) {
 
     // Test WhatsApp text generator with guardian name
     const waMsgWithGuardian = buildWhatsAppTextFn(sampleCand.name, sampleCand.sr, 'श्री. प्रकाश वसंत झोपे');
-    assert(waMsgWithGuardian.includes('आम्ही श्री. प्रकाश वसंत झोपे यांची मुलगी कु. प्रियंका (डॉली) साठी संपर्क करत'), 'WhatsApp message mentions guardian name and candidate name');
+    assert(waMsgWithGuardian.includes('आम्ही श्री. प्रकाश वसंत झोपे यांची मुलगी कु. प्रियंका (डॉली)'), 'WhatsApp message mentions guardian name and candidate name');
 
     // Test password check logic
     const adminPassword = vm.runInContext('ADMIN_PASSWORD', sandbox);

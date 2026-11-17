@@ -3447,14 +3447,14 @@
       sendMode: 'full_method_b',
       groomName: 'शुभम अनिल खर्चे',
       groomBirthName: 'धनंजय',
-      groomDob: '२५/०८/१९९६ (25/08/1996)',
+      groomDob: '25/08/1996',
       groomTime: 'सकाळी ११.५६ वा.',
       groomPlace: 'शेलगाव बाजार',
       groomGotra: 'वशिष्ठ',
       groomComplexionBlood: 'गोरा | रक्तगट: B+ve',
       groomEdu: 'B.E. Mechanical',
       groomJob: 'Sr. QA Engineer',
-      groomCompany: 'Shaurya Technosoft Pvt Ltd, Pune',
+      groomCompany: 'Shaurya Technosoft Pvt. Ltd., Pune',
       groomSalary: '7.8 LPA',
       groomFather: 'कै. अनिल पुंजाजी खर्चे',
       groomMother: 'श्रीमती अनिता अनिल खर्चे',
@@ -3487,15 +3487,19 @@
         }
       }
 
+      const candDisplay = candidateName ? (candidateName.startsWith('कु.') ? candidateName : `कु. ${candidateName}`) : '';
+      const cleanSr = String(srNo || '').replace(/\.$/, '').trim();
+      const srPart = cleanSr ? ` (अ.क्र. ${cleanSr}.)` : '';
+
       let introLine = '';
       if (cleanGuardian) {
         let prefix = '';
         if (!cleanGuardian.startsWith('श्री') && !cleanGuardian.startsWith('सौ') && !cleanGuardian.startsWith('डॉ')) {
           prefix = 'श्री. ';
         }
-        introLine = `आम्ही ${prefix}${cleanGuardian} यांची मुलगी ${candidateName} साठी संपर्क करत आहोत.`;
+        introLine = `आम्ही ${prefix}${cleanGuardian} यांची मुलगी ${candDisplay}${srPart} हिच्यासाठी आपल्याशी संपर्क साधत आहोत.`;
       } else {
-        introLine = `आम्ही वधू-वर सूचक सूचीमधील अ.क्र. ${srNo} (${candidateName}) यांच्या माहिती संदर्भात संपर्क करत आहोत.`;
+        introLine = `आम्ही वधू-वर सूचीमधील मुलगी ${candDisplay}${srPart} हिच्यासाठी आपल्याशी संपर्क साधत आहोत.`;
       }
 
       if (waSettings.customProposalTemplate && waSettings.customProposalTemplate.trim()) {
@@ -3507,12 +3511,12 @@
           groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
           groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
           groom_job: waSettings.groomJob || 'Sr. QA Engineer',
-          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune',
+          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune',
           groom_salary: waSettings.groomSalary || '7.8 LPA',
-          groom_dob: waSettings.groomDob || '२५/०८/१९९६',
+          groom_dob: waSettings.groomDob || '25/08/1996',
           groom_gotra: waSettings.groomGotra || 'वशिष्ठ',
-          profile_url: 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche',
-          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg',
+          profile_url: 'https://shubham-bi.github.io/Anubandh/biodata.html',
+          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_biodata_redesigned.png',
           family_contacts: waSettings.groomContacts || '9420539396 / 9422152231'
         };
         return waSettings.customProposalTemplate.replace(/\{(\w+)\}/g, (match, key) => {
@@ -3520,21 +3524,24 @@
         });
       }
 
-      return `सस्नेह नमस्कार 🙏
+      return `नमस्कार!
 
 ${introLine}
 
-खर्चे परिवारातर्फे आमच्या मुलाची (${waSettings.groomName || 'शुभम अनिल खर्चे'}) सविस्तर विवाह परिचय पत्रिका (बायोडाटा फोटो) सोबत जोडली आहे.
+भट्रूमंडळ वधू-वर सूचीमध्ये आपल्या मुलीची विवाहासाठी दिलेली माहिती आम्ही वाचली. तिचे स्थळ आम्हाला योग्य वाटल्यामुळे आपणाशी संपर्क साधत आहोत.
+
+मुलाचा बायोडाटा सोबत जोडलेला आहे. तसेच, अधिक माहिती खालील लिंकवर पाहता येईल:
+https://shubham-bi.github.io/Anubandh/biodata.html
 
 *थोडक्यात माहिती:*
-• नाव: ${waSettings.groomName || 'शुभम अनिल खर्चे'}
+• नाव: चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'}
 • शिक्षण: ${waSettings.groomEdu || 'B.E. Mechanical'}
-• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune'}
+• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune'}
 • वार्षिक पॅकेज: ${waSettings.groomSalary || '7.8 LPA'}
-• जन्म तारीख: ${waSettings.groomDob || '२५/०८/१९९६'}
-• गोत्र: ${waSettings.groomGotra || 'वशिष्ठ'} | रक्तगट: B+ve
+• जन्मतारीख: ${waSettings.groomDob || '25/08/1996'}
+• गोत्र: ${waSettings.groomGotra || 'वशिष्ठ'}
 
-आपणास स्थळ अनुकूल वाटल्यास कृपया पुढील चर्चेसाठी संपर्क करावा, ही नम्र विनंती.
+आपणासही आमचे स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी कृपया संपर्क साधावा.
 
 धन्यवाद! 🙏
 खर्चे परिवार (मो. 9420539396 / 9422152231)`;
@@ -4299,18 +4306,33 @@ ${introLine}
           groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
           groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
           groom_job: waSettings.groomJob || 'Sr. QA Engineer',
-          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune'
+          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune',
+          groom_salary: waSettings.groomSalary || '7.8 LPA',
+          groom_dob: waSettings.groomDob || '25/08/1996',
+          profile_url: PROFILE_SHARE_URL
         };
         return waSettings.customShareTemplate.replace(/\{(\w+)\}/g, (match, key) => {
           return tplVars[key] !== undefined ? tplVars[key] : match;
         });
       }
-      return `*चि. शुभम अनिल खर्चे | विवाह परिचय पत्रिका (बायोडाटा)*
-(B.E. Mechanical • Sr. QA Engineer, Pune)
+      return `नमस्कार!
 
-सस्नेह नमस्कार 🙏
-खर्चे परिवारातर्फे चि. शुभम अनिल खर्चे यांची विवाह परिचय पत्रिका सोबत जोडली आहे.
-कृपया पत्रिका फोटोचे अवलोकन करावे, ही नम्र विनंती.`;
+आम्ही आमचा मुलगा चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'} याच्यासाठी योग्य वधूच्या शोधात आहोत.
+
+मुलाचा (${waSettings.groomName || 'शुभम अनिल खर्चे'}) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:
+${PROFILE_SHARE_URL}
+
+*थोडक्यात माहिती:*
+• नाव: चि. ${waSettings.groomName || 'शुभम अनिल खर्चे'}
+• शिक्षण: ${waSettings.groomEdu || 'B.E. Mechanical'}
+• नोकरी: ${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune'}
+• वार्षिक पॅकेज: ${waSettings.groomSalary || '7.8 LPA'}
+• जन्मतारीख: ${waSettings.groomDob || '25/08/1996'}
+
+आपल्या परिचयात योग्य स्थळ असल्यास कृपया आम्हाला कळवावे.
+
+धन्यवाद! 🙏
+खर्चे परिवार (मो. 9420539396 / 9422152231)`;
     }
 
     // =========================================================
