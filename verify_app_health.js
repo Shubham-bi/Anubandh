@@ -315,6 +315,18 @@ try {
   // 9. WhatsApp Multi-Attachment & Clipboard Copy assertions
   assert(indexCode.includes('copyImageToClipboard') && indexCode.includes('navigator.share') && indexCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
   assert(bioCode.includes('copyImageToClipboard') && bioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");
+
+  // 10. Traditional Redesigned Biodata Sheet & WhatsApp Image Sharing assertions
+  const redesignedPath = path.join(repoDir, 'shubham_biodata_redesigned.html');
+  assert(fs.existsSync(redesignedPath), "shubham_biodata_redesigned.html exists");
+  const redesignedCode = fs.readFileSync(redesignedPath, 'utf8');
+  assert(redesignedCode.includes('shareOnWhatsAppAsImage') && redesignedCode.includes('downloadSheetImage') && redesignedCode.includes('copySheetImageToClipboard'), "shubham_biodata_redesigned.html provides WhatsApp image sharing, download, and clipboard copy actions");
+  const redesignedImgPath = path.join(repoDir, 'shubham_biodata_redesigned.png');
+  assert(fs.existsSync(redesignedImgPath) && fs.statSync(redesignedImgPath).size > 10000, "shubham_biodata_redesigned.png exists and is a valid image asset (>10KB)");
+  assert(indexCode.includes('shubham_biodata_redesigned.png') && indexCode.includes('shubham_biodata_redesigned.html'), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
+  assert(bioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
+  const swCodeCurrent = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
+  assert(swCodeCurrent.includes('shubham_biodata_redesigned.html') && swCodeCurrent.includes('shubham_biodata_redesigned.png'), "sw.js caches redesigned biodata sheet and image for offline access");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
