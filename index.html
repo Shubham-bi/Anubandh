@@ -2149,7 +2149,10 @@
       <div class="modal-content-body">
         
         <div style="display:flex; gap:6px; border-bottom:1.5px solid #f1f5f9; padding-bottom:10px; overflow-x:auto;">
-          <button id="tabProfileCmsBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('profile_cms')">
+          <button id="tabCandidateEditBtn" type="button" class="action-btn action-btn-primary" style="padding:7px 12px; font-size:12.5px; white-space:nowrap; border-color:#0284c7;" onclick="switchAdminTab('candidate_edit')">
+            👰 वधू प्रोफाईल संपादन
+          </button>
+          <button id="tabProfileCmsBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('profile_cms')">
             📄 शेअर बायोडाटा संपादन
           </button>
           <button id="tabSyncBtn" type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; white-space:nowrap;" onclick="switchAdminTab('sync')">
@@ -2163,8 +2166,150 @@
           </button>
         </div>
 
+        <!-- TAB 0: Candidate Profiles CMS (Edit Wrong or Missing Details) -->
+        <div id="secCandidateEditSettings">
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#166534; margin-bottom:12px; display:flex; flex-direction:column; gap:4px;">
+            <div style="font-weight:800; font-size:13.5px; display:flex; align-items:center; gap:6px;">
+              <span>👰</span>
+              <span>वधू प्रोफाईल माहिती संपादन (Candidate CMS)</span>
+            </div>
+            <div>
+              सूचीमधील कोणत्याही वधूची चुकीची किंवा अपूर्ण राहिलेली माहिती (नाव, जन्मतारीख, शिक्षण, नोकरी, गोत्र, संपर्क, फोन) येथे थेट दुरुस्त करा. केलेले बदल लगेच सेव्ह होतात.
+            </div>
+          </div>
+
+          <!-- Selector Bar -->
+          <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;">
+            <div style="flex:1 1 320px;">
+              <label class="form-label" style="font-weight:700; margin-bottom:4px; color:#0f172a;">दुरुस्तीसाठी वधू निवडा (Select Candidate):</label>
+              <select id="cmsCandidateSelect" class="form-control" style="font-weight:700; font-size:13.5px; border-color:#0284c7; background:#f0f9ff;" onchange="loadCandidateForEdit(this.value)">
+                <!-- populated dynamically -->
+              </select>
+            </div>
+            <div style="display:flex; gap:6px; align-items:flex-end;">
+              <button type="button" class="action-btn action-btn-outline" style="padding:7px 12px; font-size:12.5px; border-color:#0284c7; color:#0369a1;" onclick="downloadUpdatedCandidatesJson()" title="अपडेटेड candidates.json फाईल डाऊनलोड करा">
+                📥 candidates.json डाऊनलोड
+              </button>
+            </div>
+          </div>
+
+          <!-- Edit Form Container -->
+          <form id="cmsCandidateEditForm" onsubmit="saveCandidateEditData(event)" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+            <input type="hidden" id="editCandId"/>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #f1f5f9; padding-bottom:8px; flex-wrap:wrap; gap:6px;">
+              <div style="font-weight:800; font-size:14px; color:var(--primary); display:flex; align-items:center; gap:6px;">
+                <span>✏️</span>
+                <span id="editCandHeading">माहिती दुरुस्ती फॉर्म</span>
+              </div>
+              <span id="editCandStatusBadge" class="status-badge" style="font-size:11.5px;">-</span>
+            </div>
+
+            <!-- Row 1: Sr No, Name -->
+            <div class="cms-grid-2" style="margin-bottom:10px;">
+              <div class="form-group">
+                <label class="form-label">अ.क्र. (Serial No.):</label>
+                <input type="text" id="editCandSr" class="form-control" placeholder="उदा. १८१." required/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">उमेदवाराचे नाव:</label>
+                <input type="text" id="editCandName" class="form-control" placeholder="उदा. कु. प्रियंका (डॉली)" required/>
+              </div>
+            </div>
+
+            <!-- Row 2: Birth Date, Time, Mulgaon / Place -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:10px;">
+              <div class="form-group">
+                <label class="form-label">जन्मतारीख (Date of Birth):</label>
+                <input type="text" id="editCandDate" class="form-control" placeholder="उदा. २२-१-२०००"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">जन्म वेळ (Birth Time):</label>
+                <input type="text" id="editCandTime" class="form-control" placeholder="उदा. स. ६ वा."/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">जन्म ठिकाण / मूळगाव:</label>
+                <input type="text" id="editCandMulgaon" class="form-control" placeholder="उदा. मलकापूर / पुणे"/>
+              </div>
+            </div>
+
+            <!-- Row 3: Height, Complexion, Gotra, Mamkul, Blood -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:10px;">
+              <div class="form-group">
+                <label class="form-label">उंची (Height):</label>
+                <input type="text" id="editCandHeight" class="form-control" placeholder="उदा. ५'४''"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">वर्ण (Complexion):</label>
+                <input type="text" id="editCandComplexion" class="form-control" placeholder="उदा. गोरा / निमगोरा"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">गोत्र (Gotra):</label>
+                <input type="text" id="editCandGotra" class="form-control" placeholder="उदा. विश्वामित्र"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">मामकुळ (Mamkul):</label>
+                <input type="text" id="editCandMamkul" class="form-control" placeholder="उदा. कोलते (नरवेल)"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">रक्तगट (Blood Group):</label>
+                <input type="text" id="editCandBlood" class="form-control" placeholder="उदा. एबी+ / ओ+"/>
+              </div>
+            </div>
+
+            <!-- Row 4: Education & Job -->
+            <div class="form-group" style="margin-bottom:10px;">
+              <label class="form-label">🎓 शिक्षण, नोकरी व कंपनी / पॅकेज:</label>
+              <textarea id="editCandEdu" class="form-control" rows="3" placeholder="उदा. बी.ई. कॉम्प्युटर इंजीनियर&#10;नो-सिनियर सिस्टीम इंजी. इन्फोसिस लि. पुणे&#10;रु.६ लाख वार्षीक"></textarea>
+            </div>
+
+            <!-- Row 5: Family & Expectations -->
+            <div class="cms-grid-2" style="margin-bottom:10px;">
+              <div class="form-group">
+                <label class="form-label">👨‍👩‍👧 कुटुंब / भावंडे माहिती:</label>
+                <textarea id="editCandFam" class="form-control" rows="2" placeholder="उदा. भाऊ- १&#10;बहिण- नाही"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">🎯 अपेक्षा (Expectations):</label>
+                <textarea id="editCandExp" class="form-control" rows="2" placeholder="उदा. अनुरूप / उच्चशिक्षित / नोकरी"></textarea>
+              </div>
+            </div>
+
+            <!-- Row 6: Contact & Phones -->
+            <div class="form-group" style="margin-bottom:10px;">
+              <label class="form-label">📞 पालक व संपर्क माहिती (संपूर्ण पत्ता व नावे):</label>
+              <textarea id="editCandContact" class="form-control" rows="4" placeholder="उदा. श्री. प्रकाश वसंत झोपे&#10;रा. निंपाणा, ता.मलकापूर&#10;मो. ८२६२९५९८५८..."></textarea>
+            </div>
+
+            <div class="cms-grid-2" style="margin-bottom:14px;">
+              <div class="form-group">
+                <label class="form-label">मोबाईल नंबर (स्वल्पविरामाने वेगळे करा):</label>
+                <input type="text" id="editCandPhones" class="form-control" placeholder="उदा. 9876543210, 9420539396"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">सध्याची स्थिती (Status):</label>
+                <select id="editCandStatus" class="form-control">
+                  <option value="pending">⏳ संपर्क बाकी (Pending)</option>
+                  <option value="contacted">📞 संपर्क झाला (Contacted)</option>
+                  <option value="interested">⭐ सकारात्मक (Interested)</option>
+                  <option value="followup">⏰ पुन्हा संपर्क करावा (Follow-up)</option>
+                  <option value="not_interested">🚫 Not Interested</option>
+                  <option value="matched">💍 स्थळ जुळले (Matched)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+              <button type="button" class="action-btn action-btn-outline" onclick="closeAdminSettingsModal()">रद्द करा</button>
+              <button type="submit" class="action-btn action-btn-primary" style="background:#15803d; font-size:13px; padding:8px 18px;">
+                💾 ही प्रोफाईल माहिती सेव्ह करा
+              </button>
+            </div>
+          </form>
+        </div>
+
         <!-- TAB 1: Shareable Profile CMS & Section Builder -->
-        <div id="secProfileCmsSettings">
+        <div id="secProfileCmsSettings" style="display:none;">
           <!-- Live Info Bar -->
           <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#1e40af; margin-bottom:12px; display:flex; flex-direction:column; gap:6px;">
             <div>
@@ -3558,11 +3703,13 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       return false;
     }
 
-    let targetAdminSection = 'profile_cms';
+    let targetAdminSection = 'candidate_edit';
+    let targetAdminCandId = null;
 
-    function requestAdminAccess(targetSec) {
+    function requestAdminAccess(targetSec, targetCandId) {
       closeSideMenu();
-      targetAdminSection = targetSec || 'profile_cms';
+      targetAdminSection = targetSec || 'candidate_edit';
+      targetAdminCandId = targetCandId || null;
       document.getElementById('adminPwdInput').value = '';
       document.getElementById('pwdErrorMsg').style.display = 'none';
       document.getElementById('pwdModal').classList.add('open');
@@ -3587,7 +3734,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
         localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
         localStorage.removeItem(ADMIN_LOCKOUT_KEY);
         closePwdModal();
-        openAdminSettingsModal(targetAdminSection);
+        openAdminSettingsModal(targetAdminSection, targetAdminCandId);
         showToast('🔓 ॲक्सेस मंजूर!');
       } else {
         let attempts = parseInt(localStorage.getItem(ADMIN_ATTEMPTS_KEY) || '0', 10) + 1;
@@ -3609,9 +3756,168 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       }
     }
 
-    function openAdminSettingsModal(section) {
+    let currentEditingCandidateId = null;
+
+    function populateCmsCandidateSelect(selectedId) {
+      const sel = document.getElementById('cmsCandidateSelect');
+      if (!sel) return;
+      sel.innerHTML = '';
+      
+      const sorted = [...candidates].sort((a, b) => parseSrNo(a.sr) - parseSrNo(b.sr));
+      sorted.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `[अ.क्र. ${c.sr}] ${c.name} (${c.mulgaon || 'गाव नाही'})`;
+        if (selectedId && c.id === selectedId) opt.selected = true;
+        sel.appendChild(opt);
+      });
+
+      const targetId = selectedId || (sorted.length > 0 ? sorted[0].id : null);
+      if (targetId) {
+        sel.value = targetId;
+        loadCandidateForEdit(targetId);
+      }
+    }
+
+    function loadCandidateForEdit(candId) {
+      const cand = candidates.find(c => c.id === candId);
+      if (!cand) return;
+
+      currentEditingCandidateId = cand.id;
+      const elId = document.getElementById('editCandId');
+      if (elId) elId.value = cand.id;
+      const elSr = document.getElementById('editCandSr');
+      if (elSr) elSr.value = cand.sr || '';
+      const elName = document.getElementById('editCandName');
+      if (elName) elName.value = cand.name || '';
+      const elDate = document.getElementById('editCandDate');
+      if (elDate) elDate.value = cand.date || '';
+      const elTime = document.getElementById('editCandTime');
+      if (elTime) elTime.value = cand.time || '';
+      const elMul = document.getElementById('editCandMulgaon');
+      if (elMul) elMul.value = cand.mulgaon || '';
+      const elH = document.getElementById('editCandHeight');
+      if (elH) elH.value = cand.height || '';
+      const elC = document.getElementById('editCandComplexion');
+      if (elC) elC.value = cand.complexion || '';
+      const elG = document.getElementById('editCandGotra');
+      if (elG) elG.value = cand.gotra || '';
+      const elM = document.getElementById('editCandMamkul');
+      if (elM) elM.value = cand.mamkul || '';
+      const elB = document.getElementById('editCandBlood');
+      if (elB) elB.value = cand.blood || '';
+      const elEdu = document.getElementById('editCandEdu');
+      if (elEdu) elEdu.value = cand.edu || '';
+      const elFam = document.getElementById('editCandFam');
+      if (elFam) elFam.value = cand.fam || '';
+      const elExp = document.getElementById('editCandExp');
+      if (elExp) elExp.value = cand.exp || '';
+      const elContact = document.getElementById('editCandContact');
+      if (elContact) elContact.value = cand.contact || '';
+      const elPhones = document.getElementById('editCandPhones');
+      if (elPhones) elPhones.value = (cand.phones || []).join(', ');
+      const elStatus = document.getElementById('editCandStatus');
+      if (elStatus) elStatus.value = cand.status || 'pending';
+
+      const sInfo = STATUS_MAP[cand.status || 'pending'] || STATUS_MAP.pending;
+      const badge = document.getElementById('editCandStatusBadge');
+      if (badge) {
+        badge.textContent = `${sInfo.icon} ${sInfo.label}`;
+        badge.style.background = sInfo.bg || '#f1f5f9';
+        badge.style.color = sInfo.color || '#0f172a';
+      }
+
+      const heading = document.getElementById('editCandHeading');
+      if (heading) {
+        heading.textContent = `[अ.क्र. ${cand.sr}] ${cand.name} - संपादन`;
+      }
+    }
+
+    function saveCandidateEditData(e) {
+      if (e) e.preventDefault();
+      const candId = document.getElementById('editCandId')?.value || currentEditingCandidateId;
+      const cand = candidates.find(c => c.id === candId);
+      if (!cand) {
+        alert('उमेदवार सापडला नाही.');
+        return;
+      }
+
+      cand.sr = document.getElementById('editCandSr').value.trim();
+      cand.name = document.getElementById('editCandName').value.trim();
+      cand.date = document.getElementById('editCandDate').value.trim();
+      cand.time = document.getElementById('editCandTime').value.trim();
+      cand.mulgaon = document.getElementById('editCandMulgaon').value.trim();
+      cand.height = document.getElementById('editCandHeight').value.trim();
+      cand.complexion = document.getElementById('editCandComplexion').value.trim();
+      cand.gotra = document.getElementById('editCandGotra').value.trim();
+      cand.mamkul = document.getElementById('editCandMamkul').value.trim();
+      cand.blood = document.getElementById('editCandBlood').value.trim();
+      cand.edu = document.getElementById('editCandEdu').value.trim();
+      cand.fam = document.getElementById('editCandFam').value.trim();
+      cand.exp = document.getElementById('editCandExp').value.trim();
+      cand.contact = document.getElementById('editCandContact').value.trim();
+      cand.status = document.getElementById('editCandStatus').value;
+
+      // Re-calculate age if date changed
+      if (cand.date) {
+        const calculated = calculateAge(cand.date);
+        if (calculated) cand.age = calculated;
+      }
+
+      // Parse and clean phones
+      const rawPhones = document.getElementById('editCandPhones').value;
+      if (rawPhones) {
+        const phoneList = rawPhones.split(/[,;\n]+/).map(p => p.trim()).filter(Boolean);
+        cand.phones = phoneList;
+      }
+
+      // Persist to localStorage and sync to Firebase
+      persistData();
+      renderView();
+
+      // Attempt server save to disk (server.js)
+      fetch('/api/save-candidates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(candidates, null, 2)
+      }).catch(() => {});
+
+      closeAdminSettingsModal();
+      showToast(`✅ [अ.क्र. ${cand.sr}] ${cand.name} ची माहिती सेव्ह झाली!`);
+
+      setTimeout(() => {
+        const cardEl = document.getElementById(cand.id);
+        if (cardEl) {
+          cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          cardEl.style.transition = 'box-shadow 0.4s, transform 0.4s';
+          cardEl.style.boxShadow = '0 0 0 3px #16a34a, 0 10px 25px rgba(22,163,74,0.2)';
+          setTimeout(() => { cardEl.style.boxShadow = ''; }, 2000);
+        }
+      }, 150);
+    }
+
+    function downloadUpdatedCandidatesJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(candidates, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = "candidates.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('अपडेटेड candidates.json डाऊनलोड झाले!');
+    }
+
+    function openCandidateEditDirect(candId, event) {
+      if (event) event.stopPropagation();
+      requestAdminAccess('candidate_edit', candId);
+    }
+
+    function openAdminSettingsModal(section, targetCandId) {
       loadShareableProfileData();
       renderProfileCmsForm();
+
+      // Populate candidate selector
+      populateCmsCandidateSelect(targetCandId);
 
       document.getElementById('waGroomName').value = waSettings.groomName || '';
       document.getElementById('waGroomBirthName').value = waSettings.groomBirthName || '';
@@ -3633,7 +3939,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('waPhotoNote').value = waSettings.photoNote || '';
 
       updateWaPreview();
-      switchAdminTab(section || 'profile_cms');
+      switchAdminTab(section || 'candidate_edit');
       document.getElementById('adminSettingsModal').classList.add('open');
     }
 
@@ -3642,17 +3948,22 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     function switchAdminTab(tab) {
+      const isCandEdit = tab === 'candidate_edit';
       const isCms = tab === 'profile_cms';
       const isWa = tab === 'wa';
       const isSync = tab === 'sync';
       const isBackup = tab === 'backup';
 
+      const secCandEdit = document.getElementById('secCandidateEditSettings');
+      if (secCandEdit) secCandEdit.style.display = isCandEdit ? 'block' : 'none';
       document.getElementById('secProfileCmsSettings').style.display = isCms ? 'block' : 'none';
       document.getElementById('secWaSettings').style.display = isWa ? 'block' : 'none';
       document.getElementById('secSyncSettings').style.display = isSync ? 'block' : 'none';
       const backupSec = document.getElementById('secBackupSettings');
       if (backupSec) backupSec.style.display = isBackup ? 'block' : 'none';
 
+      const btnCandEdit = document.getElementById('tabCandidateEditBtn');
+      if (btnCandEdit) btnCandEdit.className = isCandEdit ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
       document.getElementById('tabProfileCmsBtn').className = isCms ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
       document.getElementById('tabSyncBtn').className = isSync ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
       const backupBtn = document.getElementById('tabBackupBtn');
@@ -3732,6 +4043,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             if (match) {
               return {
                 ...initCand,
+                ...match,
                 status: match.status || initCand.status,
                 shortlisted: isShort,
                 logs: match.logs || []
@@ -4431,12 +4743,15 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
 
           </div>
 
-          <div class="card-footer" style="display:flex; gap:8px; align-items:center;">
-            <button class="btn-track" style="flex:1;" onclick="openTrackModal('${c.id}')">
+          <div class="card-footer" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+            <button class="btn-track" style="flex:1 1 120px;" onclick="openTrackModal('${c.id}')">
               ✍️ संभाषण नोंद (${(c.logs || []).length})
             </button>
-            <button type="button" class="btn-not-interested btn-reject-quick ${c.status === 'not_interested' ? 'active' : ''}" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested म्हणून नोंदवा'}" style="${c.status === 'not_interested' ? 'background:#fef2f2; border:1.5px solid #f87171; color:#dc2626;' : 'background:#f8fafc; border:1px solid #cbd5e1; color:#64748b;'} border-radius:8px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;">
+            <button type="button" class="btn-not-interested btn-reject-quick ${c.status === 'not_interested' ? 'active' : ''}" onclick="toggleNotInterestedCandidate('${c.id}', event)" title="${c.status === 'not_interested' ? 'Not Interested मागे घ्या' : 'Not Interested म्हणून नोंदवा'}" style="${c.status === 'not_interested' ? 'background:#fef2f2; border:1.5px solid #f87171; color:#dc2626;' : 'background:#f8fafc; border:1px solid #cbd5e1; color:#64748b;'} border-radius:8px; padding:7px 10px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;">
               ${c.status === 'not_interested' ? '🚫 Not Interested' : 'Not Interested'}
+            </button>
+            <button type="button" class="btn-card-edit" onclick="openCandidateEditDirect('${c.id}', event)" title="माहिती दुरुस्त करा (Edit Candidate Profile)" style="background:#f1f5f9; border:1px solid #cbd5e1; color:#0f172a; border-radius:8px; padding:7px 10px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all 0.2s;" onmouseover="this.style.background='#e0f2fe'; this.style.borderColor='#7dd3fc';" onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';">
+              ✏️ संपादन
             </button>
           </div>
         `;
@@ -4512,9 +4827,14 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
             </span>
           </td>
           <td>
-            <button class="action-btn action-btn-primary" style="padding:5px 9px; font-size:12px;" onclick="openTrackModal('${c.id}')">
-              ✍️ (${logCount})
-            </button>
+            <div style="display:flex; gap:4px; align-items:center;">
+              <button class="action-btn action-btn-primary" style="padding:5px 9px; font-size:12px;" onclick="openTrackModal('${c.id}')" title="संभाषण नोंद">
+                ✍️ (${logCount})
+              </button>
+              <button type="button" class="action-btn action-btn-outline" style="padding:5px 8px; font-size:12px;" onclick="openCandidateEditDirect('${c.id}', event)" title="माहिती संपादन">
+                ✏️
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);

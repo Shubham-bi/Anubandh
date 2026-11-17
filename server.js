@@ -33,6 +33,24 @@ const server = http.createServer((req, res) => {
     });
     return;
   }
+
+  // API to save candidate data directly from Candidate CMS
+  if (req.method === 'POST' && reqPath === '/api/save-candidates') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const parsed = JSON.parse(body); // validate JSON
+        fs.writeFileSync(path.join(__dirname, 'candidates.json'), JSON.stringify(parsed, null, 2), 'utf8');
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, message: 'candidates.json saved successfully!' }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+    });
+    return;
+  }
   
   const filePath = path.join(__dirname, reqPath);
   const ext = path.extname(filePath).toLowerCase();

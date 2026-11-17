@@ -194,12 +194,16 @@ try {
   assert(shubhamCode.includes('DEFAULT_PROFILE_DATA') && shubhamCode.includes('renderProfile'), "shubham-kharche.html supports dynamic profile rendering");
 
   assert(indexCode.includes('secProfileCmsSettings'), "index.html contains Shareable Profile CMS section");
+  assert(indexCode.includes('secCandidateEditSettings'), "index.html contains Candidate Profiles CMS section");
   assert(indexCode.includes('saveProfileCmsData'), "index.html contains saveProfileCmsData handler");
+  assert(indexCode.includes('saveCandidateEditData') && indexCode.includes('loadCandidateForEdit'), "index.html contains handlers to load and edit candidate profile details");
+  assert(indexCode.includes('openCandidateEditDirect') && indexCode.includes('btn-card-edit'), "index.html provides direct edit buttons on candidate cards");
   assert(indexCode.includes('confirmAddCmsSection'), "index.html supports adding custom sections dynamically");
   assert(indexCode.includes('deleteCmsSection'), "index.html supports removing sections dynamically");
 
   const serverCode = fs.readFileSync(path.join(repoDir, 'server.js'), 'utf8');
   assert(serverCode.includes('/api/save-profile'), "server.js provides POST /api/save-profile endpoint");
+  assert(serverCode.includes('/api/save-candidates'), "server.js provides POST /api/save-candidates endpoint");
 
   const swCode2 = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(swCode2.includes('profile_data.json'), "sw.js caches profile_data.json");
