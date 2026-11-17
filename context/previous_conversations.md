@@ -4617,3 +4617,26 @@ refer this for design [सोबत पत्रिका फोटो जोड
 
 ---
 
+## 💬 संभाषण फेरी 106 [Step 5510]
+
+**वेळ (Timestamp):** `2026-11-17T12:40:00Z`
+
+### 👤 वापरकर्त्याची विचारणा (User Request):
+
+```text
+in message while sharing dont include name in () 
+insted कु. अनुष्का (देवयानी) share कु. अनुष्का only
+dont include  गोत्र: ${groomGotra} in any message
+follow bellow sequence
+```
+
+### 🤖 सहाय्यकाचा प्रतिसाद व अंमलबजावणी (Assistant Response & Actions):
+
+1. **नावांमधील कंसातील भाग वगळणे:** `messages.js` मध्ये Regex वापरून `कु. अनुष्का (देवयानी)` चे रुपांतर थेट `कु. अनुष्का` असे केले.
+2. **गोत्र पूर्णपणे वगळणे:** प्रस्ताव संदेशातून `• गोत्र: ${groomGotra}` ची ओळ काढून टाकली.
+3. **अचूक क्रमवारीची अंमलबजावणी:** युझरच्या निर्देशानुसार प्रथम वराची थोडक्यात माहिती (`*मुलाची थोडक्यात माहिती:*`), त्यानंतर बायोडाटा लिंक असा सुसंगत क्रम ठेवला.
+4. **पडताळणी:** [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) मधील सर्व चाचण्या अद्ययावत करून १४७/१४७ चाचण्या उत्तीर्ण झाल्या.
+5. सर्व बदल GitHub `origin/main` वर पुश केले.
+
+---
+

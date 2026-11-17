@@ -30,15 +30,19 @@
    * १. उमेदवार प्रस्ताव मेसेज (मुलीच्या पालकांना पाठवताना - Candidate Proposal Message)
    * Parameters:
    * - girlFatherName / guardianName : मुलीच्या वडिलांचे/पालकांचे नाव (उदा. गजानन वामन वराडे)
-   * - girlName / candidateName       : मुलीचे नाव (उदा. अनुष्का)
+   * - girlName / candidateName       : मुलीचे नाव (उदा. अनुष्का किंवा कु. अनुष्का (देवयानी))
    * - listNumber / srNo              : सूचीमधील अ.क्र. (उदा. १७१)
    */
   function buildCandidateProposalMessage(params = {}) {
     const father = (params.girlFatherName || params.guardianName || '').trim();
-    const girl = (params.girlName || params.candidateName || '').trim();
-    const listNo = String(params.listNumber !== undefined && params.listNumber !== null ? params.listNumber : (params.srNo || '')).replace(/\.$/, '').trim();
+    let girl = (params.girlName || params.candidateName || '').trim();
 
-    const candDisplay = girl ? (girl.startsWith('कु.') ? girl : `कु. ${girl}`) : '';
+    // In message while sharing don't include name in () -> e.g. कु. अनुष्का (देवयानी) -> कु. अनुष्का only
+    girl = girl.replace(/\s*\([^)]*\)/g, '').trim();
+    girl = girl.replace(/^कु\.?\s*/, '').trim();
+
+    const candDisplay = girl ? `कु. ${girl}` : '';
+    const listNo = String(params.listNumber !== undefined && params.listNumber !== null ? params.listNumber : (params.srNo || '')).replace(/\.$/, '').trim();
     const srPart = listNo ? ` (अ.क्र. ${listNo}.)` : '';
 
     let introLine = '';
@@ -60,13 +64,12 @@
     const groomCompany = params.groomCompany || DEFAULT_GROOM.company;
     const groomSalary = params.groomSalary || DEFAULT_GROOM.salary;
     const groomDob = params.groomDob || DEFAULT_GROOM.dob;
-    const groomGotra = params.groomGotra || DEFAULT_GROOM.gotra;
     const url = params.biodataUrl || BIODATA_URL;
 
     // Optional CMS Custom Template override
     if (params.customTemplate && params.customTemplate.trim()) {
       const vars = {
-        candidate_name: girl,
+        candidate_name: candDisplay || girl,
         sr_no: listNo,
         guardian_name: father,
         intro_line: introLine,
@@ -76,7 +79,6 @@
         groom_company: groomCompany,
         groom_salary: groomSalary,
         groom_dob: groomDob,
-        groom_gotra: groomGotra,
         profile_url: url
       };
       return params.customTemplate.replace(/\{(\w+)\}/g, (match, key) => (vars[key] !== undefined ? vars[key] : match));
@@ -88,16 +90,15 @@ ${introLine}
 
 भ्रातृमंडळ वधू-वर सूचीमध्ये आपल्या मुलीची विवाहासाठी दिलेली माहिती आम्ही वाचली. तिचे स्थळ आम्हाला योग्य वाटल्यामुळे आपणाशी संपर्क साधत आहोत.
 
-मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:
-${url}
-
-*थोडक्यात माहिती:*
+*मुलाची थोडक्यात माहिती:*
 • नाव: चि. ${groomName}
 • शिक्षण: ${groomEdu}
 • नोकरी: ${groomJob}, ${groomCompany}
 • वार्षिक पॅकेज: ${groomSalary}
 • जन्मतारीख: ${groomDob}
-• गोत्र: ${groomGotra}
+
+मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:
+${url}
 
 आपणासही आमचे स्थळ अनुकूल वाटल्यास पुढील चर्चेसाठी कृपया संपर्क साधावा.
 

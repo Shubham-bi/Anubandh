@@ -125,20 +125,21 @@ if (scriptMatch) {
 
     // Test WhatsApp text generator
     const buildWhatsAppTextFn = vm.runInContext('buildWhatsAppText', sandbox);
-    const sampleCand = initialData[1]; // cand_1 (कु. प्रियंका)
+    const sampleCand = initialData[1]; // cand_1 (कु. प्रियंका (डॉली))
     const waMsg = buildWhatsAppTextFn(sampleCand.name, sampleCand.sr);
     assert(waMsg.includes('शुभम अनिल खर्चे'), 'WhatsApp message contains groom name (शुभम अनिल खर्चे)');
     assert(waMsg.includes('B.E. Mechanical'), 'WhatsApp message contains education (B.E. Mechanical)');
     assert(waMsg.includes('Shaurya Technosoft'), 'WhatsApp message contains company name');
     assert(waMsg.includes('7.8 LPA'), 'WhatsApp message contains salary (7.8 LPA)');
-    assert(waMsg.includes('वशिष्ठ'), 'WhatsApp message contains gotra (वशिष्ठ)');
+    assert(!waMsg.includes('गोत्र:'), 'WhatsApp message excludes gotra per user requirement');
     assert(!waMsg.includes('खर्चे परिवार (मो. 9420539396 / 9422152231)'), 'WhatsApp message excludes redundant family phone footer per user requirement');
     assert(waMsg.includes('धन्यवाद! 🙏'), 'WhatsApp message cleanly ends with polite closing (धन्यवाद! 🙏)');
-    assert(waMsg.includes(sampleCand.name), 'WhatsApp message incorporates target candidate name');
+    assert(waMsg.includes('कु. प्रियंका') && !waMsg.includes('(डॉली)'), 'WhatsApp message excludes name in parentheses (कु. प्रियंका instead of कु. प्रियंका (डॉली))');
 
     // Test WhatsApp text generator with guardian name
     const waMsgWithGuardian = buildWhatsAppTextFn(sampleCand.name, sampleCand.sr, 'श्री. प्रकाश वसंत झोपे');
-    assert(waMsgWithGuardian.includes('आम्ही श्री. प्रकाश वसंत झोपे यांची मुलगी कु. प्रियंका (डॉली)'), 'WhatsApp message mentions guardian name and candidate name');
+    assert(waMsgWithGuardian.includes('आम्ही श्री. प्रकाश वसंत झोपे यांची मुलगी कु. प्रियंका (अ.क्र.'), 'WhatsApp message mentions guardian name and clean candidate name without parentheses');
+    assert(waMsgWithGuardian.indexOf('*मुलाची थोडक्यात माहिती:*') < waMsgWithGuardian.indexOf('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:'), 'WhatsApp message follows sequence: groom info before biodata link');
 
     // Test password check logic
     const adminPassword = vm.runInContext('ADMIN_PASSWORD', sandbox);
@@ -341,10 +342,13 @@ try {
   const messagesMod = require('./messages.js');
   const testProposal = messagesMod.buildCandidateProposalMessage({
     girlFatherName: 'गजानन वामन वराडे',
-    girlName: 'अनुष्का',
+    girlName: 'अनुष्का (देवयानी)',
     listNumber: '१७१'
   });
   assert(testProposal.includes('आम्ही श्री. गजानन वामन वराडे यांची मुलगी कु. अनुष्का (अ.क्र. १७१.) हिच्यासाठी आपल्याशी संपर्क साधत आहोत.'), 'messages.js parameterizes girl father name, girl name, and list number');
+  assert(!testProposal.includes('(देवयानी)'), 'messages.js excludes name in parentheses per user requirement');
+  assert(!testProposal.includes('गोत्र:'), 'messages.js excludes gotra per user requirement');
+  assert(testProposal.indexOf('*मुलाची थोडक्यात माहिती:*') < testProposal.indexOf('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js follows requested sequence: groom info before biodata link');
   assert(testProposal.includes('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:\nhttps://shubham-bi.github.io/Anubandh/biodata.html'), 'messages.js candidate proposal contains exact requested biodata link text');
 
   const testGeneric = messagesMod.buildGenericShareMessage();
