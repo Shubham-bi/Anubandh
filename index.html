@@ -2282,14 +2282,6 @@
       </div>
 
       <div class="drawer-body">
-        <div class="menu-item" onclick="openBiodataModal(); closeSideMenu();">
-          <span>🤵</span>
-          <span>वधू पक्षासाठी प्रोफाईल</span>
-        </div>
-        <div class="menu-item" onclick="openCanvasCardModal(); closeSideMenu();">
-          <span>🖼️</span>
-          <span>बायोडाटा इमेज कार्ड</span>
-        </div>
         <div class="menu-item" onclick="shareProfileOnWhatsApp(); closeSideMenu();">
           <span>💬</span>
           <span>WhatsApp शेअर</span>
@@ -2298,16 +2290,8 @@
           <span>🔗</span>
           <span>कॉपी लिंक</span>
         </div>
-        <div class="menu-item" onclick="openBioViewModal(); closeSideMenu();">
-          <span>🖼️</span>
-          <span>मूळ बायोडाटा फोटो</span>
-        </div>
-        <div class="menu-item" onclick="window.open('./shubham_biodata_redesigned.html', '_blank'); closeSideMenu();">
-          <span>📜</span>
-          <span>पारंपरिक पत्रिका (Redesigned)</span>
-        </div>
 
-        <div class="menu-item" id="menuInstallBtn" style="display:none;" onclick="triggerPwaInstall(); closeSideMenu();">
+        <div class="menu-item" id="menuInstallBtn" onclick="triggerPwaInstall(); closeSideMenu();">
           <span>📲</span>
           <span>मोबाईल ॲप इन्स्टॉल</span>
         </div>
@@ -2383,6 +2367,30 @@
       </div>
       <div class="modal-content-body">
         
+        <!-- Moved Biodata & Patrika Quick Access Actions (वधू पक्षासाठी प्रोफाईल, बायोडाटा कार्ड, मूळ फोटो, पारंपरिक पत्रिका) -->
+        <div class="admin-quick-biodata-bar" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; padding:10px 14px; align-items:center;">
+          <div style="font-size:12.5px; font-weight:800; color:#334155; display:inline-flex; align-items:center; gap:5px; margin-right:4px;">
+            <span>📑</span>
+            <span>बायोडाटा व पत्रिका पर्याय:</span>
+          </div>
+          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; background:#fff; font-weight:700; display:inline-flex; align-items:center; gap:5px;" onclick="openBiodataModal()" title="वधू पक्षासाठी तयार केलेले प्रोफाईल वेबपेज पहा">
+            <span>🤵</span>
+            <span>वधू पक्षासाठी प्रोफाईल</span>
+          </button>
+          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; background:#fff; font-weight:700; display:inline-flex; align-items:center; gap:5px;" onclick="openCanvasCardModal()" title="बायोडाटा इमेज कार्ड तयार करा">
+            <span>🖼️</span>
+            <span>बायोडाटा इमेज कार्ड</span>
+          </button>
+          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; background:#fff; font-weight:700; display:inline-flex; align-items:center; gap:5px;" onclick="openBioViewModal()" title="मूळ हस्तलिखित/स्कॅन केलेला बायोडाटा फोटो पहा">
+            <span>🖼️</span>
+            <span>मूळ बायोडाटा फोटो</span>
+          </button>
+          <button type="button" class="action-btn action-btn-outline" style="padding:6px 12px; font-size:12.5px; background:#fff; font-weight:700; display:inline-flex; align-items:center; gap:5px;" onclick="window.open('./shubham_biodata_redesigned.html', '_blank')" title="पारंपरिक रीडिझाइन केलेली विवाह पत्रिका उघडा">
+            <span>📜</span>
+            <span>पारंपरिक पत्रिका (Redesigned)</span>
+          </button>
+        </div>
+
         <!-- Modern Segmented Pill Tabs Navigation -->
         <div class="cms-nav-scroll">
           <button id="tabCandidateEditBtn" type="button" class="cms-nav-tab-btn cms-nav-active action-btn-primary" onclick="switchAdminTab('candidate_edit')">

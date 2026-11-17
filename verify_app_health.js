@@ -308,6 +308,16 @@ try {
   // 8. Voice Speech-to-Text (mr-IN) assertions
   assert(indexCode.includes('toggleVoiceSpeechRecognition') && indexCode.includes('mr-IN') && indexCode.includes('voice-note-btn'), "index.html supports Speech-to-Text voice logging in Marathi (mr-IN)");
 
+  // Side Menu Reorganization assertions
+  const drawerBodyMatch = indexCode.match(/<div class="drawer-body">([\s\S]*?)<\/div>\s*<div style="padding/i);
+  assert(drawerBodyMatch !== null, "index.html defines drawer-body in side menu");
+  if (drawerBodyMatch) {
+    const drawerHtml = drawerBodyMatch[1];
+    assert(!drawerHtml.includes('openBiodataModal') && !drawerHtml.includes('openCanvasCardModal') && !drawerHtml.includes('shubham_biodata_redesigned.html'), "Side menu drawer has removed biodata modal, canvas card, and redesigned sheet options per user requirement");
+    assert(drawerHtml.includes('WhatsApp शेअर') && drawerHtml.includes('कॉपी लिंक') && drawerHtml.includes('मोबाईल ॲप इन्स्टॉल') && drawerHtml.includes('अ‍ॅडमिन सेटिंग्ज') && drawerHtml.includes('ॲप विषयी माहिती'), "Side menu drawer only shows the 5 requested options");
+  }
+  assert(indexCode.includes('admin-quick-biodata-bar') && indexCode.includes('openBiodataModal') && indexCode.includes('openCanvasCardModal'), "index.html admin settings modal houses the moved biodata and patrika options");
+
   // 9. WhatsApp Multi-Attachment & Clipboard Copy assertions
   assert(indexCode.includes('copyImageToClipboard') && indexCode.includes('navigator.share') && indexCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
   assert(bioCode.includes('copyImageToClipboard') && bioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");

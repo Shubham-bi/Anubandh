@@ -4640,3 +4640,57 @@ follow bellow sequence
 
 ---
 
+## 💬 संभाषण फेरी 107 [Step 5590]
+
+**वेळ (Timestamp):** `2026-11-17T12:48:00Z`
+
+### 👤 वापरकर्त्याची विचारणा (User Request):
+
+```text
+in side menu only show bellow options
+WhatsApp शेअर
+🔗
+कॉपी लिंक
+🖼️
+
+मोबाईल ॲप इन्स्टॉल
+⚙️
+अॅडमिन सेटिंग्ज
+🔒 पासवर्ड
+ℹ️
+ॲप विषयी माहिती
+
+
+move bellow option into अॅडमिन सेटिंग्ज
+🤵
+वधू पक्षासाठी प्रोफाईल
+🖼️
+बायोडाटा इमेज कार्ड
+💬
+मूळ बायोडाटा फोटो
+📜
+पारंपरिक पत्रिका (Redesigned)
+📲
+```
+
+### 🤖 सहाय्यकाचा प्रतिसाद व अंमलबजावणी (Assistant Response & Actions):
+
+1. **साइड मेन्यूचे सरलीकरण (`index.html`):**
+   - साइड मेन्यू ड्रॉवर (`#sideMenuOverlay .drawer-body`) मधून ४ पर्याय हटवून फक्त खालील ५ पर्याय ठेवले:
+     - `💬 WhatsApp शेअर`
+     - `🔗 कॉपी लिंक`
+     - `📲 मोबाईल ॲप इन्स्टॉल`
+     - `⚙️ अॅडमिन सेटिंग्ज 🔒 पासवर्ड`
+     - `ℹ️ ॲप विषयी माहिती`
+2. **बायोडाटा पर्याय ॲडमिन सेटिंग्जमध्ये हलवले:**
+   - खालील चारही पर्याय थेट `#adminSettingsModal` च्या शीर्षभागी `.admin-quick-biodata-bar` मध्ये समाविष्ट केले:
+     - `🤵 वधू पक्षासाठी प्रोफाईल` (`openBiodataModal()`)
+     - `🖼️ बायोडाटा इमेज कार्ड` (`openCanvasCardModal()`)
+     - `🖼️ मूळ बायोडाटा फोटो` (`openBioViewModal()`)
+     - `📜 पारंपरिक पत्रिका (Redesigned)` (`window.open('./shubham_biodata_redesigned.html', '_blank')`)
+3. **चाचणी व पडताळणी:**
+   - [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) मध्ये साइड मेन्यू स्ट्रक्चरच्या नवीन चाचण्या जोडल्या — **१५१/१५१ चाचण्या १००% उत्तीर्ण**.
+   - सर्व बदल GitHub `origin/main` वर सुरक्षितपणे पुश केले.
+
+---
+
