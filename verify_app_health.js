@@ -25,7 +25,8 @@ const requiredFiles = [
   'sw.js',
   'icon.svg',
   'biodata.html',
-  'shubham-kharche.html',
+  'shubham_biodata_redesigned.html',
+  'shubham_biodata_redesigned.png',
   'shubham_kharche_biodata.jpg',
   'candidates.json',
   'server.js',
@@ -162,9 +163,7 @@ try {
   const bioCode = fs.readFileSync(path.join(repoDir, 'biodata.html'), 'utf8');
   assert(!bioCode.includes("PROFILE_PASS"), "biodata.html is open to all without password");
   assert(bioCode.includes('shubham_kharche_biodata.jpg'), "biodata.html links to original biodata photo");
-  
-  const shubhamCode = fs.readFileSync(path.join(repoDir, 'shubham-kharche.html'), 'utf8');
-  assert(!shubhamCode.includes("PROFILE_PASS"), "shubham-kharche.html is open to all without password");
+  assert(bioCode.includes('contacts-list') && bioCode.includes('elder-row'), "biodata.html shows contacts in a clean list layout instead of cards");
 
   // 6. Validate Main Portal Authentication & App Install Banner & SVG Up Arrow
   const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
@@ -191,7 +190,6 @@ try {
   assert(profileJson && profileJson.hero && Array.isArray(profileJson.sections), "profile_data.json contains valid hero and sections");
 
   assert(bioCode.includes('DEFAULT_PROFILE_DATA') && bioCode.includes('renderProfile'), "biodata.html supports dynamic profile rendering");
-  assert(shubhamCode.includes('DEFAULT_PROFILE_DATA') && shubhamCode.includes('renderProfile'), "shubham-kharche.html supports dynamic profile rendering");
 
   assert(indexCode.includes('secProfileCmsSettings'), "index.html contains Shareable Profile CMS section");
   assert(indexCode.includes('secCandidateEditSettings'), "index.html contains Candidate Profiles CMS section");
@@ -212,14 +210,10 @@ try {
   assert(indexCode.includes('contact-person-name') && indexCode.includes('contact-person-addr'), "index.html defines contact-person-name and contact-person-addr classes");
   assert(indexCode.includes('addrStartIdx') || indexCode.includes('raMatch'), "index.html implements name and address line separation for contacts");
 
-  // WhatsApp Hyperlink & Share Shubham_Kharche assertions
-  assert(bioCode.includes('Shubham_Kharche'), "biodata.html uses link name Shubham_Kharche");
+  // WhatsApp Profile Share & Hyperlink options assertions
   assert(bioCode.includes('shareProfileOnWhatsApp') && bioCode.includes('copyHyperlink'), "biodata.html has WhatsApp share and hyperlink copy options");
   assert(!bioCode.includes('class="sticky-btn-call"') && !bioCode.includes('class="sticky-btn-wa"'), "biodata.html has removed bottom call and whatsapp direct chat options");
-  assert(shubhamCode.includes('shareProfileOnWhatsApp') && shubhamCode.includes('copyHyperlink'), "shubham-kharche.html has WhatsApp share and hyperlink copy options");
-  assert(indexCode.includes('shareProfileOnWhatsApp') && indexCode.includes('copyProfileHyperlink'), "index.html provides options to share profile as Shubham_Kharche");
-  assert(indexCode.includes('Shubham_Kharche'), "index.html WhatsApp message formats profile link with Shubham_Kharche");
-  assert(fs.existsSync(path.join(repoDir, 'Shubham_Kharche.html')), "Shubham_Kharche.html vanity route exists");
+  assert(indexCode.includes('shareProfileOnWhatsApp') && indexCode.includes('copyProfileHyperlink'), "index.html provides options to share profile");
 
   // Track Modal (संभाषण नोंद) Enhanced Screen assertions
   assert(indexCode.includes('phone-touch-row') && indexCode.includes('quickContactChips'), "index.html defines phone-touch-row and quick contact chips");
@@ -273,11 +267,8 @@ try {
   const currentSwCode = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(!currentSwCode.includes('datalab-convert-Suchi-SHortlist.html') && !currentSwCode.includes('matrimonial-tracker-app.html'), "sw.js focuses on index.html and no longer caches redundant secondary files");
 
-  // Primary master synchronization
-  const bioA = fs.readFileSync('biodata.html');
-  const bioB = fs.readFileSync('shubham-kharche.html');
-  const bioC = fs.readFileSync('Shubham_Kharche.html');
-  assert(bioA.equals(bioB) && bioA.equals(bioC), "Primary master biodata.html is 100% synchronized with shubham-kharche.html and Shubham_Kharche.html");
+  // Primary master single file
+  assert(fs.existsSync(path.join(repoDir, 'biodata.html')), "Primary master biodata.html is the single standalone biodata file");
 
   // 1. Instant / Seamless In-App Biodata Viewer assertions
   assert(indexCode.includes('id="biodataModal"') && indexCode.includes('openBiodataModal') && indexCode.includes('closeBiodataModal'), "index.html defines seamless in-app biodataModal and handlers");
@@ -305,9 +296,9 @@ try {
   assert(indexCode.includes('toggleNotInterestedInsideTrackModal') && indexCode.includes('updateTrackModalNotInterestedBtn'), "index.html provides Not Interested toggle inside trackModal");
   assert(indexCode.includes('onclick="toggleNotInterestedCandidate(\'${c.id}\', event)"'), "index.html table view provides quick Not Interested toggle");
 
-  // 7. Accessibility (Dark Mode & Font Scalability) assertions
-  assert(indexCode.includes('body.theme-dark') && indexCode.includes('toggleDarkMode') && indexCode.includes('initAccessibilitySettings'), "index.html supports persistent Dark Mode with toggle and CSS variables");
-  assert(indexCode.includes('data-font-size') && indexCode.includes('setFontSize') && indexCode.includes('cycleFontSize'), "index.html supports 3-tier Font Size scalability (A-/A/A+)");
+  // 7. Clean Default Light Mode assertions (No Dark Mode or Font Size buttons)
+  assert(!indexCode.includes('id="headerThemeToggleBtn"') && !indexCode.includes('id="headerFontSizeBtn"'), "index.html enforces default clean light mode without theme toggle or font size buttons");
+  assert(!indexCode.includes('id="drawerDarkModeBtn"') && !indexCode.includes('id="fsBtnSmall"'), "index.html drawer has removed dark mode and font size toggle functionality");
 
   // 8. Voice Speech-to-Text (mr-IN) assertions
   assert(indexCode.includes('toggleVoiceSpeechRecognition') && indexCode.includes('mr-IN') && indexCode.includes('voice-note-btn'), "index.html supports Speech-to-Text voice logging in Marathi (mr-IN)");
@@ -321,6 +312,7 @@ try {
   assert(fs.existsSync(redesignedPath), "shubham_biodata_redesigned.html exists");
   const redesignedCode = fs.readFileSync(redesignedPath, 'utf8');
   assert(redesignedCode.includes('shareOnWhatsAppAsImage') && redesignedCode.includes('downloadSheetImage') && redesignedCode.includes('copySheetImageToClipboard'), "shubham_biodata_redesigned.html provides WhatsApp image sharing, download, and clipboard copy actions");
+  assert(redesignedCode.includes('contact-item') && redesignedCode.includes('contact-idx'), "shubham_biodata_redesigned.html displays contacts in a clean list layout instead of cards");
   const redesignedImgPath = path.join(repoDir, 'shubham_biodata_redesigned.png');
   assert(fs.existsSync(redesignedImgPath) && fs.statSync(redesignedImgPath).size > 10000, "shubham_biodata_redesigned.png exists and is a valid image asset (>10KB)");
   assert(indexCode.includes('shubham_biodata_redesigned.png') && indexCode.includes('shubham_biodata_redesigned.html'), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");

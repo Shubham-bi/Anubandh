@@ -120,20 +120,40 @@
     font-size: 14px;
   }
   .contacts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px 2px;
   }
-  .contact {
-    padding: 10px 12px;
-    border: 1px solid #e6ddd5;
-    border-radius: 7px;
-    background: #fffdf9;
-    font-size: 14px;
-    line-height: 1.65;
+  .contact-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    border-bottom: 1px dashed #e6ddd5;
+    padding-bottom: 6px;
   }
-  .contact-name { font-weight: 600; }
-  .phone { color: #8f452f; font-weight: 600; letter-spacing: .2px; }
+  .contact-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .contact-idx {
+    font-weight: 700;
+    color: #8f452f;
+    min-width: 22px;
+  }
+  .contact-name { font-weight: 700; color: var(--ink); }
+  .contact-details {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .contact-place { color: var(--muted); }
+  .contact-sep { color: #c9b8a9; }
+  .phone { color: #8f452f; font-weight: 700; letter-spacing: .2px; white-space: nowrap; }
   .bottom-rule {
     width: 42%;
     height: 1px;
@@ -321,10 +341,42 @@
   <section class="section" aria-labelledby="contact-title">
     <h2 class="section-title" id="contact-title">संपर्क</h2>
     <div class="contacts">
-      <div class="contact"><div class="contact-name">श्री. विजय पुंजाजी खर्चे</div><div>शेलगाव बाजार</div><div class="phone">मो. नं. 9420539396</div></div>
-      <div class="contact"><div class="contact-name">श्री. गजानन नरहरी खर्चे</div><div>शेलगाव बाजार</div><div class="phone">मो. नं. 9422152231</div></div>
-      <div class="contact"><div class="contact-name">श्री. महेंद्र प्रल्हाद पाटील</div><div>मलकापूर</div><div class="phone">मो. नं. 9921639872</div></div>
-      <div class="contact"><div class="contact-name">श्री. उमेश एकनाथ फेंगडे</div><div>वाडी- पोफळी</div><div class="phone">मो. नं. 9604458015</div></div>
+      <div class="contact-item">
+        <span class="contact-idx">१.</span>
+        <div class="contact-details">
+          <span class="contact-name">श्री. विजय पुंजाजी खर्चे</span>
+          <span class="contact-place">(शेलगाव बाजार)</span>
+          <span class="contact-sep">•</span>
+          <span class="phone">मो. नं. ९४२०५३९३९६</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-idx">२.</span>
+        <div class="contact-details">
+          <span class="contact-name">श्री. गजानन नरहरी खर्चे</span>
+          <span class="contact-place">(शेलगाव बाजार)</span>
+          <span class="contact-sep">•</span>
+          <span class="phone">मो. नं. ९४२२१५२२३१</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-idx">३.</span>
+        <div class="contact-details">
+          <span class="contact-name">श्री. महेंद्र प्रल्हाद पाटील</span>
+          <span class="contact-place">(मलकापूर)</span>
+          <span class="contact-sep">•</span>
+          <span class="phone">मो. नं. ९९२१६३९८७२</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-idx">४.</span>
+        <div class="contact-details">
+          <span class="contact-name">श्री. उमेश एकनाथ फेंगडे</span>
+          <span class="contact-place">(वाडी-पोफळी)</span>
+          <span class="contact-sep">•</span>
+          <span class="phone">मो. नं. ९६०४४५८०१५</span>
+        </div>
+      </div>
     </div>
   </section>
   <div class="bottom-rule"></div>
@@ -354,14 +406,12 @@
 
 <script src="./html2canvas.min.js"></script>
 <script>
-  const PROPOSAL_TEXT = `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव (बायोडाटा)*
+  const PROPOSAL_TEXT = `*चि. शुभम अनिल खर्चे | विवाह परिचय पत्रिका (बायोडाटा)*
 (B.E. Mechanical • Sr. QA Engineer, Pune)
 
 सस्नेह नमस्कार 🙏
-खर्चे परिवारातर्फे चि. शुभम खर्चे यांचा सविस्तर डिजिटल बायोडाटा पाहण्यासाठी खालील लिंकवर क्लिक करा:
-👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche
-
-(टीप: सोबत मूळ विवाह परिचय पत्रिकेचा फोटो जोडला आहे.)`;
+खर्चे परिवारातर्फे चि. शुभम अनिल खर्चे यांची विवाह परिचय पत्रिका सोबत जोडली आहे.
+कृपया पत्रिका फोटोचे अवलोकन करावे, ही नम्र विनंती.`;
 
   let toastTimer = null;
   function showToast(msg) {
@@ -397,7 +447,7 @@
     showToast('⏳ इमेज तयार होत आहे...');
     try {
       const blob = await generateSheetBlob();
-      const file = new File([blob], 'Shubham_Kharche_Biodata.png', { type: 'image/png' });
+      const file = new File([blob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
 
       // Level 1: Native Mobile Share
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -440,7 +490,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Shubham_Kharche_Biodata.png';
+      a.download = 'shubham_biodata_redesigned.png';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

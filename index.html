@@ -37,117 +37,6 @@
       --base-font-size: 15px;
     }
 
-    /* Dark Theme CSS Variables & Component Overrides */
-    body.theme-dark {
-      --bg: #0b1120;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --primary-light: #4c0519;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    }
-    body.theme-dark .portal-header {
-      background: linear-gradient(135deg, #1f040b 0%, #4c0519 50%, #881337 100%);
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
-    }
-    body.theme-dark .cand-card,
-    body.theme-dark .modal-box,
-    body.theme-dark .menu-drawer,
-    body.theme-dark .cms-card,
-    body.theme-dark .cms-sec-card,
-    body.theme-dark .table-view-container,
-    body.theme-dark .contact-card {
-      background: var(--card-bg) !important;
-      border-color: var(--border) !important;
-      color: var(--text) !important;
-    }
-    body.theme-dark .status-pill,
-    body.theme-dark .view-toggle-btn,
-    body.theme-dark .action-btn-outline,
-    body.theme-dark .hbtn-menu {
-      background: #1e293b;
-      border-color: var(--border);
-      color: #f1f5f9;
-    }
-    body.theme-dark .status-pill.active {
-      background: var(--primary) !important;
-      color: #ffffff !important;
-    }
-    body.theme-dark .form-control {
-      background: #0f172a !important;
-      color: #f8fafc !important;
-      border-color: #334155 !important;
-    }
-    body.theme-dark .form-control:focus {
-      border-color: #f43f5e !important;
-    }
-    body.theme-dark .modal-overlay.full-page-view,
-    body.theme-dark .modal-overlay.full-page-view .modal-box {
-      background: #0b1120 !important;
-    }
-    body.theme-dark .modal-overlay.full-page-view .modal-head {
-      background: #1e293b !important;
-      border-color: #334155 !important;
-    }
-    body.theme-dark .cms-sec-head,
-    body.theme-dark .cms-cand-picker-box {
-      background: #0f172a !important;
-      border-color: #1e3a8a !important;
-    }
-    body.theme-dark .cms-nav-tab-btn {
-      background: #1e293b !important;
-      border-color: #334155 !important;
-      color: #cbd5e1 !important;
-    }
-    body.theme-dark table th {
-      background: #0f172a !important;
-      color: #cbd5e1 !important;
-      border-color: #334155 !important;
-    }
-    body.theme-dark table td {
-      border-color: #334155 !important;
-      color: #f1f5f9 !important;
-    }
-    body.theme-dark table tr:hover td {
-      background: #1e293b !important;
-    }
-    body.theme-dark .drawer-head {
-      background: #1e293b !important;
-      border-color: #334155 !important;
-    }
-    body.theme-dark .menu-item {
-      border-color: #334155 !important;
-      color: #f1f5f9 !important;
-    }
-    body.theme-dark .menu-item:hover {
-      background: #0f172a !important;
-    }
-    body.theme-dark .quick-status-scroll {
-      background: transparent;
-    }
-
-    /* Font Size Scalability */
-    body[data-font-size="small"] {
-      font-size: 13.5px !important;
-    }
-    body[data-font-size="medium"] {
-      font-size: 16.5px !important;
-    }
-    body[data-font-size="large"] {
-      font-size: 18.5px !important;
-    }
-    body[data-font-size="large"] .cand-title {
-      font-size: 18px !important;
-    }
-    body[data-font-size="large"] .card-grid-row {
-      font-size: 15.5px !important;
-    }
-    body[data-font-size="large"] .form-control {
-      font-size: 16px !important;
-    }
-
     /* Voice Recording Note Styles */
     .voice-note-btn {
       background: #ffffff;
@@ -163,11 +52,6 @@
       gap: 5px;
       transition: all 0.2s ease;
     }
-    body.theme-dark .voice-note-btn {
-      background: #1e293b;
-      border-color: #334155;
-      color: #f1f5f9;
-    }
     .voice-note-btn:hover {
       background: #f1f5f9;
       border-color: #94a3b8;
@@ -177,11 +61,6 @@
       border-color: #ef4444 !important;
       color: #b91c1c !important;
       animation: pulseMicGlow 1.2s infinite alternate ease-in-out;
-    }
-    body.theme-dark .voice-note-btn.listening {
-      background: #450a0a !important;
-      border-color: #dc2626 !important;
-      color: #fca5a5 !important;
     }
     @keyframes pulseMicGlow {
       from { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(1); }
@@ -199,11 +78,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-    body.theme-dark .voice-status-bar {
-      background: #450a0a;
-      border-color: #7f1d1d;
-      color: #fca5a5;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -2242,14 +2116,6 @@
       </div>
 
       <div class="header-actions">
-        <!-- Font Size Stepper -->
-        <button class="hbtn-menu" id="headerFontSizeBtn" onclick="cycleFontSize()" title="अक्षरांचा आकार बदला (A- / A / A+)" style="padding:6px 9px; font-weight:800; font-size:12.5px;">
-          A<span style="font-size:10px;">±</span>
-        </button>
-        <!-- Dark Mode Toggle -->
-        <button class="hbtn-menu" id="headerThemeToggleBtn" onclick="toggleDarkMode()" title="डार्क / लाईट मोड बदला" style="padding:6px 9px; font-size:13.5px;">
-          🌙
-        </button>
         <!-- Quick Biodata Button -->
         <button class="hbtn-quick" onclick="openBioViewModal()" title="शुभमचा मूळ बायोडाटा फोटो पहा">
           🖼️ बायोडाटा
@@ -2419,33 +2285,6 @@
         <div class="menu-item" onclick="window.open('./shubham_biodata_redesigned.html', '_blank'); closeSideMenu();">
           <span>📜</span>
           <span>पारंपरिक पत्रिका (Redesigned)</span>
-        </div>
-
-        <!-- Accessibility & Theme Controls Section -->
-        <div style="padding:12px 14px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:rgba(0,0,0,0.02); margin:6px 0;">
-          <div style="font-size:11.5px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:5px;">
-            <span>🎨</span>
-            <span>देखावा व सुलभता (Accessibility)</span>
-          </div>
-          
-          <!-- Dark Mode Toggle Row -->
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:13px; font-weight:700;">🌙 नाईट / डार्क मोड:</span>
-            <button type="button" class="action-btn action-btn-outline" id="drawerDarkModeBtn" onclick="toggleDarkMode()" style="font-size:12px; padding:4px 10px; border-radius:999px;">
-              डार्क मोड टॉगल
-            </button>
-          </div>
-
-          <!-- Font Size Adjuster Row -->
-          <div>
-            <div style="font-size:12px; font-weight:700; margin-bottom:6px;">अक्षरांचा आकार (Font Size):</div>
-            <div style="display:flex; gap:5px;">
-              <button type="button" class="action-btn action-btn-outline" id="fsBtnSmall" style="flex:1; padding:5px 4px; font-size:11px;" onclick="setFontSize('small')">A- लहान</button>
-              <button type="button" class="action-btn action-btn-outline" id="fsBtnNormal" style="flex:1; padding:5px 4px; font-size:11px; font-weight:800;" onclick="setFontSize('normal')">A मूळ</button>
-              <button type="button" class="action-btn action-btn-outline" id="fsBtnMedium" style="flex:1; padding:5px 4px; font-size:11px;" onclick="setFontSize('medium')">A+ मोठे</button>
-              <button type="button" class="action-btn action-btn-outline" id="fsBtnLarge" style="flex:1; padding:5px 4px; font-size:11px;" onclick="setFontSize('large')">A++ खूप</button>
-            </div>
-          </div>
         </div>
 
         <div class="menu-item" id="menuInstallBtn" style="display:none;" onclick="triggerPwaInstall(); closeSideMenu();">
@@ -2764,7 +2603,7 @@
                 🔗 लाईव्ह वेबपेज उघडा (biodata.html) ↗
               </a>
               <button type="button" onclick="shareProfileOnWhatsApp()" style="color:#15803d; font-weight:800; background:white; padding:4px 10px; border-radius:6px; border:1px solid #86efac; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-size:12px;">
-                💬 WhatsApp वर शेअर करा (Shubham_Kharche)
+                💬 WhatsApp वर शेअर करा
               </button>
               <button type="button" onclick="copyProfileHyperlink()" style="color:#0f172a; font-weight:700; background:white; padding:4px 10px; border-radius:6px; border:1px solid #cbd5e1; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-size:12px;" title="बायोडाटा लिंक व संदेश कॉपी करा">
                 🔗 कॉपी लिंक
@@ -4330,8 +4169,8 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       document.getElementById('biodataModal').classList.remove('open');
     }
 
-    const PROFILE_SHARE_NAME = 'Shubham_Kharche';
-    const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
+    const PROFILE_SHARE_NAME = 'biodata.html';
+    const PROFILE_SHARE_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
 
     function getShareableProfileFullMessage() {
       if (waSettings.customShareTemplate && waSettings.customShareTemplate.trim()) {
@@ -4339,106 +4178,18 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           groom_name: waSettings.groomName || 'शुभम अनिल खर्चे',
           groom_edu: waSettings.groomEdu || 'B.E. Mechanical',
           groom_job: waSettings.groomJob || 'Sr. QA Engineer',
-          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune',
-          profile_url: PROFILE_SHARE_URL,
-          photo_url: 'https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg'
+          groom_company: waSettings.groomCompany || 'Shaurya Technosoft Pvt Ltd, Pune'
         };
         return waSettings.customShareTemplate.replace(/\{(\w+)\}/g, (match, key) => {
           return tplVars[key] !== undefined ? tplVars[key] : match;
         });
       }
-      return `*चि. शुभम अनिल खर्चे | विवाह प्रस्ताव (बायोडाटा)*
+      return `*चि. शुभम अनिल खर्चे | विवाह परिचय पत्रिका (बायोडाटा)*
 (B.E. Mechanical • Sr. QA Engineer, Pune)
 
 सस्नेह नमस्कार 🙏
-खर्चे परिवारातर्फे चि. शुभम खर्चे यांचा सविस्तर डिजिटल बायोडाटा व माहिती पाहण्यासाठी खालील लिंकवर क्लिक करा:
-👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche
-
-(टीप: या लिंकवर शिक्षण, नोकरी, कौटुंबिक माहिती, कुंडली व संपर्क उपलब्ध आहेत.)`;
-    }
-
-    // =========================================================
-    // ACCESSIBILITY & THEME CONTROLS (Dark Mode & Font Scalability)
-    // =========================================================
-    const THEME_STORAGE_KEY = 'anubandh_theme';
-    const FONT_SIZE_STORAGE_KEY = 'anubandh_font_size';
-
-    function initAccessibilitySettings() {
-      const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const activeTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-      applyTheme(activeTheme, false);
-
-      const savedFontSize = localStorage.getItem(FONT_SIZE_STORAGE_KEY) || 'normal';
-      applyFontSize(savedFontSize, false);
-    }
-
-    function applyTheme(theme, showNotice = true) {
-      const isDark = theme === 'dark';
-      document.body.classList.toggle('theme-dark', isDark);
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
-
-      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-      if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', isDark ? '#1f040b' : '#be123c');
-      }
-
-      const headerBtn = document.getElementById('headerThemeToggleBtn');
-      if (headerBtn) {
-        headerBtn.innerHTML = isDark ? '☀️' : '🌙';
-        headerBtn.title = isDark ? 'लाईट मोड चालू करा' : 'डार्क मोड चालू करा';
-      }
-
-      const drawerBtn = document.getElementById('drawerDarkModeBtn');
-      if (drawerBtn) {
-        drawerBtn.textContent = isDark ? '☀️ लाईट मोड' : '🌙 डार्क मोड';
-        drawerBtn.className = isDark ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-      }
-
-      if (showNotice) {
-        showToast(isDark ? '🌙 डार्क मोड सक्रिय झाला!' : '☀️ लाईट मोड सक्रिय झाला!');
-      }
-    }
-
-    function toggleDarkMode(forceTheme) {
-      const isCurrentlyDark = document.body.classList.contains('theme-dark');
-      const newTheme = forceTheme || (isCurrentlyDark ? 'light' : 'dark');
-      applyTheme(newTheme, true);
-    }
-
-    function applyFontSize(size, showNotice = true) {
-      document.body.dataset.fontSize = size;
-      localStorage.setItem(FONT_SIZE_STORAGE_KEY, size);
-
-      const sizes = ['small', 'normal', 'medium', 'large'];
-      sizes.forEach(s => {
-        const btn = document.getElementById(`fsBtn${s.charAt(0).toUpperCase() + s.slice(1)}`);
-        if (btn) {
-          btn.className = (s === size) ? 'action-btn action-btn-primary' : 'action-btn action-btn-outline';
-        }
-      });
-
-      const headerBtn = document.getElementById('headerFontSizeBtn');
-      if (headerBtn) {
-        const labels = { small: 'A-', normal: 'A', medium: 'A+', large: 'A++' };
-        headerBtn.innerHTML = labels[size] || 'A';
-      }
-
-      if (showNotice) {
-        const labelsMr = { small: 'लहान', normal: 'मूळ सामान्य', medium: 'मोठा', large: 'खूप मोठा' };
-        showToast(`अक्षरांचा आकार: ${labelsMr[size] || size}`);
-      }
-    }
-
-    function setFontSize(size) {
-      applyFontSize(size, true);
-    }
-
-    function cycleFontSize() {
-      const cur = document.body.dataset.fontSize || 'normal';
-      const order = ['normal', 'medium', 'large', 'small'];
-      let nextIdx = (order.indexOf(cur) + 1) % order.length;
-      applyFontSize(order[nextIdx], true);
+खर्चे परिवारातर्फे चि. शुभम अनिल खर्चे यांची विवाह परिचय पत्रिका सोबत जोडली आहे.
+कृपया पत्रिका फोटोचे अवलोकन करावे, ही नम्र विनंती.`;
     }
 
     // =========================================================
@@ -4596,7 +4347,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
           }
           if (resp.ok) {
             const blob = await resp.blob();
-            const fileName = photoSrc.endsWith('.png') ? 'Shubham_Kharche_Biodata.png' : 'Shubham_Kharche_Biodata.jpg';
+            const fileName = photoSrc.endsWith('.png') ? 'shubham_biodata_redesigned.png' : 'Shubham_Kharche_Biodata.jpg';
             const fileType = blob.type || (photoSrc.endsWith('.png') ? 'image/png' : 'image/jpeg');
             const file = new File([blob], fileName, { type: fileType });
             if (navigator.canShare({ files: [file] })) {
@@ -7008,7 +6759,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       if (!generatedCardDataUrl && !generatedCardBlob) return;
       const link = document.createElement('a');
       link.href = generatedCardDataUrl || URL.createObjectURL(generatedCardBlob);
-      link.download = 'Shubham_Kharche_Biodata_Card.png';
+      link.download = 'shubham_biodata_redesigned.png';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -7019,7 +6770,7 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
       const shareMsg = getShareableProfileFullMessage();
       if (navigator.canShare && generatedCardBlob) {
         try {
-          const file = new File([generatedCardBlob], 'Shubham_Kharche_Biodata_Card.png', { type: generatedCardBlob.type || 'image/png' });
+          const file = new File([generatedCardBlob], 'shubham_biodata_redesigned.png', { type: generatedCardBlob.type || 'image/png' });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
@@ -7143,7 +6894,13 @@ https://shubham-bi.github.io/Anubandh/shubham_kharche_biodata.jpg
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      initAccessibilitySettings();
+      // Ensure default clean light mode
+      if (document.body.classList.contains('theme-dark')) document.body.classList.remove('theme-dark');
+      delete document.body.dataset.fontSize;
+      try {
+        localStorage.removeItem('anubandh_theme');
+        localStorage.removeItem('anubandh_font_size');
+      } catch (e) {}
       hideSplashScreen();
       checkAppAuth();
       setupInstallPromptBanner();
