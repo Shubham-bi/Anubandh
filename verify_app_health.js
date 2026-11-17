@@ -329,6 +329,10 @@ try {
   // 12. Candidate Additional Key-Value Details (+ Button)
   assert(indexCode.includes('openAddCandidateDetailModal') && indexCode.includes('saveCandidateDetail') && indexCode.includes('candidateDetailModal'), "index.html defines additional key-value detail modal and handlers");
   assert(indexCode.includes('➕ माहिती जोडा') && indexCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
+
+  // 13. Direct wa.me Number Sharing Format
+  assert(indexCode.includes('https://wa.me/${digits}?text='), "index.html uses https://wa.me/${digits} format for direct number sharing");
+  assert(bioCode.includes('https://wa.me/'), "biodata.html uses https://wa.me format for WhatsApp sharing");
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

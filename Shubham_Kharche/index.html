@@ -1162,7 +1162,7 @@
     function shareProfileOnWhatsApp() {
       // Hyperlink formatted message: [Shubham_Kharche](URL)
       const text = `[${SHARE_LINK_NAME}](${SHARE_URL})`;
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
       window.open(waUrl, '_blank');
     }
 
@@ -1235,7 +1235,7 @@
       const { cleanDigits, contactName } = activePhoneAction;
       closePhoneActionModal();
       const msg = encodeURIComponent(`सस्नेह नमस्कार ${contactName}, आम्ही चि. शुभम खर्चे यांच्या विवाह प्रस्तावासंदर्भात संपर्क करत आहोत.`);
-      const url = `https://api.whatsapp.com/send/?phone=91${cleanDigits}&text=${msg}`;
+      const url = cleanDigits ? `https://wa.me/91${cleanDigits}?text=${msg}` : `https://wa.me/?text=${msg}`;
       window.open(url, '_blank');
     }
 

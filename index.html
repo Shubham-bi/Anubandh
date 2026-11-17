@@ -3566,7 +3566,7 @@ https://shubham-bi.github.io/Anubandh/biodata.html
         digits = '91' + digits.slice(1);
       }
 
-      const waUrl = `https://api.whatsapp.com/send/?phone=${digits}&text=${encodeURIComponent(text)}`;
+      const waUrl = digits ? `https://wa.me/${digits}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
       // On mobile devices, always open WhatsApp directly with candidate's number
@@ -4523,7 +4523,7 @@ ${PROFILE_SHARE_URL}
       }
 
       // Level 3: Direct WhatsApp URL fallback (Mobile: window.location.href, Desktop: window.open + copy)
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
       if (isMobile) {
         window.location.href = waUrl;
       } else {
@@ -7068,7 +7068,7 @@ ${PROFILE_SHARE_URL}
     async function shareGeneratedCardWhatsApp() {
       const shareMsg = getShareableProfileFullMessage();
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
 
       if (navigator.canShare && generatedCardBlob) {
         try {

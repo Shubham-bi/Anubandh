@@ -631,7 +631,7 @@ https://shubham-bi.github.io/Anubandh/biodata.html
   // Step 5: Inside ShareModal, user clicks "WhatsApp वर पाठवा"
   async function shareFromModalWhatsApp() {
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(PROPOSAL_TEXT)}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(PROPOSAL_TEXT)}`;
 
     // Try Level 1: Native Mobile Share with pre-cached File (User gesture active!)
     if (navigator.canShare && cachedShareFile) {

@@ -227,6 +227,23 @@
 
 ---
 
+## १४. अधिकृत `https://wa.me` लिंक पद्धतीचा अवलंब (Universal https://wa.me Click-to-Chat Migration)
+
+### निर्णय १४.१: जुन्या `api.whatsapp.com` ऐवजी मानक `https://wa.me` फॉरमॅट
+* **पार्श्वभूमी व गरज:** युझरने स्पष्ट सूचना दिली: *"when share message to number it shoul share like https://wa.me"*.
+* **विचारप्रक्रिया (Thought Process):** 
+  - पूर्वी वापरली जाणारी `https://api.whatsapp.com/send/?phone=...` ही जुनी फॉरमॅट लिंक काही ब्राउझर्स किंवा कस्टमाइज्ड अँड्रॉइड रॉम्समध्ये मध्यस्थी वेब पानावर (intermediate redirect page) थांबवते किंवा धीम्या गतीने उघडते.
+  - व्हॉट्सॲपचा अधिकृत व वेगवान जागतिक मानक (Universal Standard) हा **`https://wa.me/<number>?text=<encoded_text>`** हा आहे.
+  - हा फॉरमॅट कोणत्याही मध्यस्थी पानाशिवाय थेट मोबाइलवर अधिकृत WhatsApp ॲप किंवा डेस्कटॉपवर WhatsApp Web उघडतो.
+* **अंमलबजावणी:**
+  - फोन नंबर शेअरिंग: `https://wa.me/${digits}?text=${encodeURIComponent(text)}`
+  - सामान्य शेअरिंग (विना नंबर): `https://wa.me/?text=${encodeURIComponent(text)}`
+  - `index.html`, `biodata.html`, `shubham_biodata_redesigned.html` व इतर सर्व संबंधित फाईल्समध्ये जुने संदर्भ बदलून १००% `https://wa.me` वर स्थलांतरित केले.
+* **परिणाम:** उमेदवारांच्या पालकांच्या नंबरवर मेसेज पाठवणे अधिक जलद, आधुनिक आणि विना-अडथळा (Zero Redirect Delay) सुरू झाले.
+
+---
+
+
 
 
 

@@ -1328,7 +1328,7 @@ ${SHARE_URL}
       }
 
       // Level 3: Direct WhatsApp URL fallback (Mobile: window.location.href, Desktop: window.open + copy)
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
       if (isMobile) {
         window.location.href = waUrl;
       } else {
@@ -1420,8 +1420,19 @@ ${SHARE_URL}
       const { cleanDigits, contactName } = activePhoneAction;
       closePhoneActionModal();
       const msg = encodeURIComponent(`सस्नेह नमस्कार ${contactName}, आम्ही चि. शुभम खर्चे यांच्या विवाह प्रस्तावासंदर्भात संपर्क करत आहोत.`);
-      const url = `https://api.whatsapp.com/send/?phone=91${cleanDigits}&text=${msg}`;
-      window.open(url, '_blank');
+      let digits = cleanDigits ? String(cleanDigits).replace(/\D/g, '') : '';
+      if (digits.length === 10) {
+        digits = '91' + digits;
+      } else if (digits.length === 11 && digits.startsWith('0')) {
+        digits = '91' + digits.slice(1);
+      }
+      const url = digits ? `https://wa.me/${digits}?text=${msg}` : `https://wa.me/?text=${msg}`;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = url;
+      } else {
+        window.open(url, '_blank');
+      }
     }
 
     function executeModalCopy() {
@@ -1780,7 +1791,7 @@ ${SHARE_URL}
     async function shareGeneratedCardWhatsApp() {
       const shareMsg = getShareableProfileFullMessage();
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
 
       if (navigator.canShare && generatedCardBlob) {
         try {
