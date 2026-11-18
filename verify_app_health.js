@@ -36,6 +36,8 @@ const requiredFiles = [
   'share-utils.js',
   'storage.js',
   'modals.js',
+  'candidate-renderer.js',
+  'voice-logger.js',
   'candidates.json',
   'server.js',
   'start-pwa.bat'
@@ -184,7 +186,9 @@ try {
   const shareUtilsCode = fs.readFileSync(path.join(repoDir, 'share-utils.js'), 'utf8');
   const storageCode = fs.readFileSync(path.join(repoDir, 'storage.js'), 'utf8');
   const modalsCode = fs.readFileSync(path.join(repoDir, 'modals.js'), 'utf8');
-  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode;
+  const candRendererCode = fs.readFileSync(path.join(repoDir, 'candidate-renderer.js'), 'utf8');
+  const voiceLoggerCode = fs.readFileSync(path.join(repoDir, 'voice-logger.js'), 'utf8');
+  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode + '\n' + candRendererCode + '\n' + voiceLoggerCode;
 
   assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
@@ -320,7 +324,7 @@ try {
   assert(!indexCode.includes('id="drawerDarkModeBtn"') && !indexCode.includes('id="fsBtnSmall"'), "index.html drawer has removed dark mode and font size toggle functionality");
 
   // 8. Voice Speech-to-Text (mr-IN) assertions
-  assert(indexCode.includes('toggleVoiceSpeechRecognition') && indexCode.includes('mr-IN') && indexCode.includes('voice-note-btn'), "index.html supports Speech-to-Text voice logging in Marathi (mr-IN)");
+  assert(allAppCode.includes('toggleVoiceSpeechRecognition') && allAppCode.includes('mr-IN') && indexCode.includes('voice-note-btn'), "index.html supports Speech-to-Text voice logging in Marathi (mr-IN)");
 
   // Side Menu Reorganization assertions
   const drawerBodyMatch = indexCode.match(/<div class="drawer-body">([\s\S]*?)<\/div>\s*<div style="padding/i);
@@ -427,6 +431,22 @@ try {
   assert(indexCode.includes('src="./storage.js"'), 'index.html references storage.js');
   assert(indexCode.includes('src="./modals.js"'), 'index.html references modals.js');
   assert(swCodeCurrent.includes('./storage.js') && swCodeCurrent.includes('./modals.js'), 'sw.js caches storage.js and modals.js');
+
+  // 20. Modular Architecture: Phase 3 (candidate-renderer.js & voice-logger.js)
+  const candMod = require(path.join(repoDir, 'candidate-renderer.js'));
+  assert(typeof candMod.calculateAge === 'function', 'candidate-renderer.js exports calculateAge');
+  assert(typeof candMod.parseSrNo === 'function', 'candidate-renderer.js exports parseSrNo');
+  assert(typeof candMod.sortCandidates === 'function', 'candidate-renderer.js exports sortCandidates');
+  assert(typeof candMod.filterCandidates === 'function', 'candidate-renderer.js exports filterCandidates');
+  assert(candMod.calculateAge('28/11/1997') > 25, 'candidate-renderer.js calculateAge accurately computes age');
+
+  const voiceMod = require(path.join(repoDir, 'voice-logger.js'));
+  assert(typeof voiceMod.toggleVoiceSpeechRecognition === 'function', 'voice-logger.js exports toggleVoiceSpeechRecognition');
+  assert(typeof voiceMod.isSpeechRecognitionSupported === 'function', 'voice-logger.js exports isSpeechRecognitionSupported');
+
+  assert(indexCode.includes('src="./candidate-renderer.js"'), 'index.html references candidate-renderer.js');
+  assert(indexCode.includes('src="./voice-logger.js"'), 'index.html references voice-logger.js');
+  assert(swCodeCurrent.includes('./candidate-renderer.js') && swCodeCurrent.includes('./voice-logger.js'), 'sw.js caches candidate-renderer.js and voice-logger.js');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

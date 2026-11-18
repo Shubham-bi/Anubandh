@@ -1506,6 +1506,10 @@
   <script src="./storage.js"></script>
   <script src="./modals.js"></script>
 
+  <!-- Candidate Renderer & Voice Logger Modules -->
+  <script src="./candidate-renderer.js"></script>
+  <script src="./voice-logger.js"></script>
+
   <!-- Application Logic -->
   <script>
 
@@ -2399,115 +2403,7 @@
       return '';
     }
 
-    // =========================================================
-    // VOICE SPEECH RECOGNITION (Web Speech API in Marathi mr-IN)
-    // =========================================================
-    let activeVoiceRecognition = null;
-    let activeVoiceTargetId = null;
-    let activeVoiceBtn = null;
-
-    function toggleVoiceSpeechRecognition(textareaId, btnEl) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        showToast('⚠️ आपल्या ब्राउझरमध्ये व्हॉइस स्पीच रेकग्निशन उपलब्ध नाही.');
-        return;
-      }
-
-      const statusEl = document.getElementById(`voiceStatus_${textareaId}`);
-
-      if (activeVoiceRecognition) {
-        try { activeVoiceRecognition.stop(); } catch(e) {}
-        activeVoiceRecognition = null;
-        if (activeVoiceBtn) {
-          activeVoiceBtn.classList.remove('listening');
-          const lbl = activeVoiceBtn.querySelector('.voice-label');
-          if (lbl) lbl.textContent = 'बोलून लिहा';
-        }
-        if (statusEl) statusEl.style.display = 'none';
-        if (activeVoiceTargetId === textareaId) {
-          activeVoiceTargetId = null;
-          activeVoiceBtn = null;
-          showToast('🛑 व्हॉइस रेकॉर्डिंग थांबवले.');
-          return;
-        }
-      }
-
-      try {
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'mr-IN'; // Marathi
-        recognition.continuous = true;
-        recognition.interimResults = true;
-
-        activeVoiceRecognition = recognition;
-        activeVoiceTargetId = textareaId;
-        activeVoiceBtn = btnEl;
-
-        btnEl.classList.add('listening');
-        const lbl = btnEl.querySelector('.voice-label');
-        if (lbl) lbl.textContent = '🔴 ऐकत आहे (थांबवा)';
-
-        if (statusEl) {
-          statusEl.style.display = 'flex';
-          statusEl.innerHTML = `<span>🎙️ ऐकत आहे... मराठीत बोला. [पूर्ण झाल्यावर पुन्हा टॅप करा]</span>`;
-        }
-
-        const textarea = document.getElementById(textareaId);
-
-        recognition.onresult = (event) => {
-          let interimTranscript = '';
-          let finalTranscript = '';
-
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            const transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-              finalTranscript += transcript + ' ';
-            } else {
-              interimTranscript += transcript;
-            }
-          }
-
-          if (finalTranscript && textarea) {
-            const curVal = textarea.value.trim();
-            textarea.value = curVal ? (curVal + ' ' + finalTranscript.trim()) : finalTranscript.trim();
-          }
-
-          if (statusEl) {
-            if (interimTranscript) {
-              statusEl.innerHTML = `<span>🗣️ <em>"${escapeHtml(interimTranscript)}"</em></span>`;
-            } else {
-              statusEl.innerHTML = `<span>🎙️ ऐकत आहे... मराठीत बोला. [पूर्ण झाल्यावर पुन्हा टॅप करा]</span>`;
-            }
-          }
-        };
-
-        recognition.onerror = (event) => {
-          console.warn('Speech recognition error:', event.error);
-          if (event.error === 'not-allowed') {
-            showToast('⚠️ मायक्रोफोन परवानगी नाकारली आहे. कृपया ब्राउझरमध्ये Allow करा.');
-          } else if (event.error !== 'no-speech') {
-            showToast(`व्हॉइस त्रुटी: ${event.error}`);
-          }
-        };
-
-        recognition.onend = () => {
-          if (activeVoiceRecognition === recognition) {
-            activeVoiceRecognition = null;
-            activeVoiceTargetId = null;
-            if (btnEl) {
-              btnEl.classList.remove('listening');
-              if (lbl) lbl.textContent = 'बोलून लिहा';
-            }
-            if (statusEl) statusEl.style.display = 'none';
-          }
-        };
-
-        recognition.start();
-        showToast('🎙️ माईक सुरू झाला! मराठीत बोला.');
-      } catch (err) {
-        console.error('Speech recognition start error:', err);
-        showToast('व्हॉइस रेकॉर्डिंग सुरू करताना त्रुटी आली.');
-      }
-    }
+    // Note: Voice Speech Recognition (Web Speech API in Marathi mr-IN) is modularized in voice-logger.js
 
     // Note: Multi-attachment WhatsApp sharing & clipboard copy helpers are modularized in share-utils.js & card-generator.js
 

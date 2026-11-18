@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anubandh-v53';
+const CACHE_NAME = 'anubandh-v54';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,6 +11,8 @@ const ASSETS_TO_CACHE = [
   './share-utils.js',
   './storage.js',
   './modals.js',
+  './candidate-renderer.js',
+  './voice-logger.js',
   './shubham_biodata_redesigned.html',
   './shubham_biodata_redesigned.png',
   './html2canvas.min.js',
