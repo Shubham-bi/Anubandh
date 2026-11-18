@@ -18,18 +18,14 @@
 
 ---
 
-## 🚀 GitHub Pages वर लाईव्ह सुरू कसे करावे (GitHub Pages Setup)
+## 🚀 लाईव्ह ॲप व शेअरेबल प्रोफाईल लिंक्स (Live URLs)
 
-1. **Repository Settings** मध्ये जा.
-2. डाव्या बाजूला **Pages** पर्यायावर क्लिक करा.
-3. **Build and deployment > Branch** मध्ये:
-   - Branch: `main` निवडा.
-   - Folder: `/ (root)` निवडा.
-4. **Save** बटनावर क्लिक करा.
-5. १-२ मिनिटांत तुमची लिंक लाईव्ह होईल:  
-   👉 **`https://shubham-bi.github.io/Anubandh/`**
+* **मुख्य ॲप (Original App):**  
+  👉 **`https://anubandh-shubham-kharche.vercel.app`**
+* **वधू पक्षासाठी शेअरेबल प्रोफाईल पेज (Shareable Profile for Bride's Family):**  
+  👉 **`https://anubandh-shubham-kharche.vercel.app/profile`**
 
-मोबाईलच्या Chrome किंवा Safari मध्ये ही लिंक उघडून **"Add to Home Screen"** किंवा **"Install App"** केल्यास आई-वडिलांच्या मोबाईलवर **"अनुबंध"** चे स्वतंत्र ॲप इन्स्टॉल होईल!
+मोबाईलच्या Chrome किंवा Safari मध्ये ही लिंक उघडून **"Add to Home Screen"** किंवा **"Install App"** केल्यास मोबाईलवर **"अनुबंध"** चे स्वतंत्र PWA ॲप इन्स्टॉल होईल!
 
 ---
 

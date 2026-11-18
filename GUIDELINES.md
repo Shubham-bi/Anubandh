@@ -9,7 +9,7 @@
 
 | फाईल | वर्णन व उद्देश |
 | :--- | :--- |
-| **`index.html`** | 🌐 **एकमेव Single Source of Truth व मुख्य वेब ॲप** (लाईव्ह URL: `https://shubham-bi.github.io/Anubandh/`). |
+| **`index.html`** | 🌐 **एकमेव Single Source of Truth व मुख्य वेब ॲप** (लाईव्ह URL: `https://anubandh-shubham-kharche.vercel.app`). |
 | **`datalab-convert-Suchi-SHortlist.html`** | 📄 ऐतिहासिक बॅकअप फाईल (Single Source धोरणानुसार आता सक्रिय कोड किंवा कॅशमध्ये वापरली जात नाही). |
 | **`matrimonial-tracker-app.html`** | 💻 ऐतिहासिक बॅकअप फाईल. |
 | **`manifest.json`** | 📱 PWA (Progressive Web App) कॉन्फिगरेशन (नाव: अनुबंध, थीम: `#be123c`, आयकॉन्स). |

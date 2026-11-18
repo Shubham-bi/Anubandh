@@ -4756,5 +4756,46 @@ i need the url of profile for bride
 4. **चाचणी व पडताळणी:**
    - [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) मध्ये लाइव्ह कॅनव्हासचे assertion जोडून **१५८/१५८ चाचण्या १००% यशस्वी**.
 
+---
+
+## 💬 संभाषण फेरी 109 [Step 6130]
+
+**वेळ (Timestamp):** `2026-11-18T05:55:00Z`
+
+### 👤 वापरकर्त्याची विचारणा (User Request):
+
+```text
+404
+There isn't a GitHub Pages site here.
+showing for https://shubham-bi.github.io/Anubandh/biodata.html
+
+https://anubandh-shubham-kharche.vercel.app this is original app url
+https://anubandh-shubham-kharche.vercel.app/profile this require for shareble page
+```
+
+### 🤖 सहाय्यकाचा प्रतिसाद व अंमलबजावणी (Assistant Response & Actions):
+
+1. **Vercel कॉन्फिगरेशन (`vercel.json`):**
+   - Vercel वर `/profile` आणि `/profile/` मार्गावर आलेली रिक्वेस्ट विना-पासवर्ड असलेल्या डिजिटल बायोडाटा पेजकडे (`/biodata.html`) वळवण्यासाठी `vercel.json` तयार केले:
+     ```json
+     {
+       "version": 2,
+       "cleanUrls": true,
+       "rewrites": [
+         { "source": "/profile", "destination": "/biodata.html" },
+         { "source": "/profile/", "destination": "/biodata.html" },
+         { "source": "/biodata", "destination": "/biodata.html" }
+       ]
+     }
+     ```
+2. **सर्व URL चे Vercel कडे स्थलांतर:**
+   - [messages.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/messages.js): `BIODATA_URL` अद्ययावत केला 👉 `https://anubandh-shubham-kharche.vercel.app/profile`.
+   - [index.html](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/index.html): `PROFILE_SHARE_URL` व कॅनव्हास बॅनर URL अद्ययावत केली 👉 `https://anubandh-shubham-kharche.vercel.app/profile`.
+   - [biodata.html](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/biodata.html): Open Graph मेटा टॅग्स, `SHARE_URL` व कॅनव्हास बॅनर URL अद्ययावत केली.
+   - [server.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/server.js): स्थानिक चाचणीसाठी `/profile` ला `/biodata.html` कडे रूट केले.
+3. **चाचणी व पडताळणी:**
+   - [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) मध्ये Vercel आणि `/profile` URL पडताळणी चाचण्या समाविष्ट केल्या — **१६२/१६२ चाचण्या १००% यशस्वी**.
+
+
 
 

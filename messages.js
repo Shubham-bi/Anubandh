@@ -14,7 +14,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  const BIODATA_URL = 'https://shubham-bi.github.io/Anubandh/biodata.html';
+  const BIODATA_URL = 'https://anubandh-shubham-kharche.vercel.app/profile';
 
   const DEFAULT_GROOM = {
     name: 'शुभम अनिल खर्चे',
