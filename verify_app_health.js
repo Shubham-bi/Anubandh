@@ -29,8 +29,11 @@ const requiredFiles = [
   'shubham_biodata_redesigned.html',
   'shubham_biodata_redesigned.png',
   'shubham_kharche_biodata.jpg',
+  'styles.css',
   'config.js',
   'messages.js',
+  'card-generator.js',
+  'share-utils.js',
   'candidates.json',
   'server.js',
   'start-pwa.bat'
@@ -174,6 +177,11 @@ try {
 
   // 6. Validate Main Portal Authentication & App Install Banner & SVG Up Arrow
   const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
+  const stylesCss = fs.readFileSync(path.join(repoDir, 'styles.css'), 'utf8');
+  const cardGenCode = fs.readFileSync(path.join(repoDir, 'card-generator.js'), 'utf8');
+  const shareUtilsCode = fs.readFileSync(path.join(repoDir, 'share-utils.js'), 'utf8');
+  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode;
+
   assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
   assert(indexCode.includes('anubandh_app_auth_lockout_until'), "index.html enforces 3-attempt 10-minute lockout on wrong PIN");
@@ -182,7 +190,7 @@ try {
   assert(!indexCode.includes('id="pwaInstallBtn"'), "index.html has removed duplicate header install button");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
   assert(indexCode.includes('✍️ संभाषण नोंद'), "index.html uses updated button label संभाषण नोंद");
-  assert(indexCode.includes('.btn-track'), "index.html has proper button styling for .btn-track");
+  assert((indexCode + stylesCss).includes('.btn-track'), "index.html has proper button styling for .btn-track");
 
   // 7. Validate Standalone candidates.json
   const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
@@ -239,13 +247,13 @@ try {
 
   // Admin Portal Full Page assertions
   assert(indexCode.includes('full-page-view'), "index.html adminSettingsModal has full-page-view class");
-  assert(indexCode.includes('.modal-overlay.full-page-view'), "index.html defines .modal-overlay.full-page-view CSS for full page view");
+  assert((indexCode + stylesCss).includes('.modal-overlay.full-page-view'), "index.html defines .modal-overlay.full-page-view CSS for full page view");
 
   // Shareable Profile CMS Mobile Responsiveness assertions
   assert(indexCode.includes('cms-mobile-save-bar'), "index.html defines sticky floating save bar for mobile");
   assert(indexCode.includes('cms-grid-2') && indexCode.includes('cms-row-item'), "index.html uses responsive grid and row classes for CMS");
   assert(indexCode.includes('cms-contact-card') && indexCode.includes('cms-sec-head-main'), "index.html provides touch-friendly contact cards and section headers for CMS");
-  assert(indexCode.includes('@media (max-width: 640px)'), "index.html includes mobile media queries for CMS editor");
+  assert((indexCode + stylesCss).includes('@media (max-width: 640px)'), "index.html includes mobile media queries for CMS editor");
 
   // Double-press Back to Exit App assertions
   assert(indexCode.includes('initBackButtonHandler'), "index.html contains initBackButtonHandler");
@@ -287,7 +295,7 @@ try {
   assert(srvCode.includes('/api/upload-photo'), "server.js provides POST /api/upload-photo endpoint");
 
   // 3. HTML5 Canvas Biodata Card Generator assertions
-  assert(indexCode.includes('generateBiodataCardBlob') && indexCode.includes('openCanvasCardModal') && indexCode.includes('downloadGeneratedCard'), "index.html defines HTML5 Canvas biodata card generator and actions");
+  assert(allAppCode.includes('generateBiodataCardBlob') && allAppCode.includes('openCanvasCardModal') && allAppCode.includes('downloadGeneratedCard'), "index.html defines HTML5 Canvas biodata card generator and actions");
   assert(bioCode.includes('generateBiodataCardBlob') && bioCode.includes('openCanvasCardModal'), "biodata.html defines HTML5 Canvas biodata card generator");
 
   // 4. CMS Customizable Message Templates assertions
@@ -321,7 +329,7 @@ try {
   assert(indexCode.includes('admin-quick-biodata-bar') && indexCode.includes('openBiodataModal') && indexCode.includes('openCanvasCardModal'), "index.html admin settings modal houses the moved biodata and patrika options");
 
   // 9. WhatsApp Multi-Attachment & Clipboard Copy assertions
-  assert(indexCode.includes('copyImageToClipboard') && indexCode.includes('navigator.share') && indexCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
+  assert(allAppCode.includes('copyImageToClipboard') && allAppCode.includes('navigator.share') && allAppCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
   assert(bioCode.includes('copyImageToClipboard') && bioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");
 
   // 10. Traditional Redesigned Biodata Sheet & WhatsApp Image Sharing assertions
@@ -332,13 +340,13 @@ try {
   assert(redesignedCode.includes('contact-item') && redesignedCode.includes('contact-idx'), "shubham_biodata_redesigned.html displays contacts in a clean list layout instead of cards");
   const redesignedImgPath = path.join(repoDir, 'shubham_biodata_redesigned.png');
   assert(fs.existsSync(redesignedImgPath) && fs.statSync(redesignedImgPath).size > 10000, "shubham_biodata_redesigned.png exists and is a valid image asset (>10KB)");
-  assert(indexCode.includes('shubham_biodata_redesigned.png') && indexCode.includes('shubham_biodata_redesigned.html'), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
+  assert(allAppCode.includes('shubham_biodata_redesigned.png') && (indexCode.includes('shubham_biodata_redesigned.html') || shareUtilsCode.includes('shubham_biodata_redesigned.html')), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
   assert(bioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
   const swCodeCurrent = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(swCodeCurrent.includes('shubham_biodata_redesigned.html') && swCodeCurrent.includes('shubham_biodata_redesigned.png'), "sw.js caches redesigned biodata sheet and image for offline access");
 
   // 11. Unified Canvas Image Sharing Across All Options
-  assert(indexCode.includes('shareGeneratedCardNative') && indexCode.includes('copyProfileHyperlink') && indexCode.includes('openWhatsAppChat'), "index.html supports native app sharing and canvas image copy across all options");
+  assert(allAppCode.includes('shareGeneratedCardNative') && allAppCode.includes('copyProfileHyperlink') && allAppCode.includes('openWhatsAppChat'), "index.html supports native app sharing and canvas image copy across all options");
   assert(bioCode.includes('shareGeneratedCardNative') && bioCode.includes('copyHyperlink'), "biodata.html supports native app sharing and canvas image copy across all options");
   assert(redesignedCode.includes('shareToAnyApp') && redesignedCode.includes('sbtn-share'), "shubham_biodata_redesigned.html supports universal cross-app sharing (shareToAnyApp)");
 
@@ -379,7 +387,7 @@ try {
   const candZero = candJsonData.find(c => c.id === 'cand_0');
   assert(candZero && candZero.phones && candZero.phones.includes('9422152322'), "cand_0 (sr ०.) phones array includes 9422152322");
   assert(indexCode.includes('"id":"cand_0"') && indexCode.includes('"phones":["9422152322"]'), "index.html INITIAL_DATA defines phones ['9422152322'] for cand_0");
-  assert(indexCode.includes('getLiveBiodataCardBlob'), 'index.html defines getLiveBiodataCardBlob for live dynamic canvas sharing');
+  assert(allAppCode.includes('getLiveBiodataCardBlob'), 'index.html defines getLiveBiodataCardBlob for live dynamic canvas sharing');
   assert(bioCode.includes('getLiveBiodataCardBlob'), 'biodata.html defines getLiveBiodataCardBlob for live dynamic canvas sharing');
   assert(redesignedCode.includes('html2canvas'), 'shubham_biodata_redesigned.html renders live sheet via html2canvas');
 
