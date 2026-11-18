@@ -29,6 +29,7 @@ const requiredFiles = [
   'shubham_biodata_redesigned.html',
   'shubham_biodata_redesigned.png',
   'shubham_kharche_biodata.jpg',
+  'config.js',
   'messages.js',
   'candidates.json',
   'server.js',
@@ -390,6 +391,14 @@ try {
   assert(bioCode.includes('anubandh-shubham-kharche.vercel.app/profile'), 'biodata.html points to Vercel shareable profile URL');
   const profileCode = fs.readFileSync(path.join(repoDir, 'profile.html'), 'utf8');
   assert(profileCode.includes('anubandh-shubham-kharche.vercel.app/profile'), 'profile.html points to Vercel shareable profile URL');
+
+  // 18. Centralized App Configuration (config.js)
+  const configMod = require(path.join(repoDir, 'config.js'));
+  assert(configMod && configMod.PROFILE_URL === 'https://anubandh-shubham-kharche.vercel.app/profile', 'config.js exports PROFILE_URL');
+  assert(indexCode.includes('src="./config.js"'), 'index.html references config.js');
+  assert(bioCode.includes('src="./config.js"'), 'biodata.html references config.js');
+  assert(profileCode.includes('src="./config.js"'), 'profile.html references config.js');
+  assert(redesignedCode.includes('src="./config.js"'), 'shubham_biodata_redesigned.html references config.js');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

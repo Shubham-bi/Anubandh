@@ -537,6 +537,7 @@
 </div>
 
 <script src="./html2canvas.min.js"></script>
+<script src="./config.js"></script>
 <script src="./messages.js"></script>
 <script>
   const PROPOSAL_TEXT = (typeof AnubandhMessages !== 'undefined' && AnubandhMessages.buildGenericShareMessage) 
@@ -784,7 +785,7 @@
 
   function copyPageLink() {
     // const url = 'https://shubham-bi.github.io/Anubandh/Shubham_Kharche';
-    const url = 'https://anubandh-shubham-kharche.vercel.app/profile';
+    const url = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_URL) ? AnubandhConfig.PROFILE_URL : 'https://anubandh-shubham-kharche.vercel.app/profile';
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url).then(() => {
         showToast('✅ लिंक कॉपी झाली!');

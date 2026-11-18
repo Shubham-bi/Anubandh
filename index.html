@@ -3801,6 +3801,9 @@
 
   <div id="toast" class="toast-msg"></div>
 
+  <!-- Centralized App Configuration -->
+  <script src="./config.js"></script>
+
   <!-- Messages Single Source of Truth -->
   <script src="./messages.js"></script>
 
@@ -4677,8 +4680,8 @@
       document.getElementById('biodataModal').classList.remove('open');
     }
 
-    const PROFILE_SHARE_NAME = 'profile';
-    const PROFILE_SHARE_URL = 'https://anubandh-shubham-kharche.vercel.app/profile';
+    const PROFILE_SHARE_NAME = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_PATH) ? AnubandhConfig.PROFILE_PATH.replace(/^\//, '') : 'profile';
+    const PROFILE_SHARE_URL = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_URL) ? AnubandhConfig.PROFILE_URL : 'https://anubandh-shubham-kharche.vercel.app/profile';
 
     function getShareableProfileFullMessage() {
       const msgHandler = (typeof AnubandhMessages !== 'undefined') ? AnubandhMessages : (typeof window !== 'undefined' ? window.AnubandhMessages : null);
@@ -7526,7 +7529,8 @@
 
           ctx.fillStyle = '#0369a1';
           ctx.font = 'bold 24px "Mukta", sans-serif';
-          ctx.fillText('👉 https://anubandh-shubham-kharche.vercel.app/profile', 540, linkY + 85);
+          const profileBannerUrl = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_URL) ? AnubandhConfig.PROFILE_URL : 'https://anubandh-shubham-kharche.vercel.app/profile';
+          ctx.fillText('👉 ' + profileBannerUrl, 540, linkY + 85);
 
           // Bottom Branding
           ctx.fillStyle = '#94a3b8';

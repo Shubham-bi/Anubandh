@@ -878,6 +878,9 @@
     <img src="./shubham_kharche_biodata.jpg" alt="बायोडाटा पूर्ण फोटो"/>
   </div>
 
+  <!-- Centralized App Configuration -->
+  <script src="./config.js"></script>
+
   <!-- Messages Single Source of Truth -->
   <script src="./messages.js"></script>
   <script>
@@ -1230,8 +1233,8 @@
       document.getElementById('fullImgModal').classList.remove('open');
     }
 
-    const SHARE_LINK_NAME = 'profile';
-    const SHARE_URL = 'https://anubandh-shubham-kharche.vercel.app/profile';
+    const SHARE_LINK_NAME = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_PATH) ? AnubandhConfig.PROFILE_PATH.replace(/^\//, '') : 'profile';
+    const SHARE_URL = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_URL) ? AnubandhConfig.PROFILE_URL : 'https://anubandh-shubham-kharche.vercel.app/profile';
 
     function getShareableProfileFullMessage() {
       const msgHandler = (typeof AnubandhMessages !== 'undefined') ? AnubandhMessages : (typeof window !== 'undefined' ? window.AnubandhMessages : null);
@@ -1724,7 +1727,8 @@
 
           ctx.fillStyle = '#0369a1';
           ctx.font = 'bold 24px "Mukta", sans-serif';
-          ctx.fillText('👉 https://anubandh-shubham-kharche.vercel.app/profile', 540, linkY + 85);
+          const bannerUrl = (typeof AnubandhConfig !== 'undefined' && AnubandhConfig.PROFILE_URL) ? AnubandhConfig.PROFILE_URL : 'https://anubandh-shubham-kharche.vercel.app/profile';
+          ctx.fillText('👉 ' + bannerUrl, 540, linkY + 85);
 
           ctx.fillStyle = '#94a3b8';
           ctx.font = '600 16px "Mukta", sans-serif';
