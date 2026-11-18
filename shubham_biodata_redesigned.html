@@ -536,9 +536,9 @@
   </button>
 </div>
 
-<script src="./html2canvas.min.js"></script>
-<script src="./config.js"></script>
-<script src="./messages.js"></script>
+<script src="./js/html2canvas.min.js"></script>
+<script src="./js/config.js"></script>
+<script src="./js/messages.js"></script>
 <script>
   const PROPOSAL_TEXT = (typeof AnubandhMessages !== 'undefined' && AnubandhMessages.buildGenericShareMessage) 
     ? AnubandhMessages.buildGenericShareMessage() 
@@ -586,10 +586,10 @@
 
     // Fallback to static asset if html2canvas not ready
     try {
-      const resp = await fetch('./shubham_biodata_redesigned.png');
+      const resp = await fetch('./assets/shubham_biodata_redesigned.png');
       if (resp.ok) {
         cachedShareBlob = await resp.blob();
-        cachedShareDataUrl = './shubham_biodata_redesigned.png';
+        cachedShareDataUrl = './assets/shubham_biodata_redesigned.png';
         cachedShareFile = new File([cachedShareBlob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
         return { blob: cachedShareBlob, dataUrl: cachedShareDataUrl, file: cachedShareFile };
       }

@@ -15,8 +15,8 @@
   const PROFILE_PATH = '/profile';
   const PROFILE_FILE = 'profile.html';
   const PROFILE_URL = `${APP_URL}${PROFILE_PATH}`;
-  const BIODATA_IMG_URL = `${APP_URL}/shubham_kharche_biodata.jpg`;
-  const REDESIGNED_PNG_URL = `${APP_URL}/shubham_biodata_redesigned.png`;
+  const BIODATA_IMG_URL = `${APP_URL}/assets/shubham_kharche_biodata.jpg`;
+  const REDESIGNED_PNG_URL = `${APP_URL}/assets/shubham_biodata_redesigned.png`;
 
   return {
     APP_URL,

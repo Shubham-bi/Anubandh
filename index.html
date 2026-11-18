@@ -11,11 +11,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
   <meta name="apple-mobile-web-app-title" content="अनुबंध"/>
-  <link rel="apple-touch-icon" href="icon.svg"/>
-  <link rel="icon" type="image/svg+xml" href="icon.svg"/>
+  <link rel="apple-touch-icon" href="./assets/icon.svg"/>
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg"/>
   <link rel="prefetch" href="./biodata.html"/>
 
-  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 <body>
 
@@ -110,7 +110,7 @@
       <div id="pwaInstallBanner" class="pwa-install-banner" style="display:none;">
         <div class="pwa-banner-content">
           <div class="pwa-banner-icon">
-            <img src="./icon.svg" alt="अनुबंध" width="38" height="38"/>
+            <img src="./assets/icon.svg" alt="अनुबंध" width="38" height="38"/>
           </div>
           <div class="pwa-banner-text">
             <strong>📲 अनुबंध ॲप इन्स्टॉल करा</strong>
@@ -1283,10 +1283,10 @@
       </div>
       <div class="modal-content-body" style="align-items: center; text-align: center;">
         <div style="width:100%; max-height:72vh; overflow-y:auto; border-radius:10px; border:1px solid #e2e8f0; background:#f8fafc; padding:6px;">
-          <img src="shubham_kharche_biodata.jpg" alt="Shubham Kharche Biodata" style="max-width: 100%; height: auto; border-radius: 6px;"/>
+          <img src="./assets/shubham_kharche_biodata.jpg" alt="Shubham Kharche Biodata" style="max-width: 100%; height: auto; border-radius: 6px;"/>
         </div>
         <div style="display:flex; justify-content:space-between; width:100%; margin-top:8px;">
-          <a href="shubham_kharche_biodata.jpg" target="_blank" download="Shubham_Kharche_Biodata.jpg" class="action-btn action-btn-primary" style="text-decoration:none;">
+          <a href="./assets/shubham_kharche_biodata.jpg" target="_blank" download="Shubham_Kharche_Biodata.jpg" class="action-btn action-btn-primary" style="text-decoration:none;">
             📥 फोटो डाऊनलोड
           </a>
           <button type="button" class="action-btn action-btn-outline" onclick="closeBioViewModal()">बंद करा</button>
@@ -1493,25 +1493,25 @@
   <div id="toast" class="toast-msg"></div>
 
   <!-- Centralized App Configuration -->
-  <script src="./config.js"></script>
+  <script src="./js/config.js"></script>
 
   <!-- Messages Single Source of Truth -->
-  <script src="./messages.js"></script>
+  <script src="./js/messages.js"></script>
 
   <!-- Card Generator & Sharing Utilities -->
-  <script src="./card-generator.js"></script>
-  <script src="./share-utils.js"></script>
+  <script src="./js/card-generator.js"></script>
+  <script src="./js/share-utils.js"></script>
 
   <!-- Storage & Modals Modules -->
-  <script src="./storage.js"></script>
-  <script src="./modals.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/modals.js"></script>
 
   <!-- Candidate Renderer & Voice Logger Modules -->
-  <script src="./candidate-renderer.js"></script>
-  <script src="./voice-logger.js"></script>
+  <script src="./js/candidate-renderer.js"></script>
+  <script src="./js/voice-logger.js"></script>
 
   <!-- Auth & PWA Controller -->
-  <script src="./auth-pwa.js"></script>
+  <script src="./js/auth-pwa.js"></script>
 
   <!-- Application Logic -->
   <script>
@@ -1744,7 +1744,7 @@
           title: "मूळ बायोडाटा पत्रिका फोटो",
           icon: "🖼️",
           type: "photo",
-          photoUrl: "./shubham_kharche_biodata.jpg",
+          photoUrl: "./assets/shubham_kharche_biodata.jpg",
           hint: "👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा",
           downloadText: "📥 बायोडाटा फोटो सेव्ह करा"
         }
@@ -1785,7 +1785,7 @@
       }
 
       // Sync if profile_data.json on disk/git has newer updatedAt
-      fetch('./profile_data.json?v=' + Date.now())
+      fetch('./data/profile_data.json?v=' + Date.now())
         .then(r => r.json())
         .then(diskData => {
           if (diskData && diskData.hero && Array.isArray(diskData.sections)) {
@@ -1941,7 +1941,7 @@
             </div>
           `;
         } else if (sec.type === 'photo') {
-          const curPhoto = sec.photoUrl || './shubham_kharche_biodata.jpg';
+          const curPhoto = sec.photoUrl || './assets/shubham_kharche_biodata.jpg';
           bodyHtml = `
             <div style="display:flex; gap:12px; align-items:center; margin-bottom:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
               <img src="${escapeHtml(curPhoto)}" id="cmsPhotoThumb_${sIdx}" alt="Shubham Photo" style="width:68px; height:84px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1; box-shadow:0 1px 3px rgba(0,0,0,0.1); background:#fff; flex-shrink:0;"/>
@@ -2134,7 +2134,7 @@
     }
 
     function resetPhotoToDefault(sIdx) {
-      const defaultUrl = './shubham_kharche_biodata.jpg';
+      const defaultUrl = './assets/shubham_kharche_biodata.jpg';
       updateCmsSectionProp(sIdx, 'photoUrl', defaultUrl);
       const urlInp = document.getElementById(`cmsPhotoUrlInp_${sIdx}`);
       if (urlInp) urlInp.value = defaultUrl;

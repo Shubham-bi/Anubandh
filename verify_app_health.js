@@ -23,25 +23,28 @@ const requiredFiles = [
   'index.html',
   'manifest.json',
   'sw.js',
-  'icon.svg',
   'profile.html',
   'biodata.html',
   'shubham_biodata_redesigned.html',
-  'shubham_biodata_redesigned.png',
-  'shubham_kharche_biodata.jpg',
-  'styles.css',
-  'config.js',
-  'messages.js',
-  'card-generator.js',
-  'share-utils.js',
-  'storage.js',
-  'modals.js',
-  'candidate-renderer.js',
-  'voice-logger.js',
-  'auth-pwa.js',
-  'candidates.json',
   'server.js',
-  'start-pwa.bat'
+  'start-pwa.bat',
+  'assets/icon.svg',
+  'assets/icon-192.svg',
+  'assets/icon-512.svg',
+  'assets/shubham_biodata_redesigned.png',
+  'assets/shubham_kharche_biodata.jpg',
+  'css/styles.css',
+  'js/config.js',
+  'js/messages.js',
+  'js/card-generator.js',
+  'js/share-utils.js',
+  'js/storage.js',
+  'js/modals.js',
+  'js/candidate-renderer.js',
+  'js/voice-logger.js',
+  'js/auth-pwa.js',
+  'data/candidates.json',
+  'data/profile_data.json'
 ];
 
 requiredFiles.forEach(f => {
@@ -70,7 +73,7 @@ assert(scriptMatch !== null, 'Found <script> block in index.html');
 
 if (scriptMatch) {
   const scriptCode = scriptMatch[1];
-  const AnubandhMessages = require('./messages.js');
+  const AnubandhMessages = require(path.join(repoDir, 'js', 'messages.js'));
 
   const sandbox = {
     AnubandhMessages,
@@ -184,14 +187,14 @@ try {
 
   // 6. Validate Main Portal Authentication & App Install Banner & SVG Up Arrow
   const indexCode = fs.readFileSync(path.join(repoDir, 'index.html'), 'utf8');
-  const stylesCss = fs.readFileSync(path.join(repoDir, 'styles.css'), 'utf8');
-  const cardGenCode = fs.readFileSync(path.join(repoDir, 'card-generator.js'), 'utf8');
-  const shareUtilsCode = fs.readFileSync(path.join(repoDir, 'share-utils.js'), 'utf8');
-  const storageCode = fs.readFileSync(path.join(repoDir, 'storage.js'), 'utf8');
-  const modalsCode = fs.readFileSync(path.join(repoDir, 'modals.js'), 'utf8');
-  const candRendererCode = fs.readFileSync(path.join(repoDir, 'candidate-renderer.js'), 'utf8');
-  const voiceLoggerCode = fs.readFileSync(path.join(repoDir, 'voice-logger.js'), 'utf8');
-  const authPwaCode = fs.readFileSync(path.join(repoDir, 'auth-pwa.js'), 'utf8');
+  const stylesCss = fs.readFileSync(path.join(repoDir, 'css', 'styles.css'), 'utf8');
+  const cardGenCode = fs.readFileSync(path.join(repoDir, 'js', 'card-generator.js'), 'utf8');
+  const shareUtilsCode = fs.readFileSync(path.join(repoDir, 'js', 'share-utils.js'), 'utf8');
+  const storageCode = fs.readFileSync(path.join(repoDir, 'js', 'storage.js'), 'utf8');
+  const modalsCode = fs.readFileSync(path.join(repoDir, 'js', 'modals.js'), 'utf8');
+  const candRendererCode = fs.readFileSync(path.join(repoDir, 'js', 'candidate-renderer.js'), 'utf8');
+  const voiceLoggerCode = fs.readFileSync(path.join(repoDir, 'js', 'voice-logger.js'), 'utf8');
+  const authPwaCode = fs.readFileSync(path.join(repoDir, 'js', 'auth-pwa.js'), 'utf8');
   const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode + '\n' + candRendererCode + '\n' + voiceLoggerCode + '\n' + authPwaCode;
   const allBioCode = bioCode + '\n' + cardGenCode + '\n' + shareUtilsCode;
 
@@ -206,14 +209,14 @@ try {
   assert((indexCode + stylesCss).includes('.btn-track'), "index.html has proper button styling for .btn-track");
 
   // 7. Validate Standalone candidates.json
-  const candJsonRaw = fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8');
+  const candJsonRaw = fs.readFileSync(path.join(repoDir, 'data', 'candidates.json'), 'utf8');
   const candJson = JSON.parse(candJsonRaw);
   assert(Array.isArray(candJson) && candJson.length === 84, "candidates.json is valid array containing exactly 84 records");
   assert(candJson.every(c => c.age !== undefined && c.age > 0), "all 84 candidates have calculated age field in candidates.json");
   assert(allAppCode.includes('cand-name') && allAppCode.includes('age-badge'), "index.html displays age badge in front of candidate name");
   assert(bioCode.includes('shubhamAge') && bioCode.includes('hero-name'), "biodata.html displays dynamically calculated age in front of groom name");
   // 8. Validate Shareable Profile CMS & Dynamic Profile Rendering
-  const profileJsonRaw = fs.readFileSync(path.join(repoDir, 'profile_data.json'), 'utf8');
+  const profileJsonRaw = fs.readFileSync(path.join(repoDir, 'data', 'profile_data.json'), 'utf8');
   const profileJson = JSON.parse(profileJsonRaw);
   assert(profileJson && profileJson.hero && Array.isArray(profileJson.sections), "profile_data.json contains valid hero and sections");
 
@@ -351,7 +354,7 @@ try {
   const redesignedCode = fs.readFileSync(redesignedPath, 'utf8');
   assert(redesignedCode.includes('shareOnWhatsAppAsImage') && redesignedCode.includes('downloadSheetImage') && redesignedCode.includes('copySheetImageToClipboard'), "shubham_biodata_redesigned.html provides WhatsApp image sharing, download, and clipboard copy actions");
   assert(redesignedCode.includes('contact-item') && redesignedCode.includes('contact-idx'), "shubham_biodata_redesigned.html displays contacts in a clean list layout instead of cards");
-  const redesignedImgPath = path.join(repoDir, 'shubham_biodata_redesigned.png');
+  const redesignedImgPath = path.join(repoDir, 'assets', 'shubham_biodata_redesigned.png');
   assert(fs.existsSync(redesignedImgPath) && fs.statSync(redesignedImgPath).size > 10000, "shubham_biodata_redesigned.png exists and is a valid image asset (>10KB)");
   assert(allAppCode.includes('shubham_biodata_redesigned.png') && (indexCode.includes('shubham_biodata_redesigned.html') || shareUtilsCode.includes('shubham_biodata_redesigned.html')), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
   assert(allBioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
@@ -372,7 +375,7 @@ try {
   assert(allBioCode.includes('https://wa.me/'), "biodata.html uses https://wa.me format for WhatsApp sharing");
 
   // 14. Single Source of Truth for Messages (messages.js)
-  const messagesMod = require('./messages.js');
+  const messagesMod = require(path.join(repoDir, 'js', 'messages.js'));
   const testProposal = messagesMod.buildCandidateProposalMessage({
     girlFatherName: 'गजानन वामन वराडे',
     girlName: 'अनुष्का (देवयानी)',
@@ -386,9 +389,9 @@ try {
 
   const testGeneric = messagesMod.buildGenericShareMessage();
   assert(testGeneric.includes('मुलाचा (शुभम अनिल खर्चे) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js generic share contains exact requested text');
-  assert(indexCode.includes('src="./messages.js"') || indexCode.includes('src="messages.js"'), 'index.html references messages.js');
-  assert(bioCode.includes('src="./messages.js"') || bioCode.includes('src="messages.js"'), 'biodata.html references messages.js');
-  assert(redesignedCode.includes('src="./messages.js"') || redesignedCode.includes('src="messages.js"'), 'shubham_biodata_redesigned.html references messages.js');
+  assert(indexCode.includes('src="./js/messages.js"') || indexCode.includes('src="js/messages.js"'), 'index.html references messages.js');
+  assert(bioCode.includes('src="./js/messages.js"') || bioCode.includes('src="js/messages.js"'), 'biodata.html references messages.js');
+  assert(redesignedCode.includes('src="./js/messages.js"') || redesignedCode.includes('src="js/messages.js"'), 'shubham_biodata_redesigned.html references messages.js');
   assert(swCodeCurrent.includes('messages.js'), 'sw.js caches messages.js for offline use');
 
   // 15. Admin App Layout, Menu List Hub & Web Browser Fallback
@@ -396,7 +399,7 @@ try {
   assert(indexCode.includes('openAdminInWebBrowser') && indexCode.includes('handleAdminHeaderBack'), "index.html provides open in web browser and app navigation back handler");
   
   // 16. cand_0 phone update
-  const candJsonData = JSON.parse(fs.readFileSync(path.join(repoDir, 'candidates.json'), 'utf8'));
+  const candJsonData = JSON.parse(fs.readFileSync(path.join(repoDir, 'data', 'candidates.json'), 'utf8'));
   const candZero = candJsonData.find(c => c.id === 'cand_0');
   assert(candZero && candZero.phones && candZero.phones.includes('9422152322'), "cand_0 (sr ०.) phones array includes 9422152322");
   assert(indexCode.includes('"id":"cand_0"') && indexCode.includes('"phones":["9422152322"]'), "index.html INITIAL_DATA defines phones ['9422152322'] for cand_0");
@@ -414,31 +417,31 @@ try {
   assert(profileCode.includes('anubandh-shubham-kharche.vercel.app/profile'), 'profile.html points to Vercel shareable profile URL');
 
   // 18. Centralized App Configuration (config.js)
-  const configMod = require(path.join(repoDir, 'config.js'));
+  const configMod = require(path.join(repoDir, 'js', 'config.js'));
   assert(configMod && configMod.PROFILE_URL === 'https://anubandh-shubham-kharche.vercel.app/profile', 'config.js exports PROFILE_URL');
-  assert(indexCode.includes('src="./config.js"'), 'index.html references config.js');
-  assert(bioCode.includes('src="./config.js"'), 'biodata.html references config.js');
-  assert(profileCode.includes('src="./config.js"'), 'profile.html references config.js');
-  assert(redesignedCode.includes('src="./config.js"'), 'shubham_biodata_redesigned.html references config.js');
+  assert(indexCode.includes('src="./js/config.js"'), 'index.html references config.js');
+  assert(bioCode.includes('src="./js/config.js"'), 'biodata.html references config.js');
+  assert(profileCode.includes('src="./js/config.js"'), 'profile.html references config.js');
+  assert(redesignedCode.includes('src="./js/config.js"'), 'shubham_biodata_redesigned.html references config.js');
 
   // 19. Modular Architecture: Phase 2 (storage.js & modals.js)
-  const storageMod = require(path.join(repoDir, 'storage.js'));
+  const storageMod = require(path.join(repoDir, 'js', 'storage.js'));
   assert(typeof storageMod.getStoredCandidates === 'function', 'storage.js exports getStoredCandidates');
   assert(typeof storageMod.exportDataJson === 'function', 'storage.js exports exportDataJson');
   assert(typeof storageMod.exportDataCsv === 'function', 'storage.js exports exportDataCsv');
 
-  const modalsMod = require(path.join(repoDir, 'modals.js'));
+  const modalsMod = require(path.join(repoDir, 'js', 'modals.js'));
   assert(typeof modalsMod.showCustomConfirm === 'function', 'modals.js exports showCustomConfirm');
   assert(typeof modalsMod.openPhoneActionPrompt === 'function', 'modals.js exports openPhoneActionPrompt');
   assert(typeof modalsMod.openAddCandidateDetailModal === 'function', 'modals.js exports openAddCandidateDetailModal');
   assert(typeof modalsMod.getOpenModal === 'function', 'modals.js exports getOpenModal');
 
-  assert(indexCode.includes('src="./storage.js"'), 'index.html references storage.js');
-  assert(indexCode.includes('src="./modals.js"'), 'index.html references modals.js');
-  assert(swCodeCurrent.includes('./storage.js') && swCodeCurrent.includes('./modals.js'), 'sw.js caches storage.js and modals.js');
+  assert(indexCode.includes('src="./js/storage.js"'), 'index.html references storage.js');
+  assert(indexCode.includes('src="./js/modals.js"'), 'index.html references modals.js');
+  assert(swCodeCurrent.includes('./js/storage.js') && swCodeCurrent.includes('./js/modals.js'), 'sw.js caches storage.js and modals.js');
 
   // 20. Modular Architecture: Phase 3 (candidate-renderer.js & voice-logger.js)
-  const candMod = require(path.join(repoDir, 'candidate-renderer.js'));
+  const candMod = require(path.join(repoDir, 'js', 'candidate-renderer.js'));
   assert(typeof candMod.calculateAge === 'function', 'candidate-renderer.js exports calculateAge');
   assert(typeof candMod.parseSrNo === 'function', 'candidate-renderer.js exports parseSrNo');
   assert(typeof candMod.sortCandidates === 'function', 'candidate-renderer.js exports sortCandidates');
@@ -447,12 +450,12 @@ try {
   assert(typeof candMod.renderTable === 'function', 'candidate-renderer.js exports renderTable');
   assert(candMod.calculateAge('28/11/1997') > 25, 'candidate-renderer.js calculateAge accurately computes age');
 
-  const voiceMod = require(path.join(repoDir, 'voice-logger.js'));
+  const voiceMod = require(path.join(repoDir, 'js', 'voice-logger.js'));
   assert(typeof voiceMod.toggleVoiceSpeechRecognition === 'function', 'voice-logger.js exports toggleVoiceSpeechRecognition');
   assert(typeof voiceMod.isSpeechRecognitionSupported === 'function', 'voice-logger.js exports isSpeechRecognitionSupported');
 
   // 21. Modular Architecture: auth-pwa.js
-  const authPwaMod = require(path.join(repoDir, 'auth-pwa.js'));
+  const authPwaMod = require(path.join(repoDir, 'js', 'auth-pwa.js'));
   assert(authPwaMod.APP_PASS === '258', 'auth-pwa.js defines APP_PASS 258');
   assert(typeof authPwaMod.checkAppLockout === 'function', 'auth-pwa.js exports checkAppLockout');
   assert(typeof authPwaMod.checkAppAuth === 'function', 'auth-pwa.js exports checkAppAuth');
@@ -460,10 +463,10 @@ try {
   assert(typeof authPwaMod.triggerPwaInstall === 'function', 'auth-pwa.js exports triggerPwaInstall');
   assert(typeof authPwaMod.scrollToTop === 'function', 'auth-pwa.js exports scrollToTop');
 
-  assert(indexCode.includes('src="./candidate-renderer.js"'), 'index.html references candidate-renderer.js');
-  assert(indexCode.includes('src="./voice-logger.js"'), 'index.html references voice-logger.js');
-  assert(indexCode.includes('src="./auth-pwa.js"'), 'index.html references auth-pwa.js');
-  assert(swCodeCurrent.includes('./candidate-renderer.js') && swCodeCurrent.includes('./voice-logger.js') && swCodeCurrent.includes('./auth-pwa.js'), 'sw.js caches candidate-renderer.js, voice-logger.js and auth-pwa.js');
+  assert(indexCode.includes('src="./js/candidate-renderer.js"'), 'index.html references candidate-renderer.js');
+  assert(indexCode.includes('src="./js/voice-logger.js"'), 'index.html references voice-logger.js');
+  assert(indexCode.includes('src="./js/auth-pwa.js"'), 'index.html references auth-pwa.js');
+  assert(swCodeCurrent.includes('./js/candidate-renderer.js') && swCodeCurrent.includes('./js/voice-logger.js') && swCodeCurrent.includes('./js/auth-pwa.js'), 'sw.js caches candidate-renderer.js, voice-logger.js and auth-pwa.js');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

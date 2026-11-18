@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
         if (parsed.image && parsed.image.startsWith('data:image/')) {
           const base64Data = parsed.image.replace(/^data:image\/\w+;base64,/, '');
           const buffer = Buffer.from(base64Data, 'base64');
-          fs.writeFileSync(path.join(__dirname, 'shubham_kharche_biodata.jpg'), buffer);
+          fs.writeFileSync(path.join(__dirname, 'assets', 'shubham_kharche_biodata.jpg'), buffer);
         }
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ success: true, message: 'Photo saved successfully!' }));
@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         JSON.parse(body); // validate JSON
-        fs.writeFileSync(path.join(__dirname, 'profile_data.json'), body, 'utf8');
+        fs.writeFileSync(path.join(__dirname, 'data', 'profile_data.json'), body, 'utf8');
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ success: true, message: 'profile_data.json saved successfully!' }));
       } catch (err) {
@@ -69,7 +69,7 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const parsed = JSON.parse(body); // validate JSON
-        fs.writeFileSync(path.join(__dirname, 'candidates.json'), JSON.stringify(parsed, null, 2), 'utf8');
+        fs.writeFileSync(path.join(__dirname, 'data', 'candidates.json'), JSON.stringify(parsed, null, 2), 'utf8');
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ success: true, message: 'candidates.json saved successfully!' }));
       } catch (err) {
@@ -80,7 +80,18 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  const filePath = path.join(__dirname, reqPath);
+  let filePath = path.join(__dirname, reqPath);
+  // Auto-resolve subdirectories for backwards-compatible URLs
+  if (!fs.existsSync(filePath)) {
+    const candidateFolders = ['assets', 'data', 'css', 'js'];
+    for (const folder of candidateFolders) {
+      const subPath = path.join(__dirname, folder, reqPath);
+      if (fs.existsSync(subPath)) {
+        filePath = subPath;
+        break;
+      }
+    }
+  }
   const ext = path.extname(filePath).toLowerCase();
 
   fs.readFile(filePath, (err, data) => {

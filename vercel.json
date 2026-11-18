@@ -7,6 +7,14 @@
     { "source": "/biodata", "destination": "/profile.html" },
     { "source": "/biodata.html", "destination": "/profile.html" },
     { "source": "/Shubham_Kharche", "destination": "/profile.html" },
-    { "source": "/Shubham_Kharche/", "destination": "/profile.html" }
+    { "source": "/Shubham_Kharche/", "destination": "/profile.html" },
+    { "source": "/shubham_kharche_biodata.jpg", "destination": "/assets/shubham_kharche_biodata.jpg" },
+    { "source": "/shubham_biodata_redesigned.png", "destination": "/assets/shubham_biodata_redesigned.png" },
+    { "source": "/icon.svg", "destination": "/assets/icon.svg" },
+    { "source": "/icon-192.svg", "destination": "/assets/icon-192.svg" },
+    { "source": "/icon-512.svg", "destination": "/assets/icon-512.svg" },
+    { "source": "/styles.css", "destination": "/css/styles.css" },
+    { "source": "/candidates.json", "destination": "/data/candidates.json" },
+    { "source": "/profile_data.json", "destination": "/data/profile_data.json" }
   ]
 }

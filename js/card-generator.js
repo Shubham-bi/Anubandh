@@ -380,7 +380,7 @@
     } catch (err) {
       console.warn('Live canvas generation fallback, trying cached asset:', err);
       try {
-        const preRenderedUrl = './shubham_biodata_redesigned.png';
+        const preRenderedUrl = './assets/shubham_biodata_redesigned.png';
         const resp = await fetch(preRenderedUrl);
         if (resp.ok) {
           generatedCardBlob = await resp.blob();

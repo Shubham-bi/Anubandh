@@ -13,11 +13,11 @@
   <meta property="og:site_name" content="Shubham_Kharche"/>
   <meta property="og:url" content="https://anubandh-shubham-kharche.vercel.app/profile"/>
   <meta property="og:description" content="चि. शुभम अनिल खर्चे • B.E. Mechanical • Sr. QA Engineer, Pune (7.8 LPA) • गोत्र: वशिष्ठ • मूळगाव: शेलगाव बाजार, बुलडाणा."/>
-  <meta property="og:image" content="https://anubandh-shubham-kharche.vercel.app/shubham_kharche_biodata.jpg"/>
+  <meta property="og:image" content="https://anubandh-shubham-kharche.vercel.app/assets/shubham_kharche_biodata.jpg"/>
   <meta property="og:type" content="profile"/>
 
-  <link rel="icon" type="image/svg+xml" href="icon.svg"/>
-  <link rel="apple-touch-icon" href="icon.svg"/>
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg"/>
+  <link rel="apple-touch-icon" href="./assets/icon.svg"/>
 
   <style>
     :root {
@@ -798,14 +798,14 @@
             🖼️ मूळ बायोडाटा पत्रिका
           </div>
           <img 
-            src="./shubham_kharche_biodata.jpg" 
+            src="./assets/shubham_kharche_biodata.jpg" 
             alt="शुभम खर्चे बायोडाटा पत्रिका" 
             class="biodata-thumbnail" 
             onclick="openFullImg()"
           />
           <div class="tap-hint">👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा</div>
           <div>
-            <a href="./shubham_kharche_biodata.jpg" download="Shubham_Kharche_Biodata.jpg" class="btn-download-img">
+            <a href="./assets/shubham_kharche_biodata.jpg" download="Shubham_Kharche_Biodata.jpg" class="btn-download-img">
               📥 बायोडाटा फोटो सेव्ह करा
             </a>
           </div>
@@ -875,18 +875,18 @@
   <!-- Fullscreen Image Modal -->
   <div id="fullImgModal" class="img-modal" onclick="closeFullImg()">
     <button class="modal-close" onclick="closeFullImg()">&times;</button>
-    <img src="./shubham_kharche_biodata.jpg" alt="बायोडाटा पूर्ण फोटो"/>
+    <img src="./assets/shubham_kharche_biodata.jpg" alt="बायोडाटा पूर्ण फोटो"/>
   </div>
 
   <!-- Centralized App Configuration -->
-  <script src="./config.js"></script>
+  <script src="./js/config.js"></script>
 
   <!-- Messages Single Source of Truth -->
-  <script src="./messages.js"></script>
+  <script src="./js/messages.js"></script>
 
   <!-- Card Generator & Sharing Utilities -->
-  <script src="./card-generator.js"></script>
-  <script src="./share-utils.js"></script>
+  <script src="./js/card-generator.js"></script>
+  <script src="./js/share-utils.js"></script>
   <script>
     // Open to all - no password required
 
@@ -989,7 +989,7 @@
           title: "मूळ बायोडाटा पत्रिका फोटो",
           icon: "🖼️",
           type: "photo",
-          photoUrl: "./shubham_kharche_biodata.jpg",
+          photoUrl: "./assets/shubham_kharche_biodata.jpg",
           hint: "👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा",
           downloadText: "📥 बायोडाटा फोटो सेव्ह करा"
         }
@@ -1153,14 +1153,14 @@
                   ${escapeHtml(sec.icon || '🖼️')} ${escapeHtml(sec.title || 'मूळ बायोडाटा पत्रिका')}
                 </div>
                 <img 
-                  src="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" 
+                  src="${escapeHtml(sec.photoUrl || './assets/shubham_kharche_biodata.jpg')}" 
                   alt="बायोडाटा पत्रिका" 
                   class="biodata-thumbnail" 
                   onclick="openFullImg()"
                 />
                 <div class="tap-hint">${escapeHtml(sec.hint || '👆 पूर्ण आकारात पाहण्यासाठी फोटोवर टॅप करा')}</div>
                 <div>
-                  <a href="${escapeHtml(sec.photoUrl || './shubham_kharche_biodata.jpg')}" download="Shubham_Kharche_Biodata.jpg" class="btn-download-img">
+                  <a href="${escapeHtml(sec.photoUrl || './assets/shubham_kharche_biodata.jpg')}" download="Shubham_Kharche_Biodata.jpg" class="btn-download-img">
                     ${escapeHtml(sec.downloadText || '📥 बायोडाटा फोटो सेव्ह करा')}
                   </a>
                 </div>
@@ -1204,7 +1204,7 @@
       }
 
       // 2. Fetch fresh profile_data.json
-      fetch('./profile_data.json?v=' + Date.now())
+      fetch('./data/profile_data.json?v=' + Date.now())
         .then(res => {
           if (!res.ok) throw new Error('Network error');
           return res.json();

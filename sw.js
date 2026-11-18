@@ -1,27 +1,29 @@
-const CACHE_NAME = 'anubandh-v57';
+const CACHE_NAME = 'anubandh-v58';
 const ASSETS_TO_CACHE = [
   '/',
   './',
   './profile.html',
   './biodata.html',
-  './styles.css',
-  './config.js',
-  './messages.js',
-  './card-generator.js',
-  './share-utils.js',
-  './storage.js',
-  './modals.js',
-  './candidate-renderer.js',
-  './voice-logger.js',
-  './auth-pwa.js',
   './shubham_biodata_redesigned.html',
-  './shubham_biodata_redesigned.png',
-  './html2canvas.min.js',
-  './candidates.json',
-  './profile_data.json',
   './manifest.json',
-  './icon.svg',
-  './shubham_kharche_biodata.jpg'
+  './css/styles.css',
+  './js/config.js',
+  './js/messages.js',
+  './js/card-generator.js',
+  './js/share-utils.js',
+  './js/storage.js',
+  './js/modals.js',
+  './js/candidate-renderer.js',
+  './js/voice-logger.js',
+  './js/auth-pwa.js',
+  './js/html2canvas.min.js',
+  './data/candidates.json',
+  './data/profile_data.json',
+  './assets/icon.svg',
+  './assets/icon-192.svg',
+  './assets/icon-512.svg',
+  './assets/shubham_kharche_biodata.jpg',
+  './assets/shubham_biodata_redesigned.png'
 ];
 
 self.addEventListener('install', (event) => {

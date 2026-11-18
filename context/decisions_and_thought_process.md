@@ -442,3 +442,23 @@
 
 
 
+
+
+---
+
+### निर्णय क्रमांक ५६: स्वच्छ फोल्डर स्ट्रक्चर व फाईल रेफरन्स अद्ययावतीकरण (Folder Structure Organization & Reference Updates)
+* **तारीख:** १८ नोव्हेंबर २०२६
+* **पार्श्वभूमी व गरज:**
+  प्रकल्पामध्ये रूट डिरेक्टरीमध्ये अनेक विविध प्रकारच्या फाईल्स (CSS, JS मॉड्यूल्स, JSON डेटा, इमेज ॲसेट्स, जुन्या ऐतिहासिक फाईल्स) एकत्र होत्या. युझरच्या सूचनेनुसार:
+  १. स्वच्छ व व्यावसायिक फोल्डर स्ट्रक्चर तयार करणे (`css/`, `js/`, `data/`, `assets/`, `trash/`).
+  २. सर्व फाईल रेफरन्सेस नवीन स्ट्रक्चरनुसार अपडेट करणे.
+  ३. असंबद्ध / जुन्या फाईल्ससाठी `trash/` फोल्डर बनवून त्यात हलवणे.
+  ४. **कडक अट:** कोणतीही फाईल कायमस्वरूपी डिलीट (remove) करायची नाही - सर्व फाईल्स `trash/` मध्ये सुरक्षित जतन करणे.
+* **अंमलबजावणी:**
+  - `trash/`: `datalab-convert-Suchi-SHortlist.html`, `datalab-convert-Suchi-SHortlist.html.bak`, `datalab-convert-MyBiodata.html`, `matrimonial-tracker-app.html`, `MyBiodata.png`, `Shubham_Kharche/`, `Vercel-Key/`
+  - `css/`: `styles.css`
+  - `js/`: `config.js`, `messages.js`, `card-generator.js`, `share-utils.js`, `storage.js`, `modals.js`, `candidate-renderer.js`, `voice-logger.js`, `auth-pwa.js`, `html2canvas.min.js`
+  - `data/`: `candidates.json`, `profile_data.json`
+  - `assets/`: `icon.svg`, `icon-192.svg`, `icon-512.svg`, `shubham_kharche_biodata.jpg`, `shubham_biodata_redesigned.png`
+  - सर्व HTML (`index.html`, `profile.html`, `biodata.html`, `shubham_biodata_redesigned.html`), JavaScript मॉड्यूल्स, `manifest.json`, `sw.js` (anubandh-v58), `server.js` आणि `vercel.json` (बॅकवर्ड कंपॅटिबिलिटी रीराइट्ससह) चे सर्व अंतर्गत मार्ग अपडेट केले.
+  - सर्व २१२/२१२ ऑटोमेटेड टेस्ट्स उत्तीर्ण झाल्या.
