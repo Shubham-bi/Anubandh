@@ -34,6 +34,8 @@ const requiredFiles = [
   'messages.js',
   'card-generator.js',
   'share-utils.js',
+  'storage.js',
+  'modals.js',
   'candidates.json',
   'server.js',
   'start-pwa.bat'
@@ -180,7 +182,9 @@ try {
   const stylesCss = fs.readFileSync(path.join(repoDir, 'styles.css'), 'utf8');
   const cardGenCode = fs.readFileSync(path.join(repoDir, 'card-generator.js'), 'utf8');
   const shareUtilsCode = fs.readFileSync(path.join(repoDir, 'share-utils.js'), 'utf8');
-  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode;
+  const storageCode = fs.readFileSync(path.join(repoDir, 'storage.js'), 'utf8');
+  const modalsCode = fs.readFileSync(path.join(repoDir, 'modals.js'), 'utf8');
+  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode;
 
   assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
   assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
@@ -242,8 +246,8 @@ try {
   assert(indexCode.includes('getShareableProfileFullMessage') && bioCode.includes('getShareableProfileFullMessage'), "index.html and biodata.html copy full accompanied message with profile link");
 
   // Phone Action Modal (संपर्क पर्याय निवडा) Contact Person Name assertions
-  assert(indexCode.includes('phoneModalContactName') && indexCode.includes('phone-modal-contact-name'), "index.html phone action modal defines phoneModalContactName element and CSS");
-  assert(indexCode.includes('contactPersonName') && indexCode.includes('contactName'), "index.html passes and binds contact person name in openPhoneActionPrompt");
+  assert(indexCode.includes('phoneModalContactName') && (indexCode + stylesCss).includes('phone-modal-contact-name'), "index.html phone action modal defines phoneModalContactName element and CSS");
+  assert(allAppCode.includes('contactPersonName') && allAppCode.includes('contactName'), "index.html passes and binds contact person name in openPhoneActionPrompt");
 
   // Admin Portal Full Page assertions
   assert(indexCode.includes('full-page-view'), "index.html adminSettingsModal has full-page-view class");
@@ -256,9 +260,9 @@ try {
   assert((indexCode + stylesCss).includes('@media (max-width: 640px)'), "index.html includes mobile media queries for CMS editor");
 
   // Double-press Back to Exit App assertions
-  assert(indexCode.includes('initBackButtonHandler'), "index.html contains initBackButtonHandler");
-  assert(indexCode.includes('BACK_EXIT_DELAY_MS') && indexCode.includes('lastBackPressTime'), "index.html tracks back button timing for double press exit");
-  assert(indexCode.includes('popstate') && indexCode.includes('getOpenModal'), "index.html listens to popstate and closes open modals on back");
+  assert(allAppCode.includes('initBackButtonHandler'), "index.html contains initBackButtonHandler");
+  assert(allAppCode.includes('BACK_EXIT_DELAY_MS') && allAppCode.includes('lastBackPressTime'), "index.html tracks back button timing for double press exit");
+  assert(allAppCode.includes('popstate') && allAppCode.includes('getOpenModal'), "index.html listens to popstate and closes open modals on back");
   assert(bioCode.includes('popstate') && bioCode.includes('closeFullImg'), "biodata.html handles back button to close open modals");
 
   // Shortlist Feature and Navigation Tabs assertions
@@ -303,7 +307,7 @@ try {
   assert(indexCode.includes('customProposalTemplate') && indexCode.includes('customShareTemplate'), "index.html interpolates custom proposal and share templates");
 
   // 5. Custom Branded Confirmation Popup Modal assertions
-  assert(indexCode.includes('id="customConfirmModal"') && indexCode.includes('showCustomConfirm') && indexCode.includes('handleCustomConfirmOk'), "index.html provides custom styled confirmation popup modal");
+  assert(indexCode.includes('id="customConfirmModal"') && allAppCode.includes('showCustomConfirm') && allAppCode.includes('handleCustomConfirmOk'), "index.html provides custom styled confirmation popup modal");
   assert(!indexCode.includes('if (!confirm(') && !indexCode.includes('if (confirm('), "index.html has replaced native browser confirm() dialogs with showCustomConfirm modal");
 
   // 6. Single conversation delete bug fix & Not Interested toggle assertions
@@ -351,7 +355,7 @@ try {
   assert(redesignedCode.includes('shareToAnyApp') && redesignedCode.includes('sbtn-share'), "shubham_biodata_redesigned.html supports universal cross-app sharing (shareToAnyApp)");
 
   // 12. Candidate Additional Key-Value Details (+ Button)
-  assert(indexCode.includes('openAddCandidateDetailModal') && indexCode.includes('saveCandidateDetail') && indexCode.includes('candidateDetailModal'), "index.html defines additional key-value detail modal and handlers");
+  assert(allAppCode.includes('openAddCandidateDetailModal') && allAppCode.includes('saveCandidateDetail') && indexCode.includes('candidateDetailModal'), "index.html defines additional key-value detail modal and handlers");
   assert(indexCode.includes('➕ माहिती जोडा') && indexCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
 
   // 13. Direct wa.me Number Sharing Format
@@ -407,6 +411,22 @@ try {
   assert(bioCode.includes('src="./config.js"'), 'biodata.html references config.js');
   assert(profileCode.includes('src="./config.js"'), 'profile.html references config.js');
   assert(redesignedCode.includes('src="./config.js"'), 'shubham_biodata_redesigned.html references config.js');
+
+  // 19. Modular Architecture: Phase 2 (storage.js & modals.js)
+  const storageMod = require(path.join(repoDir, 'storage.js'));
+  assert(typeof storageMod.getStoredCandidates === 'function', 'storage.js exports getStoredCandidates');
+  assert(typeof storageMod.exportDataJson === 'function', 'storage.js exports exportDataJson');
+  assert(typeof storageMod.exportDataCsv === 'function', 'storage.js exports exportDataCsv');
+
+  const modalsMod = require(path.join(repoDir, 'modals.js'));
+  assert(typeof modalsMod.showCustomConfirm === 'function', 'modals.js exports showCustomConfirm');
+  assert(typeof modalsMod.openPhoneActionPrompt === 'function', 'modals.js exports openPhoneActionPrompt');
+  assert(typeof modalsMod.openAddCandidateDetailModal === 'function', 'modals.js exports openAddCandidateDetailModal');
+  assert(typeof modalsMod.getOpenModal === 'function', 'modals.js exports getOpenModal');
+
+  assert(indexCode.includes('src="./storage.js"'), 'index.html references storage.js');
+  assert(indexCode.includes('src="./modals.js"'), 'index.html references modals.js');
+  assert(swCodeCurrent.includes('./storage.js') && swCodeCurrent.includes('./modals.js'), 'sw.js caches storage.js and modals.js');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

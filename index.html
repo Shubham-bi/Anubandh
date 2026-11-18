@@ -1502,6 +1502,10 @@
   <script src="./card-generator.js"></script>
   <script src="./share-utils.js"></script>
 
+  <!-- Storage & Modals Modules -->
+  <script src="./storage.js"></script>
+  <script src="./modals.js"></script>
+
   <!-- Application Logic -->
   <script>
 
@@ -4458,47 +4462,11 @@
     }
 
     function exportDataJson() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(candidates, null, 2));
-      const a = document.createElement('a');
-      a.href = dataStr;
-      a.download = "anubandh_backup_" + new Date().toISOString().slice(0, 10) + ".json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      showToast('JSON डाऊनलोड झाले!');
+      if (window.AnubandhStorage) AnubandhStorage.exportDataJson(candidates);
     }
 
     function exportDataCsv() {
-      const headers = ["अ.क्र.", "नाव", "जन्म ठिकाण", "उंची", "वर्ण", "गोत्र", "मामकुळ", "जन्म तारीख", "वेळ", "रक्त", "शिक्षण", "कुटुंब", "अपेक्षा", "संपर्क", "फोन", "स्थिती"];
-      const rows = candidates.map(c => [
-        `"${c.sr}"`,
-        `"${(c.name || '').replace(/"/g, '""')}"`,
-        `"${(c.mulgaon || '').replace(/"/g, '""')}"`,
-        `"${(c.height || '').replace(/"/g, '""')}"`,
-        `"${(c.complexion || '').replace(/"/g, '""')}"`,
-        `"${(c.gotra || '').replace(/"/g, '""')}"`,
-        `"${(c.mamkul || '').replace(/"/g, '""')}"`,
-        `"${(c.date || '').replace(/"/g, '""')}"`,
-        `"${(c.time || '').replace(/"/g, '""')}"`,
-        `"${(c.blood || '').replace(/"/g, '""')}"`,
-        `"${(c.edu || '').replace(/"/g, '""')}"`,
-        `"${(c.fam || '').replace(/"/g, '""')}"`,
-        `"${(c.exp || '').replace(/"/g, '""')}"`,
-        `"${(c.contact || '').replace(/"/g, '""')}"`,
-        `"${(c.phones || []).join(', ')}"`,
-        `"${c.status || 'pending'}"`
-      ].join(','));
-
-      const csvContent = "﻿" + headers.join(',') + "\n" + rows.join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = "anubandh_candidates_" + new Date().toISOString().slice(0, 10) + ".csv";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      showToast('CSV डाऊनलोड झाली!');
+      if (window.AnubandhStorage) AnubandhStorage.exportDataCsv(candidates);
     }
 
     function showToast(msg) {
@@ -4728,62 +4696,7 @@
       sessionStorage.setItem('anubandh_install_dismissed', 'true');
     }
 
-    // Custom Confirmation Dialog (Replaces native browser confirm())
-    let confirmResolveCallback = null;
-    function showCustomConfirm({ title, message, confirmText = 'होय, पुष्टी करा', cancelText = 'रद्द करा', type = 'danger' }) {
-      return new Promise((resolve) => {
-        confirmResolveCallback = resolve;
-        const modal = document.getElementById('customConfirmModal');
-        if (!modal) {
-          resolve(confirm(`${title}\n${message}`));
-          return;
-        }
-        document.getElementById('confirmTitle').textContent = title || 'पुष्टीकरण';
-        document.getElementById('confirmMessage').textContent = message || '';
-        const okBtn = document.getElementById('confirmOkBtn');
-        const cancelBtn = document.getElementById('confirmCancelBtn');
-        const iconContainer = document.getElementById('confirmIconContainer');
-
-        okBtn.textContent = confirmText;
-        cancelBtn.textContent = cancelText;
-
-        if (type === 'danger') {
-          iconContainer.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
-          iconContainer.style.background = '#fee2e2';
-          okBtn.style.background = '#dc2626';
-          okBtn.style.borderColor = '#dc2626';
-        } else {
-          iconContainer.innerHTML = '⚠️';
-          iconContainer.style.background = '#fef3c7';
-          okBtn.style.background = '#d97706';
-          okBtn.style.borderColor = '#d97706';
-        }
-
-        modal.classList.add('open');
-      });
-    }
-
-    function handleCustomConfirmOk() {
-      const modal = document.getElementById('customConfirmModal');
-      if (modal) modal.classList.remove('open');
-      if (confirmResolveCallback) {
-        confirmResolveCallback(true);
-        confirmResolveCallback = null;
-      }
-    }
-
-    function handleCustomConfirmCancel() {
-      const modal = document.getElementById('customConfirmModal');
-      if (modal) modal.classList.remove('open');
-      if (confirmResolveCallback) {
-        confirmResolveCallback(false);
-        confirmResolveCallback = null;
-      }
-    }
-
-    function closeCustomConfirmModal() {
-      handleCustomConfirmCancel();
-    }
+    // Note: Custom Confirmation Dialog (showCustomConfirm, handleCustomConfirmOk, etc.) is modularized in modals.js
 
     // Note: HTML5 Canvas Biodata Card Generator & Card Sharing actions are modularized in card-generator.js & share-utils.js
 
