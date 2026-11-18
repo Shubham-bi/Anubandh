@@ -1,7 +1,8 @@
-const CACHE_NAME = 'anubandh-v49';
+const CACHE_NAME = 'anubandh-v50';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './profile.html',
   './biodata.html',
   './shubham_biodata_redesigned.html',
   './shubham_biodata_redesigned.png',

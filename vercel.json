@@ -2,8 +2,11 @@
   "version": 2,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/profile", "destination": "/biodata.html" },
-    { "source": "/profile/", "destination": "/biodata.html" },
-    { "source": "/biodata", "destination": "/biodata.html" }
+    { "source": "/profile", "destination": "/profile.html" },
+    { "source": "/profile/", "destination": "/profile.html" },
+    { "source": "/biodata", "destination": "/profile.html" },
+    { "source": "/biodata.html", "destination": "/profile.html" },
+    { "source": "/Shubham_Kharche", "destination": "/profile.html" },
+    { "source": "/Shubham_Kharche/", "destination": "/profile.html" }
   ]
 }

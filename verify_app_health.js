@@ -24,6 +24,7 @@ const requiredFiles = [
   'manifest.json',
   'sw.js',
   'icon.svg',
+  'profile.html',
   'biodata.html',
   'shubham_biodata_redesigned.html',
   'shubham_biodata_redesigned.png',
@@ -359,7 +360,7 @@ try {
   assert(!testProposal.includes('(देवयानी)'), 'messages.js excludes name in parentheses per user requirement');
   assert(!testProposal.includes('गोत्र:'), 'messages.js excludes gotra per user requirement');
   assert(testProposal.indexOf('*मुलाची थोडक्यात माहिती:*') < testProposal.indexOf('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js follows requested sequence: groom info before biodata link');
-  assert(testProposal.includes('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:\nhttps://anubandh-shubham-kharche.vercel.app/profile'), 'messages.js candidate proposal contains exact requested biodata link text');
+  assert(testProposal.includes('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:\nhttps://anubandh-shubham-kharche.vercel.app/profile.html'), 'messages.js candidate proposal contains exact requested biodata link text');
 
   const testGeneric = messagesMod.buildGenericShareMessage();
   assert(testGeneric.includes('मुलाचा (शुभम अनिल खर्चे) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js generic share contains exact requested text');
@@ -384,9 +385,11 @@ try {
   // 17. Vercel deployment configuration & Shareable Profile URL
   assert(fs.existsSync(path.join(repoDir, 'vercel.json')), 'vercel.json exists for Vercel deployment');
   const vercelConfig = JSON.parse(fs.readFileSync(path.join(repoDir, 'vercel.json'), 'utf8'));
-  assert(vercelConfig.rewrites && vercelConfig.rewrites.some(r => r.source === '/profile' && r.destination === '/biodata.html'), 'vercel.json rewrites /profile to /biodata.html');
-  assert(indexCode.includes('anubandh-shubham-kharche.vercel.app/profile'), 'index.html points to Vercel shareable profile URL');
-  assert(bioCode.includes('anubandh-shubham-kharche.vercel.app/profile'), 'biodata.html points to Vercel shareable profile URL');
+  assert(vercelConfig.rewrites && vercelConfig.rewrites.some(r => r.source === '/profile' && r.destination === '/profile.html'), 'vercel.json rewrites /profile to /profile.html');
+  assert(indexCode.includes('anubandh-shubham-kharche.vercel.app/profile.html'), 'index.html points to Vercel shareable profile URL');
+  assert(bioCode.includes('anubandh-shubham-kharche.vercel.app/profile.html'), 'biodata.html points to Vercel shareable profile URL');
+  const profileCode = fs.readFileSync(path.join(repoDir, 'profile.html'), 'utf8');
+  assert(profileCode.includes('anubandh-shubham-kharche.vercel.app/profile.html'), 'profile.html points to Vercel shareable profile URL');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

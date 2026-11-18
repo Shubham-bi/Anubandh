@@ -18,8 +18,9 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
-  if (reqPath === '/profile' || reqPath === '/profile/') reqPath = '/biodata.html';
-  if (reqPath === '/biodata' || reqPath === '/biodata/') reqPath = '/biodata.html';
+  if (reqPath === '/profile' || reqPath === '/profile/' || reqPath === '/profile.html') reqPath = '/profile.html';
+  if (reqPath === '/biodata' || reqPath === '/biodata/' || reqPath === '/biodata.html') reqPath = '/profile.html';
+  if (reqPath === '/Shubham_Kharche' || reqPath === '/Shubham_Kharche/') reqPath = '/profile.html';
 
   // API to upload photo for Shubham's biodata
   if (req.method === 'POST' && reqPath === '/api/upload-photo') {

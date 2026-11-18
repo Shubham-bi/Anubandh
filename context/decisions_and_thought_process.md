@@ -395,15 +395,18 @@
 * `buildGenericShareMessage` मध्ये:
   - शोध घेण्याविषयीचे वाक्य सुरुवातीला आणि बायोडाटा लिंक शेवटी ठेवल्याने संवादाचा प्रवाह अतिशय वाचनीय व प्रभावी झाला आहे.
 
-### निर्णय २२.२: वधू पक्षासाठी प्रोफाईल URL Vercel वर स्थलांतरित (Vercel Live URL Migration)
-* **पार्श्वभूमी:** वापरकर्त्याकडून माहिती मिळाली की GitHub Pages सक्रिय नसल्याने 404 एरर येत होता. मूळ ॲप Vercel वर डिप्लॉय करण्यात आले आहे:
-  - मुख्य ॲप: `https://anubandh-shubham-kharche.vercel.app`
-  - वधू पक्षासाठी शेअरेबल पेज: `https://anubandh-shubham-kharche.vercel.app/profile`
+### निर्णय २२.२: वधू पक्षासाठी प्रोफाईल URL Vercel वर स्थलांतरित व `profile.html` ची निर्मिती (Vercel Live URL & profile.html Creation)
+* **पार्श्वभूमी:** वापरकर्त्याकडून माहिती मिळाली की GitHub Pages सक्रिय नसल्याने 404 एरर येत होता. मूळ ॲप Vercel वर डिप्लॉय करण्यात आले आहे. तसेच वापरकर्त्याने स्पष्ट निर्देश दिले:
+  - *"https://anubandh-shubham-kharche.vercel.app/profile.html add this"*
+  - *"biodata.html rename it to profile.html if require"*
+  - *"https://shubham-bi.github.io/Anubandh/Shubham_Kharche no side at this location"*
 * **अंमलबजावणी:**
-  1. `vercel.json` कॉन्फिगरेशन फाईल तयार केली, ज्यामध्ये `/profile` आणि `/profile/` ची रिक्वेस्ट थेट विना-पासवर्ड असलेल्या `biodata.html` कडे रिराइट केली जाते.
-  2. `messages.js` मधील `BIODATA_URL`, `index.html` आणि `biodata.html` मधील शेअर लिंक्स आणि कॅनव्हास बॅनर URL त्वरित `https://anubandh-shubham-kharche.vercel.app/profile` वर अद्ययावत केली.
-  3. `server.js` मध्ये स्थानिक चाचणीसाठी `/profile` ला `biodata.html` कडे रूट केले.
-  4. `verify_app_health.js` मध्ये Vercel आणि `/profile` च्या १६२ चाचण्या १००% उत्तीर्ण झाल्या.
+  1. `profile.html` हे प्रत्यक्ष स्टॅटिक वेबपेज तयार केले जेणेकरून Vercel वर `https://anubandh-shubham-kharche.vercel.app/profile.html` थेट विना-अडथळा उघडेल.
+  2. `vercel.json` कॉन्फिगरेशन फाईल अद्ययावत केली, ज्यामध्ये `/profile`, `/profile.html`, `/biodata`, `/biodata.html` आणि `/Shubham_Kharche` या सर्व मार्गांवरून येणाऱ्या विनंत्या थेट `profile.html` कडे रिराइट होतात.
+  3. `messages.js` मधील `BIODATA_URL`, `index.html`, `biodata.html`, आणि `shubham_biodata_redesigned.html` मधील शेअर लिंक्स आणि कॅनव्हास बॅनर URL त्वरित `https://anubandh-shubham-kharche.vercel.app/profile.html` वर अद्ययावत केल्या.
+  4. `Shubham_Kharche/index.html` मध्ये `profile.html` कडे स्वयंचलित रिडायरेक्ट जोडले.
+  5. `sw.js` कॅश आवृत्ती `anubandh-v50` करून `profile.html` कॅशमध्ये समाविष्ट केले.
+  6. `verify_app_health.js` मध्ये Vercel आणि `profile.html` च्या १६४ चाचण्या १००% उत्तीर्ण झाल्या.
 
 
 
