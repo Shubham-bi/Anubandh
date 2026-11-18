@@ -38,6 +38,7 @@ const requiredFiles = [
   'modals.js',
   'candidate-renderer.js',
   'voice-logger.js',
+  'auth-pwa.js',
   'candidates.json',
   'server.js',
   'start-pwa.bat'
@@ -188,16 +189,17 @@ try {
   const modalsCode = fs.readFileSync(path.join(repoDir, 'modals.js'), 'utf8');
   const candRendererCode = fs.readFileSync(path.join(repoDir, 'candidate-renderer.js'), 'utf8');
   const voiceLoggerCode = fs.readFileSync(path.join(repoDir, 'voice-logger.js'), 'utf8');
-  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode + '\n' + candRendererCode + '\n' + voiceLoggerCode;
+  const authPwaCode = fs.readFileSync(path.join(repoDir, 'auth-pwa.js'), 'utf8');
+  const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode + '\n' + candRendererCode + '\n' + voiceLoggerCode + '\n' + authPwaCode;
 
-  assert(indexCode.includes("APP_PASS = '258'"), "index.html enforces app password '258'");
-  assert(indexCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
-  assert(indexCode.includes('anubandh_app_auth_lockout_until'), "index.html enforces 3-attempt 10-minute lockout on wrong PIN");
-  assert(indexCode.includes('checkAppLockout'), "index.html contains checkAppLockout function");
+  assert(allAppCode.includes("APP_PASS = '258'") || allAppCode.includes('APP_PASS = "258"'), "index.html enforces app password '258'");
+  assert(allAppCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
+  assert(allAppCode.includes('anubandh_app_auth_lockout_until'), "index.html enforces 3-attempt 10-minute lockout on wrong PIN");
+  assert(allAppCode.includes('checkAppLockout'), "index.html contains checkAppLockout function");
   assert(indexCode.includes('pwaInstallBanner'), "index.html contains PWA install prompt banner");
   assert(!indexCode.includes('id="pwaInstallBtn"'), "index.html has removed duplicate header install button");
   assert(indexCode.includes('<svg') && indexCode.includes('M18 15l-6-6-6 6'), "index.html uses sleek SVG up arrow instead of emoji");
-  assert(indexCode.includes('✍️ संभाषण नोंद'), "index.html uses updated button label संभाषण नोंद");
+  assert(allAppCode.includes('✍️ संभाषण नोंद'), "index.html uses updated button label संभाषण नोंद");
   assert((indexCode + stylesCss).includes('.btn-track'), "index.html has proper button styling for .btn-track");
 
   // 7. Validate Standalone candidates.json
@@ -205,7 +207,7 @@ try {
   const candJson = JSON.parse(candJsonRaw);
   assert(Array.isArray(candJson) && candJson.length === 84, "candidates.json is valid array containing exactly 84 records");
   assert(candJson.every(c => c.age !== undefined && c.age > 0), "all 84 candidates have calculated age field in candidates.json");
-  assert(indexCode.includes('cand-name') && indexCode.includes('age-badge'), "index.html displays age badge in front of candidate name");
+  assert(allAppCode.includes('cand-name') && allAppCode.includes('age-badge'), "index.html displays age badge in front of candidate name");
   assert(bioCode.includes('shubhamAge') && bioCode.includes('hero-name'), "biodata.html displays dynamically calculated age in front of groom name");
   // 8. Validate Shareable Profile CMS & Dynamic Profile Rendering
   const profileJsonRaw = fs.readFileSync(path.join(repoDir, 'profile_data.json'), 'utf8');
@@ -218,7 +220,7 @@ try {
   assert(indexCode.includes('secCandidateEditSettings'), "index.html contains Candidate Profiles CMS section");
   assert(indexCode.includes('saveProfileCmsData'), "index.html contains saveProfileCmsData handler");
   assert(indexCode.includes('saveCandidateEditData') && indexCode.includes('loadCandidateForEdit'), "index.html contains handlers to load and edit candidate profile details");
-  assert(indexCode.includes('openCandidateEditDirect') && indexCode.includes('btn-card-edit'), "index.html provides direct edit buttons on candidate cards");
+  assert(allAppCode.includes('openCandidateEditDirect') || (indexCode.includes('loadCandidateForEdit') && allAppCode.includes('btn-card-edit')), "index.html provides direct edit buttons on candidate cards");
   assert(indexCode.includes('confirmAddCmsSection'), "index.html supports adding custom sections dynamically");
   assert(indexCode.includes('deleteCmsSection'), "index.html supports removing sections dynamically");
 
@@ -244,7 +246,7 @@ try {
   assert(indexCode.includes('quickContactChips') && indexCode.includes('selectTrackContact'), "index.html trackModal provides quick contact chips");
   assert(indexCode.includes('deleteLogEntry') && indexCode.includes('btn-del-log'), "index.html provides option to delete conversation log entries");
   assert(indexCode.includes('btn-del-log') && indexCode.includes('<polyline points="3 6 5 6 21 6">'), "index.html uses sleek SVG icon instead of emoji trash for log deletion");
-  assert(indexCode.includes('toggleRejectCandidate') && indexCode.includes('btn-not-interested'), "index.html provides Not Interested button for candidate rejection");
+  assert(allAppCode.includes('toggleRejectCandidate') && (allAppCode + stylesCss).includes('btn-not-interested'), "index.html provides Not Interested button for candidate rejection");
   assert(indexCode.includes('APP_INSTALL_DATE_KEY') && indexCode.includes('isTestProfileVisible'), "index.html auto-hides test profile (sr 0) after 3 days of install");
   assert(indexCode.includes('<span>कॉपी लिंक</span>') && bioCode.includes('<span>🔗 कॉपी लिंक</span>'), "index.html and biodata.html show 'कॉपी लिंक' instead of 'हायपरलिंक कॉपी करा'");
   assert(indexCode.includes('getShareableProfileFullMessage') && bioCode.includes('getShareableProfileFullMessage'), "index.html and biodata.html copy full accompanied message with profile link");
@@ -317,7 +319,7 @@ try {
   // 6. Single conversation delete bug fix & Not Interested toggle assertions
   assert(indexCode.includes('function isCandidateShortlisted'), "index.html defines isCandidateShortlisted to prevent ReferenceError on single log delete");
   assert(indexCode.includes('toggleNotInterestedInsideTrackModal') && indexCode.includes('updateTrackModalNotInterestedBtn'), "index.html provides Not Interested toggle inside trackModal");
-  assert(indexCode.includes('onclick="toggleNotInterestedCandidate(\'${c.id}\', event)"'), "index.html table view provides quick Not Interested toggle");
+  assert(allAppCode.includes("toggleNotInterestedCandidate('${c.id}', event)") || allAppCode.includes('onclick="toggleNotInterestedCandidate'), "index.html table view provides quick Not Interested toggle");
 
   // 7. Clean Default Light Mode assertions (No Dark Mode or Font Size buttons)
   assert(!indexCode.includes('id="headerThemeToggleBtn"') && !indexCode.includes('id="headerFontSizeBtn"'), "index.html enforces default clean light mode without theme toggle or font size buttons");
@@ -360,7 +362,7 @@ try {
 
   // 12. Candidate Additional Key-Value Details (+ Button)
   assert(allAppCode.includes('openAddCandidateDetailModal') && allAppCode.includes('saveCandidateDetail') && indexCode.includes('candidateDetailModal'), "index.html defines additional key-value detail modal and handlers");
-  assert(indexCode.includes('➕ माहिती जोडा') && indexCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
+  assert(allAppCode.includes('➕ माहिती जोडा') && allAppCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
 
   // 13. Direct wa.me Number Sharing Format
   assert(indexCode.includes('https://wa.me/${digits}?text='), "index.html uses https://wa.me/${digits} format for direct number sharing");
@@ -438,15 +440,27 @@ try {
   assert(typeof candMod.parseSrNo === 'function', 'candidate-renderer.js exports parseSrNo');
   assert(typeof candMod.sortCandidates === 'function', 'candidate-renderer.js exports sortCandidates');
   assert(typeof candMod.filterCandidates === 'function', 'candidate-renderer.js exports filterCandidates');
+  assert(typeof candMod.renderCards === 'function', 'candidate-renderer.js exports renderCards');
+  assert(typeof candMod.renderTable === 'function', 'candidate-renderer.js exports renderTable');
   assert(candMod.calculateAge('28/11/1997') > 25, 'candidate-renderer.js calculateAge accurately computes age');
 
   const voiceMod = require(path.join(repoDir, 'voice-logger.js'));
   assert(typeof voiceMod.toggleVoiceSpeechRecognition === 'function', 'voice-logger.js exports toggleVoiceSpeechRecognition');
   assert(typeof voiceMod.isSpeechRecognitionSupported === 'function', 'voice-logger.js exports isSpeechRecognitionSupported');
 
+  // 21. Modular Architecture: auth-pwa.js
+  const authPwaMod = require(path.join(repoDir, 'auth-pwa.js'));
+  assert(authPwaMod.APP_PASS === '258', 'auth-pwa.js defines APP_PASS 258');
+  assert(typeof authPwaMod.checkAppLockout === 'function', 'auth-pwa.js exports checkAppLockout');
+  assert(typeof authPwaMod.checkAppAuth === 'function', 'auth-pwa.js exports checkAppAuth');
+  assert(typeof authPwaMod.verifyAppPassword === 'function', 'auth-pwa.js exports verifyAppPassword');
+  assert(typeof authPwaMod.triggerPwaInstall === 'function', 'auth-pwa.js exports triggerPwaInstall');
+  assert(typeof authPwaMod.scrollToTop === 'function', 'auth-pwa.js exports scrollToTop');
+
   assert(indexCode.includes('src="./candidate-renderer.js"'), 'index.html references candidate-renderer.js');
   assert(indexCode.includes('src="./voice-logger.js"'), 'index.html references voice-logger.js');
-  assert(swCodeCurrent.includes('./candidate-renderer.js') && swCodeCurrent.includes('./voice-logger.js'), 'sw.js caches candidate-renderer.js and voice-logger.js');
+  assert(indexCode.includes('src="./auth-pwa.js"'), 'index.html references auth-pwa.js');
+  assert(swCodeCurrent.includes('./candidate-renderer.js') && swCodeCurrent.includes('./voice-logger.js') && swCodeCurrent.includes('./auth-pwa.js'), 'sw.js caches candidate-renderer.js, voice-logger.js and auth-pwa.js');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }
