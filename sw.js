@@ -1,7 +1,7 @@
-const CACHE_NAME = 'anubandh-v55';
+const CACHE_NAME = 'anubandh-v57';
 const ASSETS_TO_CACHE = [
+  '/',
   './',
-  './index.html',
   './profile.html',
   './biodata.html',
   './styles.css',
@@ -27,8 +27,15 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // Resilient cache loading: one failing asset never prevents SW installation
+      for (const asset of ASSETS_TO_CACHE) {
+        try {
+          await cache.add(asset);
+        } catch (err) {
+          console.warn(`[ServiceWorker] Optional cache skip for ${asset}:`, err.message);
+        }
+      }
     })
   );
 });
@@ -43,10 +50,36 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Stale-While-Revalidate strategy: Serve instantly from cache (<10ms) while fetching freshest in background
+// Resilient Navigation & Stale-While-Revalidate caching strategy
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // 1. Navigation requests (PWA opening, /index.html, root /)
+  if (event.request.mode === 'navigate' || url.pathname === '/' || url.pathname === '/index.html') {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return caches.match('/').then((rootCached) => {
+          if (rootCached) return rootCached;
+          return caches.match('./').then((dotCached) => {
+            if (dotCached) return dotCached;
+            return fetch(event.request).catch(() => {
+              return caches.match('/') || caches.match('./');
+            });
+          });
+        });
+      }).then((resp) => {
+        return resp || fetch(event.request);
+      }).catch(() => {
+        return caches.match('/') || caches.match('./');
+      })
+    );
+    return;
+  }
+
+  // 2. Static Assets: Stale-While-Revalidate
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)
@@ -62,6 +95,8 @@ self.addEventListener('fetch', (event) => {
         .catch(() => cachedResponse);
 
       return cachedResponse || fetchPromise;
+    }).catch(() => {
+      return fetch(event.request);
     })
   );
 });

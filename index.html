@@ -1621,54 +1621,17 @@
       return '';
     }
 
-    // Robust digit converter (handles Devanagari ०-९ and English 0-9)
+    // Centralized WhatsApp Sharing delegate to AnubandhShareUtils
     function toEnglishDigits(str) {
-      if (!str) return '';
-      const devanagari = ['०','१','२','३','४','५','६','७','८','९'];
-      let res = String(str);
-      for (let i = 0; i < 10; i++) {
-        res = res.split(devanagari[i]).join(String(i));
+      if (typeof AnubandhShareUtils !== 'undefined' && AnubandhShareUtils.toEnglishDigits) {
+        return AnubandhShareUtils.toEnglishDigits(str);
       }
-      return res.replace(/\D/g, '');
+      return String(str || '').replace(/\D/g, '');
     }
 
     async function openWhatsAppChat(phone, candidateName, srNo, guardianName) {
-      const text = buildWhatsAppText(candidateName, srNo, guardianName);
-      let digits = toEnglishDigits(phone);
-      if (digits.length === 10) {
-        digits = '91' + digits;
-      } else if (digits.length === 11 && digits.startsWith('0')) {
-        digits = '91' + digits.slice(1);
-      }
-
-      const waUrl = digits ? `https://wa.me/${digits}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      // On mobile devices, always open WhatsApp directly with candidate's number
-      if (isMobile) {
-        window.location.href = waUrl;
-        return;
-      }
-
-      // Desktop: Copy dynamic canvas image to clipboard for easy Ctrl+V pasting into WhatsApp Web
-      let imgCopied = false;
-      try {
-        const card = await getLiveBiodataCardBlob();
-        if (card && card.blob) {
-          imgCopied = await copyImageToClipboard(card.blob);
-        }
-      } catch(e) {
-        console.warn('Live card copy error, trying fallback:', e);
-      }
-      if (!imgCopied) {
-        const photoSrc = './shubham_biodata_redesigned.png';
-        imgCopied = await copyImageToClipboard(photoSrc);
-      }
-      window.open(waUrl, '_blank');
-      if (imgCopied) {
-        showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
-      } else {
-        showToast('WhatsApp चॅट उघडले आहे!');
+      if (typeof AnubandhShareUtils !== 'undefined' && AnubandhShareUtils.openWhatsAppChat) {
+        return AnubandhShareUtils.openWhatsAppChat(phone, candidateName, srNo, guardianName);
       }
     }
 

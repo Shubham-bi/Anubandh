@@ -139,11 +139,7 @@
         }
       }
     } catch(e) {
-      console.warn('Live card copy error, trying fallback:', e);
-    }
-    if (!imgCopied) {
-      const photoSrc = './shubham_biodata_redesigned.png';
-      imgCopied = await copyImageToClipboard(photoSrc);
+      console.warn('Live card copy error:', e);
     }
     window.open(waUrl, '_blank');
     if (typeof showToast === 'function') {
@@ -189,7 +185,7 @@
       try {
         const card = await getCard();
         if (card && card.blob) {
-          const file = new File([card.blob], 'shubham_biodata_redesigned.png', { type: card.blob.type || 'image/png' });
+          const file = new File([card.blob], 'shubham_kharche_biodata_card.png', { type: card.blob.type || 'image/png' });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
@@ -234,12 +230,6 @@
           }
         }
       } catch (e) {}
-      if (!imgCopied) {
-        imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
-        if (!imgCopied) {
-          imgCopied = await copyImageToClipboard('./shubham_kharche_biodata.jpg');
-        }
-      }
       window.open(waUrl, '_blank');
       if (typeof showToast === 'function') {
         if (imgCopied) {
@@ -265,9 +255,6 @@
         }
       }
     } catch (e) {}
-    if (!imgCopied) {
-      imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
-    }
     if (imgCopied) {
       if (typeof showToast === 'function') showToast('📸 बायोडाटा पत्रिका इमेज क्लिपबोर्डवर कॉपी झाली! (चॅटमध्ये Paste करा)');
       return;
@@ -298,13 +285,23 @@
     }
   }
 
-  function downloadGeneratedCard() {
-    const dataUrl = window.generatedCardDataUrl || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardDataUrl : null);
-    const blob = window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
+  async function downloadGeneratedCard() {
+    let dataUrl = window.generatedCardDataUrl || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardDataUrl : null);
+    let blob = window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
+    if (!blob) {
+      const getCard = (typeof getLiveBiodataCardBlob === 'function') 
+        ? getLiveBiodataCardBlob 
+        : (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.getLiveBiodataCardBlob : null);
+      if (getCard) {
+        const res = await getCard();
+        blob = res?.blob;
+        dataUrl = res?.dataUrl;
+      }
+    }
     if (!dataUrl && !blob) return;
     const link = document.createElement('a');
     link.href = dataUrl || URL.createObjectURL(blob);
-    link.download = 'shubham_biodata_redesigned.png';
+    link.download = 'shubham_kharche_biodata_card.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -315,11 +312,15 @@
     const shareMsg = getShareableProfileFullMessage();
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
-    const blob = window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
+    const getCard = (typeof getLiveBiodataCardBlob === 'function') 
+      ? getLiveBiodataCardBlob 
+      : (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.getLiveBiodataCardBlob : null);
+    const card = getCard ? await getCard() : null;
+    const blob = card?.blob || window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
 
     if (navigator.canShare && blob) {
       try {
-        const file = new File([blob], 'shubham_biodata_redesigned.png', { type: blob.type || 'image/png' });
+        const file = new File([blob], 'shubham_kharche_biodata_card.png', { type: blob.type || 'image/png' });
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
@@ -351,7 +352,10 @@
     if (isMobile) {
       window.location.href = waUrl;
     } else {
-      const imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
+      let imgCopied = false;
+      if (blob) {
+        imgCopied = await copyImageToClipboard(blob);
+      }
       window.open(waUrl, '_blank');
       if (typeof showToast === 'function') {
         if (imgCopied) {
@@ -365,10 +369,15 @@
 
   async function shareGeneratedCardNative() {
     const shareMsg = getShareableProfileFullMessage();
-    const blob = window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
+    const getCard = (typeof getLiveBiodataCardBlob === 'function') 
+      ? getLiveBiodataCardBlob 
+      : (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.getLiveBiodataCardBlob : null);
+    const card = getCard ? await getCard() : null;
+    const blob = card?.blob || window.generatedCardBlob || (typeof AnubandhCardGenerator !== 'undefined' ? AnubandhCardGenerator.generatedCardBlob : null);
+
     if (navigator.canShare && blob) {
       try {
-        const file = new File([blob], 'shubham_biodata_redesigned.png', { type: blob.type || 'image/png' });
+        const file = new File([blob], 'shubham_kharche_biodata_card.png', { type: blob.type || 'image/png' });
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],

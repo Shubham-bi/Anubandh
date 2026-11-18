@@ -97,20 +97,35 @@
       // Data references
       const pData = (typeof shareableProfileData !== 'undefined' && shareableProfileData) 
         ? shareableProfileData 
-        : ((typeof DEFAULT_PROFILE_DATA !== 'undefined') ? DEFAULT_PROFILE_DATA : null);
+        : ((typeof currentProfile !== 'undefined' && currentProfile) 
+          ? currentProfile 
+          : ((typeof DEFAULT_PROFILE_DATA !== 'undefined') ? DEFAULT_PROFILE_DATA : null));
       const settings = (typeof waSettings !== 'undefined' && waSettings) ? waSettings : {};
 
       const findVal = (secId, keyPart) => {
         if (!pData?.sections) return '';
-        const sec = pData.sections.find(s => s.id === secId);
-        if (!sec?.fields) return '';
-        const f = sec.fields.find(fld => fld.label && fld.label.includes(keyPart));
-        return f ? f.value : '';
+        const sec = pData.sections.find(s => s.id === secId || s.id === secId.replace('sec-', 'sec-education-'));
+        if (!sec) return '';
+        if (Array.isArray(sec.items)) {
+          const item = sec.items.find(i => i.label && i.label.includes(keyPart));
+          if (item) return item.val || item.value || '';
+        }
+        if (Array.isArray(sec.fields)) {
+          const f = sec.fields.find(fld => fld.label && fld.label.includes(keyPart));
+          if (f) return f.value || f.val || '';
+        }
+        return '';
       };
 
-      // Photo Source
+      // Personal portrait photo (never load scanned paper document into the face circle)
+      const heroPhoto = pData?.hero?.photo;
       const photoSec = pData?.sections?.find(s => s.type === 'photo');
-      const photoSrc = (photoSec && photoSec.photoUrl) ? photoSec.photoUrl : './shubham_kharche_biodata.jpg';
+      let photoSrc = null;
+      if (heroPhoto && !heroPhoto.includes('biodata') && !heroPhoto.includes('MyBiodata')) {
+        photoSrc = heroPhoto;
+      } else if (photoSec && photoSec.photoUrl && !photoSec.photoUrl.includes('biodata') && !photoSec.photoUrl.includes('MyBiodata')) {
+        photoSrc = photoSec.photoUrl;
+      }
 
       const photoImg = new Image();
       if (photoSrc && !photoSrc.startsWith('data:image/')) {
@@ -158,24 +173,28 @@
             }
             ctx.drawImage(imgObj, dx, dy, drawW, drawH);
           } catch(e) {
-            ctx.fillStyle = '#e2e8f0';
+            ctx.fillStyle = '#fff7ed';
             ctx.fillRect(photoX - radius, photoY - radius, radius * 2, radius * 2);
+            ctx.fillStyle = '#881337';
+            ctx.font = 'bold 76px "Mukta", sans-serif';
+            ctx.fillText('🤵', photoX, photoY + 26);
           }
           ctx.restore();
         } else {
-          ctx.fillStyle = '#f1f5f9';
+          // Dignified Groom Avatar Medallion
+          ctx.fillStyle = '#fff7ed';
           ctx.beginPath();
           ctx.arc(photoX, photoY, radius, 0, Math.PI * 2);
           ctx.fill();
-          ctx.fillStyle = '#64748b';
-          ctx.font = 'bold 70px "Mukta", sans-serif';
-          ctx.fillText('🤵', photoX, photoY + 25);
+          ctx.fillStyle = '#881337';
+          ctx.font = 'bold 76px "Mukta", sans-serif';
+          ctx.fillText('🤵', photoX, photoY + 26);
         }
 
         // Name & Profession
         const name = pData?.hero?.name || settings.groomName || 'चि. शुभम अनिल खर्चे';
-        const edu = pData?.hero?.role || settings.groomEdu || 'B.E. Mechanical Engineering';
-        const job = (findVal('sec-job', 'पद') ? `${findVal('sec-job', 'पद')}, ${findVal('sec-job', 'कंपनी') || 'Pune'}` : `${settings.groomJob || 'Sr. QA Engineer'}, ${settings.groomCompany || 'Pune'}`);
+        const edu = pData?.hero?.role || settings.groomEdu || 'B.E. Mechanical • Sr. QA Engineer IT, Pune';
+        const job = (findVal('sec-education-job', 'कंपनी') ? `${findVal('sec-education-job', 'हुद्दा') || 'Sr. QA Engineer'}, ${findVal('sec-education-job', 'कंपनी')}` : `${settings.groomJob || 'Sr. QA Engineer'}, ${settings.groomCompany || 'Shaurya Technosoft Pvt. Ltd., Pune'}`);
 
         ctx.textAlign = 'center';
         ctx.fillStyle = '#881337';
@@ -199,14 +218,14 @@
 
         // 8 Vitals Cards Grid
         const vitals = [
-          { label: 'जन्म तारीख व वेळ', val: (findVal('sec-personal', 'तारीख') || settings.groomDob || '२५/०८/१९९६') + ' • ' + (findVal('sec-personal', 'वेळ') || settings.groomTime || 'स. ११:५६') },
+          { label: 'जन्म तारीख व वेळ', val: (findVal('sec-personal', 'तारीख') || settings.groomDob || '25/08/1996') + ' • ' + (findVal('sec-personal', 'वेळ') || settings.groomTime || 'सकाळी ११.५६ वा.') },
           { label: 'उंची व वर्ण', val: (findVal('sec-personal', 'उंची') || "५' ९\"") + ' • ' + (findVal('sec-personal', 'वर्ण') || 'गोरा') },
-          { label: 'वार्षिक पॅकेज', val: (findVal('sec-job', 'उत्पन्न') || settings.groomSalary || '७.८ लाख (7.8 LPA)') },
+          { label: 'वार्षिक पॅकेज', val: (findVal('sec-education-job', 'उत्पन्न') || findVal('sec-job', 'उत्पन्न') || settings.groomSalary || '7.8 LPA') },
           { label: 'गोत्र व रक्तगट', val: (findVal('sec-personal', 'गोत्र') || settings.groomGotra || 'वशिष्ठ') + ' • ' + (findVal('sec-personal', 'रक्तगट') || 'B+ve') },
-          { label: 'मूळ गाव व वास्तव', val: (findVal('sec-personal', 'जन्म ठिकाण') ? findVal('sec-personal', 'जन्म ठिकाण').split(',')[0].trim() : (settings.groomPlace || 'शेलगाव बाजार')) + ' • ह. मु. पुणे' },
-          { label: 'वडील व व्यवसाय', val: (findVal('sec-family', 'वडिलांचे') || settings.groomFather || 'कै. अनिल पुंजाजी खर्चे') + ' • ' + (findVal('sec-family', 'शेती') || 'शेती (५.५ एकर)') },
-          { label: 'आई व भावंडे', val: (findVal('sec-family', 'आईचे') || settings.groomMother || 'सौ. अनिता खर्चे') + ' • ' + (findVal('sec-family', 'बहिणी') || '२ बहिणी (विवाहित)') },
-          { label: 'मामाचे कुळ', val: findVal('sec-personal', 'मामा') || settings.groomMamkul || 'चोपडे, दाताळा' }
+          { label: 'मूळ गाव व वास्तव', val: (findVal('sec-personal', 'जन्म ठिकाण') ? findVal('sec-personal', 'जन्म ठिकाण').split(',')[0].trim() : (findVal('sec-family', 'मूळगाव') ? findVal('sec-family', 'मूळगाव').split(',')[0].trim() : (settings.groomPlace || 'शेलगाव बाजार'))) + ' • ह. मु. पुणे' },
+          { label: 'वडील व व्यवसाय', val: (findVal('sec-family', 'वडिलांचे') || settings.groomFather || 'कै. अनिल पुंजाजी खर्चे') + ' • ' + (findVal('sec-family', 'शेती') || findVal('sec-family', 'व्यवसाय') || 'शेती (५.५ एकर)') },
+          { label: 'आई व भावंडे', val: (findVal('sec-family', 'आईचे') || settings.groomMother || 'श्रीमती अनिता अनिल खर्चे') + ' • ' + (findVal('sec-family', 'बहिणी') || findVal('sec-family', 'भावंडे') || '२ बहिणी (विवाहित)') },
+          { label: 'मामाचे कुळ', val: findVal('sec-personal', 'मामा') || findVal('sec-family', 'मामा') || settings.groomMamkul || 'चोपडे, दाताळा' }
         ];
 
         const startY = 545;
@@ -259,9 +278,9 @@
         ctx.fillText('📞 संपर्क: खर्चे परिवार', 540, footY + 40);
 
         const elders = pData?.sections?.find(s => s.id === 'sec-contacts')?.elders || [];
-        let contactLine1 = elders[0] ? `${elders[0].name}: ${elders[0].displayPhone || elders[0].phone}` : 'श्री. विजय खर्चे: ९४२०५३९३९६';
+        let contactLine1 = elders[0] ? `${elders[0].name}: ${elders[0].displayPhone || elders[0].phone}` : 'श्री. विजय पुंजाजी खर्चे: ९४२०५३९३९६';
         if (elders[1]) contactLine1 += ` | ${elders[1].name}: ${elders[1].displayPhone || elders[1].phone}`;
-        let contactLine2 = elders[2] ? `${elders[2].name}: ${elders[2].displayPhone || elders[2].phone}` : 'ह. मु. पुणे / मूळगाव: शेलगाव बाजार, ता. मोताळा, जि. बुलढाणा';
+        let contactLine2 = elders[2] ? `${elders[2].name}: ${elders[2].displayPhone || elders[2].phone}` : 'श्री. महेंद्र प्रल्हाद पाटील: ९९२१६३९८७२';
         if (elders[3]) contactLine2 += ` | ${elders[3].name}: ${elders[3].displayPhone || elders[3].phone}`;
 
         ctx.fillStyle = '#0f172a';
@@ -318,12 +337,16 @@
         }
       };
 
-      photoImg.onload = () => continueDrawing(photoImg);
-      photoImg.onerror = () => continueDrawing(null);
-      photoImg.src = photoSrc;
-      setTimeout(() => {
-        if (!photoImg.complete) continueDrawing(null);
-      }, 1200);
+      if (photoSrc) {
+        photoImg.onload = () => continueDrawing(photoImg);
+        photoImg.onerror = () => continueDrawing(null);
+        photoImg.src = photoSrc;
+        setTimeout(() => {
+          if (!photoImg.complete) continueDrawing(null);
+        }, 1200);
+      } else {
+        continueDrawing(null);
+      }
     });
   }
 

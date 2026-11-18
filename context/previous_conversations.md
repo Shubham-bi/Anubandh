@@ -4850,6 +4850,45 @@ use this url for sharing insted of https://anubandh-shubham-kharche.vercel.app/p
 3. **चाचणी व पडताळणी:**
    - [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) द्वारे सर्व **१६४/१६४ चाचण्या १००% उत्तीर्ण**.
 
+---
+
+## 💬 संभाषण फेरी 112 [Step 7100]
+
+**वेळ (Timestamp):** `2026-11-18T08:35:00Z`
+
+### 👤 वापरकर्त्याची विचारणा (User Request):
+
+```text
+in the recent changes some fucnitonality of app are brocken
+invensigate and find root cause
+this kind of issues are sown a bad impression
+
+1. when install and open app showing error
+2. old biadata is shown while sharing insted latest canvas
+  - [Attachment: image/png media_1794990298164_5c18aec6.png] -> ERR_FAILED on PWA launch
+  - [Attachment: image/jpeg media_1794990313326_e67bdcfe.jpg] -> Showing old paper biodata squished inside circular avatar and shared
+```
+
+### 🤖 सहाय्यकाचा प्रतिसाद व अंमलबजावणी (Assistant Response & Actions):
+
+1. **समस्या १: PWA इन्स्टॉल करून उघडल्यावर `ERR_FAILED` येणे:**
+   - **शोध व मूळ कारण:** `manifest.json` मध्ये `"start_url": "./index.html"` होते. Vercel च्या `cleanUrls: true` मुळे `/index.html` ला `HTTP 308 Permanent Redirect` मिळून तो रूट `/` कडे पाठवला जात होता. PWA standalone विंडोमध्ये Service Worker द्वारे कॅश शोधताना `/index.html` चा थेट रिस्पॉन्स न मिळाल्यामुळे Chromium मध्ये `net::ERR_FAILED` येत होते.
+   - **निवारण:** `manifest.json` मध्ये `"start_url": "/"` आणि `"scope": "/"` सेट केले. तसेच [sw.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/sw.js) आवृत्ती `anubandh-v57` वर नेऊन नेव्हिगेशन रिक्वेस्ट हँडलर अधिक सुरक्षित केला जेणेकरून तो कधीही `undefined` रिटर्न करणार नाही.
+
+2. **समस्या २: शेअरिंग दरम्यान जुनी माहिती/दस्तऐवज जाणे व फेस-सर्कलमध्ये कागदी दस्तऐवज दिसणे:**
+   - **शोध व मूळ कारण:**
+     1. [card-generator.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/card-generator.js) मधील फोटो लॉजिक थेट `shubham_kharche_biodata.jpg` (कागदी पत्रिका) उचलून लहान फेस-सर्कलमध्ये टाकत होते.
+     2. `findVal()` फंक्शन केवळ `sec.fields` पाहत होते, ज्यामुळे `profile_data.json` आणि CMS चे `sec.items` सापडत नव्हते व कार्ड जुन्या हार्डकोडेड डीफॉल्ट्सवर जात होते.
+     3. [profile.html](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/profile.html) व [biodata.html](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/biodata.html) मध्ये ४०० ओळींचे जुने इनलाईन कोड होते, जे नवीन मॉड्यूलर फाइल्सना ओव्हरराईड करत होते.
+   - **निवारण:**
+     1. फेस-सर्कलमध्ये कागदी दस्तऐवज काढणे पूर्णपणे बंद केले. जर प्रत्यक्ष पोर्ट्रेट फोटो नसेल तर सोनेरी व मरून फ्रेममध्ये देखणा व प्रतिष्ठित ग्रूम अवतार `🤵` काढला जातो.
+     2. `findVal()` सुधारून CMS व लोकलस्टोरेज मधील अद्ययावत माहिती रिअल-टाइम कॅनव्हासवर आणली.
+     3. `profile.html` व `biodata.html` मधील सर्व डुप्लिकेट कोड काढून थेट [card-generator.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/card-generator.js) आणि [share-utils.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/share-utils.js) ला जोडले.
+     4. शेअर फाइलचे नाव `shubham_kharche_biodata_card.png` केले.
+
+3. **चाचणी व पडताळणी:**
+   - [verify_app_health.js](file:///d:/UBUNTU%20DATA/01_Experiments/SY_OCR/verify_app_health.js) द्वारे सर्व **२०९/२०९ चाचण्या १००% उत्तीर्ण**.
+
 
 
 

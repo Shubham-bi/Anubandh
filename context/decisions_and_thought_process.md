@@ -408,6 +408,35 @@
   5. `sw.js` कॅश आवृत्ती `anubandh-v50` करून `profile.html` कॅशमध्ये समाविष्ट केले.
   6. `verify_app_health.js` मध्ये Vercel आणि `profile.html` च्या १६४ चाचण्या १००% उत्तीर्ण झाल्या.
 
+---
+
+## २३. PWA इन्स्टॉल स्टार्ट URL एरर (ERR_FAILED) व लेटेस्ट कॅनव्हास इमेज कार्ड शेअरिंग निवारण (PWA Launch Fix & Authentic Canvas Card Resolution)
+
+### निर्णय २३.१: `manifest.json` start_url आणि Service Worker नेव्हिगेशन स्ट्रॅटेजी
+* **पार्श्वभूमी व समस्या:**
+  वापरकर्त्याने ॲप इन्स्टॉल करून होम स्क्रीनवरून उघडल्यास Chromium आधारित ब्राउझरमध्ये `This site can't be reached. The webpage at https://anubandh-shubham-kharche.vercel.app/index.html might be temporarily down... ERR_FAILED` अशी त्रुटी येत होती.
+* **मूळ कारण (Root Cause Analysis):**
+  1. `manifest.json` मध्ये `"start_url": "./index.html"` किंवा `"start_url": "/index.html"` नमूद होते.
+  2. Vercel होस्टिंगवर `"cleanUrls": true` कॉन्फिगर असल्यामुळे कोणत्याही `/index.html` विनंतीला Vercel कडून `HTTP 308 Permanent Redirect` मिळून ती रूट `/` कडे पाठवली जाते.
+  3. PWA standalone विंडोमध्ये Service Worker द्वारे कॅश शोधताना `/index.html` ची थेट नोंद नसल्यामुळे किंवा ३०८ रिडायरेक्ट अयशस्वी ठरल्यास `event.respondWith()` ला `undefined` परत मिळत होते, ज्यामुळे क्रोमियम `net::ERR_FAILED` दाखवत होते.
+* **अंमलबजावणी व उपाय:**
+  1. `manifest.json` मध्ये `"start_url": "/"` आणि `"scope": "/"` केले.
+  2. `sw.js` (आवृत्ती `anubandh-v57`) मध्ये नेव्हिगेशन रिक्वेस्ट हँडलर अधिक सुरक्षित व लवचिक बनवला: जेव्हा युझर PWA उघडतो किंवा `/index.html` विनंती करतो, तेव्हा प्रथम कॅशमधील `/` किंवा `./` तपासून थेट रिस्पॉन्स दिला जातो, आणि कधीही `undefined` रिटर्न होत नाही.
+
+### निर्णय २३.२: शेअरिंग दरम्यान जुन्या बायोडाटा ऐवजी लेटेस्ट कॅनव्हास कार्डचे १००% एकत्रीकरण
+* **पार्श्वभूमी व समस्या:**
+  शेअरिंग करताना किंवा इमेज डाऊनलोड करताना लेटेस्ट आकर्षक कॅनव्हास कार्डऐवजी जुनी स्टॅटिक इमेज (`shubham_biodata_redesigned.png`) जात होती, आणि कॅनव्हास कार्डच्या मध्यभागी असलेल्या गोलाकार फोटो फ्रेममध्ये कागदी बायोडाटा पत्रिकेचा फोटो (`shubham_kharche_biodata.jpg`) चपटा होऊन दिसत होता.
+* **मूळ कारणे (Root Cause Analysis):**
+  1. `card-generator.js` मध्ये `photoSec = pData.sections.find(s => s.type === 'photo')` द्वारे थेट कागदी दस्तऐवजाचा फोटो (`shubham_kharche_biodata.jpg`) फेस-सर्कलमध्ये ड्रॉ केला जात होता.
+  2. `card-generator.js` मधील `findVal()` फंक्शन केवळ `sec.fields` शोधत होते, तर `profile_data.json` व CMS मध्ये `sec.items` वापरले जात होते. त्यामुळे फील्ड व्हॅल्यूज न सापडल्याने कार्ड नेहमी जुन्या हार्डकोडेड डीफॉल्ट्सवर जात होते.
+  3. `share-utils.js`, `profile.html` आणि `biodata.html` मधील शेअरिंग व क्लिपबोर्ड फॉलबॅक फंक्शन्समध्ये स्टॅटिक `shubham_biodata_redesigned.png` हार्डकोड केले होते. तसेच `profile.html` मध्ये ४०० हून अधिक ओळींचे जुने इनलाईन कॅनव्हास कोड होते, जे नवीन मॉड्यूलर `card-generator.js` ला ओव्हरराईड करत होते.
+* **अंमलबजावणी व उपाय:**
+  1. **फेस अवतार दुरुस्ती:** फेस-सर्कलमध्ये कागदी दस्तऐवज ड्रॉ न करता, प्रत्यक्ष पोर्ट्रेट फोटो नसल्यास सोनेरी व मरून फ्रेममध्ये देखणा व प्रतिष्ठित ग्रूम अवतार `🤵` काढला.
+  2. **डेटा बाइंडिंग:** `findVal()` मध्ये `sec.items` आणि `sec.fields` दोन्ही शोधण्याची सोय करून CMS व लोकलस्टोरेज मधील रिअल-टाइम व्हॅल्यूज जोडल्या.
+  3. **मॉड्यूलर एकत्रीकरण:** `profile.html` व `biodata.html` मधील सर्व डुप्लिकेट फंक्शन्स काढून थेट `AnubandhCardGenerator` व `AnubandhShareUtils` ला जोडले.
+  4. **फाइल नेमिंग व क्लिपबोर्ड:** शेअरिंग दरम्यान फाइलचे नाव `shubham_kharche_biodata_card.png` केले आणि क्लिपबोर्ड कॉपी थेट लाइव्ह कॅनव्हास ब्लBlob वरून केली.
+  5. **आरोग्य चाचण्या:** `verify_app_health.js` मध्ये सर्व **२०९ चाचण्या १००% यशस्वी**.
+
 
 
 

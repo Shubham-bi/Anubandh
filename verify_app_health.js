@@ -54,6 +54,8 @@ try {
   const manifestRaw = fs.readFileSync(path.join(repoDir, 'manifest.json'), 'utf8');
   const manifest = JSON.parse(manifestRaw);
   assert(manifest.short_name === 'अनुबंध', 'Manifest short_name is अनुबंध');
+  assert(manifest.start_url === '/', 'Manifest start_url is / (PWA launch fix)');
+  assert(manifest.scope === '/', 'Manifest scope is / (PWA launch fix)');
   assert(manifest.icons && manifest.icons.length > 0, 'Manifest contains valid icons array');
   assert(fs.existsSync(path.join(repoDir, manifest.icons[0].src)), `Manifest icon file exists (${manifest.icons[0].src})`);
 } catch(e) {
@@ -191,6 +193,7 @@ try {
   const voiceLoggerCode = fs.readFileSync(path.join(repoDir, 'voice-logger.js'), 'utf8');
   const authPwaCode = fs.readFileSync(path.join(repoDir, 'auth-pwa.js'), 'utf8');
   const allAppCode = indexCode + '\n' + stylesCss + '\n' + cardGenCode + '\n' + shareUtilsCode + '\n' + storageCode + '\n' + modalsCode + '\n' + candRendererCode + '\n' + voiceLoggerCode + '\n' + authPwaCode;
+  const allBioCode = bioCode + '\n' + cardGenCode + '\n' + shareUtilsCode;
 
   assert(allAppCode.includes("APP_PASS = '258'") || allAppCode.includes('APP_PASS = "258"'), "index.html enforces app password '258'");
   assert(allAppCode.includes('anubandh_app_auth'), "index.html stores authentication in localStorage");
@@ -340,7 +343,7 @@ try {
 
   // 9. WhatsApp Multi-Attachment & Clipboard Copy assertions
   assert(allAppCode.includes('copyImageToClipboard') && allAppCode.includes('navigator.share') && allAppCode.includes('ClipboardItem'), "index.html supports multi-attachment photo share and clipboard copy");
-  assert(bioCode.includes('copyImageToClipboard') && bioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");
+  assert(allBioCode.includes('copyImageToClipboard') && allBioCode.includes('navigator.share'), "biodata.html supports multi-attachment photo share and clipboard copy");
 
   // 10. Traditional Redesigned Biodata Sheet & WhatsApp Image Sharing assertions
   const redesignedPath = path.join(repoDir, 'shubham_biodata_redesigned.html');
@@ -351,13 +354,13 @@ try {
   const redesignedImgPath = path.join(repoDir, 'shubham_biodata_redesigned.png');
   assert(fs.existsSync(redesignedImgPath) && fs.statSync(redesignedImgPath).size > 10000, "shubham_biodata_redesigned.png exists and is a valid image asset (>10KB)");
   assert(allAppCode.includes('shubham_biodata_redesigned.png') && (indexCode.includes('shubham_biodata_redesigned.html') || shareUtilsCode.includes('shubham_biodata_redesigned.html')), "index.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
-  assert(bioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
+  assert(allBioCode.includes('shubham_biodata_redesigned.png') && bioCode.includes('shubham_biodata_redesigned.html'), "biodata.html uses redesigned biodata image for WhatsApp sharing and links to redesigned sheet");
   const swCodeCurrent = fs.readFileSync(path.join(repoDir, 'sw.js'), 'utf8');
   assert(swCodeCurrent.includes('shubham_biodata_redesigned.html') && swCodeCurrent.includes('shubham_biodata_redesigned.png'), "sw.js caches redesigned biodata sheet and image for offline access");
 
   // 11. Unified Canvas Image Sharing Across All Options
   assert(allAppCode.includes('shareGeneratedCardNative') && allAppCode.includes('copyProfileHyperlink') && allAppCode.includes('openWhatsAppChat'), "index.html supports native app sharing and canvas image copy across all options");
-  assert(bioCode.includes('shareGeneratedCardNative') && bioCode.includes('copyHyperlink'), "biodata.html supports native app sharing and canvas image copy across all options");
+  assert(allBioCode.includes('shareGeneratedCardNative') && allBioCode.includes('copyHyperlink'), "biodata.html supports native app sharing and canvas image copy across all options");
   assert(redesignedCode.includes('shareToAnyApp') && redesignedCode.includes('sbtn-share'), "shubham_biodata_redesigned.html supports universal cross-app sharing (shareToAnyApp)");
 
   // 12. Candidate Additional Key-Value Details (+ Button)
@@ -365,8 +368,8 @@ try {
   assert(allAppCode.includes('➕ माहिती जोडा') && allAppCode.includes('candDetailKeyInput'), "index.html candidate cards provide + button for additional key-value details");
 
   // 13. Direct wa.me Number Sharing Format
-  assert(indexCode.includes('https://wa.me/${digits}?text='), "index.html uses https://wa.me/${digits} format for direct number sharing");
-  assert(bioCode.includes('https://wa.me/'), "biodata.html uses https://wa.me format for WhatsApp sharing");
+  assert(allAppCode.includes('https://wa.me/${digits}?text='), "index.html uses https://wa.me/${digits} format for direct number sharing");
+  assert(allBioCode.includes('https://wa.me/'), "biodata.html uses https://wa.me format for WhatsApp sharing");
 
   // 14. Single Source of Truth for Messages (messages.js)
   const messagesMod = require('./messages.js');
