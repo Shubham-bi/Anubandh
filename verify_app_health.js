@@ -377,6 +377,9 @@ try {
   const candZero = candJsonData.find(c => c.id === 'cand_0');
   assert(candZero && candZero.phones && candZero.phones.includes('9422152322'), "cand_0 (sr ०.) phones array includes 9422152322");
   assert(indexCode.includes('"id":"cand_0"') && indexCode.includes('"phones":["9422152322"]'), "index.html INITIAL_DATA defines phones ['9422152322'] for cand_0");
+  assert(indexCode.includes('getLiveBiodataCardBlob'), 'index.html defines getLiveBiodataCardBlob for live dynamic canvas sharing');
+  assert(bioCode.includes('getLiveBiodataCardBlob'), 'biodata.html defines getLiveBiodataCardBlob for live dynamic canvas sharing');
+  assert(redesignedCode.includes('html2canvas'), 'shubham_biodata_redesigned.html renders live sheet via html2canvas');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

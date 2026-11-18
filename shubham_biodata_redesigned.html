@@ -559,25 +559,13 @@
   let cachedShareDataUrl = null;
   let cachedShareFile = null;
 
-  // Step 2 & 3: Generate high quality photo & convert to toDataURL('image/png')
+  // Step 2 & 3: Generate high quality photo via dynamic Canvas (html2canvas) so updates reflect everywhere
   async function prepareShareCardData() {
     if (cachedShareBlob && cachedShareFile && cachedShareDataUrl) {
       return { blob: cachedShareBlob, dataUrl: cachedShareDataUrl, file: cachedShareFile };
     }
 
-    // Try pre-rendered official image first for instant loading
-    try {
-      const resp = await fetch('./shubham_biodata_redesigned.png');
-      if (resp.ok) {
-        cachedShareBlob = await resp.blob();
-        cachedShareDataUrl = './shubham_biodata_redesigned.png';
-        cachedShareFile = new File([cachedShareBlob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
-        return { blob: cachedShareBlob, dataUrl: cachedShareDataUrl, file: cachedShareFile };
-      }
-    } catch(e) {
-      console.warn('Pre-rendered card fetch error, falling back to html2canvas:', e);
-    }
-
+    // Prioritize live Canvas generation from current DOM sheet
     if (window.html2canvas) {
       try {
         const sheet = document.querySelector('.sheet');
@@ -591,8 +579,21 @@
         cachedShareFile = new File([cachedShareBlob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
         return { blob: cachedShareBlob, dataUrl: cachedShareDataUrl, file: cachedShareFile };
       } catch (err) {
-        console.warn('html2canvas generation fallback:', err);
+        console.warn('html2canvas dynamic generation error, trying fallback:', err);
       }
+    }
+
+    // Fallback to static asset if html2canvas not ready
+    try {
+      const resp = await fetch('./shubham_biodata_redesigned.png');
+      if (resp.ok) {
+        cachedShareBlob = await resp.blob();
+        cachedShareDataUrl = './shubham_biodata_redesigned.png';
+        cachedShareFile = new File([cachedShareBlob], 'shubham_biodata_redesigned.png', { type: 'image/png' });
+        return { blob: cachedShareBlob, dataUrl: cachedShareDataUrl, file: cachedShareFile };
+      }
+    } catch(e) {
+      console.warn('Pre-rendered card fetch error:', e);
     }
     return null;
   }

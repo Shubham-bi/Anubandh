@@ -3941,9 +3941,20 @@
         return;
       }
 
-      // Desktop: Copy canvas image to clipboard for easy Ctrl+V pasting into WhatsApp Web
-      const photoSrc = './shubham_biodata_redesigned.png';
-      const imgCopied = await copyImageToClipboard(photoSrc);
+      // Desktop: Copy dynamic canvas image to clipboard for easy Ctrl+V pasting into WhatsApp Web
+      let imgCopied = false;
+      try {
+        const card = await getLiveBiodataCardBlob();
+        if (card && card.blob) {
+          imgCopied = await copyImageToClipboard(card.blob);
+        }
+      } catch(e) {
+        console.warn('Live card copy error, trying fallback:', e);
+      }
+      if (!imgCopied) {
+        const photoSrc = './shubham_biodata_redesigned.png';
+        imgCopied = await copyImageToClipboard(photoSrc);
+      }
       window.open(waUrl, '_blank');
       if (imgCopied) {
         showToast('📸 पत्रिका फोटो क्लिपबोर्डवर कॉपी झाला! WhatsApp चॅटमध्ये फक्त Paste (Ctrl+V) करा.');
@@ -4639,6 +4650,10 @@
       if (shareableProfileData.hero.name) waSettings.groomName = shareableProfileData.hero.name;
       localStorage.setItem(WA_SETTINGS_KEY, JSON.stringify(waSettings));
 
+      // 9. Invalidate cached dynamic canvas card so subsequent exports re-render fresh
+      generatedCardBlob = null;
+      generatedCardDataUrl = null;
+
       closeAdminSettingsModal();
     }
 
@@ -4795,22 +4810,45 @@
     // =========================================================
     // MULTI-ATTACHMENT WHATSAPP SHARING & CLIPBOARD COPY
     // =========================================================
-    async function copyImageToClipboard(imageUrl) {
+    async function copyImageToClipboard(input) {
       try {
         if (!navigator.clipboard || !window.ClipboardItem) return false;
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        await new Promise((resolve, reject) => {
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = imageUrl;
-        });
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth || img.width;
-        canvas.height = img.naturalHeight || img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const pngBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        let pngBlob = null;
+        if (input instanceof Blob) {
+          if (input.type === 'image/png') {
+            pngBlob = input;
+          } else {
+            pngBlob = await new Promise((resolve) => {
+              const img = new Image();
+              img.onload = () => {
+                const cvs = document.createElement('canvas');
+                cvs.width = img.naturalWidth || img.width;
+                cvs.height = img.naturalHeight || img.height;
+                const ctx = cvs.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                cvs.toBlob(resolve, 'image/png');
+              };
+              img.src = URL.createObjectURL(input);
+            });
+          }
+        } else if (typeof input === 'string' && input.startsWith('data:image/')) {
+          const res = await fetch(input);
+          pngBlob = await res.blob();
+        } else if (typeof input === 'string') {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+            img.src = input;
+          });
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || img.width;
+          canvas.height = img.naturalHeight || img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          pngBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        }
         if (pngBlob) {
           await navigator.clipboard.write([
             new ClipboardItem({ 'image/png': pngBlob })
@@ -4823,24 +4861,26 @@
       return false;
     }
 
+    async function getLiveBiodataCardBlob() {
+      if (generatedCardBlob && generatedCardDataUrl) {
+        return { blob: generatedCardBlob, dataUrl: generatedCardDataUrl };
+      }
+      const res = await generateBiodataCardBlob();
+      generatedCardBlob = res.blob;
+      generatedCardDataUrl = res.dataUrl;
+      return res;
+    }
+
     async function shareProfileOnWhatsApp() {
       const msg = getShareableProfileFullMessage();
-      let photoSrc = './shubham_biodata_redesigned.png';
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // Level 1: Mobile Native Web Share API with photo file attachment
+      // Level 1: Mobile Native Web Share API with live dynamic canvas card attachment
       if (navigator.canShare) {
         try {
-          let resp = await fetch(photoSrc);
-          if (!resp.ok) {
-            photoSrc = './shubham_kharche_biodata.jpg';
-            resp = await fetch(photoSrc);
-          }
-          if (resp.ok) {
-            const blob = await resp.blob();
-            const fileName = photoSrc.endsWith('.png') ? 'shubham_biodata_redesigned.png' : 'Shubham_Kharche_Biodata.jpg';
-            const fileType = blob.type || (photoSrc.endsWith('.png') ? 'image/png' : 'image/jpeg');
-            const file = new File([blob], fileName, { type: fileType });
+          const card = await getLiveBiodataCardBlob();
+          if (card && card.blob) {
+            const file = new File([card.blob], 'shubham_biodata_redesigned.png', { type: card.blob.type || 'image/png' });
             if (navigator.canShare({ files: [file] })) {
               await navigator.share({
                 files: [file],
@@ -4876,9 +4916,18 @@
       if (isMobile) {
         window.location.href = waUrl;
       } else {
-        let imgCopied = await copyImageToClipboard(photoSrc);
-        if (!imgCopied && photoSrc !== './shubham_kharche_biodata.jpg') {
-          imgCopied = await copyImageToClipboard('./shubham_kharche_biodata.jpg');
+        let imgCopied = false;
+        try {
+          const card = await getLiveBiodataCardBlob();
+          if (card && card.blob) {
+            imgCopied = await copyImageToClipboard(card.blob);
+          }
+        } catch (e) {}
+        if (!imgCopied) {
+          imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
+          if (!imgCopied) {
+            imgCopied = await copyImageToClipboard('./shubham_kharche_biodata.jpg');
+          }
         }
         window.open(waUrl, '_blank');
         if (imgCopied) {
@@ -4891,10 +4940,18 @@
 
     async function copyProfileHyperlink() {
       const fullMsg = getShareableProfileFullMessage();
-      const photoSrc = './shubham_biodata_redesigned.png';
 
-      // Level 1: Copy canvas image directly to clipboard
-      const imgCopied = await copyImageToClipboard(photoSrc);
+      // Level 1: Copy live canvas image directly to clipboard
+      let imgCopied = false;
+      try {
+        const card = await getLiveBiodataCardBlob();
+        if (card && card.blob) {
+          imgCopied = await copyImageToClipboard(card.blob);
+        }
+      } catch (e) {}
+      if (!imgCopied) {
+        imgCopied = await copyImageToClipboard('./shubham_biodata_redesigned.png');
+      }
       if (imgCopied) {
         showToast('📸 बायोडाटा पत्रिका इमेज क्लिपबोर्डवर कॉपी झाली! (चॅटमध्ये Paste करा)');
         return;
@@ -5666,6 +5723,8 @@
       e.preventDefault();
       updateWaPreview();
       localStorage.setItem(WA_SETTINGS_KEY, JSON.stringify(waSettings));
+      generatedCardBlob = null;
+      generatedCardDataUrl = null;
       closeAdminSettingsModal();
       showToast('सेटिंग्ज सेव्ह झाल्या!');
     }
@@ -7343,10 +7402,20 @@
             ctx.fillText('🤵', photoX, photoY + 25);
           }
 
+          // Extract dynamic CMS data with fallback to waSettings
+          const pData = (typeof shareableProfileData !== 'undefined' && shareableProfileData) ? shareableProfileData : null;
+          const findVal = (secId, keyPart) => {
+            if (!pData?.sections) return '';
+            const sec = pData.sections.find(s => s.id === secId);
+            if (!sec?.fields) return '';
+            const f = sec.fields.find(fld => fld.label && fld.label.includes(keyPart));
+            return f ? f.value : '';
+          };
+
           // Name & Profession
-          const name = waSettings.groomName || 'चि. शुभम अनिल खर्चे';
-          const edu = waSettings.groomEdu || 'B.E. Mechanical Engineering';
-          const job = `${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Pune'}`;
+          const name = pData?.hero?.name || waSettings.groomName || 'चि. शुभम अनिल खर्चे';
+          const edu = pData?.hero?.role || waSettings.groomEdu || 'B.E. Mechanical Engineering';
+          const job = (findVal('sec-job', 'पद') ? `${findVal('sec-job', 'पद')}, ${findVal('sec-job', 'कंपनी') || 'Pune'}` : `${waSettings.groomJob || 'Sr. QA Engineer'}, ${waSettings.groomCompany || 'Pune'}`);
 
           ctx.textAlign = 'center';
           ctx.fillStyle = '#881337';
@@ -7370,14 +7439,14 @@
 
           // 8 Vitals Cards Grid
           const vitals = [
-            { label: 'जन्म तारीख व वेळ', val: `${waSettings.groomDob || '२५/०८/१९९६'} • ${waSettings.groomTime || 'स. १०:१५'}` },
-            { label: 'उंची व वर्ण', val: `५' ९" (१७५ सेमी) • ${waSettings.groomComplexionBlood ? waSettings.groomComplexionBlood.split('|')[0].trim() : 'गोरा'}` },
-            { label: 'वार्षिक पॅकेज', val: `${waSettings.groomSalary || '७.८ लाख'} (7.8 LPA)` },
-            { label: 'गोत्र व रक्तगट', val: `${waSettings.groomGotra || 'वशिष्ठ'} • B+ve` },
-            { label: 'मूळ गाव व वास्तव', val: `${waSettings.groomPlace || 'जळगाव'} • ह. मु. पुणे` },
-            { label: 'वडील व व्यवसाय', val: `${waSettings.groomFather || 'श्री. अनिल खर्चे'} (निवृत्त शिक्षक)` },
-            { label: 'आई व भावंडे', val: `${waSettings.groomMother || 'सौ. अनिता खर्चे'} • १ भाऊ (विवाहित)` },
-            { label: 'मामाचे कुळ', val: `${waSettings.groomMamkul || 'पाटील / महाजन'}` }
+            { label: 'जन्म तारीख व वेळ', val: (findVal('sec-personal', 'तारीख') || waSettings.groomDob || '२५/०८/१९९६') + ' • ' + (findVal('sec-personal', 'वेळ') || waSettings.groomTime || 'स. ११:५६') },
+            { label: 'उंची व वर्ण', val: (findVal('sec-personal', 'उंची') || "५' ९\"") + ' • ' + (findVal('sec-personal', 'वर्ण') || 'गोरा') },
+            { label: 'वार्षिक पॅकेज', val: (findVal('sec-job', 'उत्पन्न') || waSettings.groomSalary || '७.८ लाख (7.8 LPA)') },
+            { label: 'गोत्र व रक्तगट', val: (findVal('sec-personal', 'गोत्र') || waSettings.groomGotra || 'वशिष्ठ') + ' • ' + (findVal('sec-personal', 'रक्तगट') || 'B+ve') },
+            { label: 'मूळ गाव व वास्तव', val: (findVal('sec-personal', 'जन्म ठिकाण') ? findVal('sec-personal', 'जन्म ठिकाण').split(',')[0].trim() : (waSettings.groomPlace || 'शेलगाव बाजार')) + ' • ह. मु. पुणे' },
+            { label: 'वडील व व्यवसाय', val: (findVal('sec-family', 'वडिलांचे') || waSettings.groomFather || 'कै. अनिल पुंजाजी खर्चे') + ' • ' + (findVal('sec-family', 'शेती') || 'शेती (५.५ एकर)') },
+            { label: 'आई व भावंडे', val: (findVal('sec-family', 'आईचे') || waSettings.groomMother || 'सौ. अनिता खर्चे') + ' • ' + (findVal('sec-family', 'बहिणी') || '२ बहिणी (विवाहित)') },
+            { label: 'मामाचे कुळ', val: findVal('sec-personal', 'मामा') || waSettings.groomMamkul || 'चोपडे, दाताळा' }
           ];
 
           const startY = 545;
@@ -7429,13 +7498,19 @@
           ctx.font = 'bold 22px "Mukta", sans-serif';
           ctx.fillText('📞 संपर्क: खर्चे परिवार', 540, footY + 40);
 
+          const elders = pData?.sections?.find(s => s.id === 'sec-contacts')?.elders || [];
+          let contactLine1 = elders[0] ? `${elders[0].name}: ${elders[0].displayPhone || elders[0].phone}` : 'श्री. विजय खर्चे: ९४२०५३९३९६';
+          if (elders[1]) contactLine1 += ` | ${elders[1].name}: ${elders[1].displayPhone || elders[1].phone}`;
+          let contactLine2 = elders[2] ? `${elders[2].name}: ${elders[2].displayPhone || elders[2].phone}` : 'ह. मु. पुणे / मूळगाव: शेलगाव बाजार, ता. मोताळा, जि. बुलढाणा';
+          if (elders[3]) contactLine2 += ` | ${elders[3].name}: ${elders[3].displayPhone || elders[3].phone}`;
+
           ctx.fillStyle = '#0f172a';
           ctx.font = 'bold 22px "Mukta", sans-serif';
-          ctx.fillText('श्री. अनिल सोपान खर्चे (वडील): ९४२०५३९३९६ / ९४२२१५२२३१', 540, footY + 80);
+          ctx.fillText(contactLine1, 540, footY + 80);
 
           ctx.fillStyle = '#64748b';
           ctx.font = '16px "Mukta", sans-serif';
-          ctx.fillText('पत्ता: सर्वे नं. ४२/२, खर्चे निवास, वडगाव शेरी, पुणे - ४११०१४', 540, footY + 120);
+          ctx.fillText(contactLine2, 540, footY + 120);
 
           // Digital Profile Link Banner
           const linkY = 1170;
@@ -7451,7 +7526,7 @@
 
           ctx.fillStyle = '#0369a1';
           ctx.font = 'bold 24px "Mukta", sans-serif';
-          ctx.fillText('👉 https://shubham-bi.github.io/Anubandh/Shubham_Kharche', 540, linkY + 85);
+          ctx.fillText('👉 https://shubham-bi.github.io/Anubandh/biodata.html', 540, linkY + 85);
 
           // Bottom Branding
           ctx.fillStyle = '#94a3b8';
@@ -7495,22 +7570,7 @@
       loader.style.display = 'block';
       container.style.display = 'none';
 
-      try {
-        // First try to load the high-res pre-rendered traditional redesigned biodata image
-        const preRenderedUrl = './shubham_biodata_redesigned.png';
-        const resp = await fetch(preRenderedUrl);
-        if (resp.ok) {
-          generatedCardBlob = await resp.blob();
-          generatedCardDataUrl = preRenderedUrl;
-          img.src = preRenderedUrl;
-          loader.style.display = 'none';
-          container.style.display = 'block';
-          return;
-        }
-      } catch (e) {
-        console.warn('Pre-rendered card load fallback:', e);
-      }
-
+      // Always generate dynamically from live canvas so edits reflect immediately everywhere
       try {
         const result = await generateBiodataCardBlob();
         generatedCardBlob = result.blob;
@@ -7519,7 +7579,19 @@
         loader.style.display = 'none';
         container.style.display = 'block';
       } catch (err) {
-        console.error('Error generating card:', err);
+        console.warn('Live canvas generation fallback, trying cached asset:', err);
+        try {
+          const preRenderedUrl = './shubham_biodata_redesigned.png';
+          const resp = await fetch(preRenderedUrl);
+          if (resp.ok) {
+            generatedCardBlob = await resp.blob();
+            generatedCardDataUrl = preRenderedUrl;
+            img.src = preRenderedUrl;
+            loader.style.display = 'none';
+            container.style.display = 'block';
+            return;
+          }
+        } catch (e) {}
         loader.innerHTML = '<div style="color:#ef4444;">इमेज कार्ड तयार करताना त्रुटी आली. कृपया पुन्हा प्रयत्न करा.</div>';
       }
     }
