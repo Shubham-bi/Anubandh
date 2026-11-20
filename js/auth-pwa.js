@@ -213,6 +213,119 @@
     }
   }
 
+  // Theme & Font Size Preferences Management
+  const THEME_STORAGE_KEY = 'anubandh_theme';
+  const FONT_STORAGE_KEY = 'anubandh_font_size';
+
+  function getAppTheme() {
+    try {
+      return localStorage.getItem(THEME_STORAGE_KEY) || 'light';
+    } catch (e) {
+      return 'light';
+    }
+  }
+
+  function getAppFontSize() {
+    try {
+      return localStorage.getItem(FONT_STORAGE_KEY) || 'normal';
+    } catch (e) {
+      return 'normal';
+    }
+  }
+
+  function setAppTheme(theme) {
+    const targetTheme = (theme === 'dark') ? 'dark' : 'light';
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, targetTheme);
+    } catch (e) {}
+
+    if (typeof document !== 'undefined' && document.body) {
+      if (targetTheme === 'dark') {
+        document.body.classList.add('theme-dark');
+      } else {
+        document.body.classList.remove('theme-dark');
+      }
+    }
+    updateThemeUiState(targetTheme);
+    if (typeof showToast === 'function') {
+      showToast(targetTheme === 'dark' ? '🌙 डार्क मोड सक्रिय झाला!' : '☀️ लाईट मोड सक्रिय झाला!');
+    }
+    return targetTheme;
+  }
+
+  function setAppFontSize(size) {
+    const validSizes = ['small', 'normal', 'large'];
+    const targetSize = validSizes.includes(size) ? size : 'normal';
+    try {
+      localStorage.setItem(FONT_STORAGE_KEY, targetSize);
+    } catch (e) {}
+
+    if (typeof document !== 'undefined' && document.body) {
+      document.body.dataset.fontSize = targetSize;
+    }
+    updateFontUiState(targetSize);
+    if (typeof showToast === 'function') {
+      showToast('फॉन्ट आकार अपडेट झाला!');
+    }
+    return targetSize;
+  }
+
+  function updateThemeUiState(theme) {
+    if (typeof document === 'undefined') return;
+    const btnLight = document.getElementById('btnThemeLight');
+    const btnDark = document.getElementById('btnThemeDark');
+    if (btnLight && btnDark) {
+      if (theme === 'dark') {
+        btnDark.style.borderColor = '#be123c';
+        btnDark.style.boxShadow = '0 0 0 2px rgba(190, 18, 60, 0.3)';
+        btnLight.style.borderColor = '#cbd5e1';
+        btnLight.style.boxShadow = 'none';
+      } else {
+        btnLight.style.borderColor = '#be123c';
+        btnLight.style.boxShadow = '0 0 0 2px rgba(190, 18, 60, 0.3)';
+        btnDark.style.borderColor = '#cbd5e1';
+        btnDark.style.boxShadow = 'none';
+      }
+    }
+  }
+
+  function updateFontUiState(size) {
+    if (typeof document === 'undefined') return;
+    const sizes = ['small', 'normal', 'large'];
+    sizes.forEach(s => {
+      const btn = document.getElementById('btnFont' + s.charAt(0).toUpperCase() + s.slice(1));
+      if (btn) {
+        if (s === size) {
+          btn.style.borderColor = '#be123c';
+          btn.style.background = '#fff1f2';
+          btn.style.color = '#be123c';
+          btn.style.fontWeight = '700';
+        } else {
+          btn.style.borderColor = '#cbd5e1';
+          btn.style.background = '#ffffff';
+          btn.style.color = '#334155';
+          btn.style.fontWeight = '500';
+        }
+      }
+    });
+  }
+
+  function initThemeAndFont() {
+    const savedTheme = getAppTheme();
+    const savedFont = getAppFontSize();
+
+    if (typeof document !== 'undefined' && document.body) {
+      if (savedTheme === 'dark') {
+        document.body.classList.add('theme-dark');
+      } else {
+        document.body.classList.remove('theme-dark');
+      }
+      document.body.dataset.fontSize = savedFont;
+    }
+    updateThemeUiState(savedTheme);
+    updateFontUiState(savedFont);
+  }
+
   return {
     APP_PASS,
     APP_AUTH_KEY,
@@ -229,6 +342,11 @@
     setupInstallPromptBanner,
     scrollToTop,
     handleScrollToTopVisibility,
+    getAppTheme,
+    getAppFontSize,
+    setAppTheme,
+    setAppFontSize,
+    initThemeAndFont,
     setDeferredPrompt: (p) => { deferredPrompt = p; window.deferredPrompt = p; }
   };
 });

@@ -19,6 +19,53 @@
       --base-font-size: 15px;
     }
 
+    /* Optional Dark Theme (Accessible via Admin Settings / CMS) */
+    body.theme-dark {
+      --bg: #090d16;
+      --card-bg: #131c2e;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #233149;
+      --primary-light: #2d1219;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+    body.theme-dark .navbar {
+      background: #101726;
+      border-color: #233149;
+    }
+    body.theme-dark .card,
+    body.theme-dark .modal-box,
+    body.theme-dark .phone-modal-sheet,
+    body.theme-dark .side-drawer {
+      background: #131c2e;
+      color: #f1f5f9;
+    }
+    body.theme-dark .form-control,
+    body.theme-dark .search-input {
+      background: #1b263b;
+      color: #f8fafc;
+      border-color: #334155;
+    }
+    body.theme-dark .cms-card {
+      background: #131c2e;
+      border-color: #233149;
+    }
+
+    /* Optional Font Size Scaling */
+    body[data-font-size="small"] {
+      --base-font-size: 13.5px;
+      font-size: 13.5px;
+    }
+    body[data-font-size="normal"] {
+      --base-font-size: 15px;
+      font-size: 15px;
+    }
+    body[data-font-size="large"] {
+      --base-font-size: 16.5px;
+      font-size: 16.5px;
+    }
+
     /* Voice Recording Note Styles */
     .voice-note-btn {
       background: #ffffff;
@@ -698,12 +745,14 @@
       word-break: break-word;
     }
     .contact-person-name {
+      display: block;
       font-weight: 700;
       color: #0f172a;
       line-height: 1.35;
       margin-bottom: 2px;
     }
     .contact-person-addr {
+      display: block;
       font-size: 12px;
       color: #475569;
       font-weight: 500;

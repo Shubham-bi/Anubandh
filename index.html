@@ -438,6 +438,18 @@
               <div class="admin-menu-card-arrow">›</div>
             </div>
 
+            <!-- 7. Display & Theme Preferences -->
+            <div class="admin-menu-card" onclick="openAdminSection('display')">
+              <div class="admin-menu-card-icon" style="background:#fef3c7; color:#b45309;">🎨</div>
+              <div class="admin-menu-card-body">
+                <div class="admin-menu-card-top">
+                  <span class="admin-menu-card-title">डिस्प्ले व थीम प्राधान्ये (Display & Theme)</span>
+                </div>
+                <div class="admin-menu-card-desc">डार्क मोड (Dark Theme), फॉन्ट आकार (Font Size) व व्हिज्युअल प्राधान्ये.</div>
+              </div>
+              <div class="admin-menu-card-arrow">›</div>
+            </div>
+
           </div>
         </div>
 
@@ -1068,12 +1080,39 @@
               </div>
             </div>
 
-            <!-- CARD 3: Live WhatsApp Chat Simulator -->
+            <!-- CARD 3: Message Content Toggles (Switches) -->
+            <div class="cms-card">
+              <div class="cms-card-head">
+                <div class="cms-card-title">
+                  <span>⚙️</span>
+                  <span>३. मेसेज मजकूर प्राधान्ये (Message Content Switches)</span>
+                </div>
+              </div>
+              <div style="font-size:12px; color:#64748b; margin-bottom:12px;">
+                WhatsApp प्रस्तावात खालील घटक हवे असल्यास चेक करा किंवा नको असल्यास अनचेक करा:
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#334155; cursor:pointer;">
+                  <input type="checkbox" id="waOptionGotra" onchange="updateWaPreview()" style="width:16px; height:16px; accent-color:#be123c;"/>
+                  <span>संदेशात मुलाचे गोत्र समाविष्ट करा (Include Gotra in proposal)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#334155; cursor:pointer;">
+                  <input type="checkbox" id="waOptionNick" onchange="updateWaPreview()" style="width:16px; height:16px; accent-color:#be123c;"/>
+                  <span>मुलीचे कंसातील टोपणनाव दाखवा (उदा. कु. अनुष्का (देवयानी))</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#334155; cursor:pointer;">
+                  <input type="checkbox" id="waOptionFooter" onchange="updateWaPreview()" style="width:16px; height:16px; accent-color:#be123c;"/>
+                  <span>खर्चे परिवार फोन पादटीप जोडा (Include family phone footer)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- CARD 4: Live WhatsApp Chat Simulator -->
             <div class="cms-card">
               <div class="cms-card-head">
                 <div class="cms-card-title">
                   <span>📱</span>
-                  <span>३. थेट WhatsApp चॅट सिम्युलेटर (Live Preview)</span>
+                  <span>४. थेट WhatsApp चॅट सिम्युलेटर (Live Preview)</span>
                 </div>
                 <span style="font-size:11.5px; color:#15803d; font-weight:700;">🟢 प्रत्यक्षात असा मेसेज दिसेल</span>
               </div>
@@ -1147,6 +1186,57 @@
               <button type="button" class="action-btn action-btn-primary" style="background:#15803d; padding:9px 16px; font-size:13px; width:100%; justify-content:center;" onclick="exportDataCsv()">
                 📊 Excel CSV यादी डाऊनलोड
               </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Display & Theme Preferences -->
+        <div id="secDisplaySettings" style="display:none; padding-top:4px;">
+          <div class="cms-card">
+            <div class="cms-card-head">
+              <div class="cms-card-title">
+                <span>🎨</span>
+                <span>अ‍ॅप डिस्प्ले व थीम प्राधान्ये (Display Preferences)</span>
+              </div>
+            </div>
+            
+            <div style="font-size:12.5px; color:#64748b; margin-bottom:14px; line-height:1.5;">
+              येथून तुम्ही ॲपचा रंग (लाईट किंवा डार्क थीम) आणि वाचण्यासाठी सोयीस्कर फॉन्ट आकार निवडू शकता. तुमची निवड आपोआप सेव्ह केली जाईल.
+            </div>
+
+            <!-- Theme Switcher -->
+            <div style="margin-bottom:18px;">
+              <label class="form-label" style="font-weight:700; color:#0f172a; margin-bottom:8px; display:block;">
+                🌓 अ‍ॅप थीम निवडा (Color Theme):
+              </label>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <button type="button" id="btnThemeLight" class="action-btn" onclick="setAppTheme('light')" style="padding:12px; border:2px solid #be123c; background:#ffffff; color:#be123c; font-weight:800; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                  <span style="font-size:18px;">☀️</span>
+                  <span>लाईट मोड (Light)</span>
+                </button>
+                <button type="button" id="btnThemeDark" class="action-btn" onclick="setAppTheme('dark')" style="padding:12px; border:1px solid #cbd5e1; background:#1e293b; color:#f8fafc; font-weight:800; border-radius:10px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                  <span style="font-size:18px;">🌙</span>
+                  <span>डार्क मोड (Dark)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Font Size Switcher -->
+            <div>
+              <label class="form-label" style="font-weight:700; color:#0f172a; margin-bottom:8px; display:block;">
+                🔤 फॉन्ट आकार (Text Size):
+              </label>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                <button type="button" id="btnFontSmall" class="action-btn" onclick="setAppFontSize('small')" style="padding:9px; border:1px solid #cbd5e1; background:#ffffff; font-size:12.5px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                  लहान (Small)
+                </button>
+                <button type="button" id="btnFontNormal" class="action-btn" onclick="setAppFontSize('normal')" style="padding:9px; border:2px solid #be123c; background:#fff1f2; color:#be123c; font-weight:800; font-size:14px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                  मध्यम (Normal)
+                </button>
+                <button type="button" id="btnFontLarge" class="action-btn" onclick="setAppFontSize('large')" style="padding:9px; border:1px solid #cbd5e1; background:#ffffff; font-size:16px; font-weight:700; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                  मोठा (Large)
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1579,7 +1669,10 @@
       groomContacts: '• श्री. विजय पुंजाजी खर्चे (शेलगाव बाजार) - मो. 9420539396\n• श्री. गजानन नरहरी खर्चे (शेलगाव बाजार) - मो. 9422152231\n• श्री. महेंद्र प्रल्हाद पाटील (मलकापूर) - मो. 9921639872\n• श्री. उमेश एकनाथ फेंगडे (वाडी-पोफळी) - मो. 9604458015',
       photoNote: '📸 (मुलाचे फोटो खाली सोबत मॅन्युअली जोडत आहोत)',
       customProposalTemplate: '',
-      customShareTemplate: ''
+      customShareTemplate: '',
+      includeGotra: false,
+      includeNickname: false,
+      includeFamilyFooter: false
     };
 
     let waSettings = { ...DEFAULT_WA_SETTINGS };
@@ -1615,6 +1708,9 @@
           groomSalary: waSettings.groomSalary,
           groomDob: waSettings.groomDob,
           groomGotra: waSettings.groomGotra,
+          includeGotra: !!waSettings.includeGotra,
+          includeNickname: !!waSettings.includeNickname,
+          includeFamilyFooter: !!waSettings.includeFamilyFooter,
           customTemplate: waSettings.customProposalTemplate
         });
       }
@@ -2869,6 +2965,8 @@
       if (secSync) secSync.style.display = 'none';
       const secBackup = document.getElementById('secBackupSettings');
       if (secBackup) secBackup.style.display = 'none';
+      const secDisplay = document.getElementById('secDisplaySettings');
+      if (secDisplay) secDisplay.style.display = 'none';
 
       // Hide section nav strip
       const secHeaderStrip = document.getElementById('adminSectionHeaderStrip');
@@ -2909,7 +3007,8 @@
         'profile_cms': '🤵 शुभम बायोडाटा संपादन',
         'wa': '💬 WhatsApp मेसेज व टेम्पलेट',
         'sync': '🔄 मल्टी-युझर क्लाउड सिंक',
-        'backup': '💾 डेटा बॅकअप व Excel'
+        'backup': '💾 डेटा बॅकअप व Excel',
+        'display': '🎨 डिस्प्ले व थीम प्राधान्ये'
       };
 
       const subTitle = document.getElementById('adminActiveSectionSubtitle');
@@ -2982,6 +3081,13 @@
       const shareTplEl = document.getElementById('waShareTemplate');
       if (shareTplEl) shareTplEl.value = waSettings.customShareTemplate || '';
 
+      const optGotra = document.getElementById('waOptionGotra');
+      if (optGotra) optGotra.checked = !!waSettings.includeGotra;
+      const optNick = document.getElementById('waOptionNick');
+      if (optNick) optNick.checked = !!waSettings.includeNickname;
+      const optFooter = document.getElementById('waOptionFooter');
+      if (optFooter) optFooter.checked = !!waSettings.includeFamilyFooter;
+
       updateWaPreview();
       if (section && section !== 'menu') {
         openAdminSection(section);
@@ -3001,6 +3107,7 @@
       const isWa = tab === 'wa';
       const isSync = tab === 'sync';
       const isBackup = tab === 'backup';
+      const isDisplay = tab === 'display';
 
       const secCandEdit = document.getElementById('secCandidateEditSettings');
       if (secCandEdit) secCandEdit.style.display = isCandEdit ? 'block' : 'none';
@@ -3009,13 +3116,15 @@
       document.getElementById('secSyncSettings').style.display = isSync ? 'block' : 'none';
       const backupSec = document.getElementById('secBackupSettings');
       if (backupSec) backupSec.style.display = isBackup ? 'block' : 'none';
+      const displaySec = document.getElementById('secDisplaySettings');
+      if (displaySec) displaySec.style.display = isDisplay ? 'block' : 'none';
 
       const menuHub = document.getElementById('adminMenuHub');
-      if (menuHub && (isCandEdit || isCms || isWa || isSync || isBackup)) {
+      if (menuHub && (isCandEdit || isCms || isWa || isSync || isBackup || isDisplay)) {
         menuHub.style.display = 'none';
       }
       const secHeaderStrip = document.getElementById('adminSectionHeaderStrip');
-      if (secHeaderStrip && (isCandEdit || isCms || isWa || isSync || isBackup)) {
+      if (secHeaderStrip && (isCandEdit || isCms || isWa || isSync || isBackup || isDisplay)) {
         secHeaderStrip.style.display = 'block';
       }
 
@@ -3027,7 +3136,8 @@
         'profile_cms': '🤵 शुभम बायोडाटा संपादन',
         'wa': '💬 WhatsApp मेसेज व टेम्पलेट',
         'sync': '🔄 मल्टी-युझर क्लाउड सिंक',
-        'backup': '💾 डेटा बॅकअप व Excel'
+        'backup': '💾 डेटा बॅकअप व Excel',
+        'display': '🎨 डिस्प्ले व थीम प्राधान्ये'
       };
 
       const subTitle = document.getElementById('adminActiveSectionSubtitle');
@@ -3035,6 +3145,15 @@
 
       const breadcrumb = document.getElementById('adminSecBreadcrumb');
       if (breadcrumb && tabTitles[tab]) breadcrumb.textContent = '⚙️ अ‍ॅडमिन › ' + tabTitles[tab];
+
+      if (isDisplay) {
+        if (typeof updateThemeUiState === 'function' && typeof getAppTheme === 'function') {
+          updateThemeUiState(getAppTheme());
+        }
+        if (typeof updateFontUiState === 'function' && typeof getAppFontSize === 'function') {
+          updateFontUiState(getAppFontSize());
+        }
+      }
 
       const btnCandEdit = document.getElementById('tabCandidateEditBtn');
       if (btnCandEdit) {
@@ -3105,6 +3224,13 @@
       if (propTplEl) waSettings.customProposalTemplate = propTplEl.value;
       const shareTplEl = document.getElementById('waShareTemplate');
       if (shareTplEl) waSettings.customShareTemplate = shareTplEl.value;
+
+      const optGotra = document.getElementById('waOptionGotra');
+      if (optGotra) waSettings.includeGotra = optGotra.checked;
+      const optNick = document.getElementById('waOptionNick');
+      if (optNick) waSettings.includeNickname = optNick.checked;
+      const optFooter = document.getElementById('waOptionFooter');
+      if (optFooter) waSettings.includeFamilyFooter = optFooter.checked;
 
       const previewText = buildWhatsAppText('कु. प्रियंका (डॉली)', '१८१.');
       document.getElementById('waPreviewBox').textContent = previewText;
@@ -3569,6 +3695,9 @@
     }
   
     function parseContactSections(contactStr, phonesList) {
+      if (typeof AnubandhCandidateRenderer !== 'undefined' && AnubandhCandidateRenderer.parseContactSections) {
+        return AnubandhCandidateRenderer.parseContactSections(contactStr, phonesList);
+      }
       const text = contactStr || '';
       const phones = (phonesList || []).map(p => ({
         display: p,
@@ -4276,13 +4405,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Ensure default clean light mode
-      if (document.body.classList.contains('theme-dark')) document.body.classList.remove('theme-dark');
-      delete document.body.dataset.fontSize;
-      try {
-        localStorage.removeItem('anubandh_theme');
-        localStorage.removeItem('anubandh_font_size');
-      } catch (e) {}
+      if (typeof initThemeAndFont === 'function') {
+        initThemeAndFont();
+      }
       hideSplashScreen();
       checkAppAuth();
       setupInstallPromptBanner();

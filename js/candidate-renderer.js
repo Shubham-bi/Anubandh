@@ -188,33 +188,46 @@
       }
 
       const cleanedLines = infoLines.map(l => {
-        return l.replace(/^(पालक|संपर्क[\s-]*[१२12]?|नाव)[\s\(\):-]+/i, '').trim();
+        return l.replace(/^संपर्क-[१1२2][\):]\s*/, '')
+                .replace(/^[१1२2][\):]\s*/, '')
+                .trim();
       }).filter(Boolean);
 
       let namePart = '';
       let addrPart = '';
 
-      if (cleanedLines.length > 0) {
-        namePart = cleanedLines[0];
-        const raMatch = namePart.search(/[\s,，]+रा[.:\s]/i);
-        if (raMatch !== -1) {
-          addrPart = namePart.slice(raMatch).replace(/^[\s,，]+/, '').trim();
-          namePart = namePart.slice(0, raMatch).trim();
-        }
+      const addrRegex = /^(?:रा\.|रा\s|ह\.मु\.|मु\.|मु\s|पत्ता[:\s])/;
 
-        if (cleanedLines.length > 1) {
-          const restAddr = cleanedLines.slice(1).join(', ');
-          addrPart = addrPart ? `${addrPart}, ${restAddr}` : restAddr;
+      if (cleanedLines.length >= 2) {
+        const addrStartIdx = cleanedLines.findIndex((l, i) => i > 0 && addrRegex.test(l));
+        if (addrStartIdx !== -1) {
+          namePart = cleanedLines.slice(0, addrStartIdx).join(', ');
+          addrPart = cleanedLines.slice(addrStartIdx).join(', ');
+        } else {
+          namePart = cleanedLines[0];
+          addrPart = cleanedLines.slice(1).join(', ');
+        }
+      } else if (cleanedLines.length === 1) {
+        const l = cleanedLines[0];
+        const raMatch = l.match(/^(.+?)[,，]?\s*((?:रा\.|रा\s|ह\.मु\.|मु\.|मु\s|पत्ता[:\s]).+)$/);
+        if (raMatch) {
+          namePart = raMatch[1].trim();
+          addrPart = raMatch[2].trim();
+        } else {
+          namePart = l;
+          addrPart = '';
         }
       }
 
+      namePart = namePart.replace(/[,，\s]+$/, '').trim();
+
       let infoFormatted = '-';
       if (namePart && addrPart) {
-        infoFormatted = `<span class="contact-person-name">${namePart}</span><span class="contact-person-addr">${addrPart}</span>`;
+        infoFormatted = `<div class="contact-person-name">${namePart},</div><div class="contact-person-addr">${addrPart}</div>`;
       } else if (namePart) {
-        infoFormatted = `<span class="contact-person-name">${namePart}</span>`;
+        infoFormatted = `<div class="contact-person-name">${namePart}</div>`;
       } else if (addrPart) {
-        infoFormatted = `<span class="contact-person-addr">${addrPart}</span>`;
+        infoFormatted = `<div class="contact-person-addr">${addrPart}</div>`;
       }
 
       return {
@@ -224,6 +237,18 @@
         addrPart: addrPart,
         phone: matchedPhone
       };
+    });
+
+    const attachedCleans = contacts.map(c => c.phone ? c.phone.clean : '').filter(Boolean);
+    const remaining = phones.filter(p => !attachedCleans.includes(p.clean));
+    remaining.forEach((rem, rIdx) => {
+      contacts.push({
+        role: 'अतिरिक्त संपर्क ' + (rIdx + 1),
+        info: '<div class="contact-person-name">फोन क्रमांक</div>',
+        namePart: 'फोन क्रमांक',
+        addrPart: '',
+        phone: rem
+      });
     });
 
     return contacts;
@@ -417,7 +442,12 @@
         <td style="max-width:190px; font-size:12px;">${(c.edu || '-').replace(/\n/g, ' ')}</td>
         <td style="font-size:12px;">${(c.fam || '-').replace(/\n/g, ' ')}</td>
         <td style="font-size:12px; min-width:180px;">
-          ${(c.contact || '').split('मो.')[0].trim()}
+          ${contactSections.map(cs => `
+            <div style="margin-bottom:6px;">
+              <span class="contact-role-badge" style="font-size:10px; padding:1px 5px; margin-bottom:2px; display:inline-block;">${cs.role}</span>
+              ${cs.info || '-'}
+            </div>
+          `).join('')}
           <div style="margin-top:4px;">${phoneButtons}</div>
         </td>
         <td>

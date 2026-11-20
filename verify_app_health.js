@@ -240,6 +240,8 @@ try {
   // Contact Name and Address separation assertion
   assert(indexCode.includes('contact-person-name') && indexCode.includes('contact-person-addr'), "index.html defines contact-person-name and contact-person-addr classes");
   assert(indexCode.includes('addrStartIdx') || indexCode.includes('raMatch'), "index.html implements name and address line separation for contacts");
+  assert(candRendererCode.includes('addrStartIdx') && candRendererCode.includes('raMatch'), "candidate-renderer.js implements address separation placing रा. on next line");
+  assert(stylesCss.includes('.contact-person-name') && stylesCss.includes('.contact-person-addr'), "styles.css styles contact-person-name and contact-person-addr");
 
   // WhatsApp Profile Share & Hyperlink options assertions
   assert(bioCode.includes('shareProfileOnWhatsApp') && bioCode.includes('copyHyperlink'), "biodata.html has WhatsApp share and hyperlink copy options");
@@ -382,10 +384,35 @@ try {
     listNumber: '१७१'
   });
   assert(testProposal.includes('आम्ही श्री. गजानन वामन वराडे यांची मुलगी कु. अनुष्का (अ.क्र. १७१.) हिच्यासाठी आपल्याशी संपर्क साधत आहोत.'), 'messages.js parameterizes girl father name, girl name, and list number');
-  assert(!testProposal.includes('(देवयानी)'), 'messages.js excludes name in parentheses per user requirement');
-  assert(!testProposal.includes('गोत्र:'), 'messages.js excludes gotra per user requirement');
+  assert(!testProposal.includes('(देवयानी)'), 'messages.js excludes name in parentheses per user requirement by default');
+  assert(!testProposal.includes('गोत्र:'), 'messages.js excludes gotra per user requirement by default');
   assert(testProposal.indexOf('*मुलाची थोडक्यात माहिती:*') < testProposal.indexOf('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js follows requested sequence: groom info before biodata link');
   assert(testProposal.includes('मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:\nhttps://anubandh-shubham-kharche.vercel.app/profile'), 'messages.js candidate proposal contains exact requested biodata link text');
+
+  // Phase 1 Option Tests:
+  const testProposalWithGotra = messagesMod.buildCandidateProposalMessage({
+    girlFatherName: 'गजानन वामन वराडे',
+    girlName: 'अनुष्का (देवयानी)',
+    listNumber: '१७१',
+    includeGotra: true
+  });
+  assert(testProposalWithGotra.includes('• गोत्र: वशिष्ठ'), 'messages.js dynamically includes Gotra when includeGotra is true');
+
+  const testProposalWithNick = messagesMod.buildCandidateProposalMessage({
+    girlFatherName: 'गजानन वामन वराडे',
+    girlName: 'अनुष्का (देवयानी)',
+    listNumber: '१७१',
+    includeNickname: true
+  });
+  assert(testProposalWithNick.includes('(देवयानी)'), 'messages.js dynamically includes Nickname in parentheses when includeNickname is true');
+
+  const testProposalWithFooter = messagesMod.buildCandidateProposalMessage({
+    girlFatherName: 'गजानन वामन वराडे',
+    girlName: 'अनुष्का (देवयानी)',
+    listNumber: '१७१',
+    includeFamilyFooter: true
+  });
+  assert(testProposalWithFooter.includes('खर्चे परिवार (मो. 9420539396 / 9422152231)'), 'messages.js dynamically includes family phone footer when includeFamilyFooter is true');
 
   const testGeneric = messagesMod.buildGenericShareMessage();
   assert(testGeneric.includes('मुलाचा (शुभम अनिल खर्चे) बायोडाटा सोबत जोडलेला आहे. अधिक माहिती खालील लिंकवर पाहता येईल:'), 'messages.js generic share contains exact requested text');
@@ -467,6 +494,13 @@ try {
   assert(indexCode.includes('src="./js/voice-logger.js"'), 'index.html references voice-logger.js');
   assert(indexCode.includes('src="./js/auth-pwa.js"'), 'index.html references auth-pwa.js');
   assert(swCodeCurrent.includes('./js/candidate-renderer.js') && swCodeCurrent.includes('./js/voice-logger.js') && swCodeCurrent.includes('./js/auth-pwa.js'), 'sw.js caches candidate-renderer.js, voice-logger.js and auth-pwa.js');
+
+  // 22. Phase 1: Theme & Font Preferences and Configurable Messages
+  assert(stylesCss.includes('body.theme-dark') && stylesCss.includes('--bg: #090d16'), 'styles.css defines body.theme-dark variables');
+  assert(stylesCss.includes('body[data-font-size="small"]') && stylesCss.includes('body[data-font-size="large"]'), 'styles.css defines font size scaling rules');
+  assert(typeof authPwaMod.setAppTheme === 'function' && typeof authPwaMod.setAppFontSize === 'function', 'auth-pwa.js exports setAppTheme and setAppFontSize');
+  assert(indexCode.includes('id="secDisplaySettings"') && indexCode.includes('btnThemeDark'), 'index.html defines secDisplaySettings with theme switches');
+  assert(indexCode.includes('waOptionGotra') && indexCode.includes('waOptionNick') && indexCode.includes('waOptionFooter'), 'index.html defines message content switches in CMS');
 } catch(e) {
   assert(false, `biodata profile verification error: ${e.message}`);
 }

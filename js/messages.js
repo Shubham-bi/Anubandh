@@ -38,8 +38,10 @@
     const father = (params.girlFatherName || params.guardianName || '').trim();
     let girl = (params.girlName || params.candidateName || '').trim();
 
-    // In message while sharing don't include name in () -> e.g. कु. अनुष्का (देवयानी) -> कु. अनुष्का only
-    girl = girl.replace(/\s*\([^)]*\)/g, '').trim();
+    // In message while sharing don't include name in () unless explicitly requested via includeNickname toggle
+    if (!params.includeNickname) {
+      girl = girl.replace(/\s*\([^)]*\)/g, '').trim();
+    }
     girl = girl.replace(/^कु\.?\s*/, '').trim();
 
     const candDisplay = girl ? `कु. ${girl}` : '';
@@ -65,6 +67,7 @@
     const groomCompany = params.groomCompany || DEFAULT_GROOM.company;
     const groomSalary = params.groomSalary || DEFAULT_GROOM.salary;
     const groomDob = params.groomDob || DEFAULT_GROOM.dob;
+    const groomGotra = params.groomGotra || DEFAULT_GROOM.gotra;
     const url = params.biodataUrl || BIODATA_URL;
 
     // Optional CMS Custom Template override
@@ -80,9 +83,27 @@
         groom_company: groomCompany,
         groom_salary: groomSalary,
         groom_dob: groomDob,
+        groom_gotra: groomGotra,
         profile_url: url
       };
       return params.customTemplate.replace(/\{(\w+)\}/g, (match, key) => (vars[key] !== undefined ? vars[key] : match));
+    }
+
+    const groomLines = [
+      `• नाव: चि. ${groomName}`,
+      `• शिक्षण: ${groomEdu}`,
+      `• नोकरी: ${groomJob}, ${groomCompany}`,
+      `• वार्षिक पॅकेज: ${groomSalary}`,
+      `• जन्मतारीख: ${groomDob}`
+    ];
+    if (params.includeGotra) {
+      groomLines.push(`• गोत्र: ${groomGotra}`);
+    }
+
+    let footerNote = 'धन्यवाद! 🙏';
+    if (params.includeFamilyFooter) {
+      const footerText = params.familyFooterText || 'खर्चे परिवार (मो. 9420539396 / 9422152231)';
+      footerNote += `\n— ${footerText}`;
     }
 
     return `नमस्कार!
@@ -92,18 +113,14 @@ ${introLine}
 भ्रातृमंडळ वधू-वर सूचीमध्ये आपल्या मुलीची विवाहासाठी दिलेली माहिती आम्ही वाचली. तिचे स्थळ आम्हाला योग्य वाटल्यामुळे आमच्या मुलाची माहिती आपणास पाठवत आहोत.
 
 *मुलाची थोडक्यात माहिती:*
-• नाव: चि. ${groomName}
-• शिक्षण: ${groomEdu}
-• नोकरी: ${groomJob}, ${groomCompany}
-• वार्षिक पॅकेज: ${groomSalary}
-• जन्मतारीख: ${groomDob}
+${groomLines.join('\n')}
 
 मुलाचा बायोडाटा आणि अधिक माहिती खालील लिंकवर पाहता येईल:
 ${url}
 
 आपणासही आमचे स्थळ योग्य वाटल्यास पुढील चर्चेसाठी कृपया संपर्क साधावा.
 
-धन्यवाद! 🙏`;
+${footerNote}`;
   }
 
   /**
